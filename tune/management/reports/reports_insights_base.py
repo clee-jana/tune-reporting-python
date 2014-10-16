@@ -170,10 +170,10 @@ class ReportsInsightBase(ReportsBase):
         TuneManagementBase.validate_datetime('end_date', end_date)
 
         self.validate_cohort_type(cohort_type)
-        if isinstance(cohort_interval, str):
+        if cohort_interval is not None:
             self.validate_cohort_interval(cohort_interval)
 
-        if isinstance(filter, str):
+        if filter is not None:
             filter = TuneManagementBase.validate_filter(self, filter)
 
         return ReportsBase.call(
@@ -302,21 +302,14 @@ class ReportsInsightBase(ReportsBase):
         TuneManagementBase.validate_datetime('start_date', start_date)
         TuneManagementBase.validate_datetime('end_date', end_date)
 
-        if (not isinstance(cohort_type, str)
-            or (cohort_type not in self.___cohort_types)):
-            raise ValueError(
-                "Parameter 'cohort_type' is invalid: '{}'.".format(cohort_type))
-        if (isinstance(interval, str)
-            and (interval not in self.__cohort_intervals)):
-            raise ValueError(
-                "Parameter 'interval' is invalid: '{}'.".format(cohort_type))
-        if (not isinstance(aggregation_type, str)
-            or (aggregation_type not in self.__aggregation_types)):
-            raise ValueError(
-                "Parameter 'aggregation_type' is invalid: '{}'.".format(aggregation_type))
+        self.validate_cohort_type(cohort_type)
+        self.validate_aggregation_type(aggregation_type)
 
         fields = TuneManagementBase.validate_fields(self, fields)
         group = TuneManagementBase.validate_group(self, group)
+        
+        if cohort_interval is not None:
+            self.validate_cohort_interval(cohort_interval)
 
         if filter is not None:
             filter = TuneManagementBase.validate_filter(self, filter)
@@ -329,7 +322,7 @@ class ReportsInsightBase(ReportsBase):
                 'end_date': end_date,
                 'cohort_type': cohort_type,
                 'aggregation_type': aggregation_type,
-                'interval': interval,
+                'interval': cohort_interval,
                 'filter': filter,
                 'fields': fields,
                 'group': group,

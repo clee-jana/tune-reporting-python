@@ -158,79 +158,133 @@
 152 
 153             print(  \textcolor{stringliteral}{"\(\backslash\)n= advertiser stats clicks status in CSV data format =\(\backslash\)n"})
 154 
-155             csv\_report\_reader = export.fetch(job\_id, report\_format=\textcolor{stringliteral}{"csv"}, verbose = \textcolor{keyword}{True})
-156             csv\_report\_reader.read()
-157             csv\_report\_reader.pretty\_print(limit=5)
-158 
-159             print(  \textcolor{stringliteral}{"= advertiser/stats/clicks/find\_export\_queue.json request ="})
-160             response = clicks.export(
-161                     start\_date,
-162                     end\_date,
-163                     filter              = \textcolor{keywordtype}{None},
-164                     fields              = \textcolor{stringliteral}{"created,site.name,campaign.name \(\backslash\)}
-165 \textcolor{stringliteral}{                                          ,publisher.name,is\_unique,publisher\_ref\_id \(\backslash\)}
-166 \textcolor{stringliteral}{                                          ,country.name,region.name,agency.name \(\backslash\)}
-167 \textcolor{stringliteral}{                                          ,site\_id,campaign\_id,publisher\_id \(\backslash\)}
-168 \textcolor{stringliteral}{                                          ,agency\_id,country\_id,region\_id"},
-169                     format              = \textcolor{stringliteral}{"json"},
-170                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
-171                 )
-172             print(\textcolor{stringliteral}{"= advertiser/stats/clicks/export.json response: \{\}"}.format(response))
-173 
-174             \textcolor{keywordflow}{if} response.http\_code != 200:
-175                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
-176 
-177             job\_id = response.data
-178             print(\textcolor{stringliteral}{"Job ID: \{\}"}.format(job\_id))
-179 
-180             export = Export(api\_key)
-181 
-182             json\_report\_reader = export.fetch(job\_id, report\_format=\textcolor{stringliteral}{"json"}, verbose = \textcolor{keyword}{True})
-183             json\_report\_reader.read()
-184             json\_report\_reader.pretty\_print(limit=5)
-185 
-186         \textcolor{keywordflow}{except} TuneSdkException \textcolor{keyword}{as} exc:
-187             print(\textcolor{stringliteral}{"TuneSdkException (\{\})"}.format(exc))
-188             print(self.format\_exception(exc.errors))
-189         \textcolor{keywordflow}{except} Exception:
-190             exc\_type, exc\_value, exc\_traceback = sys.exc\_info()
-191             print(\textcolor{stringliteral}{"*** print\_tb:"})
-192             traceback.print\_tb(exc\_traceback, limit=1, file=sys.stdout)
-193             print(\textcolor{stringliteral}{"*** print\_exception:"})
-194             traceback.print\_exception(exc\_type, exc\_value, exc\_traceback,
-195                                       limit=2, file=sys.stdout)
-196             print(\textcolor{stringliteral}{"*** print\_exc:"})
-197             traceback.print\_exc()
-198 
-199         print(  \textcolor{stringliteral}{"======================================"})
-200         print(  \textcolor{stringliteral}{"= End Example                        ="})
-201         print(  \textcolor{stringliteral}{"======================================"})
-202 
-203     @staticmethod
-204     \textcolor{keyword}{def }format\_exception(e):
-205         \textcolor{stringliteral}{"Provide traceback of provided exception."}
-206         exception\_list = traceback.format\_stack()
-207         exception\_list = exception\_list[:-2]
-208         exception\_list.extend(traceback.format\_tb(sys.exc\_info()[2]))
-209         exception\_list.extend(traceback.format\_exception\_only(sys.exc\_info()[0], sys.exc\_info()[1]))
-210 
-211         exception\_str = \textcolor{stringliteral}{"Traceback (most recent call last):\(\backslash\)n"}
-212         exception\_str += \textcolor{stringliteral}{""}.join(exception\_list)
-213         \textcolor{comment}{# Removing the last \(\backslash\)n}
-214         exception\_str = exception\_str[:-1]
-215 
-216         \textcolor{keywordflow}{return} exception\_str
-217 
-218 \textcolor{keywordflow}{if} \_\_name\_\_ == \textcolor{stringliteral}{'\_\_main\_\_'}:
-219     \textcolor{keywordflow}{try}:
-220         \textcolor{keywordflow}{if} len(sys.argv) < 2:
-221             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Provide API Key to execute Tune Management API example \{\}."}.format(sys.argv[0
+155             status = \textcolor{stringliteral}{"running"}
+156             response = \textcolor{keywordtype}{None}
+157             attempt = 0
+158     
+159             \textcolor{keywordflow}{while} \textcolor{keyword}{True}:
+160                 response = export.download(self.\_\_job\_id)
+161     
+162                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} response:
+163                     \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(
+164                         \textcolor{stringliteral}{"No response returned from export request."}
+165                     )
+166     
+167                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} response.data:
+168                     \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(
+169                         \textcolor{stringliteral}{"No response data returned from export. Request URL: \{\}"}.format(
+170                             response.request\_url
+171                         )
+172                     )
+173     
+174                 \textcolor{keywordflow}{if} response.http\_code != 200:
+175                     \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(
+176                         \textcolor{stringliteral}{"Request failed: HTTP Error Code: \{\}: \{\}"}.format(
+177                             response.http\_code,
+178                             response.request\_url
+179                         )
+180                     )
+181     
+182                 status = response.data[\textcolor{stringliteral}{"status"}]
+183                 \textcolor{keywordflow}{if} status == \textcolor{stringliteral}{"complete"} \textcolor{keywordflow}{or} status == \textcolor{stringliteral}{"fail"}:
+184                     \textcolor{keywordflow}{break}
+185     
+186                 attempt += 1
+187                 \textcolor{keywordflow}{if} self.\_\_verbose:
+188                     print(\textcolor{stringliteral}{"= thread id \{\}: attempt: \{\}, response: \{\}"}.format(
+189                             current\_thread().ident,
+190                             attempt,
+191                             response
+192                         )
+193                     )
+194     
+195                 time.sleep(self.\_\_sleep)
+196     
+197             \textcolor{keywordflow}{if} self.\_\_verbose:
+198                 print(\textcolor{stringliteral}{"= thread id \{\}: response: \{\}"}.format(
+199                         current\_thread().ident,
+200                         response
+201                     )
+202                 )
+203 
+204             report\_url = response.data[\textcolor{stringliteral}{"data"}][\textcolor{stringliteral}{"url"}]
+205             
+206             csv\_report\_reader = ReportReaderCSV(
+207                     report\_url
+208                 )
+209             
+210             csv\_report\_reader.read()
+211             csv\_report\_reader.pretty\_print(limit=5)
+212 
+213             print(  \textcolor{stringliteral}{"= advertiser/stats/clicks/find\_export\_queue.json request ="})
+214             response = clicks.export(
+215                     start\_date,
+216                     end\_date,
+217                     filter              = \textcolor{keywordtype}{None},
+218                     fields              = \textcolor{stringliteral}{"created,site.name,campaign.name \(\backslash\)}
+219 \textcolor{stringliteral}{                                          ,publisher.name,is\_unique,publisher\_ref\_id \(\backslash\)}
+220 \textcolor{stringliteral}{                                          ,country.name,region.name,agency.name \(\backslash\)}
+221 \textcolor{stringliteral}{                                          ,site\_id,campaign\_id,publisher\_id \(\backslash\)}
+222 \textcolor{stringliteral}{                                          ,agency\_id,country\_id,region\_id"},
+223                     format              = \textcolor{stringliteral}{"json"},
+224                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+225                 )
+226             print(\textcolor{stringliteral}{"= advertiser/stats/clicks/export.json response: \{\}"}.format(response))
+227 
+228             \textcolor{keywordflow}{if} response.http\_code != 200:
+229                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+230 
+231             job\_id = response.data
+232             print(\textcolor{stringliteral}{"Job ID: \{\}"}.format(job\_id))
+233 
+234             export = Export(api\_key)
+235 
+236             json\_report\_reader = export.fetch(job\_id, report\_format=\textcolor{stringliteral}{"json"}, verbose = \textcolor{keyword}{True})
+237             json\_report\_reader.read()
+238             json\_report\_reader.pretty\_print(limit=5)
+239 
+240         \textcolor{keywordflow}{except} TuneSdkException \textcolor{keyword}{as} exc:
+241             print(\textcolor{stringliteral}{"TuneSdkException (\{\})"}.format(exc))
+242             print(self.format\_exception(exc.errors))
+243         \textcolor{keywordflow}{except} Exception:
+244             exc\_type, exc\_value, exc\_traceback = sys.exc\_info()
+245             print(\textcolor{stringliteral}{"*** print\_tb:"})
+246             traceback.print\_tb(exc\_traceback, limit=1, file=sys.stdout)
+247             print(\textcolor{stringliteral}{"*** print\_exception:"})
+248             traceback.print\_exception(exc\_type, exc\_value, exc\_traceback,
+249                                       limit=2, file=sys.stdout)
+250             print(\textcolor{stringliteral}{"*** print\_exc:"})
+251             traceback.print\_exc()
+252 
+253         print(  \textcolor{stringliteral}{"======================================"})
+254         print(  \textcolor{stringliteral}{"= End Example                        ="})
+255         print(  \textcolor{stringliteral}{"======================================"})
+256 
+257     @staticmethod
+258     \textcolor{keyword}{def }format\_exception(e):
+259         \textcolor{stringliteral}{"Provide traceback of provided exception."}
+260         exception\_list = traceback.format\_stack()
+261         exception\_list = exception\_list[:-2]
+262         exception\_list.extend(traceback.format\_tb(sys.exc\_info()[2]))
+263         exception\_list.extend(traceback.format\_exception\_only(sys.exc\_info()[0], sys.exc\_info()[1]))
+264 
+265         exception\_str = \textcolor{stringliteral}{"Traceback (most recent call last):\(\backslash\)n"}
+266         exception\_str += \textcolor{stringliteral}{""}.join(exception\_list)
+267         \textcolor{comment}{# Removing the last \(\backslash\)n}
+268         exception\_str = exception\_str[:-1]
+269 
+270         \textcolor{keywordflow}{return} exception\_str
+271 
+272 \textcolor{keywordflow}{if} \_\_name\_\_ == \textcolor{stringliteral}{'\_\_main\_\_'}:
+273     \textcolor{keywordflow}{try}:
+274         \textcolor{keywordflow}{if} len(sys.argv) < 2:
+275             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Provide API Key to execute Tune Management API example \{\}."}.format(sys.argv[0
       ]))
-222         api\_key = sys.argv[1]
-223         example = ExampleClicks()
-224         example.run(api\_key)
-225     \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} exc:
-226         print(\textcolor{stringliteral}{"Exception: \{0\}"}.format(exc))
-227         \textcolor{keywordflow}{raise}
+276         api\_key = sys.argv[1]
+277         example = ExampleClicks()
+278         example.run(api\_key)
+279     \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} exc:
+280         print(\textcolor{stringliteral}{"Exception: \{0\}"}.format(exc))
+281         \textcolor{keywordflow}{raise}
 \end{DoxyCodeInclude}
  

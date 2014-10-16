@@ -185,10 +185,10 @@ Definition at line 170 of file reports\-\_\-insights\-\_\-base.\-py.
 173         TuneManagementBase.validate\_datetime(\textcolor{stringliteral}{'end\_date'}, end\_date)
 174 
 175         self.\hyperlink{classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_a78f6a5bfe7258d65e381281510ae9909}{validate\_cohort\_type}(cohort\_type)
-176         \textcolor{keywordflow}{if} isinstance(cohort\_interval, str):
+176         \textcolor{keywordflow}{if} cohort\_interval \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:
 177             self.\hyperlink{classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_ad46443a32fbdae1590e4dfbeb945c566}{validate\_cohort\_interval}(cohort\_interval)
 178 
-179         \textcolor{keywordflow}{if} isinstance(filter, str):
+179         \textcolor{keywordflow}{if} filter \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:
 180             filter = TuneManagementBase.validate\_filter(self, filter)
 181 
 182         \textcolor{keywordflow}{return} ReportsBase.call(
@@ -276,40 +276,33 @@ Definition at line 303 of file reports\-\_\-insights\-\_\-base.\-py.
 305         TuneManagementBase.validate\_datetime(\textcolor{stringliteral}{'start\_date'}, start\_date)
 306         TuneManagementBase.validate\_datetime(\textcolor{stringliteral}{'end\_date'}, end\_date)
 307 
-308         \textcolor{keywordflow}{if} (\textcolor{keywordflow}{not} isinstance(cohort\_type, str)
-309             \textcolor{keywordflow}{or} (cohort\_type \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.\_\_\_cohort\_types)):
-310             \textcolor{keywordflow}{raise} ValueError(
-311                 \textcolor{stringliteral}{"Parameter 'cohort\_type' is invalid: '\{\}'."}.format(cohort\_type))
-312         \textcolor{keywordflow}{if} (isinstance(interval, str)
-313             \textcolor{keywordflow}{and} (interval \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.\_\_cohort\_intervals)):
-314             \textcolor{keywordflow}{raise} ValueError(
-315                 \textcolor{stringliteral}{"Parameter 'interval' is invalid: '\{\}'."}.format(cohort\_type))
-316         \textcolor{keywordflow}{if} (\textcolor{keywordflow}{not} isinstance(aggregation\_type, str)
-317             \textcolor{keywordflow}{or} (aggregation\_type \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.\_\_aggregation\_types)):
-318             \textcolor{keywordflow}{raise} ValueError(
-319                 \textcolor{stringliteral}{"Parameter 'aggregation\_type' is invalid: '\{\}'."}.format(aggregation\_type))
-320 
-321         fields = TuneManagementBase.validate\_fields(self, fields)
-322         group = TuneManagementBase.validate\_group(self, group)
-323 
-324         \textcolor{keywordflow}{if} filter \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:
-325             filter = TuneManagementBase.validate\_filter(self, filter)
-326 
-327         \textcolor{keywordflow}{return} ReportsBase.call(
-328             self,
-329             action=\textcolor{stringliteral}{"export"},
-330             query\_string\_dict=\{
-331                 \textcolor{stringliteral}{'start\_date'}: start\_date,
-332                 \textcolor{stringliteral}{'end\_date'}: end\_date,
-333                 \textcolor{stringliteral}{'cohort\_type'}: cohort\_type,
-334                 \textcolor{stringliteral}{'aggregation\_type'}: aggregation\_type,
-335                 \textcolor{stringliteral}{'interval'}: interval,
-336                 \textcolor{stringliteral}{'filter'}: filter,
-337                 \textcolor{stringliteral}{'fields'}: fields,
-338                 \textcolor{stringliteral}{'group'}: group,
-339                 \textcolor{stringliteral}{'response\_timezone'}: response\_timezone
-340             \}
-341         )
+308         self.\hyperlink{classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_a78f6a5bfe7258d65e381281510ae9909}{validate\_cohort\_type}(cohort\_type)
+309         self.\hyperlink{classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_a21b9eb499a7eb17b2a9bb887d4490688}{validate\_aggregation\_type}(aggregation\_type)
+310 
+311         fields = TuneManagementBase.validate\_fields(self, fields)
+312         group = TuneManagementBase.validate\_group(self, group)
+313         
+314         \textcolor{keywordflow}{if} cohort\_interval \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:
+315             self.\hyperlink{classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_ad46443a32fbdae1590e4dfbeb945c566}{validate\_cohort\_interval}(cohort\_interval)
+316 
+317         \textcolor{keywordflow}{if} filter \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:
+318             filter = TuneManagementBase.validate\_filter(self, filter)
+319 
+320         \textcolor{keywordflow}{return} ReportsBase.call(
+321             self,
+322             action=\textcolor{stringliteral}{"export"},
+323             query\_string\_dict=\{
+324                 \textcolor{stringliteral}{'start\_date'}: start\_date,
+325                 \textcolor{stringliteral}{'end\_date'}: end\_date,
+326                 \textcolor{stringliteral}{'cohort\_type'}: cohort\_type,
+327                 \textcolor{stringliteral}{'aggregation\_type'}: aggregation\_type,
+328                 \textcolor{stringliteral}{'interval'}: cohort\_interval,
+329                 \textcolor{stringliteral}{'filter'}: filter,
+330                 \textcolor{stringliteral}{'fields'}: fields,
+331                 \textcolor{stringliteral}{'group'}: group,
+332                 \textcolor{stringliteral}{'response\_timezone'}: response\_timezone
+333             \}
+334         )
 
 \end{DoxyCode}
 
@@ -376,28 +369,28 @@ object
 \end{DoxySeeAlso}
 
 
-Definition at line 390 of file reports\-\_\-insights\-\_\-base.\-py.
+Definition at line 383 of file reports\-\_\-insights\-\_\-base.\-py.
 
 
 \begin{DoxyCode}
+383 
+384     ):
+385         \textcolor{comment}{# job\_id}
+386         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} job\_id \textcolor{keywordflow}{or} len(job\_id) < 1:
+387             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Parameter 'job\_id' is not defined."})
+388 
+389         TuneManagementBase.validate\_format(report\_format)
 390 
-391     ):
-392         \textcolor{comment}{# job\_id}
-393         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} job\_id \textcolor{keywordflow}{or} len(job\_id) < 1:
-394             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Parameter 'job\_id' is not defined."})
-395 
-396         TuneManagementBase.validate\_format(report\_format)
-397 
-398         \textcolor{keywordflow}{return} ReportsBase.fetch(
-399             self,
-400             mod\_export\_namespace,
-401             mod\_export\_class,
-402             \textcolor{stringliteral}{"status"},
-403             job\_id,
-404             report\_format,
-405             verbose,
-406             sleep \textcolor{comment}{# seconds}
-407         )
+391         \textcolor{keywordflow}{return} ReportsBase.fetch(
+392             self,
+393             mod\_export\_namespace,
+394             mod\_export\_class,
+395             \textcolor{stringliteral}{"status"},
+396             job\_id,
+397             report\_format,
+398             verbose,
+399             sleep \textcolor{comment}{# seconds}
+400         )
 
 \end{DoxyCode}
 
@@ -575,20 +568,20 @@ str Report Url Helper function for parsing export status response to gather repo
 \end{DoxyReturn}
 
 
-Definition at line 419 of file reports\-\_\-insights\-\_\-base.\-py.
+Definition at line 412 of file reports\-\_\-insights\-\_\-base.\-py.
 
 
 \begin{DoxyCode}
-419 
-420     ):
-421         \textcolor{keywordflow}{if} (\textcolor{keywordflow}{not} response.data
-422             \textcolor{keywordflow}{or} \textcolor{stringliteral}{"url"} \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} response.data
-423         ):
-424             \textcolor{keywordflow}{raise} TuneSdkException(\textcolor{stringliteral}{"Report request failed to get export data."})
-425 
-426         url = response.data[\textcolor{stringliteral}{"url"}]
-427 
-428         \textcolor{keywordflow}{return} url
+412 
+413     ):
+414         \textcolor{keywordflow}{if} (\textcolor{keywordflow}{not} response.data
+415             \textcolor{keywordflow}{or} \textcolor{stringliteral}{"url"} \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} response.data
+416         ):
+417             \textcolor{keywordflow}{raise} TuneSdkException(\textcolor{stringliteral}{"Report request failed to get export data."})
+418 
+419         url = response.data[\textcolor{stringliteral}{"url"}]
+420 
+421         \textcolor{keywordflow}{return} url
 \end{DoxyCode}
 
 
@@ -624,24 +617,24 @@ Upon completion will return url to download requested report.
 Query status of insight reports. Upon completion will return url to download requested report. \begin{DoxyVerb}Args:\end{DoxyVerb}
  
 
-Definition at line 355 of file reports\-\_\-insights\-\_\-base.\-py.
+Definition at line 348 of file reports\-\_\-insights\-\_\-base.\-py.
 
 
 \begin{DoxyCode}
-355 
-356     ):
-357 
-358         \textcolor{comment}{# job\_id}
-359         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} job\_id \textcolor{keywordflow}{or} len(job\_id) < 1:
-360             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Parameter 'job\_id' is not defined."})
-361 
-362         \textcolor{keywordflow}{return} ReportsBase.call(
-363             self,
-364             \textcolor{stringliteral}{"status"},
-365             \{
-366                 \textcolor{stringliteral}{'job\_id'}: job\_id
-367             \}
-368         )
+348 
+349     ):
+350 
+351         \textcolor{comment}{# job\_id}
+352         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} job\_id \textcolor{keywordflow}{or} len(job\_id) < 1:
+353             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Parameter 'job\_id' is not defined."})
+354 
+355         \textcolor{keywordflow}{return} ReportsBase.call(
+356             self,
+357             \textcolor{stringliteral}{"status"},
+358             \{
+359                 \textcolor{stringliteral}{'job\_id'}: job\_id
+360             \}
+361         )
 
 \end{DoxyCode}
 

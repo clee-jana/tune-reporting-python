@@ -108,7 +108,7 @@ class ExampleCohort(object):
                     start_date,
                     end_date,
                     cohort_type         = "click",
-                    interval            = "year_day",
+                    cohort_interval     = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
                     filter              = "(publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"
@@ -125,7 +125,7 @@ class ExampleCohort(object):
                     start_date,
                     end_date,
                     cohort_type         = "install",
-                    interval            = "year_day",
+                    cohort_interval     = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
                     filter              = "(publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"
@@ -143,7 +143,7 @@ class ExampleCohort(object):
                     end_date,
                     cohort_type         = "click",
                     aggregation_type    = "cumulative",
-                    interval            = "year_day",
+                    cohort_interval     = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
                     filter              = "(publisher_id > 0)",
                     fields              = "site_id,site.name,campaign_id" \

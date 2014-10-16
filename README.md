@@ -17,7 +17,7 @@ directory.
 
 Go into `tune-api-python`, and then run
 
-    python setup.py install
+    python3 setup.py install
 
 You may need to run the above commands with `sudo`.
 

@@ -150,7 +150,61 @@ class ExampleClicks(object):
 
             print(  "\n= advertiser stats clicks status in CSV data format =\n")
 
-            csv_report_reader = export.fetch(job_id, report_format="csv", verbose = True)
+            status = "running"
+            response = None
+            attempt = 0
+    
+            while True:
+                response = export.download(self.__job_id)
+    
+                if not response:
+                    raise Exception(
+                        "No response returned from export request."
+                    )
+    
+                if not response.data:
+                    raise Exception(
+                        "No response data returned from export. Request URL: {}".format(
+                            response.request_url
+                        )
+                    )
+    
+                if response.http_code != 200:
+                    raise Exception(
+                        "Request failed: HTTP Error Code: {}: {}".format(
+                            response.http_code,
+                            response.request_url
+                        )
+                    )
+    
+                status = response.data["status"]
+                if status == "complete" or status == "fail":
+                    break
+    
+                attempt += 1
+                if self.__verbose:
+                    print("= thread id {}: attempt: {}, response: {}".format(
+                            current_thread().ident,
+                            attempt,
+                            response
+                        )
+                    )
+    
+                time.sleep(self.__sleep)
+    
+            if self.__verbose:
+                print("= thread id {}: response: {}".format(
+                        current_thread().ident,
+                        response
+                    )
+                )
+
+            report_url = response.data["data"]["url"]
+            
+            csv_report_reader = ReportReaderCSV(
+                    report_url
+                )
+            
             csv_report_reader.read()
             csv_report_reader.pretty_print(limit=5)
 

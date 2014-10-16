@@ -266,10 +266,10 @@ $(document).ready(function(){initNavTree('reports__insights__base_8py_source.htm
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        TuneManagementBase.validate_datetime(<span class="stringliteral">&#39;end_date&#39;</span>, end_date)</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        self.<a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a78f6a5bfe7258d65e381281510ae9909">validate_cohort_type</a>(cohort_type)</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="keywordflow">if</span> isinstance(cohort_interval, str):</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="keywordflow">if</span> cohort_interval <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            self.<a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#ad46443a32fbdae1590e4dfbeb945c566">validate_cohort_interval</a>(cohort_interval)</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">if</span> isinstance(filter, str):</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">if</span> filter <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            filter = TuneManagementBase.validate_filter(self, filter)</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <span class="keywordflow">return</span> ReportsBase.call(</div>
@@ -398,130 +398,123 @@ $(document).ready(function(){initNavTree('reports__insights__base_8py_source.htm
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        TuneManagementBase.validate_datetime(<span class="stringliteral">&#39;start_date&#39;</span>, start_date)</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        TuneManagementBase.validate_datetime(<span class="stringliteral">&#39;end_date&#39;</span>, end_date)</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keywordflow">if</span> (<span class="keywordflow">not</span> isinstance(cohort_type, str)</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;            <span class="keywordflow">or</span> (cohort_type <span class="keywordflow">not</span> <span class="keywordflow">in</span> self.___cohort_types)):</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            <span class="keywordflow">raise</span> ValueError(</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                <span class="stringliteral">&quot;Parameter &#39;cohort_type&#39; is invalid: &#39;{}&#39;.&quot;</span>.format(cohort_type))</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="keywordflow">if</span> (isinstance(interval, str)</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            <span class="keywordflow">and</span> (interval <span class="keywordflow">not</span> <span class="keywordflow">in</span> self.__cohort_intervals)):</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            <span class="keywordflow">raise</span> ValueError(</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                <span class="stringliteral">&quot;Parameter &#39;interval&#39; is invalid: &#39;{}&#39;.&quot;</span>.format(cohort_type))</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        <span class="keywordflow">if</span> (<span class="keywordflow">not</span> isinstance(aggregation_type, str)</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;            <span class="keywordflow">or</span> (aggregation_type <span class="keywordflow">not</span> <span class="keywordflow">in</span> self.__aggregation_types)):</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            <span class="keywordflow">raise</span> ValueError(</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                <span class="stringliteral">&quot;Parameter &#39;aggregation_type&#39; is invalid: &#39;{}&#39;.&quot;</span>.format(aggregation_type))</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        fields = TuneManagementBase.validate_fields(self, fields)</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        group = TuneManagementBase.validate_group(self, group)</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keywordflow">if</span> filter <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            filter = TuneManagementBase.validate_filter(self, filter)</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        <span class="keywordflow">return</span> ReportsBase.call(</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;            self,</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;            action=<span class="stringliteral">&quot;export&quot;</span>,</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;            query_string_dict={</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                <span class="stringliteral">&#39;start_date&#39;</span>: start_date,</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                <span class="stringliteral">&#39;end_date&#39;</span>: end_date,</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                <span class="stringliteral">&#39;cohort_type&#39;</span>: cohort_type,</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                <span class="stringliteral">&#39;aggregation_type&#39;</span>: aggregation_type,</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                <span class="stringliteral">&#39;interval&#39;</span>: interval,</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;                <span class="stringliteral">&#39;filter&#39;</span>: filter,</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                <span class="stringliteral">&#39;fields&#39;</span>: fields,</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;                <span class="stringliteral">&#39;group&#39;</span>: group,</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;                <span class="stringliteral">&#39;response_timezone&#39;</span>: response_timezone</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            }</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        )</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="comment">## Query status of insight reports. Upon completion will</span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="comment">#  return url to download requested report.</span></div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="comment">#</span></div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="comment">#  @param string job_id    Provided Job Identifier to reference requested report on export queue.</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="comment">##</span></div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="comment"># Query status of insight reports. Upon completion will return url to</span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="comment">#         download requested report.</span></div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="comment"># </span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="comment">#             Args:</span></div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="comment">#         </span></div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keyword">def </span><a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a60bbb91121fe5d73863303ace66ae81a">status</a>(</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        self,</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        job_id              <span class="comment"># Export queue identifier</span></div>
-<div class="line"><a name="l00355"></a><span class="lineno"><a class="line" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a60bbb91121fe5d73863303ace66ae81a">  355</a></span>&#160;    ):</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        <span class="comment"># job_id</span></div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        <span class="keywordflow">if</span> <span class="keywordflow">not</span> job_id <span class="keywordflow">or</span> len(job_id) &lt; 1:</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Parameter &#39;job_id&#39; is not defined.&quot;</span>)</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        <span class="keywordflow">return</span> ReportsBase.call(</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;            self,</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;            <span class="stringliteral">&quot;status&quot;</span>,</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;            {</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;                <span class="stringliteral">&#39;job_id&#39;</span>: job_id</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;            }</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        )</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="comment">## Helper function for fetching report upon completion.</span></div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="comment">#  Starts worker thread for polling export queue.</span></div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="comment">#</span></div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="comment">#  @param string mod_export_class  Requesting report class for this export.</span></div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="comment">#  @param string job_id            Provided Job Identifier to reference</span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="comment">#                                  requested report on export queue.</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="comment">#  @param string report_format     Expected content format of exported report.</span></div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="comment">#  @param bool   verbose           Debug purposes only to view progress of</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="comment">#                                  job on export queue.</span></div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="comment">#  @param int    sleep             Polling delay between querying job</span></div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <span class="comment">#                                  status on export queue.</span></div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <span class="comment">#</span></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    <span class="comment">#  @return object @see report_reader_base.py</span></div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keyword">def </span><a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#af7c12d70fdcb9b557ecf5fa3ee3dcf10">fetch</a>(</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;        self,</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        mod_export_namespace,</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;        mod_export_class,</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        job_id,</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        report_format,</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;        verbose=<span class="keyword">False</span>,</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;        sleep=60 <span class="comment"># seconds</span></div>
-<div class="line"><a name="l00390"></a><span class="lineno"><a class="line" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#af7c12d70fdcb9b557ecf5fa3ee3dcf10">  390</a></span>&#160;    ):</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;        <span class="comment"># job_id</span></div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;        <span class="keywordflow">if</span> <span class="keywordflow">not</span> job_id <span class="keywordflow">or</span> len(job_id) &lt; 1:</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Parameter &#39;job_id&#39; is not defined.&quot;</span>)</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;        TuneManagementBase.validate_format(report_format)</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;        <span class="keywordflow">return</span> ReportsBase.fetch(</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;            self,</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;            mod_export_namespace,</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;            mod_export_class,</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;            <span class="stringliteral">&quot;status&quot;</span>,</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;            job_id,</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;            report_format,</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;            verbose,</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;            sleep <span class="comment"># seconds</span></div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;        )</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="comment">## Helper function for parsing export status response to gather report url.</span></div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <span class="comment">#  @param @see Response</span></div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <span class="comment">#  @return str Report Url</span></div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    @staticmethod</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <span class="comment">##</span></div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="comment"># Helper function for parsing export status response to gather report url.</span></div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="comment"># </span></div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    <span class="comment">#             Args:</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <span class="comment">#         </span></div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    <span class="keyword">def </span><a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#ac71e815c7e9b4f3183b81d221589cbfb">parse_response_url</a>(</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        response</div>
-<div class="line"><a name="l00419"></a><span class="lineno"><a class="line" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#ac71e815c7e9b4f3183b81d221589cbfb">  419</a></span>&#160;    ):</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        <span class="keywordflow">if</span> (<span class="keywordflow">not</span> response.data</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;            <span class="keywordflow">or</span> <span class="stringliteral">&quot;url&quot;</span> <span class="keywordflow">not</span> <span class="keywordflow">in</span> response.data</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;        ):</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;            <span class="keywordflow">raise</span> TuneSdkException(<span class="stringliteral">&quot;Report request failed to get export data.&quot;</span>)</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        url = response.data[<span class="stringliteral">&quot;url&quot;</span>]</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;        <span class="keywordflow">return</span> url</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        self.<a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a78f6a5bfe7258d65e381281510ae9909">validate_cohort_type</a>(cohort_type)</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        self.<a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a21b9eb499a7eb17b2a9bb887d4490688">validate_aggregation_type</a>(aggregation_type)</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        fields = TuneManagementBase.validate_fields(self, fields)</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        group = TuneManagementBase.validate_group(self, group)</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        </div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        <span class="keywordflow">if</span> cohort_interval <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;            self.<a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#ad46443a32fbdae1590e4dfbeb945c566">validate_cohort_interval</a>(cohort_interval)</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="keywordflow">if</span> filter <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            filter = TuneManagementBase.validate_filter(self, filter)</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keywordflow">return</span> ReportsBase.call(</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;            self,</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;            action=<span class="stringliteral">&quot;export&quot;</span>,</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            query_string_dict={</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                <span class="stringliteral">&#39;start_date&#39;</span>: start_date,</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;                <span class="stringliteral">&#39;end_date&#39;</span>: end_date,</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;                <span class="stringliteral">&#39;cohort_type&#39;</span>: cohort_type,</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;                <span class="stringliteral">&#39;aggregation_type&#39;</span>: aggregation_type,</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;                <span class="stringliteral">&#39;interval&#39;</span>: cohort_interval,</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;                <span class="stringliteral">&#39;filter&#39;</span>: filter,</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                <span class="stringliteral">&#39;fields&#39;</span>: fields,</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                <span class="stringliteral">&#39;group&#39;</span>: group,</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                <span class="stringliteral">&#39;response_timezone&#39;</span>: response_timezone</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;            }</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        )</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    <span class="comment">## Query status of insight reports. Upon completion will</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="comment">#  return url to download requested report.</span></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    <span class="comment">#</span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="comment">#  @param string job_id    Provided Job Identifier to reference requested report on export queue.</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="comment">##</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="comment"># Query status of insight reports. Upon completion will return url to</span></div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="comment">#         download requested report.</span></div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="comment"># </span></div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="comment">#             Args:</span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="comment">#         </span></div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="keyword">def </span><a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a60bbb91121fe5d73863303ace66ae81a">status</a>(</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        self,</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        job_id              <span class="comment"># Export queue identifier</span></div>
+<div class="line"><a name="l00348"></a><span class="lineno"><a class="line" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a60bbb91121fe5d73863303ace66ae81a">  348</a></span>&#160;    ):</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        <span class="comment"># job_id</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        <span class="keywordflow">if</span> <span class="keywordflow">not</span> job_id <span class="keywordflow">or</span> len(job_id) &lt; 1:</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Parameter &#39;job_id&#39; is not defined.&quot;</span>)</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        <span class="keywordflow">return</span> ReportsBase.call(</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;            self,</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;            <span class="stringliteral">&quot;status&quot;</span>,</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;            {</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;                <span class="stringliteral">&#39;job_id&#39;</span>: job_id</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;            }</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;        )</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="comment">## Helper function for fetching report upon completion.</span></div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="comment">#  Starts worker thread for polling export queue.</span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="comment">#</span></div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="comment">#  @param string mod_export_class  Requesting report class for this export.</span></div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="comment">#  @param string job_id            Provided Job Identifier to reference</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="comment">#                                  requested report on export queue.</span></div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="comment">#  @param string report_format     Expected content format of exported report.</span></div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="comment">#  @param bool   verbose           Debug purposes only to view progress of</span></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="comment">#                                  job on export queue.</span></div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="comment">#  @param int    sleep             Polling delay between querying job</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="comment">#                                  status on export queue.</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="comment">#</span></div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="comment">#  @return object @see report_reader_base.py</span></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="keyword">def </span><a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#af7c12d70fdcb9b557ecf5fa3ee3dcf10">fetch</a>(</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        self,</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        mod_export_namespace,</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;        mod_export_class,</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        job_id,</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        report_format,</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;        verbose=<span class="keyword">False</span>,</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        sleep=60 <span class="comment"># seconds</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno"><a class="line" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#af7c12d70fdcb9b557ecf5fa3ee3dcf10">  383</a></span>&#160;    ):</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        <span class="comment"># job_id</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;        <span class="keywordflow">if</span> <span class="keywordflow">not</span> job_id <span class="keywordflow">or</span> len(job_id) &lt; 1:</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Parameter &#39;job_id&#39; is not defined.&quot;</span>)</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;        TuneManagementBase.validate_format(report_format)</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;        <span class="keywordflow">return</span> ReportsBase.fetch(</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;            self,</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;            mod_export_namespace,</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;            mod_export_class,</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;            <span class="stringliteral">&quot;status&quot;</span>,</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;            job_id,</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;            report_format,</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;            verbose,</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;            sleep <span class="comment"># seconds</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;        )</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    <span class="comment">## Helper function for parsing export status response to gather report url.</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    <span class="comment">#  @param @see Response</span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    <span class="comment">#  @return str Report Url</span></div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    @staticmethod</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <span class="comment">##</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    <span class="comment"># Helper function for parsing export status response to gather report url.</span></div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    <span class="comment"># </span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="comment">#             Args:</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <span class="comment">#         </span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <span class="keyword">def </span><a class="code" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#ac71e815c7e9b4f3183b81d221589cbfb">parse_response_url</a>(</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;        response</div>
+<div class="line"><a name="l00412"></a><span class="lineno"><a class="line" href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#ac71e815c7e9b4f3183b81d221589cbfb">  412</a></span>&#160;    ):</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;        <span class="keywordflow">if</span> (<span class="keywordflow">not</span> response.data</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;            <span class="keywordflow">or</span> <span class="stringliteral">&quot;url&quot;</span> <span class="keywordflow">not</span> <span class="keywordflow">in</span> response.data</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        ):</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;            <span class="keywordflow">raise</span> TuneSdkException(<span class="stringliteral">&quot;Report request failed to get export data.&quot;</span>)</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        url = response.data[<span class="stringliteral">&quot;url&quot;</span>]</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        <span class="keywordflow">return</span> url</div>
 <div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_a78f6a5bfe7258d65e381281510ae9909"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a78f6a5bfe7258d65e381281510ae9909">tune.management.reports.reports_insights_base.ReportsInsightBase.validate_cohort_type</a></div><div class="ttdeci">def validate_cohort_type</div><div class="ttdoc">Validate &#39;cohort_type&#39; parameter. </div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00085">reports_insights_base.py:85</a></div></div>
-<div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_ac71e815c7e9b4f3183b81d221589cbfb"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#ac71e815c7e9b4f3183b81d221589cbfb">tune.management.reports.reports_insights_base.ReportsInsightBase.parse_response_url</a></div><div class="ttdeci">def parse_response_url</div><div class="ttdoc">Helper function for parsing export status response to gather report url. </div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00419">reports_insights_base.py:419</a></div></div>
-<div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_a60bbb91121fe5d73863303ace66ae81a"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a60bbb91121fe5d73863303ace66ae81a">tune.management.reports.reports_insights_base.ReportsInsightBase.status</a></div><div class="ttdeci">def status</div><div class="ttdoc">Query status of insight reports. </div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00355">reports_insights_base.py:355</a></div></div>
+<div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_ac71e815c7e9b4f3183b81d221589cbfb"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#ac71e815c7e9b4f3183b81d221589cbfb">tune.management.reports.reports_insights_base.ReportsInsightBase.parse_response_url</a></div><div class="ttdeci">def parse_response_url</div><div class="ttdoc">Helper function for parsing export status response to gather report url. </div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00412">reports_insights_base.py:412</a></div></div>
+<div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_a60bbb91121fe5d73863303ace66ae81a"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a60bbb91121fe5d73863303ace66ae81a">tune.management.reports.reports_insights_base.ReportsInsightBase.status</a></div><div class="ttdeci">def status</div><div class="ttdoc">Query status of insight reports. </div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00348">reports_insights_base.py:348</a></div></div>
 <div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_a0d22e330edc50e64ff0a26b6f6f6154a"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a0d22e330edc50e64ff0a26b6f6f6154a">tune.management.reports.reports_insights_base.ReportsInsightBase.__api_key</a></div><div class="ttdeci">__api_key</div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00144">reports_insights_base.py:144</a></div></div>
 <div class="ttc" id="namespacetune_1_1management_1_1endpoints_html"><div class="ttname"><a href="namespacetune_1_1management_1_1endpoints.html">tune.management.endpoints</a></div><div class="ttdef"><b>Definition:</b> <a href="management_2endpoints_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 <div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_a6333765e99d27cf78b6f7bac1260e7c1"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a6333765e99d27cf78b6f7bac1260e7c1">tune.management.reports.reports_insights_base.ReportsInsightBase.count</a></div><div class="ttdeci">def count</div><div class="ttdoc">Counts all existing records that match filter criteria and returns an array of found model data...</div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00170">reports_insights_base.py:170</a></div></div>
@@ -533,14 +526,14 @@ $(document).ready(function(){initNavTree('reports__insights__base_8py_source.htm
 <div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_a8bee2fdfa90cf8a89064e23207c6441f"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a8bee2fdfa90cf8a89064e23207c6441f">tune.management.reports.reports_insights_base.ReportsInsightBase.export</a></div><div class="ttdeci">def export</div><div class="ttdoc">Places a job into a queue to generate a report that will contain records that match provided filter c...</div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00303">reports_insights_base.py:303</a></div></div>
 <div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_a92ce64372ea1665fb6826883a2739f3d"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a92ce64372ea1665fb6826883a2739f3d">tune.management.reports.reports_insights_base.ReportsInsightBase.__init__</a></div><div class="ttdeci">def __init__</div><div class="ttdoc">The constructor. </div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00135">reports_insights_base.py:135</a></div></div>
 <div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_a3b2e66b7d0cc8024605af26ca9792bd3"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a3b2e66b7d0cc8024605af26ca9792bd3">tune.management.reports.reports_insights_base.ReportsInsightBase.find</a></div><div class="ttdeci">def find</div><div class="ttdoc">Finds all existing records that match filter criteria and returns an array of found model data...</div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00233">reports_insights_base.py:233</a></div></div>
-<div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_af7c12d70fdcb9b557ecf5fa3ee3dcf10"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#af7c12d70fdcb9b557ecf5fa3ee3dcf10">tune.management.reports.reports_insights_base.ReportsInsightBase.fetch</a></div><div class="ttdeci">def fetch</div><div class="ttdoc">Helper function for fetching report upon completion. </div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00390">reports_insights_base.py:390</a></div></div>
+<div class="ttc" id="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase_html_af7c12d70fdcb9b557ecf5fa3ee3dcf10"><div class="ttname"><a href="classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#af7c12d70fdcb9b557ecf5fa3ee3dcf10">tune.management.reports.reports_insights_base.ReportsInsightBase.fetch</a></div><div class="ttdeci">def fetch</div><div class="ttdoc">Helper function for fetching report upon completion. </div><div class="ttdef"><b>Definition:</b> <a href="reports__insights__base_8py_source.html#l00383">reports_insights_base.py:383</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_3aa065c2e49b72e26258aa257033eda8.html">tune</a></li><li class="navelem"><a class="el" href="dir_731bac90be35b35f4efc310ab90553a0.html">management</a></li><li class="navelem"><a class="el" href="dir_5cca8cbecd7757ac9f5301a868dfdb55.html">reports</a></li><li class="navelem"><a class="el" href="reports__insights__base_8py.html">reports_insights_base.py</a></li>
-    <li class="footer">Generated on Wed Oct 15 2014 16:27:45 for Tune Management SDK - Python by
+    <li class="footer">Generated on Thu Oct 16 2014 07:03:16 for Tune Management SDK - Python by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>
