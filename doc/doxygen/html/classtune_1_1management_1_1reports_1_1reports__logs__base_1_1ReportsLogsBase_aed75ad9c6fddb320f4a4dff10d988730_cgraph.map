@@ -1,0 +1,4 @@
+<map id="tune.management.reports.reports_logs_base.ReportsLogsBase.count" name="tune.management.reports.reports_logs_base.ReportsLogsBase.count">
+<area shape="rect" id="node3" href="$classtune_1_1management_1_1reports_1_1reports__logs__base_1_1ReportsLogsBase.html#aa5e600c4e26a37c9f71230b38b53a7fb" title="Finds all existing records that match filter criteria and returns an array of found model data..." alt="" coords="285,5,507,59"/>
+<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1reports__logs__base_1_1ReportsLogsBase.html#adb84c7933f69d2e513859acd5c542a71" title="Places a job into a queue to generate a report that will contain records that match provided filter c..." alt="" coords="556,5,791,59"/>
+</map>

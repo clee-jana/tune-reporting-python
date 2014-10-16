@@ -1,0 +1,4 @@
+<map id="Exception" name="Exception">
+<area shape="rect" id="node3" href="$classtune_1_1common_1_1exceptions_1_1TuneSdkException.html" title="Exception raised for errors when using Tune SDK. " alt="" coords="5,153,205,293"/>
+<area shape="rect" id="node5" href="$classtune_1_1common_1_1exceptions_1_1TuneServiceException.html" title="Exception raised when error is returned from Tune Service. " alt="" coords="229,163,429,282"/>
+</map>

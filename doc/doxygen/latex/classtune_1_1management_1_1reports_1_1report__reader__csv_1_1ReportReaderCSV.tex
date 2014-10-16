@@ -1,0 +1,139 @@
+\hypertarget{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV}{\section{tune.\-management.\-reports.\-report\-\_\-reader\-\_\-csv.\-Report\-Reader\-C\-S\-V Class Reference}
+\label{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV}\index{tune.\-management.\-reports.\-report\-\_\-reader\-\_\-csv.\-Report\-Reader\-C\-S\-V@{tune.\-management.\-reports.\-report\-\_\-reader\-\_\-csv.\-Report\-Reader\-C\-S\-V}}
+}
+
+
+Helper class for reading reading remote C\-S\-V file.  
+
+
+
+
+Inheritance diagram for tune.\-management.\-reports.\-report\-\_\-reader\-\_\-csv.\-Report\-Reader\-C\-S\-V\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for tune.\-management.\-reports.\-report\-\_\-reader\-\_\-csv.\-Report\-Reader\-C\-S\-V\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a418f8a33369c1269d59406d70c4d5562}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em The constructor. \end{DoxyCompactList}\item 
+def \hyperlink{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a761840bd958d0c771e9638a637bcfd55}{read}
+\begin{DoxyCompactList}\small\item\em Using provided report download U\-R\-L, extract C\-S\-V contents. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a54edf30f0b976974d271d655393f90d8}{data}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Helper class for reading reading remote C\-S\-V file. 
+
+Helper class for reading reading remote C\-S\-V file 
+
+Definition at line 60 of file report\-\_\-reader\-\_\-csv.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a418f8a33369c1269d59406d70c4d5562}{\index{tune\-::management\-::reports\-::report\-\_\-reader\-\_\-csv\-::\-Report\-Reader\-C\-S\-V@{tune\-::management\-::reports\-::report\-\_\-reader\-\_\-csv\-::\-Report\-Reader\-C\-S\-V}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!tune::management::reports::report_reader_csv::ReportReaderCSV@{tune\-::management\-::reports\-::report\-\_\-reader\-\_\-csv\-::\-Report\-Reader\-C\-S\-V}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-management.\-reports.\-report\-\_\-reader\-\_\-csv.\-Report\-Reader\-C\-S\-V.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{report\-\_\-url}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a418f8a33369c1269d59406d70c4d5562}
+
+
+The constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & report\-\_\-url Download report U\-R\-L of requested report to be exported. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 65 of file report\-\_\-reader\-\_\-csv.\-py.
+
+
+\begin{DoxyCode}
+65 
+66     \textcolor{keyword}{def }\hyperlink{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a418f8a33369c1269d59406d70c4d5562}{\_\_init\_\_}(self, report\_url):
+67         ReportReaderBase.\_\_init\_\_(self, report\_url)
+
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a761840bd958d0c771e9638a637bcfd55}{\index{tune\-::management\-::reports\-::report\-\_\-reader\-\_\-csv\-::\-Report\-Reader\-C\-S\-V@{tune\-::management\-::reports\-::report\-\_\-reader\-\_\-csv\-::\-Report\-Reader\-C\-S\-V}!read@{read}}
+\index{read@{read}!tune::management::reports::report_reader_csv::ReportReaderCSV@{tune\-::management\-::reports\-::report\-\_\-reader\-\_\-csv\-::\-Report\-Reader\-C\-S\-V}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-management.\-reports.\-report\-\_\-reader\-\_\-csv.\-Report\-Reader\-C\-S\-V.\-read (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a761840bd958d0c771e9638a637bcfd55}
+
+
+Using provided report download U\-R\-L, extract C\-S\-V contents. 
+
+Read C\-S\-V data provided remote path report\-\_\-url. 
+
+Definition at line 72 of file report\-\_\-reader\-\_\-csv.\-py.
+
+
+\begin{DoxyCode}
+72 
+73     \textcolor{keyword}{def }\hyperlink{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a761840bd958d0c771e9638a637bcfd55}{read}(self):
+74 
+75         self.\hyperlink{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a54edf30f0b976974d271d655393f90d8}{data} = []
+76         report\_reader = \textcolor{keywordtype}{None}
+77         \textcolor{keywordflow}{try}:
+78             report\_stream = urllib.request.urlopen(self.report\_url)
+79             report\_reader = csv.reader(codecs.iterdecode(report\_stream, \textcolor{stringliteral}{'utf-8'}))
+80         \textcolor{keywordflow}{except} urllib.error.URLError \textcolor{keyword}{as} ex:
+81             \textcolor{keywordflow}{raise} TuneServiceException(\textcolor{stringliteral}{"URLError: \{\}"}.format(str(ex)), ex)
+82         \textcolor{keywordflow}{except} urllib.error.HTTPError \textcolor{keyword}{as} ex:
+83             \textcolor{keywordflow}{raise} TuneServiceException(\textcolor{stringliteral}{"HTTPError: \{\}"}.format(str(ex)), ex)
+84         \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} ex:
+85             \textcolor{keywordflow}{raise} TuneSdkException(
+86                 \textcolor{stringliteral}{"Unexpected: \{\}: \{\}"}.format(ex.\_\_class\_\_.\_\_name\_\_, str(ex)),
+87                 ex
+88             )
+89 
+90         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} report\_reader:
+91             \textcolor{keywordflow}{raise} TuneSdkException(\textcolor{stringliteral}{"CSV Reader not provided."})
+92 
+93         \textcolor{keywordflow}{for} row \textcolor{keywordflow}{in} report\_reader:
+94             self.data.append(row)
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a54edf30f0b976974d271d655393f90d8}{\index{tune\-::management\-::reports\-::report\-\_\-reader\-\_\-csv\-::\-Report\-Reader\-C\-S\-V@{tune\-::management\-::reports\-::report\-\_\-reader\-\_\-csv\-::\-Report\-Reader\-C\-S\-V}!data@{data}}
+\index{data@{data}!tune::management::reports::report_reader_csv::ReportReaderCSV@{tune\-::management\-::reports\-::report\-\_\-reader\-\_\-csv\-::\-Report\-Reader\-C\-S\-V}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}tune.\-management.\-reports.\-report\-\_\-reader\-\_\-csv.\-Report\-Reader\-C\-S\-V.\-data}}\label{classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV_a54edf30f0b976974d271d655393f90d8}
+
+
+Definition at line 74 of file report\-\_\-reader\-\_\-csv.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+tune/management/reports/\hyperlink{report__reader__csv_8py}{report\-\_\-reader\-\_\-csv.\-py}\end{DoxyCompactItemize}

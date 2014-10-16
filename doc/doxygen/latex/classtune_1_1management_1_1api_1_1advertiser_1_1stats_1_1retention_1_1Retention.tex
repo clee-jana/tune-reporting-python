@@ -1,0 +1,157 @@
+\hypertarget{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention}{\section{tune.\-management.\-api.\-advertiser.\-stats.\-retention.\-Retention Class Reference}
+\label{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention}\index{tune.\-management.\-api.\-advertiser.\-stats.\-retention.\-Retention@{tune.\-management.\-api.\-advertiser.\-stats.\-retention.\-Retention}}
+}
+
+
+Inheritance diagram for tune.\-management.\-api.\-advertiser.\-stats.\-retention.\-Retention\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for tune.\-management.\-api.\-advertiser.\-stats.\-retention.\-Retention\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention_ac2fbd3cb788b0409b7211fd03080f65f}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em The constructor. \end{DoxyCompactList}\item 
+def \hyperlink{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention_a0ecab9d27a30745d5ebed4f53d53bb0e}{fetch}
+\begin{DoxyCompactList}\small\item\em Helper function for fetching report document given provided job identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 53 of file retention.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention_ac2fbd3cb788b0409b7211fd03080f65f}{\index{tune\-::management\-::api\-::advertiser\-::stats\-::retention\-::\-Retention@{tune\-::management\-::api\-::advertiser\-::stats\-::retention\-::\-Retention}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!tune::management::api::advertiser::stats::retention::Retention@{tune\-::management\-::api\-::advertiser\-::stats\-::retention\-::\-Retention}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-management.\-api.\-advertiser.\-stats.\-retention.\-Retention.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{api\-\_\-key, }
+\item[{}]{validate = {\ttfamily False}}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention_ac2fbd3cb788b0409b7211fd03080f65f}
+
+
+The constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & api\-\_\-key Mobile\-App\-Tracking A\-P\-I Key. \\
+\hline
+{\em bool} & validate Validate fields used by actions. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 64 of file retention.\-py.
+
+
+\begin{DoxyCode}
+64 
+65         ):
+66         ReportsInsightBase.\_\_init\_\_(
+67             self,
+68             \textcolor{stringliteral}{"advertiser/stats/retention"},
+69             api\_key,
+70             \textcolor{keyword}{False},
+71             \textcolor{keyword}{True},
+72             validate
+73         )
+
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention_ac2fbd3cb788b0409b7211fd03080f65f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention_a0ecab9d27a30745d5ebed4f53d53bb0e}{\index{tune\-::management\-::api\-::advertiser\-::stats\-::retention\-::\-Retention@{tune\-::management\-::api\-::advertiser\-::stats\-::retention\-::\-Retention}!fetch@{fetch}}
+\index{fetch@{fetch}!tune::management::api::advertiser::stats::retention::Retention@{tune\-::management\-::api\-::advertiser\-::stats\-::retention\-::\-Retention}}
+\subsubsection[{fetch}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-management.\-api.\-advertiser.\-stats.\-retention.\-Retention.\-fetch (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{job\-\_\-id, }
+\item[{}]{report\-\_\-format = {\ttfamily \char`\"{}csv\char`\"{}}, }
+\item[{}]{verbose = {\ttfamily False}, }
+\item[{}]{sleep = {\ttfamily 60}}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention_a0ecab9d27a30745d5ebed4f53d53bb0e}
+
+
+Helper function for fetching report document given provided job identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & job\-\_\-id Job Identifier of report on queue. \\
+\hline
+{\em string} & report\-\_\-format Requested document format\-: csv, json \\
+\hline
+{\em bool} & verbose For debugging purposes only. \\
+\hline
+{\em int} & sleep How long thread should sleep before next status request.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+object 
+\end{DoxyReturn}
+
+
+Definition at line 89 of file retention.\-py.
+
+
+\begin{DoxyCode}
+89 
+90     ):
+91         \textcolor{keywordflow}{return} ReportsInsightBase.fetch(
+92             self,
+93             \textcolor{stringliteral}{"tune.management.api.advertiser.stats.retention"},
+94             self.\_\_class\_\_.\_\_name\_\_,
+95             job\_id,
+96             report\_format,
+97             verbose,
+98             sleep, \textcolor{comment}{# seconds}
+99         )
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1retention_1_1Retention_a0ecab9d27a30745d5ebed4f53d53bb0e_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+tune/management/api/advertiser/stats/\hyperlink{retention_8py}{retention.\-py}\end{DoxyCompactItemize}

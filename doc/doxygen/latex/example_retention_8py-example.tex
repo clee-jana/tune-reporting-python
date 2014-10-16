@@ -1,0 +1,226 @@
+\hypertarget{example_retention_8py-example}{\section{example\-\_\-retention.\-py}
+}
+/advertiser/stats/retention Tune Management A\-P\-I controller 'advertiser/stats/retention'
+
+
+\begin{DoxyCodeInclude}
+1 \textcolor{comment}{#!/usr/bin/env python}
+2 \textcolor{comment}{# -*- coding: utf-8 -*-}
+3 \textcolor{comment}{#}
+4 \textcolor{comment}{## example\_retention.py}
+5 \textcolor{comment}{#}
+6 \textcolor{comment}{#  Copyright (c) 2014 Tune, Inc}
+7 \textcolor{comment}{#  All rights reserved.}
+8 \textcolor{comment}{#}
+9 \textcolor{comment}{#  Permission is hereby granted, free of charge, to any person obtaining}
+10 \textcolor{comment}{#  a copy of this software and associated documentation files}
+11 \textcolor{comment}{#  (the "Software"), to deal in the Software without restriction, including}
+12 \textcolor{comment}{#  without limitation the rights to use, copy, modify, merge, publish,}
+13 \textcolor{comment}{#  distribute, sublicense, and/or sell copies of the Software, and to permit}
+14 \textcolor{comment}{#  persons to whom the Software is furnished to do so, subject to the}
+15 \textcolor{comment}{#  following conditions:}
+16 \textcolor{comment}{#}
+17 \textcolor{comment}{#  The above copyright notice and this permission notice shall be included in}
+18 \textcolor{comment}{#  all copies or substantial portions of the Software.}
+19 \textcolor{comment}{#}
+20 \textcolor{comment}{#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}
+21 \textcolor{comment}{#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}
+22 \textcolor{comment}{#  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL}
+23 \textcolor{comment}{#  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}
+24 \textcolor{comment}{#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING}
+25 \textcolor{comment}{#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER}
+26 \textcolor{comment}{#  DEALINGS IN THE SOFTWARE.}
+27 \textcolor{comment}{#}
+28 \textcolor{comment}{#  Python 3.0}
+29 \textcolor{comment}{#}
+30 \textcolor{comment}{#  @category  Tune}
+31 \textcolor{comment}{#  @package   Tune\_PHP\_SDK}
+32 \textcolor{comment}{#  @author    Jeff Tanner <jefft@tune.com>}
+33 \textcolor{comment}{#  @copyright 2014 Tune (http://www.tune.com)}
+34 \textcolor{comment}{#  @license   http://opensource.org/licenses/MIT The MIT License (MIT)}
+35 \textcolor{comment}{#  @version   0.9.1}
+36 \textcolor{comment}{#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink}
+37 \textcolor{comment}{#}
+38 \textcolor{comment}{#  Retention Report}
+39 \textcolor{comment}{#}
+40 \textcolor{comment}{#  The Retention Report shows you how many of your installed users open or engage}
+41 \textcolor{comment}{#  with your app over time (how users continue to get value from the app).}
+42 \textcolor{comment}{#  Retention Reports are particularly good for evaluating the quality of users as}
+43 \textcolor{comment}{#  opposed to the quantity of users (as in the case of user acquisition campaigns).}
+44 \textcolor{comment}{#  For more information about retention reports, please visit Running Retention}
+45 \textcolor{comment}{#  Reports.}
+46 \textcolor{comment}{#}
+47 \textcolor{comment}{#  Aggregate "cumulative" shows the data compounds or grows over time.}
+48 \textcolor{comment}{#}
+49 \textcolor{comment}{#  Aggregate "incremental" shows the rate of change over time.}
+50 \textcolor{comment}{#}
+51 \textcolor{comment}{#  Aggregate "cumulative" shows user growth over time by taking into account}
+52 \textcolor{comment}{#  all of the revenue from the cohort date time to the specified time interval.}
+53 \textcolor{comment}{#  Because the data is cumulative (values added on top of each other), the graph}
+54 \textcolor{comment}{#  shows an upward trend as shown in the following screenshot.}
+55 \textcolor{comment}{#}
+56 \textcolor{comment}{#  Aggregate "incremental" option only includes the data measured during the specified}
+57 \textcolor{comment}{#  interval (such as Day, Week, Month, Year, or All Time). Viewing the data}
+58 \textcolor{comment}{#  incrementally does not appear as impressive as viewing cumulative or aggregated}
+59 \textcolor{comment}{#  data because it only shows incremental changes (and there is typically a}
+60 \textcolor{comment}{#  downward trend because of decreases in retention).}
+61 \textcolor{comment}{#}
+62 \textcolor{comment}{#  Cohort "clicks" refers to the number of clicks through to the app store to}
+63 \textcolor{comment}{#  download an app.}
+64 \textcolor{comment}{#}
+65 \textcolor{comment}{#  Cohort "installs" refers to the number of downloads of an app}
+66 \textcolor{comment}{#}
+67 
+68 \textcolor{keyword}{import} sys
+69 \textcolor{keyword}{import} traceback
+70 \textcolor{keyword}{import} datetime
+71 
+72 \textcolor{keyword}{from} \hyperlink{namespacetune_1_1management_1_1api_1_1advertiser_1_1stats}{tune.management.api.advertiser.stats} \textcolor{keyword}{import} Retention
+73 \textcolor{keyword}{from} \hyperlink{namespacetune_1_1common}{tune.common} \textcolor{keyword}{import} (TuneSdkException, TuneServiceException)
+74 
+75 \textcolor{comment}{##}
+76 \textcolor{comment}{# Example using Tune Management API client.}
+77 \textcolor{keyword}{class }ExampleRetention(\hyperlink{classobject}{object}):
+78 
+79     \textcolor{keyword}{def }\_\_init\_\_(self):
+80         \textcolor{keywordflow}{pass}
+81 
+82     \textcolor{comment}{## Example of running successful requests to Tune MobileAppTracking Management API.}
+83     \textcolor{comment}{#}
+84     \textcolor{comment}{##}
+85     \textcolor{comment}{# Run Example\(\backslash\)n}
+86     \textcolor{keyword}{def }run(self, api\_key):
+87 
+88         \textcolor{comment}{# api\_key}
+89         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} api\_key \textcolor{keywordflow}{or} len(api\_key) < 1:
+90             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Parameter 'api\_key' is not defined."})
+91 
+92         print(  \textcolor{stringliteral}{"===================================================="})
+93         print(  \textcolor{stringliteral}{"= Tune Management API Advertiser Reports Retention ="})
+94         print(  \textcolor{stringliteral}{"===================================================="})
+95 
+96         \textcolor{keywordflow}{try}:
+97             week\_ago = datetime.date.fromordinal(datetime.date.today().toordinal()-8)
+98             yesterday = datetime.date.fromordinal(datetime.date.today().toordinal()-1)
+99             start\_date  = \textcolor{stringliteral}{"\{\} 00:00:00"}.format(week\_ago)
+100             end\_date    = \textcolor{stringliteral}{"\{\} 23:59:59"}.format(yesterday)
+101 
+102             retention = Retention(api\_key, validate = \textcolor{keyword}{True})
+103             
+104             response = retention.fields()
+105             print(\textcolor{stringliteral}{"= advertiser/stats/retention fields: \{\}"}.format(response))
+106 
+107             print(  \textcolor{stringliteral}{"= advertiser/stats/retention/count.json request ="})
+108             response = retention.count(
+109                     start\_date,
+110                     end\_date,
+111                     cohort\_type         = \textcolor{stringliteral}{"click"},
+112                     cohort\_interval     = \textcolor{stringliteral}{"year\_day"},
+113                     group               = \textcolor{stringliteral}{"ad\_network\_id"},
+114                     filter              = \textcolor{keywordtype}{None},
+115                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+116                 )
+117             print(\textcolor{stringliteral}{"= advertiser/stats/retention/count.json response: \{\}"}.format(response))
+118 
+119             \textcolor{keywordflow}{if} response.http\_code != 200:
+120                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+121 
+122             print(\textcolor{stringliteral}{"Count: \{\}\(\backslash\)n"}.format(response.data))
+123 
+124             print(  \textcolor{stringliteral}{"= advertiser/stats/retention/find.json request ="})
+125             response = retention.find(
+126                     start\_date,
+127                     end\_date,
+128                     cohort\_type         = \textcolor{stringliteral}{"install"},
+129                     aggregation\_type    = \textcolor{stringliteral}{"cumulative"},
+130                     cohort\_interval     = \textcolor{stringliteral}{"year\_day"},
+131                     group               = \textcolor{stringliteral}{"ad\_network\_id,install\_publisher\_id,country\_id"},
+132                     filter              = \textcolor{keywordtype}{None},
+133                     fields              = \textcolor{stringliteral}{"installs,opens,ad\_network.name"} \(\backslash\)
+134                         \textcolor{stringliteral}{",install\_publisher.name,country.name"} \(\backslash\)
+135                         \textcolor{stringliteral}{",ad\_network\_id,install\_publisher\_id,country\_id"},
+136                     limit               = 10,
+137                     page                = \textcolor{keywordtype}{None},
+138                     sort                = \{\textcolor{stringliteral}{"year\_day"}: \textcolor{stringliteral}{"ASC"}, \textcolor{stringliteral}{"install\_publisher\_id"}: \textcolor{stringliteral}{"ASC"}\},
+139                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+140                 )
+141             print(\textcolor{stringliteral}{"= advertiser/stats/retention/find.json response: \{\}"}.format(response))
+142 
+143             \textcolor{keywordflow}{if} response.http\_code != 200:
+144                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+145 
+146             print(  \textcolor{stringliteral}{"= advertiser/stats/retention/export.json request ="})
+147             response = retention.export(
+148                     start\_date,
+149                     end\_date,
+150                     cohort\_type         = \textcolor{stringliteral}{"install"},
+151                     aggregation\_type    = \textcolor{stringliteral}{"cumulative"},
+152                     cohort\_interval     = \textcolor{stringliteral}{"year\_day"},
+153                     group               = \textcolor{stringliteral}{"ad\_network\_id,install\_publisher\_id,country\_id"},
+154                     filter              = \textcolor{keywordtype}{None},
+155                     fields              = \textcolor{stringliteral}{"installs,opens,ad\_network.name"} \(\backslash\)
+156                         \textcolor{stringliteral}{",install\_publisher.name,country.name"} \(\backslash\)
+157                         \textcolor{stringliteral}{",ad\_network\_id,install\_publisher\_id,country\_id"},
+158                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+159                 )
+160             print(\textcolor{stringliteral}{"= advertiser/stats/retention/export.json response: \{\}"}.format(response))
+161 
+162             \textcolor{keywordflow}{if} response.http\_code != 200:
+163                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+164 
+165             job\_id = response.data[\textcolor{stringliteral}{"job\_id"}]
+166             print(\textcolor{stringliteral}{"Job ID: \{\}"}.format(job\_id))
+167 
+168             print(  \textcolor{stringliteral}{"= advertiser stats retention status in CSV data format ="})
+169 
+170             csv\_report\_reader = retention.fetch(job\_id, report\_format=\textcolor{stringliteral}{"csv"}, verbose = \textcolor{keyword}{True})
+171             csv\_report\_reader.read()
+172             csv\_report\_reader.pretty\_print(limit=5)
+173 
+174         \textcolor{keywordflow}{except} TuneSdkException \textcolor{keyword}{as} exc:
+175             print(\textcolor{stringliteral}{"TuneSdkException (\{\})"}.format(exc))
+176             print(self.format\_exception(exc.errors))
+177             \textcolor{keywordflow}{raise}
+178         \textcolor{keywordflow}{except} Exception:
+179             exc\_type, exc\_value, exc\_traceback = sys.exc\_info()
+180             print(\textcolor{stringliteral}{"*** print\_tb:"})
+181             traceback.print\_tb(exc\_traceback, limit=1, file=sys.stdout)
+182             print(\textcolor{stringliteral}{"*** print\_exception:"})
+183             traceback.print\_exception(exc\_type, exc\_value, exc\_traceback,
+184                                       limit=2, file=sys.stdout)
+185             print(\textcolor{stringliteral}{"*** print\_exc:"})
+186             traceback.print\_exc()
+187             \textcolor{keywordflow}{raise}
+188 
+189         print(  \textcolor{stringliteral}{"======================================"})
+190         print(  \textcolor{stringliteral}{"= End Example                        ="})
+191         print(  \textcolor{stringliteral}{"======================================"})
+192 
+193     @staticmethod
+194     \textcolor{keyword}{def }format\_exception(e):
+195         \textcolor{stringliteral}{"Provide traceback of provided exception."}
+196         exception\_list = traceback.format\_stack()
+197         exception\_list = exception\_list[:-2]
+198         exception\_list.extend(traceback.format\_tb(sys.exc\_info()[2]))
+199         exception\_list.extend(traceback.format\_exception\_only(sys.exc\_info()[0], sys.exc\_info()[1]))
+200 
+201         exception\_str = \textcolor{stringliteral}{"Traceback (most recent call last):\(\backslash\)n"}
+202         exception\_str += \textcolor{stringliteral}{""}.join(exception\_list)
+203         \textcolor{comment}{# Removing the last \(\backslash\)n}
+204         exception\_str = exception\_str[:-1]
+205 
+206         \textcolor{keywordflow}{return} exception\_str
+207 
+208 \textcolor{keywordflow}{if} \_\_name\_\_ == \textcolor{stringliteral}{'\_\_main\_\_'}:
+209     \textcolor{keywordflow}{try}:
+210         \textcolor{keywordflow}{if} len(sys.argv) < 2:
+211             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Provide API Key to execute Tune Management API example \{\}."}.format(sys.argv[0
+      ]))
+212         api\_key = sys.argv[1]
+213         example = ExampleRetention()
+214         example.run(api\_key)
+215     \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} exc:
+216         print(\textcolor{stringliteral}{"Exception: \{0\}"}.format(exc))
+217         \textcolor{keywordflow}{raise}
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,135 @@
+\hypertarget{classtune_1_1common_1_1exceptions_1_1TuneSdkException}{\section{tune.\-common.\-exceptions.\-Tune\-Sdk\-Exception Class Reference}
+\label{classtune_1_1common_1_1exceptions_1_1TuneSdkException}\index{tune.\-common.\-exceptions.\-Tune\-Sdk\-Exception@{tune.\-common.\-exceptions.\-Tune\-Sdk\-Exception}}
+}
+
+
+\hyperlink{classException}{Exception} raised for errors when using Tune S\-D\-K.  
+
+
+
+
+Inheritance diagram for tune.\-common.\-exceptions.\-Tune\-Sdk\-Exception\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classtune_1_1common_1_1exceptions_1_1TuneSdkException__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for tune.\-common.\-exceptions.\-Tune\-Sdk\-Exception\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{classtune_1_1common_1_1exceptions_1_1TuneSdkException__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classtune_1_1common_1_1exceptions_1_1TuneSdkException_a73d360d1867d5e024f7382d32a6b8fff}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Tune S\-D\-K exception constructor Args\-: message (str, optional)\-: Message describing error. \end{DoxyCompactList}\item 
+def \hyperlink{classtune_1_1common_1_1exceptions_1_1TuneSdkException_ab729754c9031f531e7d6eed2389733fd}{errors}
+\begin{DoxyCompactList}\small\item\em Get property of error object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtune_1_1common_1_1exceptions_1_1TuneSdkException_a17770d669ae88aeb8aab99d01bf900c8}{\-\_\-\-\_\-errors} = None
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classException}{Exception} raised for errors when using Tune S\-D\-K. 
+
+Attributes\-: message -- explanation of the error exc -- initial exception 
+
+Definition at line 50 of file exceptions.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtune_1_1common_1_1exceptions_1_1TuneSdkException_a73d360d1867d5e024f7382d32a6b8fff}{\index{tune\-::common\-::exceptions\-::\-Tune\-Sdk\-Exception@{tune\-::common\-::exceptions\-::\-Tune\-Sdk\-Exception}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!tune::common::exceptions::TuneSdkException@{tune\-::common\-::exceptions\-::\-Tune\-Sdk\-Exception}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-common.\-exceptions.\-Tune\-Sdk\-Exception.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{message = {\ttfamily None}, }
+\item[{}]{errors = {\ttfamily None}}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1common_1_1exceptions_1_1TuneSdkException_a73d360d1867d5e024f7382d32a6b8fff}
+
+
+Tune S\-D\-K exception constructor Args\-: message (str, optional)\-: Message describing error. 
+
+exc (\hyperlink{classException}{Exception}, optional)\-: Caught exception. 
+
+Definition at line 63 of file exceptions.\-py.
+
+
+\begin{DoxyCode}
+63 
+64     \textcolor{keyword}{def }\hyperlink{classtune_1_1common_1_1exceptions_1_1TuneSdkException_a73d360d1867d5e024f7382d32a6b8fff}{\_\_init\_\_}(self, message=None, errors=None):
+65         \textcolor{keywordflow}{if} message \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:
+66             message = \textcolor{stringliteral}{"Tune SDK error"}
+67 
+68         \textcolor{comment}{# Call the base class constructor with the parameters it needs}
+69         Exception.\_\_init\_\_(self, message)
+70 
+71         \textcolor{comment}{# Now for your custom code...}
+72         self.\hyperlink{classtune_1_1common_1_1exceptions_1_1TuneSdkException_a17770d669ae88aeb8aab99d01bf900c8}{\_\_errors} = errors
+
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classtune_1_1common_1_1exceptions_1_1TuneSdkException_ab729754c9031f531e7d6eed2389733fd}{\index{tune\-::common\-::exceptions\-::\-Tune\-Sdk\-Exception@{tune\-::common\-::exceptions\-::\-Tune\-Sdk\-Exception}!errors@{errors}}
+\index{errors@{errors}!tune::common::exceptions::TuneSdkException@{tune\-::common\-::exceptions\-::\-Tune\-Sdk\-Exception}}
+\subsubsection[{errors}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-common.\-exceptions.\-Tune\-Sdk\-Exception.\-errors (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1common_1_1exceptions_1_1TuneSdkException_ab729754c9031f531e7d6eed2389733fd}
+
+
+Get property of error object. 
+
+
+
+Definition at line 76 of file exceptions.\-py.
+
+
+\begin{DoxyCode}
+76 
+77     \textcolor{keyword}{def }\hyperlink{classtune_1_1common_1_1exceptions_1_1TuneSdkException_ab729754c9031f531e7d6eed2389733fd}{errors}(self):
+78         \textcolor{keywordflow}{return} self.\hyperlink{classtune_1_1common_1_1exceptions_1_1TuneSdkException_a17770d669ae88aeb8aab99d01bf900c8}{\_\_errors}
+
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classtune_1_1common_1_1exceptions_1_1TuneSdkException_ab729754c9031f531e7d6eed2389733fd_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classtune_1_1common_1_1exceptions_1_1TuneSdkException_a17770d669ae88aeb8aab99d01bf900c8}{\index{tune\-::common\-::exceptions\-::\-Tune\-Sdk\-Exception@{tune\-::common\-::exceptions\-::\-Tune\-Sdk\-Exception}!\-\_\-\-\_\-errors@{\-\_\-\-\_\-errors}}
+\index{\-\_\-\-\_\-errors@{\-\_\-\-\_\-errors}!tune::common::exceptions::TuneSdkException@{tune\-::common\-::exceptions\-::\-Tune\-Sdk\-Exception}}
+\subsubsection[{\-\_\-\-\_\-errors}]{\setlength{\rightskip}{0pt plus 5cm}tune.\-common.\-exceptions.\-Tune\-Sdk\-Exception.\-\_\-\-\_\-errors = None\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}}\label{classtune_1_1common_1_1exceptions_1_1TuneSdkException_a17770d669ae88aeb8aab99d01bf900c8}
+
+
+Definition at line 55 of file exceptions.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+tune/common/\hyperlink{exceptions_8py}{exceptions.\-py}\end{DoxyCompactItemize}

@@ -1,0 +1,250 @@
+\hypertarget{example_events_8py-example}{\section{example\-\_\-events.\-py}
+}
+/advertiser/stats/events Advertiser Stats logs pertaining to events.
+
+
+\begin{DoxyCodeInclude}
+1 \textcolor{comment}{#!/usr/bin/env python}
+2 \textcolor{comment}{# -*- coding: utf-8 -*-}
+3 \textcolor{comment}{#}
+4 \textcolor{comment}{## example\_events.py}
+5 \textcolor{comment}{#}
+6 \textcolor{comment}{#  Copyright (c) 2014 Tune, Inc}
+7 \textcolor{comment}{#  All rights reserved.}
+8 \textcolor{comment}{#}
+9 \textcolor{comment}{#  Permission is hereby granted, free of charge, to any person obtaining}
+10 \textcolor{comment}{#  a copy of this software and associated documentation files}
+11 \textcolor{comment}{#  (the "Software"), to deal in the Software without restriction, including}
+12 \textcolor{comment}{#  without limitation the rights to use, copy, modify, merge, publish,}
+13 \textcolor{comment}{#  distribute, sublicense, and/or sell copies of the Software, and to permit}
+14 \textcolor{comment}{#  persons to whom the Software is furnished to do so, subject to the}
+15 \textcolor{comment}{#  following conditions:}
+16 \textcolor{comment}{#}
+17 \textcolor{comment}{#  The above copyright notice and this permission notice shall be included in}
+18 \textcolor{comment}{#  all copies or substantial portions of the Software.}
+19 \textcolor{comment}{#}
+20 \textcolor{comment}{#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}
+21 \textcolor{comment}{#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}
+22 \textcolor{comment}{#  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL}
+23 \textcolor{comment}{#  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}
+24 \textcolor{comment}{#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING}
+25 \textcolor{comment}{#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER}
+26 \textcolor{comment}{#  DEALINGS IN THE SOFTWARE.}
+27 \textcolor{comment}{#}
+28 \textcolor{comment}{#  Python 3.0}
+29 \textcolor{comment}{#}
+30 \textcolor{comment}{#  @category  Tune}
+31 \textcolor{comment}{#  @package   Tune\_PHP\_SDK}
+32 \textcolor{comment}{#  @author    Jeff Tanner <jefft@tune.com>}
+33 \textcolor{comment}{#  @copyright 2014 Tune (http://www.tune.com)}
+34 \textcolor{comment}{#  @license   http://opensource.org/licenses/MIT The MIT License (MIT)}
+35 \textcolor{comment}{#  @version   0.9.1}
+36 \textcolor{comment}{#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink}
+37 \textcolor{comment}{#}
+38 \textcolor{comment}{#}
+39 \textcolor{comment}{# You can use the Logs report in the same way as the Actuals reports, but}
+40 \textcolor{comment}{# instead of being aggregated by request type, the Logs report contains the}
+41 \textcolor{comment}{# logs of each individual request (including the logs for Clicks, Installs,}
+42 \textcolor{comment}{# Updates, Events, Event Items, and Postback URLs). The log data is available}
+43 \textcolor{comment}{# in real-time, so you can use it for testing, debugging, and ensuring that}
+44 \textcolor{comment}{# all measurement and attribution continues to operate smoothly. MAT updates}
+45 \textcolor{comment}{# the Logs report every 1 minute.}
+46 \textcolor{comment}{#}
+47 \textcolor{comment}{# https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=events}
+48 \textcolor{comment}{#}
+49 \textcolor{comment}{# Events API call: stats/events}
+50 \textcolor{comment}{#}
+51 
+52 \textcolor{keyword}{import} sys
+53 \textcolor{keyword}{import} traceback
+54 \textcolor{keyword}{import} datetime
+55 
+56 \textcolor{keyword}{from} \hyperlink{namespacetune_1_1management_1_1api_1_1advertiser_1_1stats}{tune.management.api.advertiser.stats} \textcolor{keyword}{import} (Events)
+57 \textcolor{keyword}{from} \hyperlink{namespacetune_1_1management}{tune.management} \textcolor{keyword}{import} (Export)
+58 \textcolor{keyword}{from} \hyperlink{namespacetune_1_1common}{tune.common} \textcolor{keyword}{import} (TuneSdkException, TuneServiceException)
+59 
+60 \textcolor{comment}{##}
+61 \textcolor{comment}{# Example using Tune Management API client.}
+62 \textcolor{keyword}{class }ExampleEvents(\hyperlink{classobject}{object}):
+63 
+64     \textcolor{keyword}{def }\_\_init\_\_(self):
+65         \textcolor{keywordflow}{pass}
+66 
+67     \textcolor{comment}{#}
+68     \textcolor{comment}{# Example of running successful requests to Tune MobileAppTracking Management API.}
+69     \textcolor{comment}{#}
+70     \textcolor{comment}{##}
+71     \textcolor{comment}{# Run Example\(\backslash\)n}
+72     \textcolor{keyword}{def }run(self, api\_key):
+73 
+74         \textcolor{comment}{# api\_key}
+75         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} api\_key \textcolor{keywordflow}{or} len(api\_key) < 1:
+76             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Parameter 'api\_key' is not defined."})
+77 
+78         print(  \textcolor{stringliteral}{"==========================================================="})
+79         print(  \textcolor{stringliteral}{"= Tune Management API Advertiser Reports Logs Events      ="})
+80         print(  \textcolor{stringliteral}{"==========================================================="})
+81 
+82         \textcolor{keywordflow}{try}:
+83             yesterday = datetime.date.fromordinal(datetime.date.today().toordinal()-1)
+84             start\_date  = \textcolor{stringliteral}{"\{\} 00:00:00"}.format(yesterday)
+85             end\_date    = \textcolor{stringliteral}{"\{\} 23:59:59"}.format(yesterday)
+86 
+87             events = Events(api\_key, validate = \textcolor{keyword}{True})
+88             
+89             response = events.fields()
+90             print(\textcolor{stringliteral}{"= advertiser/stats/events fields: \{\}"}.format(response))
+91 
+92             print(  \textcolor{stringliteral}{"= advertiser/stats/events/count.json request ="})
+93             response = events.count(
+94                     start\_date,
+95                     end\_date,
+96                     filter              = \textcolor{stringliteral}{"(status = 'approved') AND (publisher\_id > 0)"},
+97                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+98                 )
+99             print(\textcolor{stringliteral}{"= advertiser/stats/events/count.json response: \{\}"}.format(response))
+100 
+101             \textcolor{keywordflow}{if} response.http\_code != 200:
+102                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+103 
+104             print(\textcolor{stringliteral}{"Count: \{\}\(\backslash\)n"}.format(response.data))
+105 
+106             print(  \textcolor{stringliteral}{"= advertiser/stats/events/find.json request ="})
+107             response = events.find(
+108                     start\_date,
+109                     end\_date,
+110                     filter              = \textcolor{stringliteral}{"(status = 'approved') AND (publisher\_id > 0)"},
+111                     fields              = \textcolor{stringliteral}{"created,site.name,campaign.name,install\_publisher.name"} \(\backslash\)
+112                     \textcolor{stringliteral}{",publisher.name,site\_event.name,event\_type,payout,revenue\_usd,sdk"} \(\backslash\)
+113                     \textcolor{stringliteral}{",sdk\_version,package\_name,app\_name,app\_version,country.name"} \(\backslash\)
+114                     \textcolor{stringliteral}{",campaign\_id,install\_publisher\_id,publisher\_id,site\_event\_id"} \(\backslash\)
+115                     \textcolor{stringliteral}{",country\_id,id,currency\_code,revenue,site\_event\_items\_count"},
+116                     limit               = 5,
+117                     page                = \textcolor{keywordtype}{None},
+118                     sort                = \{\textcolor{stringliteral}{"created"}: \textcolor{stringliteral}{"DESC"}\},
+119                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+120                 )
+121             print(\textcolor{stringliteral}{"= advertiser/stats/events/find.json response: \{\}"}.format(response))
+122 
+123             \textcolor{keywordflow}{if} response.http\_code != 200:
+124                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+125 
+126             print(  \textcolor{stringliteral}{"= advertiser/stats/events/find\_export\_queue.json request ="})
+127             response = events.export(
+128                     start\_date,
+129                     end\_date,
+130                     filter              = \textcolor{stringliteral}{"(status = 'approved') AND (publisher\_id > 0)"},
+131                     fields              = \textcolor{stringliteral}{"created,site.name,campaign.name,install\_publisher.name"} \(\backslash\)
+132                     \textcolor{stringliteral}{",publisher.name,site\_event.name,event\_type,payout,revenue\_usd,sdk"} \(\backslash\)
+133                     \textcolor{stringliteral}{",sdk\_version,package\_name,app\_name,app\_version,country.name"} \(\backslash\)
+134                     \textcolor{stringliteral}{",campaign\_id,install\_publisher\_id,publisher\_id,site\_event\_id"} \(\backslash\)
+135                     \textcolor{stringliteral}{",country\_id,id,currency\_code,revenue,site\_event\_items\_count"},
+136                     format              = \textcolor{stringliteral}{"csv"},
+137                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+138                 )
+139             print(\textcolor{stringliteral}{"= advertiser/stats/events/export.json response: \{\}"}.format(response))
+140 
+141             \textcolor{keywordflow}{if} response.http\_code != 200:
+142                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+143 
+144             job\_id = response.data
+145             print(\textcolor{stringliteral}{"Job ID: \{\}"}.format(job\_id))
+146 
+147             export = Export(api\_key)
+148 
+149             print(  \textcolor{stringliteral}{"\(\backslash\)n= advertiser stats events status in CSV data format =\(\backslash\)n"})
+150 
+151             csv\_report\_reader = export.fetch(job\_id, report\_format=\textcolor{stringliteral}{"csv"}, verbose = \textcolor{keyword}{True})
+152             csv\_report\_reader.read()
+153 
+154             print(\textcolor{stringliteral}{"CSV report row count: \{\}"}.format(csv\_report\_reader.count))
+155             print(\textcolor{stringliteral}{"------------------"})
+156             rows = list(csv\_report\_reader.data)
+157             \textcolor{keywordflow}{for} i, row \textcolor{keywordflow}{in} enumerate(rows):
+158                 print(\textcolor{stringliteral}{"\{\}. \{\}"}.format(i+1, str(row)))
+159                 \textcolor{keywordflow}{if} (i > 20):
+160                     \textcolor{keywordflow}{break}
+161             print(\textcolor{stringliteral}{"------------------"})
+162 
+163             print(  \textcolor{stringliteral}{"= advertiser/stats/events/find\_export\_queue.json request ="})
+164             response = events.export(
+165                     start\_date,
+166                     end\_date,
+167                     filter              = \textcolor{stringliteral}{"(status = 'approved') AND (publisher\_id > 0)"},
+168                     fields              = \textcolor{stringliteral}{"created,site.name,campaign.name,install\_publisher.name"} \(\backslash\)
+169                     \textcolor{stringliteral}{",publisher.name,site\_event.name,event\_type,payout,revenue\_usd,sdk"} \(\backslash\)
+170                     \textcolor{stringliteral}{",sdk\_version,package\_name,app\_name,app\_version,country.name"} \(\backslash\)
+171                     \textcolor{stringliteral}{",campaign\_id,install\_publisher\_id,publisher\_id,site\_event\_id"} \(\backslash\)
+172                     \textcolor{stringliteral}{",country\_id,id,currency\_code,revenue,site\_event\_items\_count"},
+173                     format              = \textcolor{stringliteral}{"json"},
+174                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+175                 )
+176             print(\textcolor{stringliteral}{"= advertiser/stats/events/export.json response: \{\}"}.format(response))
+177 
+178             \textcolor{keywordflow}{if} response.http\_code != 200:
+179                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+180 
+181             job\_id = response.data
+182             print(\textcolor{stringliteral}{"Job ID: \{\}"}.format(job\_id))
+183 
+184             export = Export(api\_key)
+185 
+186             json\_report\_reader = export.fetch(job\_id, report\_format=\textcolor{stringliteral}{"json"}, verbose = \textcolor{keyword}{True})
+187             json\_report\_reader.read()
+188 
+189             print(\textcolor{stringliteral}{"JSON report row count: \{\}"}.format(json\_report\_reader.count))
+190             print(\textcolor{stringliteral}{"------------------"})
+191             rows = list(json\_report\_reader.data)
+192             \textcolor{keywordflow}{for} i, row \textcolor{keywordflow}{in} enumerate(rows):
+193                 print(\textcolor{stringliteral}{"\{\}. \{\}"}.format(i+1, str(row)))
+194                 \textcolor{keywordflow}{if} (i > 20):
+195                     \textcolor{keywordflow}{break}
+196             print(\textcolor{stringliteral}{"------------------"})
+197 
+198         \textcolor{keywordflow}{except} TuneSdkException \textcolor{keyword}{as} exc:
+199             print(\textcolor{stringliteral}{"TuneSdkException (\{\})"}.format(exc))
+200             print(self.format\_exception(exc.errors))
+201             \textcolor{keywordflow}{raise}
+202         \textcolor{keywordflow}{except} Exception:
+203             exc\_type, exc\_value, exc\_traceback = sys.exc\_info()
+204             print(\textcolor{stringliteral}{"*** print\_tb:"})
+205             traceback.print\_tb(exc\_traceback, limit=1, file=sys.stdout)
+206             print(\textcolor{stringliteral}{"*** print\_exception:"})
+207             traceback.print\_exception(exc\_type, exc\_value, exc\_traceback,
+208                                       limit=2, file=sys.stdout)
+209             print(\textcolor{stringliteral}{"*** print\_exc:"})
+210             traceback.print\_exc()
+211             \textcolor{keywordflow}{raise}
+212 
+213         print(  \textcolor{stringliteral}{"======================================"})
+214         print(  \textcolor{stringliteral}{"= End Example                        ="})
+215         print(  \textcolor{stringliteral}{"======================================"})
+216 
+217     @staticmethod
+218     \textcolor{keyword}{def }format\_exception(e):
+219         \textcolor{stringliteral}{"Provide traceback of provided exception."}
+220         exception\_list = traceback.format\_stack()
+221         exception\_list = exception\_list[:-2]
+222         exception\_list.extend(traceback.format\_tb(sys.exc\_info()[2]))
+223         exception\_list.extend(traceback.format\_exception\_only(sys.exc\_info()[0], sys.exc\_info()[1]))
+224 
+225         exception\_str = \textcolor{stringliteral}{"Traceback (most recent call last):\(\backslash\)n"}
+226         exception\_str += \textcolor{stringliteral}{""}.join(exception\_list)
+227         \textcolor{comment}{# Removing the last \(\backslash\)n}
+228         exception\_str = exception\_str[:-1]
+229 
+230         \textcolor{keywordflow}{return} exception\_str
+231 
+232 \textcolor{keywordflow}{if} \_\_name\_\_ == \textcolor{stringliteral}{'\_\_main\_\_'}:
+233     \textcolor{keywordflow}{try}:
+234         \textcolor{keywordflow}{if} len(sys.argv) < 2:
+235             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Provide API Key to execute Tune Management API example \{\}."}.format(sys.argv[0
+      ]))
+236         api\_key = sys.argv[1]
+237         example = ExampleEvents()
+238         example.run(api\_key)
+239     \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} exc:
+240         print(\textcolor{stringliteral}{"Exception: \{0\}"}.format(exc))
+241         \textcolor{keywordflow}{raise}
+\end{DoxyCodeInclude}
+ 

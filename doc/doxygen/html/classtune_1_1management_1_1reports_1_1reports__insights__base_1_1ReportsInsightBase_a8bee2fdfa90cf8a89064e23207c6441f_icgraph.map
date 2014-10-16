@@ -1,0 +1,4 @@
+<map id="tune.management.reports.reports_insights_base.ReportsInsightBase.export" name="tune.management.reports.reports_insights_base.ReportsInsightBase.export">
+<area shape="rect" id="node3" href="$classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a3b2e66b7d0cc8024605af26ca9792bd3" title="Finds all existing records that match filter criteria and returns an array of found model data..." alt="" coords="323,5,576,59"/>
+<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#a6333765e99d27cf78b6f7bac1260e7c1" title="Counts all existing records that match filter criteria and returns an array of found model data..." alt="" coords="624,5,888,59"/>
+</map>

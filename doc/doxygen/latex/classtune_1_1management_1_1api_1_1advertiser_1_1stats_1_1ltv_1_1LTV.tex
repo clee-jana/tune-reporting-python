@@ -1,0 +1,157 @@
+\hypertarget{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV}{\section{tune.\-management.\-api.\-advertiser.\-stats.\-ltv.\-L\-T\-V Class Reference}
+\label{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV}\index{tune.\-management.\-api.\-advertiser.\-stats.\-ltv.\-L\-T\-V@{tune.\-management.\-api.\-advertiser.\-stats.\-ltv.\-L\-T\-V}}
+}
+
+
+Inheritance diagram for tune.\-management.\-api.\-advertiser.\-stats.\-ltv.\-L\-T\-V\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for tune.\-management.\-api.\-advertiser.\-stats.\-ltv.\-L\-T\-V\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV_af779610e2442bd593981f26fe1da0563}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em The constructor. \end{DoxyCompactList}\item 
+def \hyperlink{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV_a10f3a6a49f64a203162ae337ff5ccefd}{fetch}
+\begin{DoxyCompactList}\small\item\em Helper function for fetching report document given provided job identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 51 of file ltv.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV_af779610e2442bd593981f26fe1da0563}{\index{tune\-::management\-::api\-::advertiser\-::stats\-::ltv\-::\-L\-T\-V@{tune\-::management\-::api\-::advertiser\-::stats\-::ltv\-::\-L\-T\-V}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!tune::management::api::advertiser::stats::ltv::LTV@{tune\-::management\-::api\-::advertiser\-::stats\-::ltv\-::\-L\-T\-V}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-management.\-api.\-advertiser.\-stats.\-ltv.\-L\-T\-V.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{api\-\_\-key, }
+\item[{}]{validate = {\ttfamily False}}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV_af779610e2442bd593981f26fe1da0563}
+
+
+The constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & api\-\_\-key Mobile\-App\-Tracking A\-P\-I Key. \\
+\hline
+{\em bool} & validate Validate fields used by actions. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 62 of file ltv.\-py.
+
+
+\begin{DoxyCode}
+62 
+63         ):
+64         ReportsInsightBase.\_\_init\_\_(
+65             self,
+66             \textcolor{stringliteral}{"advertiser/stats/ltv"},
+67             api\_key,
+68             \textcolor{keyword}{False},
+69             \textcolor{keyword}{True},
+70             validate
+71         )
+
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV_af779610e2442bd593981f26fe1da0563_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV_a10f3a6a49f64a203162ae337ff5ccefd}{\index{tune\-::management\-::api\-::advertiser\-::stats\-::ltv\-::\-L\-T\-V@{tune\-::management\-::api\-::advertiser\-::stats\-::ltv\-::\-L\-T\-V}!fetch@{fetch}}
+\index{fetch@{fetch}!tune::management::api::advertiser::stats::ltv::LTV@{tune\-::management\-::api\-::advertiser\-::stats\-::ltv\-::\-L\-T\-V}}
+\subsubsection[{fetch}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-management.\-api.\-advertiser.\-stats.\-ltv.\-L\-T\-V.\-fetch (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{job\-\_\-id, }
+\item[{}]{report\-\_\-format = {\ttfamily \char`\"{}csv\char`\"{}}, }
+\item[{}]{verbose = {\ttfamily False}, }
+\item[{}]{sleep = {\ttfamily 60~\#~seconds~~~~~~~~~~~~~\#}}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV_a10f3a6a49f64a203162ae337ff5ccefd}
+
+
+Helper function for fetching report document given provided job identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & job\-\_\-id Job Identifier of report on queue. \\
+\hline
+{\em string} & report\-\_\-format Requested document format\-: csv, json \\
+\hline
+{\em bool} & verbose For debugging purposes only. \\
+\hline
+{\em int} & sleep How long thread should sleep before next status request.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+object 
+\end{DoxyReturn}
+
+
+Definition at line 87 of file ltv.\-py.
+
+
+\begin{DoxyCode}
+87 
+88     ):
+89         \textcolor{keywordflow}{return} ReportsInsightBase.fetch(
+90             self,
+91             \textcolor{stringliteral}{"tune.management.api.advertiser.stats.ltv"},
+92             self.\_\_class\_\_.\_\_name\_\_,
+93             job\_id,
+94             report\_format,
+95             verbose,
+96             sleep \textcolor{comment}{# seconds}
+97         )
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1ltv_1_1LTV_a10f3a6a49f64a203162ae337ff5ccefd_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+tune/management/api/advertiser/stats/\hyperlink{ltv_8py}{ltv.\-py}\end{DoxyCompactItemize}

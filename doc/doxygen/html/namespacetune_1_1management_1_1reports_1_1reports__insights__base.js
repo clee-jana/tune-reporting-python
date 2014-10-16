@@ -1,0 +1,4 @@
+var namespacetune_1_1management_1_1reports_1_1reports__insights__base =
+[
+    [ "ReportsInsightBase", "classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html", "classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase" ]
+];

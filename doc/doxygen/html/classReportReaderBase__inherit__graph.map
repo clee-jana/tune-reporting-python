@@ -1,0 +1,4 @@
+<map id="ReportReaderBase" name="ReportReaderBase">
+<area shape="rect" id="node3" href="$classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV.html" title="Helper class for reading reading remote CSV file. " alt="" coords="5,153,211,293"/>
+<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1report__reader__json_1_1ReportReaderJSON.html" title="Helper class for reading reading remote JSON file. " alt="" coords="235,153,451,293"/>
+</map>
