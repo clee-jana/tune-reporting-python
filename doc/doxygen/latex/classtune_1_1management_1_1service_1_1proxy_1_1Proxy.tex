@@ -1,0 +1,161 @@
+\hypertarget{classtune_1_1management_1_1service_1_1proxy_1_1Proxy}{\section{tune.\-management.\-service.\-proxy.\-Proxy Class Reference}
+\label{classtune_1_1management_1_1service_1_1proxy_1_1Proxy}\index{tune.\-management.\-service.\-proxy.\-Proxy@{tune.\-management.\-service.\-proxy.\-Proxy}}
+}
+
+
+Service proxy class for connecting to Tune Management A\-P\-I service.  
+
+
+
+
+Collaboration diagram for tune.\-management.\-service.\-proxy.\-Proxy\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{classtune_1_1management_1_1service_1_1proxy_1_1Proxy__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a0b3f63ff9936b0857c4ae47b38b5f926}{response}
+\begin{DoxyCompactList}\small\item\em Full response object to Tune Management A\-P\-I service. \end{DoxyCompactList}\item 
+def \hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a8fe235be39f55c27191277d95d7ef25f}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\item 
+def \hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_af3c0cf7d72b8b929b0e5fbbd1611c7ef}{execute}
+\begin{DoxyCompactList}\small\item\em H\-T\-T\-P P\-O\-S\-T request to Tune Mobile\-App\-Tracking Management A\-P\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a8152a63a83044f4106c6202e1d3621a8}{\-\_\-\-\_\-request} = None
+\item 
+\hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a1f7385defeef51c4ec8ca120c720dcfd}{\-\_\-\-\_\-response} = None
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Service proxy class for connecting to Tune Management A\-P\-I service. 
+
+Attributes\-: \-\_\-\-\_\-request\-: Tune Management A\-P\-I request object\par
+ \-\_\-\-\_\-response\-: Tune Management A\-P\-I response object\par
+
+
+Definition at line 65 of file proxy.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a8fe235be39f55c27191277d95d7ef25f}{\index{tune\-::management\-::service\-::proxy\-::\-Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!tune::management::service::proxy::Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-management.\-service.\-proxy.\-Proxy.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{request}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a8fe235be39f55c27191277d95d7ef25f}
+
+
+Definition at line 76 of file proxy.\-py.
+
+
+\begin{DoxyCode}
+76 
+77     \textcolor{keyword}{def }\hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a8fe235be39f55c27191277d95d7ef25f}{\_\_init\_\_}(self, request):
+78         \textcolor{keywordflow}{if} request \textcolor{keywordflow}{is} \textcolor{keywordtype}{None} \textcolor{keywordflow}{or} \textcolor{keywordflow}{not} isinstance(request, Request):
+79             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Invalid request provided."})
+80 
+81         self.\hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a8152a63a83044f4106c6202e1d3621a8}{\_\_request} = request
+
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_af3c0cf7d72b8b929b0e5fbbd1611c7ef}{\index{tune\-::management\-::service\-::proxy\-::\-Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}!execute@{execute}}
+\index{execute@{execute}!tune::management::service::proxy::Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}}
+\subsubsection[{execute}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-management.\-service.\-proxy.\-Proxy.\-execute (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_af3c0cf7d72b8b929b0e5fbbd1611c7ef}
+
+
+H\-T\-T\-P P\-O\-S\-T request to Tune Mobile\-App\-Tracking Management A\-P\-I. 
+
+Returns\-: bool\-: True upon success. 
+
+Definition at line 88 of file proxy.\-py.
+
+
+\begin{DoxyCode}
+88 
+89     \textcolor{keyword}{def }\hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_af3c0cf7d72b8b929b0e5fbbd1611c7ef}{execute}(self):
+90         \textcolor{keywordflow}{if} self.\hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a8152a63a83044f4106c6202e1d3621a8}{\_\_request} \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:
+91             \textcolor{keywordflow}{raise} TuneSdkException(\textcolor{stringliteral}{'Request is not set.'})
+92 
+93         \textcolor{keywordflow}{try}:
+94             request\_url = self.\_\_request.url
+95             self.\hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a1f7385defeef51c4ec8ca120c720dcfd}{\_\_response} = urllib.request.urlopen(request\_url)
+96 
+97         \textcolor{keywordflow}{except} TuneSdkException \textcolor{keyword}{as} ex:
+98             \textcolor{keywordflow}{raise}
+99         \textcolor{keywordflow}{except} TuneServiceException \textcolor{keyword}{as} ex:
+100             \textcolor{keywordflow}{raise}
+101         \textcolor{keywordflow}{except} urllib.error.URLError \textcolor{keyword}{as} ex:
+102             \textcolor{keywordflow}{raise} TuneServiceException(\textcolor{stringliteral}{"URLError: \{\}"}.format(str(ex)))
+103         \textcolor{keywordflow}{except} urllib.error.HTTPError \textcolor{keyword}{as} ex:
+104             \textcolor{keywordflow}{raise} TuneServiceException(\textcolor{stringliteral}{"HTTPError: \{\}"}.format(str(ex)))
+105         \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} ex:
+106             \textcolor{keywordflow}{raise} TuneSdkException(
+107                 \textcolor{stringliteral}{"Failed to post request: (Error:\{0\}, Url:\{1\})"}.format(
+108                     str(ex),
+109                     self.\_\_request.url),
+110                 ex
+111             )
+112 
+113         \textcolor{keywordflow}{return} \textcolor{keyword}{True}
+\end{DoxyCode}
+\hypertarget{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a0b3f63ff9936b0857c4ae47b38b5f926}{\index{tune\-::management\-::service\-::proxy\-::\-Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}!response@{response}}
+\index{response@{response}!tune::management::service::proxy::Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}}
+\subsubsection[{response}]{\setlength{\rightskip}{0pt plus 5cm}def tune.\-management.\-service.\-proxy.\-Proxy.\-response (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a0b3f63ff9936b0857c4ae47b38b5f926}
+
+
+Full response object to Tune Management A\-P\-I service. 
+
+
+
+Definition at line 73 of file proxy.\-py.
+
+
+\begin{DoxyCode}
+73 
+74     \textcolor{keyword}{def }\hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a0b3f63ff9936b0857c4ae47b38b5f926}{response}(self):
+75         \textcolor{keywordflow}{return} self.\hyperlink{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a1f7385defeef51c4ec8ca120c720dcfd}{\_\_response}
+
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a8152a63a83044f4106c6202e1d3621a8}{\index{tune\-::management\-::service\-::proxy\-::\-Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}!\-\_\-\-\_\-request@{\-\_\-\-\_\-request}}
+\index{\-\_\-\-\_\-request@{\-\_\-\-\_\-request}!tune::management::service::proxy::Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}}
+\subsubsection[{\-\_\-\-\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}tune.\-management.\-service.\-proxy.\-Proxy.\-\_\-\-\_\-request = None\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}}\label{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a8152a63a83044f4106c6202e1d3621a8}
+
+
+Definition at line 67 of file proxy.\-py.
+
+\hypertarget{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a1f7385defeef51c4ec8ca120c720dcfd}{\index{tune\-::management\-::service\-::proxy\-::\-Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}!\-\_\-\-\_\-response@{\-\_\-\-\_\-response}}
+\index{\-\_\-\-\_\-response@{\-\_\-\-\_\-response}!tune::management::service::proxy::Proxy@{tune\-::management\-::service\-::proxy\-::\-Proxy}}
+\subsubsection[{\-\_\-\-\_\-response}]{\setlength{\rightskip}{0pt plus 5cm}tune.\-management.\-service.\-proxy.\-Proxy.\-\_\-\-\_\-response = None\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}}\label{classtune_1_1management_1_1service_1_1proxy_1_1Proxy_a1f7385defeef51c4ec8ca120c720dcfd}
+
+
+Definition at line 68 of file proxy.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+tune/management/service/\hyperlink{proxy_8py}{proxy.\-py}\end{DoxyCompactItemize}

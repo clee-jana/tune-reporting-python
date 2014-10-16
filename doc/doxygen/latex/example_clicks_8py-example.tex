@@ -1,0 +1,236 @@
+\hypertarget{example_clicks_8py-example}{\section{example\-\_\-clicks.\-py}
+}
+/advertiser/stats/clicks Tune Management A\-P\-I endpoint '/advertiser/stats/clicks'
+
+
+\begin{DoxyCodeInclude}
+1 \textcolor{comment}{#!/usr/bin/env python}
+2 \textcolor{comment}{# -*- coding: utf-8 -*-}
+3 \textcolor{comment}{#}
+4 \textcolor{comment}{## example\_clicks.py}
+5 \textcolor{comment}{#}
+6 \textcolor{comment}{#  Copyright (c) 2014 Tune, Inc}
+7 \textcolor{comment}{#  All rights reserved.}
+8 \textcolor{comment}{#}
+9 \textcolor{comment}{#  Permission is hereby granted, free of charge, to any person obtaining}
+10 \textcolor{comment}{#  a copy of this software and associated documentation files}
+11 \textcolor{comment}{#  (the "Software"), to deal in the Software without restriction, including}
+12 \textcolor{comment}{#  without limitation the rights to use, copy, modify, merge, publish,}
+13 \textcolor{comment}{#  distribute, sublicense, and/or sell copies of the Software, and to permit}
+14 \textcolor{comment}{#  persons to whom the Software is furnished to do so, subject to the}
+15 \textcolor{comment}{#  following conditions:}
+16 \textcolor{comment}{#}
+17 \textcolor{comment}{#  The above copyright notice and this permission notice shall be included in}
+18 \textcolor{comment}{#  all copies or substantial portions of the Software.}
+19 \textcolor{comment}{#}
+20 \textcolor{comment}{#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}
+21 \textcolor{comment}{#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}
+22 \textcolor{comment}{#  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL}
+23 \textcolor{comment}{#  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}
+24 \textcolor{comment}{#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING}
+25 \textcolor{comment}{#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER}
+26 \textcolor{comment}{#  DEALINGS IN THE SOFTWARE.}
+27 \textcolor{comment}{#}
+28 \textcolor{comment}{#  Python 3.0}
+29 \textcolor{comment}{#}
+30 \textcolor{comment}{#  @category  Tune}
+31 \textcolor{comment}{#  @package   Tune\_PHP\_SDK}
+32 \textcolor{comment}{#  @author    Jeff Tanner <jefft@tune.com>}
+33 \textcolor{comment}{#  @copyright 2014 Tune (http://www.tune.com)}
+34 \textcolor{comment}{#  @license   http://opensource.org/licenses/MIT The MIT License (MIT)}
+35 \textcolor{comment}{#  @version   0.9.1}
+36 \textcolor{comment}{#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink}
+37 \textcolor{comment}{#}
+38 \textcolor{comment}{#}
+39 \textcolor{comment}{# You can use the Logs report in the same way as the Actuals reports, but}
+40 \textcolor{comment}{# instead of being aggregated by request type, the Logs report contains the}
+41 \textcolor{comment}{# logs of each individual request (including the logs for Clicks, Installs,}
+42 \textcolor{comment}{# Updates, Events, Event Items, and Postback URLs). The log data is available}
+43 \textcolor{comment}{# in real-time, so you can use it for testing, debugging, and ensuring that}
+44 \textcolor{comment}{# all measurement and attribution continues to operate smoothly. MAT updates}
+45 \textcolor{comment}{# the Logs report every 1 minute.}
+46 \textcolor{comment}{#}
+47 \textcolor{comment}{# https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=clicks}
+48 \textcolor{comment}{#}
+49 \textcolor{comment}{# Clicks API call: stats/clicks}
+50 \textcolor{comment}{#}
+51 
+52 \textcolor{keyword}{import} os
+53 \textcolor{keyword}{import} sys
+54 \textcolor{keyword}{import} traceback
+55 \textcolor{keyword}{import} datetime
+56 
+57 \textcolor{keywordflow}{try}:
+58     \textcolor{keyword}{from} \hyperlink{namespacetune_1_1common}{tune.common} \textcolor{keyword}{import} (TuneSdkException, TuneServiceException)
+59     \textcolor{keyword}{from} \hyperlink{namespacetune_1_1management_1_1api}{tune.management.api} \textcolor{keyword}{import} (Clicks, Export)
+60 \textcolor{keywordflow}{except} ImportError \textcolor{keyword}{as} exc:
+61     sys.stderr.write(\textcolor{stringliteral}{"Error: failed to import module (\{\})"}.format(exc))
+62     \textcolor{keywordflow}{raise}
+63 
+64 \textcolor{comment}{##}
+65 \textcolor{comment}{# Example using Tune Management API client.}
+66 \textcolor{keyword}{class }ExampleClicks(\hyperlink{classobject}{object}):
+67 
+68     \textcolor{keyword}{def }\_\_init\_\_(self):
+69         \textcolor{keywordflow}{pass}
+70 
+71     \textcolor{comment}{#}
+72     \textcolor{comment}{# Example of running successful requests to Tune MobileAppTracking Management API.}
+73     \textcolor{comment}{#}
+74     \textcolor{comment}{##}
+75     \textcolor{comment}{# Run Example\(\backslash\)n}
+76     \textcolor{keyword}{def }run(self, api\_key):
+77 
+78         \textcolor{comment}{# api\_key}
+79         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} api\_key \textcolor{keywordflow}{or} len(api\_key) < 1:
+80             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Parameter 'api\_key' is not defined."})
+81 
+82         print(  \textcolor{stringliteral}{"======================================================"})
+83         print(  \textcolor{stringliteral}{"= Tune Management API Advertiser Reports Logs Clicks ="})
+84         print(  \textcolor{stringliteral}{"======================================================"})
+85 
+86         \textcolor{keywordflow}{try}:
+87             yesterday = datetime.date.fromordinal(datetime.date.today().toordinal()-1)
+88             start\_date  = \textcolor{stringliteral}{"\{\} 00:00:00"}.format(yesterday)
+89             end\_date    = \textcolor{stringliteral}{"\{\} 23:59:59"}.format(yesterday)
+90 
+91             clicks = Clicks(api\_key, validate = \textcolor{keyword}{True})
+92             
+93             response = clicks.fields()
+94             print(\textcolor{stringliteral}{"= advertiser/stats/clicks fields: \{\}"}.format(response))
+95 
+96             print(  \textcolor{stringliteral}{"= advertiser/stats/clicks/count.json request ="})
+97             response = clicks.count(
+98                     start\_date,
+99                     end\_date,
+100                     filter              = \textcolor{keywordtype}{None},
+101                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+102                 )
+103             print(\textcolor{stringliteral}{"= advertiser/stats/clicks/count.json response: \{\}"}.format(response))
+104 
+105             \textcolor{keywordflow}{if} response.http\_code != 200:
+106                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+107 
+108             print(\textcolor{stringliteral}{"Count: \{\}\(\backslash\)n"}.format(response.data))
+109 
+110             print(  \textcolor{stringliteral}{"= advertiser/stats/clicks/find.json request ="})
+111             response = clicks.find(
+112                     start\_date,
+113                     end\_date,
+114                     filter              = \textcolor{keywordtype}{None},
+115                     fields              = \textcolor{stringliteral}{"created,site.name,campaign.name \(\backslash\)}
+116 \textcolor{stringliteral}{                                          ,publisher.name,is\_unique,publisher\_ref\_id \(\backslash\)}
+117 \textcolor{stringliteral}{                                          ,country.name,region.name,agency.name \(\backslash\)}
+118 \textcolor{stringliteral}{                                          ,site\_id,campaign\_id,publisher\_id \(\backslash\)}
+119 \textcolor{stringliteral}{                                          ,agency\_id,country\_id,region\_id"},
+120                     limit               = 5,
+121                     page                = \textcolor{keywordtype}{None},
+122                     sort                = \{\textcolor{stringliteral}{"created"}: \textcolor{stringliteral}{"DESC"}\},
+123                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+124                 )
+125             print(\textcolor{stringliteral}{"= advertiser/stats/clicks/find.json response: \{\}"}.format(response))
+126 
+127             \textcolor{keywordflow}{if} response.http\_code != 200:
+128                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+129 
+130             print(  \textcolor{stringliteral}{"= advertiser/stats/clicks/find\_export\_queue.json request ="})
+131             response = clicks.export(
+132                     start\_date,
+133                     end\_date,
+134                     filter              = \textcolor{keywordtype}{None},
+135                     fields              = \textcolor{stringliteral}{"created,site.name,campaign.name \(\backslash\)}
+136 \textcolor{stringliteral}{                                          ,publisher.name,is\_unique,publisher\_ref\_id \(\backslash\)}
+137 \textcolor{stringliteral}{                                          ,country.name,region.name,agency.name \(\backslash\)}
+138 \textcolor{stringliteral}{                                          ,site\_id,campaign\_id,publisher\_id \(\backslash\)}
+139 \textcolor{stringliteral}{                                          ,agency\_id,country\_id,region\_id"},
+140                     format              = \textcolor{stringliteral}{"csv"},
+141                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+142                 )
+143             print(\textcolor{stringliteral}{"= advertiser/stats/clicks/export.json response: \{\}"}.format(response))
+144 
+145             \textcolor{keywordflow}{if} response.http\_code != 200:
+146                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+147 
+148             job\_id = response.data
+149             print(\textcolor{stringliteral}{"Job ID: \{\}"}.format(job\_id))
+150 
+151             export = Export(api\_key)
+152 
+153             print(  \textcolor{stringliteral}{"\(\backslash\)n= advertiser stats clicks status in CSV data format =\(\backslash\)n"})
+154 
+155             csv\_report\_reader = export.fetch(job\_id, report\_format=\textcolor{stringliteral}{"csv"}, verbose = \textcolor{keyword}{True})
+156             csv\_report\_reader.read()
+157             csv\_report\_reader.pretty\_print(limit=5)
+158 
+159             print(  \textcolor{stringliteral}{"= advertiser/stats/clicks/find\_export\_queue.json request ="})
+160             response = clicks.export(
+161                     start\_date,
+162                     end\_date,
+163                     filter              = \textcolor{keywordtype}{None},
+164                     fields              = \textcolor{stringliteral}{"created,site.name,campaign.name \(\backslash\)}
+165 \textcolor{stringliteral}{                                          ,publisher.name,is\_unique,publisher\_ref\_id \(\backslash\)}
+166 \textcolor{stringliteral}{                                          ,country.name,region.name,agency.name \(\backslash\)}
+167 \textcolor{stringliteral}{                                          ,site\_id,campaign\_id,publisher\_id \(\backslash\)}
+168 \textcolor{stringliteral}{                                          ,agency\_id,country\_id,region\_id"},
+169                     format              = \textcolor{stringliteral}{"json"},
+170                     response\_timezone   = \textcolor{stringliteral}{"America/Los\_Angeles"}
+171                 )
+172             print(\textcolor{stringliteral}{"= advertiser/stats/clicks/export.json response: \{\}"}.format(response))
+173 
+174             \textcolor{keywordflow}{if} response.http\_code != 200:
+175                 \textcolor{keywordflow}{raise} \hyperlink{classException}{Exception}(\textcolor{stringliteral}{"Failed: \{\}: \{\}"}.format(response.http\_code, str(response.errors)))
+176 
+177             job\_id = response.data
+178             print(\textcolor{stringliteral}{"Job ID: \{\}"}.format(job\_id))
+179 
+180             export = Export(api\_key)
+181 
+182             json\_report\_reader = export.fetch(job\_id, report\_format=\textcolor{stringliteral}{"json"}, verbose = \textcolor{keyword}{True})
+183             json\_report\_reader.read()
+184             json\_report\_reader.pretty\_print(limit=5)
+185 
+186         \textcolor{keywordflow}{except} TuneSdkException \textcolor{keyword}{as} exc:
+187             print(\textcolor{stringliteral}{"TuneSdkException (\{\})"}.format(exc))
+188             print(self.format\_exception(exc.errors))
+189         \textcolor{keywordflow}{except} Exception:
+190             exc\_type, exc\_value, exc\_traceback = sys.exc\_info()
+191             print(\textcolor{stringliteral}{"*** print\_tb:"})
+192             traceback.print\_tb(exc\_traceback, limit=1, file=sys.stdout)
+193             print(\textcolor{stringliteral}{"*** print\_exception:"})
+194             traceback.print\_exception(exc\_type, exc\_value, exc\_traceback,
+195                                       limit=2, file=sys.stdout)
+196             print(\textcolor{stringliteral}{"*** print\_exc:"})
+197             traceback.print\_exc()
+198 
+199         print(  \textcolor{stringliteral}{"======================================"})
+200         print(  \textcolor{stringliteral}{"= End Example                        ="})
+201         print(  \textcolor{stringliteral}{"======================================"})
+202 
+203     @staticmethod
+204     \textcolor{keyword}{def }format\_exception(e):
+205         \textcolor{stringliteral}{"Provide traceback of provided exception."}
+206         exception\_list = traceback.format\_stack()
+207         exception\_list = exception\_list[:-2]
+208         exception\_list.extend(traceback.format\_tb(sys.exc\_info()[2]))
+209         exception\_list.extend(traceback.format\_exception\_only(sys.exc\_info()[0], sys.exc\_info()[1]))
+210 
+211         exception\_str = \textcolor{stringliteral}{"Traceback (most recent call last):\(\backslash\)n"}
+212         exception\_str += \textcolor{stringliteral}{""}.join(exception\_list)
+213         \textcolor{comment}{# Removing the last \(\backslash\)n}
+214         exception\_str = exception\_str[:-1]
+215 
+216         \textcolor{keywordflow}{return} exception\_str
+217 
+218 \textcolor{keywordflow}{if} \_\_name\_\_ == \textcolor{stringliteral}{'\_\_main\_\_'}:
+219     \textcolor{keywordflow}{try}:
+220         \textcolor{keywordflow}{if} len(sys.argv) < 2:
+221             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"Provide API Key to execute Tune Management API example \{\}."}.format(sys.argv[0
+      ]))
+222         api\_key = sys.argv[1]
+223         example = ExampleClicks()
+224         example.run(api\_key)
+225     \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} exc:
+226         print(\textcolor{stringliteral}{"Exception: \{0\}"}.format(exc))
+227         \textcolor{keywordflow}{raise}
+\end{DoxyCodeInclude}
+ 

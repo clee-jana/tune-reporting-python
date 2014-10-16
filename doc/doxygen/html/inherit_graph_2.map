@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classReportReaderBase.html" title="ReportReaderBase" alt="" coords="5,54,139,87"/>
+<area shape="rect" id="node3" href="$classtune_1_1management_1_1reports_1_1report__reader__csv_1_1ReportReaderCSV.html" title="Helper class for reading reading remote CSV file. " alt="" coords="193,5,399,59"/>
+<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1report__reader__json_1_1ReportReaderJSON.html" title="Helper class for reading reading remote JSON file. " alt="" coords="188,82,404,137"/>
+</map>

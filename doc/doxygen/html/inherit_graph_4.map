@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classReportsBase.html" title="ReportsBase" alt="" coords="5,131,104,165"/>
+<area shape="rect" id="node3" href="$classtune_1_1management_1_1api_1_1export_1_1Export.html" title="/export " alt="" coords="173,5,363,59"/>
+<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1reports__actuals__base_1_1ReportsActualsBase.html" title="Base class intended for gathering from Advertiser Stats actuals. " alt="" coords="153,82,383,137"/>
+<area shape="rect" id="node7" href="$classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html" title="Base class for handling Tune Management API Insight stats reports. " alt="" coords="155,159,381,214"/>
+<area shape="rect" id="node9" href="$classtune_1_1management_1_1reports_1_1reports__logs__base_1_1ReportsLogsBase.html" title="Base class intended for gathering from Advertiser Stats logs. " alt="" coords="161,237,375,291"/>
+</map>

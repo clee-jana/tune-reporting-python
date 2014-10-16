@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classTuneManagementBase.html" title="TuneManagementBase" alt="" coords="5,131,160,165"/>
+<area shape="rect" id="node3" href="$classtune_1_1management_1_1api_1_1account_1_1Account.html" title="Endpoint &#39;/account&#39;. " alt="" coords="227,5,427,59"/>
+<area shape="rect" id="node5" href="$classtune_1_1management_1_1api_1_1account_1_1users_1_1Users.html" title="Endpoint &#39;/account/users&#39;. " alt="" coords="208,82,445,137"/>
+<area shape="rect" id="node7" href="$classtune_1_1management_1_1api_1_1advertiser_1_1Advertiser.html" title="Endpoint &#39;/advertisers&#39;. " alt="" coords="221,159,432,214"/>
+<area shape="rect" id="node9" href="$classtune_1_1management_1_1reports_1_1reports__base_1_1ReportsBase.html" title="Base components for every Tune Management API reports. " alt="" coords="220,237,433,291"/>
+</map>
