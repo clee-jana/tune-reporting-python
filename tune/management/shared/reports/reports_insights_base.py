@@ -1,7 +1,7 @@
 """
 Base class for handling all Tune Management API endpoints that deal with log reports.
 """
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ## reports_insights_base.py
@@ -28,14 +28,14 @@ Base class for handling all Tune Management API endpoints that deal with log rep
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 3.0
+#  Python 2.7
 #
 #  @category  Tune
 #  @package   Tune_PHP_SDK
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.2
+#  @version   0.9.3
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -236,7 +236,7 @@ class ReportsInsightBase(ReportsBase):
         self.validate_aggregation_type(aggregation_type)
 
         group = TuneManagementBase.validate_group(self, group)
-        
+
         if cohort_interval is not None:
             self.validate_cohort_interval(cohort_interval)
 
@@ -413,5 +413,8 @@ class ReportsInsightBase(ReportsBase):
             raise TuneSdkException("Report request failed to get export data.")
 
         url = response.data["url"]
+
+        if isinstance(url, unicode):
+            url = str(url)
 
         return url

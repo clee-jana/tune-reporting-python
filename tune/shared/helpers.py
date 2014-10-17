@@ -1,7 +1,7 @@
 """
 Tune SDK shared helper functions.
 """
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ## helpers.py
@@ -28,14 +28,14 @@ Tune SDK shared helper functions.
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 3.0
+#  Python 2.7
 #
 #  @category  Tune
 #  @package   Tune_PHP_SDK
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.2
+#  @version   0.9.3
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -50,15 +50,18 @@ def python_check_version(required_version):
     if (current_version[0] == required_version[0]
         and current_version[1] >= required_version[1]):
         pass
+    elif current_version[0] > required_version[0]:
+        pass
     else:
         sys.stderr.write(
-            "[%s] - Error: Your Python interpreter must be "
-            "%d.%d or greater (within major version %d)\n"
+            "[%s] - Error: Python interpreter must be %d.%d or greater" \
+            " to use this library, current version is %d.%d.\n"
             % (
-            sys.argv[0],
+                sys.argv[0],
                 required_version[0],
                 required_version[1],
-                required_version[0]
+                current_version[0],
+                current_version[1]
             )
         )
         sys.exit(-1)

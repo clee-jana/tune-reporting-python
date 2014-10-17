@@ -1,7 +1,7 @@
 """
 Builds query string as expected for Tune Management API request.
 """
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ## query_string_builder.py
@@ -28,19 +28,25 @@ Builds query string as expected for Tune Management API request.
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 3.0
+#  Python 2.7
 #
 #  @category  Tune
 #  @package   Tune_PHP_SDK
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.2
+#  @version   0.9.3
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
-import urllib.parse
+import sys
 import re
+
+if sys.version_info[0] == 3:
+    import urllib.parse
+else:
+    import urllib
+
 from tune.shared import (
     TuneSdkException,
     TuneServiceException
@@ -91,7 +97,6 @@ class QueryStringBuilder(object):
             if name == "fields":
                 # Remove all spaces
                 fields_value = re.sub(r'\s+', '', value)
-
                 self._encode(name, fields_value)
 
             elif name == "sort":
@@ -128,11 +133,12 @@ class QueryStringBuilder(object):
                 self._encode(name, bool_value)
 
             else:
-
                 self._encode(name, value)
+        except TuneSdkException as ex:
+            raise
         except Exception as ex:
             raise TuneSdkException(
-                "Failed to add query string parameter ({0},{1}): {2}".format(
+                "Failed to add query string parameter ({0}:{1}): {2}".format(
                     name,
                     value,
                     str(ex)
@@ -151,11 +157,14 @@ class QueryStringBuilder(object):
             if self.__query:
                 self.__query += "&"
 
-            param = urllib.parse.urlencode({name : value})
+            if sys.version_info[0] == 3:
+                param = urllib.parse.urlencode({name : value})
+            else:
+                param = urllib.urlencode({name : value})
             self.__query += param
         except Exception as ex:
             raise TuneSdkException(
-                "Failed to URL encode {}:{}: ({0})".format(
+                "Failed to URL encode ({}:{}): ({0})".format(
                     name,
                     value,
                     str(ex)

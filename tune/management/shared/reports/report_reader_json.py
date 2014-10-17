@@ -1,7 +1,7 @@
 """
 Downloads remote JSON file from Amazon S3 repository and creates a reader.
 """
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ## report_reader_json.py
@@ -28,28 +28,32 @@ Downloads remote JSON file from Amazon S3 repository and creates a reader.
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 3.0
+#  Python 2.7
 #
 #  @category  Tune
 #  @package   Tune_PHP_SDK
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.2
+#  @version   0.9.3
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
 import json
+import sys
 
-import urllib.request
-import urllib.error
+if sys.version_info[0] == 3:
+    import urllib.request
+else:
+    import urllib2
 
 from .report_reader_base import (
     ReportReaderBase
 )
 from tune.shared import (
     TuneSdkException,
-    TuneServiceException
+    TuneServiceException,
+    TuneProxy
 )
 
 class ReportReaderJSON(ReportReaderBase):
@@ -66,16 +70,10 @@ class ReportReaderJSON(ReportReaderBase):
     def read(self):
         """Read JSON data provided remote path report_url."""
         self.data = None
-        try:
-            report_stream = urllib.request.urlopen(self.report_url)
-            report_content = report_stream.read()
-            report_utf8_str = report_content.decode("utf8")
-            self.data = json.loads(report_utf8_str)
-        except urllib.error.URLError as ex:
-            raise TuneServiceException("URLError: {}".format(str(ex)), ex)
-        except urllib.error.HTTPError as ex:
-            raise TuneServiceException("HTTPError: {}".format(str(ex)), ex)
-        except Exception as ex:
-            raise TuneSdkException(
-                "Unexpected: {}: {}".format(ex.__class__.__name__, str(ex)), ex
-            )
+
+        proxy = TuneProxy(self.report_url)
+        proxy.execute()
+        report_content = proxy.response.read()
+        report_utf8_str = report_content.decode("utf8")
+        self.data = json.loads(report_utf8_str)
+

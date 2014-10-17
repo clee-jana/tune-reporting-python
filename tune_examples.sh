@@ -7,4 +7,4 @@ fi
 
 api_key=$1
 
-python3 ./examples_execute.py $api_key
+python ./examples_execute.py $api_key

@@ -25,14 +25,14 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 3.0
+#  Python 2.7
 #
 #  @category  Tune
 #  @package   Tune_PHP_SDK
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.2
+#  @version   0.9.3
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 #
@@ -150,7 +150,16 @@ class ExampleClicks(object):
 
             print(  "\n= advertiser stats clicks status in CSV data format =\n")
 
-            csv_report_reader = export.fetch(job_id, report_format="csv", verbose = True)
+            csv_report_reader = export.fetch(
+                job_id,
+                report_format="csv",
+                verbose=True,
+                sleep=10
+                )
+            if csv_report_reader is None:
+                raise Exception("Failed report reader not returned.")
+            if not csv_report_reader.report_url or len(csv_report_reader.report_url) < 1:
+                raise ValueError("Parameter 'csv_report_reader.report_url' is not defined.")
             csv_report_reader.read()
             csv_report_reader.pretty_print(limit=5)
 
@@ -177,7 +186,12 @@ class ExampleClicks(object):
 
             export = Export(api_key)
 
-            json_report_reader = export.fetch(job_id, report_format="json", verbose = True)
+            json_report_reader = export.fetch(
+                job_id,
+                report_format="json",
+                verbose=True,
+                sleep=10
+                )
             json_report_reader.read()
             json_report_reader.pretty_print(limit=5)
 

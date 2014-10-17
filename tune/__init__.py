@@ -25,14 +25,14 @@ Tune SDK
 #    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #    THE SOFTWARE.
 #
-#    Python 3.0
+#    Python 2.7
 #
 # @category  Tune
 # @package   Tune_PHP_SDK
 # @author    Jeff Tanner <jefft@tune.com>
 # @copyright 2014 Tune (http://www.tune.com)
 # @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# @version   0.9.2
+# @version   0.9.3
 # @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -42,13 +42,10 @@ __author__ = 'Tune, Inc.'
 __license__ = 'LICENSE.md'
 __copyright__ = 'Copyright 2014 Tune, Inc'
 
-import sys
+from .shared import (python_check_version)
+from .version import __python_required_version__
 
-if sys.version_info < (3, 0):
-    sys.stderr.write("[%s] - Error: Your Python interpreter must be %d.%d "
-                    "or greater (within major version %d)\n"
-                    % (sys.argv[0], 3, 0, 3))
-    sys.exit(-1)
+python_check_version(__python_required_version__)
 
 try:
     from . import shared

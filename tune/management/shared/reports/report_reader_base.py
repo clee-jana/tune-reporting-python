@@ -2,7 +2,7 @@
 Base class for handling downloads of remote reports from Amazon S3
 repository and creates a reader.
 """
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ## report_reader_base.py
@@ -29,14 +29,14 @@ repository and creates a reader.
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 3.0
+#  Python 2.7
 #
 #  @category  Tune
 #  @package   Tune_PHP_SDK
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.2
+#  @version   0.9.3
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -54,6 +54,12 @@ class ReportReaderBase(object):
     #  @param string report_url Download report URL
     #                           of requested report to be exported.
     def __init__(self, report_url):
+        if (not report_url
+            or not isinstance(report_url, str)
+            or len(report_url) < 1
+            ):
+            raise ValueError("Parameter 'report_url' is not defined.")
+
         self.__report_url = report_url
         self.__report_data = None
 
