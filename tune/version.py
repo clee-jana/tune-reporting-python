@@ -28,18 +28,18 @@ Tune SDK Version
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 3.0
+#  Python 2.7
 #
 #  @category  Tune
 #  @package   Tune_PHP_SDK
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.2
+#  @version   0.9.3
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
-__version_info__ = ('0', '9', '2')
+__version_info__ = ('0', '9', '3')
 __version__ = '.'.join(__version_info__)
 
-__python_required_version__ = (3, 0)
+__python_required_version__ = (2, 7)

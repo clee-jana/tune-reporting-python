@@ -1,7 +1,7 @@
 """
 Container of response returned from Tune Management API service.
 """
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ## response.py
@@ -28,19 +28,18 @@ Container of response returned from Tune Management API service.
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 3.0
+#  Python 2.7
 #
 #  @category  Tune
 #  @package   Tune_PHP_SDK
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.2
+#  @version   0.9.3
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
 import time
-import urllib.request
 import json
 
 from tune.shared import (

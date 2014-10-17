@@ -23,7 +23,7 @@
 #    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 #    DEALINGS IN THE SOFTWARE.
 #
-#    Python 3.0
+#    Python 2.7
 #
 #    category    Tune
 #    package     SDK
@@ -50,7 +50,7 @@ except ImportError:
     from distutils.core import setup
 
 if sys.argv[-1] == 'publish':
-    os.system('python3 setup.py sdist upload')
+    os.system('python setup.py sdist upload')
     sys.exit()
 
 PACKAGES = [

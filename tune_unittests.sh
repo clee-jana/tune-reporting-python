@@ -7,4 +7,4 @@ fi
 
 api_key=$1
 
-python3 ./unittests_execute.py $api_key
+python ./unittests_execute.py $api_key
