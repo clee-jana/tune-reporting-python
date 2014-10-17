@@ -1,0 +1,9 @@
+include setup.py
+include LICENSE.md
+include AUTHORS.md
+include CHANGES.md
+include README
+include README.txt
+include README.rst
+include README.md
+recursive-include tune *.py

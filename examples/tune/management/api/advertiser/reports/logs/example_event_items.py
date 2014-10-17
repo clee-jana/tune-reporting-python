@@ -33,7 +33,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.1
+#  @version   0.9.2
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 #
@@ -56,7 +56,7 @@ import datetime
 
 from tune.management.api.advertiser.stats import (EventItems)
 from tune.management.api import (Export)
-from tune.common import (TuneSdkException, TuneServiceException)
+from tune.shared import (TuneSdkException, TuneServiceException)
 
 class ExampleEventItems(object):
     """Example using Tune Management API client."""

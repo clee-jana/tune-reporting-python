@@ -1,4 +1,0 @@
-<map id="tune.management.reports.reports_insights_base.ReportsInsightBase.status" name="tune.management.reports.reports_insights_base.ReportsInsightBase.status">
-<area shape="rect" id="node3" href="$classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#af7c12d70fdcb9b557ecf5fa3ee3dcf10" title="Helper function for fetching report upon completion. " alt="" coords="323,15,584,70"/>
-<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html#ac71e815c7e9b4f3183b81d221589cbfb" title="Helper function for parsing export status response to gather report url. " alt="" coords="632,5,896,81"/>
-</map>

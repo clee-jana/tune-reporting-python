@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.1
+#  @version   0.9.2
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -84,7 +84,6 @@ class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
         self.assertGreaterEqual(response.data, 0)
 
     def test_Find(self):
-
         response = None
 
         try:
@@ -97,10 +96,13 @@ class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
                     self.__end_date,
                     cohort_type         = "click",
                     aggregation_type    = "cumulative",
-                    cohort_interval     = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
+                    fields              = "site_id,site.name,campaign_id" \
+                        ",campaign.name,publisher_id,publisher.name" \
+                        ",installs,events,purchases,opens,cpi,rpi,epi" \
+                        ",opi,currency_code",
+                    cohort_interval     = "year_day",
                     filter              = "(publisher_id > 0)",
-                    fields              = "site_id,site.name,campaign_id,campaign.name,publisher_id,publisher.name,installs,events,purchases,opens,cpi,rpi,epi,opi,currency_code",
                     limit               = 10,
                     page                = None,
                     sort                = None,
@@ -115,8 +117,39 @@ class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
         self.assertIsNone(response.errors)
         self.assertIsInstance(response.data, list)
         self.assertLessEqual(len(response.data), 10)
+        
+    def test_Export(self):
+        response = None
+
+        try:
+            ltv = LTV(
+                self.__api_key,
+            )
+
+            response = ltv.export(
+                    self.__start_date,
+                    self.__end_date,
+                    cohort_type         = "click",
+                    aggregation_type    = "cumulative",
+                    group               = "site_id,campaign_id,publisher_id",
+                    fields              = "site_id,site.name,campaign_id" \
+                        ",campaign.name,publisher_id,publisher.name" \
+                        ",installs,events,purchases,opens,cpi,rpi,epi" \
+                        ",opi,currency_code",
+                    cohort_interval     = "year_day",
+                    filter              = "(publisher_id > 0)",
+                    response_timezone   = "America/Los_Angeles"
+                )
+        except Exception as exc:
+            self.fail("Exception: {0}".format(exc))
+
+        self.assertIsNotNone(response)
+        self.assertIsNotNone(response.data)
+        self.assertEqual(response.http_code, 200)
+        self.assertIsNone(response.errors)
 
     def runTest (self):
         self.test_ApiKey()
         self.test_Count()
         self.test_Find()
+        self.test_Export()

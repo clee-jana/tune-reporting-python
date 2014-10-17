@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.1
+#  @version   0.9.2
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -84,7 +84,6 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
         self.assertGreaterEqual(response.data, 0)
 
     def test_Find(self):
-
         response = None
 
         try:
@@ -97,10 +96,12 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
                     self.__end_date,
                     cohort_type         = "install",
                     aggregation_type    = "cumulative",
+                    group               = "ad_network_id,install_publisher_id,country_id",
+                    fields              = "installs,opens,ad_network.name" \
+                        ",install_publisher.name,country.name" \
+                        ",ad_network_id,install_publisher_id,country_id",
                     cohort_interval     = "year_day",
-                    group               = "install_publisher_id,country_id,advertiser_sub_campaign_id",
                     filter              = None,
-                    fields              = "installs,opens,install_publisher.name,country.name,advertiser_sub_campaign.name",
                     limit               = 5,
                     page                = None,
                     sort                = {"year_day": "asc", "install_publisher_id": "asc"},
@@ -116,6 +117,35 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
         self.assertIsInstance(response.data, list)
         self.assertLessEqual(len(response.data), 10)
 
+    def test_Export(self):
+        response = None
+
+        try:
+            retention = Retention(
+                self.__api_key,
+            )
+
+            response = retention.export(
+                    self.__start_date,
+                    self.__end_date,
+                    cohort_type         = "install",
+                    aggregation_type    = "cumulative",
+                    group               = "ad_network_id,install_publisher_id,country_id",
+                    fields              = "installs,opens,ad_network.name" \
+                        ",install_publisher.name,country.name" \
+                        ",ad_network_id,install_publisher_id,country_id",
+                    cohort_interval     = "year_day",
+                    filter              = None,
+                    response_timezone   = "America/Los_Angeles"
+                )
+        except Exception as exc:
+            self.fail("Exception: {0}".format(exc))
+
+        self.assertIsNotNone(response)
+        self.assertIsNotNone(response.data)
+        self.assertEqual(response.http_code, 200)
+        self.assertIsNone(response.errors)
+        
     def runTest (self):
         self.test_ApiKey()
         self.test_Count()

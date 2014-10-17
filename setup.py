@@ -55,16 +55,16 @@ if sys.argv[-1] == 'publish':
 
 PACKAGES = [
     'tune',
-    'tune.common',
+    'tune.shared',
     'tune.management',
     'tune.management.api',
     'tune.management.api.account',
     'tune.management.api.account.users',
     'tune.management.api.advertiser',
     'tune.management.api.advertiser.stats',
-    'tune.management.endpoints',
-    'tune.management.reports',
-    'tune.management.service'
+    'tune.management.shared',
+    'tune.management.shared.reports',
+    'tune.management.shared.service'
 ]
 
 REQUIRES = [

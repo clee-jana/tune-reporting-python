@@ -1,6 +1,0 @@
-<map id="ReportsBase" name="ReportsBase">
-<area shape="rect" id="node3" href="$classtune_1_1management_1_1api_1_1export_1_1Export.html" title="/export " alt="" coords="5,217,195,399"/>
-<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1reports__actuals__base_1_1ReportsActualsBase.html" title="Base class intended for gathering from Advertiser Stats actuals. " alt="" coords="219,206,448,410"/>
-<area shape="rect" id="node7" href="$classtune_1_1management_1_1reports_1_1reports__insights__base_1_1ReportsInsightBase.html" title="Base class for handling Tune Management API Insight stats reports. " alt="" coords="472,153,699,463"/>
-<area shape="rect" id="node9" href="$classtune_1_1management_1_1reports_1_1reports__logs__base_1_1ReportsLogsBase.html" title="Base class intended for gathering from Advertiser Stats logs. " alt="" coords="723,217,936,399"/>
-</map>

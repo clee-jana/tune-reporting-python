@@ -1,4 +1,0 @@
-<map id="tune.management.reports.reports_actuals_base.ReportsActualsBase.find" name="tune.management.reports.reports_actuals_base.ReportsActualsBase.find">
-<area shape="rect" id="node3" href="$classtune_1_1management_1_1reports_1_1reports__actuals__base_1_1ReportsActualsBase.html#a2808fb349b9515465dab9d2c1e12cafd" title="Validate &#39;timestamp&#39; parameter. " alt="" coords="631,5,908,81"/>
-<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1reports__actuals__base_1_1ReportsActualsBase.html#a88c5946314a561c7dc764c696b1d325e" title="Places a job into a queue to generate a report that will contain records that match provided filter c..." alt="" coords="311,47,580,102"/>
-</map>

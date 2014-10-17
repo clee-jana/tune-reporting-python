@@ -32,7 +32,7 @@
 
 import sys
 
-from examples.tune.management.service import (
+from examples.tune.management.shared import (
     ExampleClient
     )
 
@@ -54,26 +54,26 @@ if __name__ == '__main__':
             raise ValueError("Provide API Key to execute Tune Management API example {}.".format(sys.argv[0]))
         api_key = sys.argv[1]
 
-        #example = ExampleClient()
-        #example.run(api_key)
-        #
-        #example = ExampleClicks()
-        #example.run(api_key)
-        #
-        #example = ExampleEventItems()
-        #example.run(api_key)
-        #
-        #example = ExampleEvents()
-        #example.run(api_key)
-        #
-        #example = ExampleInstalls()
-        #example.run(api_key)
-        #
-        #example = ExamplePostbackUrls()
-        #example.run(api_key)
-        #
-        #example = ExampleUpdates()
-        #example.run(api_key)
+        example = ExampleClient()
+        example.run(api_key)
+        
+        example = ExampleClicks()
+        example.run(api_key)
+        
+        example = ExampleEventItems()
+        example.run(api_key)
+        
+        example = ExampleEvents()
+        example.run(api_key)
+        
+        example = ExampleInstalls()
+        example.run(api_key)
+        
+        example = ExamplePostbackUrls()
+        example.run(api_key)
+        
+        example = ExampleUpdates()
+        example.run(api_key)
         
         example = ExampleActuals()
         example.run(api_key)

@@ -1,8 +1,0 @@
-<map id="ReportsLogsBase" name="ReportsLogsBase">
-<area shape="rect" id="node3" href="$classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1clicks_1_1Clicks.html" title="{tune.management.api.advertiser.stats.clicks.\lClicks\n||+ __init__()\l}" alt="" coords="5,153,288,271"/>
-<area shape="rect" id="node5" href="$classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1event__items_1_1EventItems.html" title="{tune.management.api.advertiser.stats.event\l_items.EventItems\n||+ __init__()\l}" alt="" coords="312,153,587,271"/>
-<area shape="rect" id="node7" href="$classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1events_1_1Events.html" title="{tune.management.api.advertiser.stats.events.\lEvents\n||+ __init__()\l}" alt="" coords="611,153,896,271"/>
-<area shape="rect" id="node9" href="$classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1installs_1_1Installs.html" title="{tune.management.api.advertiser.stats.installs.\lInstalls\n||+ __init__()\l}" alt="" coords="920,153,1208,271"/>
-<area shape="rect" id="node11" href="$classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1postbacks_1_1Postbacks.html" title="{tune.management.api.advertiser.stats.postbacks.\lPostbacks\n||+ __init__()\l}" alt="" coords="1232,153,1539,271"/>
-<area shape="rect" id="node13" href="$classtune_1_1management_1_1api_1_1advertiser_1_1stats_1_1updates_1_1Updates.html" title="{tune.management.api.advertiser.stats.updates.\lUpdates\n||+ __init__()\l}" alt="" coords="1563,153,1856,271"/>
-</map>

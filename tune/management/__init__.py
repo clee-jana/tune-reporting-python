@@ -34,12 +34,12 @@ request and response from Tune Management API.
 # @author    Jeff Tanner <jefft@tune.com>
 # @copyright 2014 Tune (http://www.tune.com)
 # @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# @version   0.9.1
+# @version   0.9.2
 # @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
 from tune.version import __python_required_version__
-from tune.common import python_check_version
+from tune.shared import python_check_version
 
 python_check_version(__python_required_version__)
 
@@ -58,9 +58,5 @@ from .api import (
     LTV,            # Cohort
     Export
 )
-from .endpoints import (
-    TuneManagementBase
-)
-from .service import (
-    TuneManagementClient
-)
+
+from .shared import (TuneManagementClient, TuneManagementBase)
