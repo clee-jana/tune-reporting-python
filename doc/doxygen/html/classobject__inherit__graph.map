@@ -1,8 +1,0 @@
-<map id="object" name="object">
-<area shape="rect" id="node3" href="$classtune_1_1management_1_1endpoints_1_1base_1_1TuneManagementBase.html" title="Base components for every Tune Management API request. " alt="" coords="5,153,227,719"/>
-<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1report__reader__base_1_1ReportReaderBase.html" title="Base Abstract class. " alt="" coords="251,291,464,581"/>
-<area shape="rect" id="node7" href="$classtune_1_1management_1_1service_1_1client_1_1TuneManagementClient.html" title="{tune.management.service.client.\lTuneManagementClient\n|&#45; __request\l&#45; __response\l|+ __init__()\l+ call()\l+ request()\l+ response()\l+ version()\l}" alt="" coords="488,323,699,549"/>
-<area shape="rect" id="node9" href="$classtune_1_1management_1_1service_1_1query__string__builder_1_1QueryStringBuilder.html" title="Build Query String provide with dictionary of query parameters. " alt="" coords="723,345,941,527"/>
-<area shape="rect" id="node11" href="$classtune_1_1management_1_1service_1_1request_1_1Request.html" title="Base components for every Tune Management API request. " alt="" coords="965,217,1187,655"/>
-<area shape="rect" id="node13" href="$classtune_1_1management_1_1service_1_1response_1_1Response.html" title="Base components for every Tune Management API response. " alt="" coords="1211,249,1443,623"/>
-</map>

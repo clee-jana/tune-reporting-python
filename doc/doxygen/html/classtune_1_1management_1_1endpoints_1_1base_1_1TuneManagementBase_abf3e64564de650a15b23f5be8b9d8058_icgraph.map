@@ -1,6 +1,0 @@
-<map id="tune.management.endpoints.base.TuneManagementBase.fields" name="tune.management.endpoints.base.TuneManagementBase.fields">
-<area shape="rect" id="node3" href="$classtune_1_1management_1_1endpoints_1_1base_1_1TuneManagementBase.html#a87488fcb698ee6951ce9474c137145e4" title="Get model name for this endpoint. " alt="" coords="283,5,515,59"/>
-<area shape="rect" id="node5" href="$classtune_1_1management_1_1endpoints_1_1base_1_1TuneManagementBase.html#a817d9e1554db6d83669848ea01cee3ba" title="Validate query string parameter &#39;fields&#39; having valid endpoint&#39;s fields. " alt="" coords="277,82,520,137"/>
-<area shape="rect" id="node7" href="$classtune_1_1management_1_1endpoints_1_1base_1_1TuneManagementBase.html#ae60c7ea424b0242e7d54d5b488d85f91" title="Validate query string parameter &#39;group&#39; having valid endpoint&#39;s fields. " alt="" coords="277,159,520,214"/>
-<area shape="rect" id="node9" href="$classtune_1_1management_1_1endpoints_1_1base_1_1TuneManagementBase.html#af064daad44e8aff9af194ef16b5f3c1a" title="Validate query string parameter &#39;sort&#39; having valid endpoint&#39;s fields. " alt="" coords="283,237,515,291"/>
-</map>

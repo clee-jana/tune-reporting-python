@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.1
+#  @version   0.9.2
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 #  The Actuals report gives you quick insight into the performance of your apps
@@ -50,7 +50,7 @@ import datetime
 
 from tune.management.api.advertiser.stats import (Stats)
 from tune.management.api import (Export)
-from tune.common import (TuneSdkException, TuneServiceException)
+from tune.shared import (TuneSdkException, TuneServiceException)
 
 class ExampleActuals(object):
     """Example using Tune Management API client."""

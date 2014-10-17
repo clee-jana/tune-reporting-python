@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.1
+#  @version   0.9.2
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 #  Retention Report
@@ -70,7 +70,7 @@ import traceback
 import datetime
 
 from tune.management.api.advertiser.stats import Retention
-from tune.common import (TuneSdkException, TuneServiceException)
+from tune.shared import (TuneSdkException, TuneServiceException)
 
 class ExampleRetention(object):
     """Example using Tune Management API client."""
@@ -125,12 +125,12 @@ class ExampleRetention(object):
                     end_date,
                     cohort_type         = "install",
                     aggregation_type    = "cumulative",
-                    cohort_interval     = "year_day",
                     group               = "ad_network_id,install_publisher_id,country_id",
-                    filter              = None,
                     fields              = "installs,opens,ad_network.name" \
                         ",install_publisher.name,country.name" \
                         ",ad_network_id,install_publisher_id,country_id",
+                    cohort_interval     = "year_day",
+                    filter              = None,
                     limit               = 10,
                     page                = None,
                     sort                = {"year_day": "ASC", "install_publisher_id": "ASC"},
@@ -147,12 +147,12 @@ class ExampleRetention(object):
                     end_date,
                     cohort_type         = "install",
                     aggregation_type    = "cumulative",
-                    cohort_interval     = "year_day",
                     group               = "ad_network_id,install_publisher_id,country_id",
-                    filter              = None,
                     fields              = "installs,opens,ad_network.name" \
                         ",install_publisher.name,country.name" \
                         ",ad_network_id,install_publisher_id,country_id",
+                    cohort_interval     = "year_day",
+                    filter              = None,
                     response_timezone   = "America/Los_Angeles"
                 )
             print("= advertiser/stats/retention/export.json response: {}".format(response))

@@ -32,12 +32,12 @@ Tune SDK
 # @author    Jeff Tanner <jefft@tune.com>
 # @copyright 2014 Tune (http://www.tune.com)
 # @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# @version   0.9.1
+# @version   0.9.2
 # @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
 __title__ = 'tune'
-__build__ = 0x000090
+__build__ = 0x000092
 __author__ = 'Tune, Inc.'
 __license__ = 'LICENSE.md'
 __copyright__ = 'Copyright 2014 Tune, Inc'
@@ -51,7 +51,7 @@ if sys.version_info < (3, 0):
     sys.exit(-1)
 
 try:
-    from . import common
+    from . import shared
     from . import management
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))

@@ -1,4 +1,0 @@
-var namespacetune_1_1management_1_1reports_1_1report__export__worker =
-[
-    [ "ReportExportWorker", "classtune_1_1management_1_1reports_1_1report__export__worker_1_1ReportExportWorker.html", "classtune_1_1management_1_1reports_1_1report__export__worker_1_1ReportExportWorker" ]
-];

@@ -1,5 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classException.html" title="Exception" alt="" coords="5,54,85,87"/>
-<area shape="rect" id="node3" href="$classtune_1_1common_1_1exceptions_1_1TuneSdkException.html" title="Exception raised for errors when using Tune SDK. " alt="" coords="133,5,333,59"/>
-<area shape="rect" id="node5" href="$classtune_1_1common_1_1exceptions_1_1TuneServiceException.html" title="Exception raised when error is returned from Tune Service. " alt="" coords="133,82,333,137"/>
-</map>

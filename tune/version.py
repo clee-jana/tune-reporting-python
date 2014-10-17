@@ -35,11 +35,11 @@ Tune SDK Version
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.1
+#  @version   0.9.2
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
-__version_info__ = ('0', '9', '1')
+__version_info__ = ('0', '9', '2')
 __version__ = '.'.join(__version_info__)
 
 __python_required_version__ = (3, 0)

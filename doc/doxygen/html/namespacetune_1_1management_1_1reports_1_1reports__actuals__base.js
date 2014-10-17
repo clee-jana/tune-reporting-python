@@ -1,4 +1,0 @@
-var namespacetune_1_1management_1_1reports_1_1reports__actuals__base =
-[
-    [ "ReportsActualsBase", "classtune_1_1management_1_1reports_1_1reports__actuals__base_1_1ReportsActualsBase.html", "classtune_1_1management_1_1reports_1_1reports__actuals__base_1_1ReportsActualsBase" ]
-];

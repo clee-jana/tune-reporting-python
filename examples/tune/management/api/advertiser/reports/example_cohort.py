@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.1
+#  @version   0.9.2
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 #  Cohort Report
@@ -70,7 +70,7 @@ import traceback
 import datetime
 
 from tune.management.api.advertiser.stats import LTV
-from tune.common import (TuneSdkException, TuneServiceException)
+from tune.shared import (TuneSdkException, TuneServiceException)
 
 class ExampleCohort(object):
     """Example using Tune Management API client."""
@@ -108,7 +108,7 @@ class ExampleCohort(object):
                     start_date,
                     end_date,
                     cohort_type         = "click",
-                    interval            = "year_day",
+                    cohort_interval     = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
                     filter              = "(publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"
@@ -125,7 +125,7 @@ class ExampleCohort(object):
                     start_date,
                     end_date,
                     cohort_type         = "install",
-                    interval            = "year_day",
+                    cohort_interval     = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
                     filter              = "(publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"
@@ -143,13 +143,13 @@ class ExampleCohort(object):
                     end_date,
                     cohort_type         = "click",
                     aggregation_type    = "cumulative",
-                    interval            = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
-                    filter              = "(publisher_id > 0)",
                     fields              = "site_id,site.name,campaign_id" \
                         ",campaign.name,publisher_id,publisher.name" \
                         ",installs,events,purchases,opens,cpi,rpi,epi" \
                         ",opi,currency_code",
+                    cohort_interval     = "year_day",
+                    filter              = "(publisher_id > 0)",
                     limit               = 5,
                     page                = None,
                     sort                = None,
@@ -166,13 +166,13 @@ class ExampleCohort(object):
                     end_date,
                     cohort_type         = "click",
                     aggregation_type    = "incremental",
-                    cohort_interval     = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
-                    filter              = "(publisher_id > 0)",
                     fields              = "site_id,site.name,campaign_id" \
                         ",campaign.name,publisher_id,publisher.name" \
                         ",installs,events,purchases,opens,cpi,rpi,epi" \
                         ",opi,currency_code",
+                    cohort_interval     = "year_day",
+                    filter              = "(publisher_id > 0)",
                     limit               = 5,
                     page                = None,
                     sort                = None
@@ -188,13 +188,13 @@ class ExampleCohort(object):
                     end_date,
                     cohort_type         = "click",
                     aggregation_type    = "cumulative",
-                    cohort_interval     = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
-                    filter              = "(publisher_id > 0)",
                     fields              = "site_id,site.name,campaign_id" \
                         ",campaign.name,publisher_id,publisher.name" \
                         ",installs,events,purchases,opens,cpi,rpi,epi" \
                         ",opi,currency_code",
+                    cohort_interval     = "year_day",
+                    filter              = "(publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"
                 )
             print("= advertiser/stats/ltv/export.json response: {}".format(response))
@@ -217,13 +217,13 @@ class ExampleCohort(object):
                     end_date,
                     cohort_type         = "click",
                     aggregation_type    = "incremental",
-                    cohort_interval     = "year_day",
                     group               = "site_id,campaign_id,publisher_id",
-                    filter              = "(publisher_id > 0)",
                     fields              = "site_id,site.name,campaign_id" \
                         ",campaign.name,publisher_id,publisher.name" \
                         ",installs,events,purchases,opens,cpi,rpi,epi" \
                         ",opi,currency_code",
+                    cohort_interval     = "year_day",
+                    filter              = "(publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"
                 )
             print("= advertiser/stats/ltv/export.json response: {}".format(response))

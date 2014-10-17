@@ -1,5 +1,0 @@
-<map id="tune.management.reports.reports_logs_base.ReportsLogsBase.export" name="tune.management.reports.reports_logs_base.ReportsLogsBase.export">
-<area shape="rect" id="node3" href="$classtune_1_1management_1_1reports_1_1reports__logs__base_1_1ReportsLogsBase.html#aa5e600c4e26a37c9f71230b38b53a7fb" title="Finds all existing records that match filter criteria and returns an array of found model data..." alt="" coords="291,5,512,59"/>
-<area shape="rect" id="node5" href="$classtune_1_1management_1_1reports_1_1reports__logs__base_1_1ReportsLogsBase.html#aed75ad9c6fddb320f4a4dff10d988730" title="Counts all existing records that match filter criteria and returns an array of found model data..." alt="" coords="560,5,792,59"/>
-<area shape="rect" id="node7" href="$classtune_1_1management_1_1reports_1_1reports__logs__base_1_1ReportsLogsBase.html#a61c9ec1789d7b39d2fe86261b38e4c1b" title="The constructor. " alt="" coords="840,5,1085,59"/>
-</map>

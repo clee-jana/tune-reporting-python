@@ -35,14 +35,14 @@ Tune Management API account/users Example
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.1
+#  @version   0.9.2
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
 import sys
 import traceback
 from tune.management.api.account import (Users)
-from tune.common import (TuneSdkException)
+from tune.shared import (TuneSdkException)
 
 class ExampleUsers(object):
     """Example using Tune Management API client."""
