@@ -38,6 +38,13 @@ import sys
 
 import tune
 
+# To install the tune-api-python library, open a Terminal shell, then run this
+# file by typing:
+#
+# python setup.py install
+#
+# You need to have the setuptools module installed. Try reading the setuptools
+# documentation: http://pypi.python.org/pypi/setuptools
 from setuptools import setup, find_packages
 
 __version__ = None
@@ -49,44 +56,22 @@ try:
 except ImportError:
     from distutils.core import setup
 
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    sys.exit()
-
-PACKAGES = [
-    'tune',
-    'tune.shared',
-    'tune.management',
-    'tune.management.api',
-    'tune.management.api.account',
-    'tune.management.api.account.users',
-    'tune.management.api.advertiser',
-    'tune.management.api.advertiser.stats',
-    'tune.management.shared',
-    'tune.management.shared.reports',
-    'tune.management.shared.service'
-]
-
 REQUIRES = [
 ]
-
-FILES = ["tune/*"]
 
 setup(
     name='tune',
     version=__version__,
-    description='Tune Helper Library to Management API.',
+    description='Tune API client library.',
     author='Tune',
     author_email='sdk@tune.com',
-    url = "https://github.com/tune/tune-management-python/",
-    keywords = ["tune", "management"],
+    url = "https://github.com/MobileAppTracking/tune-api-python",
+    keywords = ["tune", "mobileapptracking", "management api"],
     install_requires = REQUIRES,
-    packages = PACKAGES,
-    package_data={'tune': FILES},
+    packages = find_packages(),
     package_dir={'tune': 'tune'},
-    license='',
     classifiers= [
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
@@ -99,17 +84,19 @@ setup(
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: Communications :: Telephony",
+        "Topic :: Software Development :: Libraries :: Python Modules"
         ],
     long_description = """\
     Python Tune Helper Library
     ----------------------------
 
     DESCRIPTION
-    The Tune SDK simplifies the process of making calls using the Tune Management API.
-    The Tune Management API is for advertisers to export data and manage their account programmatically.  
-    See https://www.github.com/tune/tune-python for more information.
+    The Tune SDK simplifies the process of making calls using the Tune
+    Management API.
+    The Tune Management API is for advertisers to export data and
+    manage their account programmatically.  
+    See https://github.com/MobileAppTracking/tune-api-python for
+    more information.
 
     LICENSE The Tune Python Helper Library is distributed under the MIT
     License """
