@@ -40,6 +40,8 @@ Tune SDK shared helper functions.
 #
 
 import sys
+import codecs
+
 from datetime import datetime
 
 ## Check Python Version
@@ -79,3 +81,16 @@ def is_parentheses_balanced(s, i=0, cnt=0):
     elif s[i] == ")":
         return is_parentheses_balanced(s, i + 1, cnt - 1)
     return is_parentheses_balanced(s, i + 1, cnt)
+
+
+## Convert unicode contents of JSON file to utf-8
+#
+def json_convert(input):
+    if isinstance(input, dict):
+        return {json_convert(key): json_convert(value) for key, value in input.iteritems()}
+    elif isinstance(input, list):
+        return [json_convert(element) for element in input]
+    elif isinstance(input, unicode):
+        return input.encode('utf-8')
+    else:
+        return input

@@ -39,6 +39,15 @@ Tune common code.
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
-from .helpers import (python_check_version, is_parentheses_balanced)
-from .exceptions import (TuneSdkException, TuneServiceException)
-from .proxy import (TuneProxy)
+from .helpers import (
+    python_check_version,
+    is_parentheses_balanced,
+    json_convert
+    )
+from .exceptions import (
+    TuneSdkException,
+    TuneServiceException
+    )
+from .proxy import (
+    TuneProxy
+    )

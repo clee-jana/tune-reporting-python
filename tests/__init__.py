@@ -1,10 +1,7 @@
-"""
-Tune SDK Version
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## version.py
+#
+## __init__.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,11 +32,16 @@ Tune SDK Version
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.6
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
-__version_info__ = ('0', '9', '6')
-__version__ = '.'.join(__version_info__)
-
-__python_required_version__ = (2, 7)
+from .test_client import TestClient
+from .test_clicks import TestClicks
+from .test_event_items import TestEventItems
+from .test_events import TestEvents
+from .test_installs import TestInstalls
+from .test_postbacks import TestPostbacks
+from .test_actuals import TestActuals
+from .test_cohort import TestCohort
+from .test_retention import TestRetention

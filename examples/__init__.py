@@ -32,6 +32,16 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.6
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
+
+from .example_client import ExampleClient
+from .example_clicks import ExampleClicks
+from .example_event_items import ExampleEventItems
+from .example_events import ExampleEvents
+from .example_installs import ExampleInstalls
+from .example_postbacks import ExamplePostbacks
+from .example_actuals import ExampleActuals
+from .example_cohort import ExampleCohort
+from .example_retention import ExampleRetention

@@ -53,19 +53,13 @@ from .report_reader_base import (
 from tune.shared import (
     TuneSdkException,
     TuneServiceException,
-    TuneProxy
+    TuneProxy,
+    json_convert
 )
 
-def __json_unicode_to_utf8_convert(input):
-    if isinstance(input, dict):
-        return {convert(key): convert(value) for key, value in input.iteritems()}
-    elif isinstance(input, list):
-        return [convert(element) for element in input]
-    elif isinstance(input, unicode):
-        return input.encode('utf-8')
-    else:
-        return input
-
+    
+## Helper class for reading reading remote JSON file
+#
 class ReportReaderJSON(ReportReaderBase):
     """Helper class for reading reading remote JSON file"""
 
@@ -87,5 +81,5 @@ class ReportReaderJSON(ReportReaderBase):
             report_utf8_str = report_content.decode("utf8")
             self.data = json.loads(
                 report_content,
-                object_hook=__json_unicode_to_utf8_convert
+                object_hook=json_convert
                 )

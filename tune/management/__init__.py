@@ -57,9 +57,10 @@ from .api import (
     LTV,            # Cohort
     Export
 )
+
 from .shared import (
     ReportReaderCSV,
-    ReportReaderJSON
+    ReportReaderJSON,
+    TuneManagementClient,
+    TuneManagementBase
 )
-
-from .shared import (TuneManagementClient, TuneManagementBase)

@@ -1,8 +1,8 @@
 ****************************************
 Tune API Python SDK for Python 2.7 and 3.0
 Incorporate Tune API services.
-Update:  2014-10-20
-Version: 0.9.3
+Update:  2014-10-23
+Version: 0.9.6
 ****************************************
 
 =============
@@ -68,14 +68,14 @@ SDK Examples
 -------------
 
 .. code-block:: bash
-    ./tune_examples.sh [API_KEY]
+    $ ./scripts/tune_examples.sh [API_KEY]
 
 -------------
 SDK Unittests
 -------------
 
 .. code-block:: bash
-    ./tune_unittests.sh [API_KEY]
+    $ ./scripts/tune_tests.sh [API_KEY]
 
 =============
 License
