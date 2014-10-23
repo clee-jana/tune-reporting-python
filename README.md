@@ -36,30 +36,38 @@ You can install **tune-api-python** via PyPi or by installing from source.
 <a name="sdk_installation_pip"></a>
 #### Via PyPi using pip:
 
-*TODO*
+Install from PyPi using [pip](http://www.pip-installer.org/en/latest/), a
+package manager for Python.
+
+```bash
+    $ pip install tune
+```
+
+Don't have pip installed? Try installing it, by running this from the command
+line:
+
+```bash
+    $ curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python
+```
 
 <a name="sdk_installation_zip"></a>
 #### Via ZIP file:
 
-you can [download the source code
+You can [download the source code
 (ZIP)](https://github.com/MobileAppTracking/tune-api-python/zipball/master "tune-api-python
 source code") for `tune-api-python`, and then run:
 
+```bash
     python setup.py install
+```
 
 You may need to run the above commands with `sudo`.
 
 <a name="sdk_examples"></a>
-## SDK Examples
+## Code Samples
 
 ```bash
     $ ./scripts/tune_examples.sh [API_KEY]
-```
-<a name="sdk_unittests"></a>
-## SDK Unittests
-
-```bash
-    $ ./scripts/tune_tests.sh [API_KEY]
 ```
 
 <a name="license"></a>

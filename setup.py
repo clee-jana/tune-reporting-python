@@ -70,6 +70,7 @@ setup(
     install_requires = REQUIRES,
     packages = find_packages(),
     package_dir={'tune': 'tune'},
+    license="MIT License",
     classifiers= [
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
