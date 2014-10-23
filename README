@@ -1,8 +1,8 @@
 ****************************************
 Tune API Python SDK for Python 2.7 and 3.0
 Incorporate Tune API services.
-Update:  2014-10-20
-Version: 0.9.3
+Update:  2014-10-23
+Version: 0.9.6
 ****************************************
 
 =============
@@ -52,7 +52,7 @@ Via PyPi using pip:
 Via ZIP file:
 -------------
 
-you can download the source code ZIP
+You can download the source code ZIP:
 https://github.com/MobileAppTracking/tune-api-python/zipball/master:
 
     python setup.py install
@@ -66,13 +66,13 @@ Code Samples
 SDK Examples
 -------------
 
-./tune_examples.sh [API_KEY]
+    $ ./scripts/tune_examples.sh [API_KEY]
 
 -------------
 SDK Unittests
 -------------
 
-./tune_unittests.sh [API_KEY]
+    $ ./scripts/tune_unittests.sh [API_KEY]
 
 =============
 License
