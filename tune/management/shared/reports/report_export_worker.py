@@ -35,7 +35,7 @@ Worker thread for polling download status of requested report.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -77,7 +77,7 @@ class ReportExportWorker(Thread):
              api_key,
              job_id,
              verbose=False,
-             sleep=60 # seconds
+             sleep=10
          ):
         # api_key
         if not api_key or len(api_key) < 1:
@@ -103,8 +103,6 @@ class ReportExportWorker(Thread):
         self.__verbose = verbose
         self.__class_export = instance
         self.__process = None
-        self.__mod_export_name = mod_export_namespace
-        self.__mod_export_class = mod_export_class
         self.__mod_export_function = mod_export_function
         self.__response = None
 
@@ -116,49 +114,60 @@ class ReportExportWorker(Thread):
         self.__process = subprocess.Popen(cmd,
                      stdout=subprocess.PIPE,
                      stderr=subprocess.STDOUT)
-        status = "running"
+
+        status = None
         response = None
         attempt = 0
 
-        while True:
-            response = getattr(self.__class_export, self.__mod_export_function)(
-                    self.__job_id
-                )
-
-            if not response:
-                raise TuneSdkException(
-                    "No response returned from export request."
-                )
-
-            if not response.data:
-                raise TuneSdkException(
-                    "No response data returned from export. Request URL: {}".format(
-                        response.request_url
+        try:
+            while True:
+                response = getattr(self.__class_export, self.__mod_export_function)(
+                        self.__job_id
                     )
-                )
 
-            if response.http_code != 200:
-                raise TuneServiceException(
-                    "Request failed: HTTP Error Code: {}: {}".format(
-                        response.http_code,
-                        response.request_url
+                if not response:
+                    raise TuneSdkException(
+                        "No response returned from export request."
                     )
-                )
 
-            status = response.data["status"]
-            if status == "complete" or status == "fail":
-                break
-
-            attempt += 1
-            if self.__verbose:
-                print("= thread id {}: attempt: {}, response: {}".format(
-                        current_thread().ident,
-                        attempt,
-                        response
+                if not response.data:
+                    raise TuneSdkException(
+                        "No response data returned from export. Request URL: {}".format(
+                            response.request_url
+                        )
                     )
-                )
 
-            time.sleep(self.__sleep)
+                if response.http_code != 200:
+                    raise TuneServiceException(
+                        "Request failed: HTTP Error Code: {}: {}".format(
+                            response.http_code,
+                            response.request_url
+                        )
+                    )
+
+                status = response.data["status"]
+                if status == "complete" or status == "fail":
+                    break
+
+                attempt += 1
+                if self.__verbose:
+                    print("= thread id {}: attempt: {}, response: {}".format(
+                            current_thread().ident,
+                            attempt,
+                            response
+                        )
+                    )
+
+                time.sleep(self.__sleep)
+        except (TuneSdkException, TuneServiceException):
+            raise
+        except Exception as ex:
+            raise TuneSdkException(
+                "Failed get export status: (Error:{0})".format(
+                    str(ex)
+                    ),
+                ex
+                )
 
         if self.__verbose:
             print("= thread id {}: response: {}".format(

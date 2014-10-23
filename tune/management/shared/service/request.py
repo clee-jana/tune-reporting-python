@@ -35,7 +35,7 @@ Container of complete request Tune Management API request.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -80,7 +80,8 @@ class Request(object):
                 controller (str): Controller portion of Tune Service request.\n
                 action (str): Action portion of Tune Service request.\n
                 api_key (str): User's Tune API Key.\n
-                query_string_dict (dictionary, optional): Other attributes to be included in the request's query string.\n
+                query_string_dict (dictionary, optional): Other attributes
+                to be included in the request's query string.\n
 
         """
         # -----------------------------------------------------------------

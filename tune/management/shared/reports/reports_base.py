@@ -35,7 +35,7 @@ Base class for handling all Tune Management API endpoints that deal with reports
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -197,7 +197,6 @@ class ReportsBase(TuneManagementBase):
     #  @param str    mod_export_class        Report class.
     #  @param str    mod_export_function     Report function performing status request.
     #  @param str    job_id                  Job Identifier of report on queue.
-    #  @param str    report_format           Requested document format: csv, json
     #  @param bool   verbose                 For debugging purposes only.
     #  @param int    sleep                   How long thread should sleep before
     #                                           next status request.
@@ -212,9 +211,8 @@ class ReportsBase(TuneManagementBase):
         mod_export_class,
         mod_export_function,
         job_id,
-        report_format,
         verbose=False,
-        sleep=60 # seconds
+        sleep=10
     ):
         """
         Helper function for fetching report document given provided job identifier.
@@ -231,8 +229,6 @@ class ReportsBase(TuneManagementBase):
             raise ValueError("Parameter 'mod_export_function' is not defined.")
         if not job_id or len(job_id) < 1:
             raise ValueError("Parameter 'job_id' is not defined.")
-        if not report_format or len(report_format) < 1:
-            raise ValueError("Parameter 'report_format' is not defined.")
 
         export_worker = ReportExportWorker(
             mod_export_namespace,
@@ -279,52 +275,7 @@ class ReportsBase(TuneManagementBase):
                 "Report request failed: {}".format(str(export_worker.response))
                 )
 
-        loaded_mod = __import__(mod_export_namespace, fromlist=[mod_export_namespace])
+        if not export_worker.response:
+            raise TuneSdkException("Failed to get export status.")
 
-        # Load it from imported module
-        loaded_class = getattr(loaded_mod, mod_export_class)
-
-        report_url = loaded_class.parse_response_url(export_worker.response)
-
-        if not report_url or len(report_url) < 1:
-            raise TuneSdkException("Failed to get report url from response.")
-
-        return self.parse_report_data(report_url, report_format)
-
-    ## Helper function for fetching report document given provided job identifier.
-    #
-    #  Response is not the same for all report endpoints.
-    #
-    #  @param str report_url     Report url provided upon
-    #                               completing of export processing.
-    #  @param str report_format  Expected format of exported report.
-    #
-    @staticmethod
-    def parse_report_data(
-       report_url,
-       report_format
-    ):
-        """
-        Helper function for fetching report document given provided job identifier.
-        """
-
-        report_reader = None
-        try:
-            if report_format == "csv":
-                report_reader = ReportReaderCSV(
-                    report_url
-                )
-            elif report_format == "json":
-                report_reader = ReportReaderJSON(
-                    report_url
-                )
-        except Exception as ex:
-            raise TuneSdkException(
-                "Failed to create reader provided by report url {}: {}".format(
-                    report_url,
-                    str(ex)
-                )
-            )
-
-        return report_reader
-
+        return export_worker.response

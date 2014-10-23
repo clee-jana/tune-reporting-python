@@ -35,15 +35,14 @@ import unittest
 
 from unittests.tune import (
     UnittestTuneManagementClient,
-    UnittestTuneManagementApiAdvertiserReportsLogsClicks,
-    UnittestTuneManagementApiAdvertiserReportsLogsEventItems,
-    UnittestTuneManagementApiAdvertiserReportsLogsEvents,
-    UnittestTuneManagementApiAdvertiserReportsLogsInstalls,
-    UnittestTuneManagementApiAdvertiserReportsLogsPostbacks,
-    UnittestTuneManagementApiAdvertiserReportsLogsUpdates,
-    UnittestTuneManagementApiAdvertiserReportsActuals,
-    UnittestTuneManagementApiAdvertiserReportsCohort,
-    UnittestTuneManagementApiAdvertiserReportsRetention
+    UnittestReportsLogsClicks,
+    UnittestReportsLogsEventItems,
+    UnittestReportsLogsEvents,
+    UnittestReportsLogsInstalls,
+    UnittestReportsLogsPostbacks,
+    UnittestReportsActuals,
+    UnittestReportsCohort,
+    UnittestReportsRetention
 )
 
 def suite(api_key):
@@ -51,15 +50,14 @@ def suite(api_key):
     suite = unittest.TestSuite()
 
     suite.addTest (UnittestTuneManagementClient(api_key))
-    suite.addTest (UnittestTuneManagementApiAdvertiserReportsLogsClicks(api_key))
-    suite.addTest (UnittestTuneManagementApiAdvertiserReportsLogsEventItems(api_key))
-    suite.addTest (UnittestTuneManagementApiAdvertiserReportsLogsEvents(api_key))
-    suite.addTest (UnittestTuneManagementApiAdvertiserReportsLogsInstalls(api_key))
-    suite.addTest (UnittestTuneManagementApiAdvertiserReportsLogsPostbacks(api_key))
-    suite.addTest (UnittestTuneManagementApiAdvertiserReportsLogsUpdates(api_key))
-    suite.addTest (UnittestTuneManagementApiAdvertiserReportsActuals(api_key))
-    suite.addTest (UnittestTuneManagementApiAdvertiserReportsCohort(api_key))
-    suite.addTest (UnittestTuneManagementApiAdvertiserReportsRetention(api_key))
+    suite.addTest (UnittestReportsLogsClicks(api_key))
+    suite.addTest (UnittestReportsLogsEventItems(api_key))
+    suite.addTest (UnittestReportsLogsEvents(api_key))
+    suite.addTest (UnittestReportsLogsInstalls(api_key))
+    suite.addTest (UnittestReportsLogsPostbacks(api_key))
+    suite.addTest (UnittestReportsActuals(api_key))
+    suite.addTest (UnittestReportsCohort(api_key))
+    suite.addTest (UnittestReportsRetention(api_key))
 
     return suite
 

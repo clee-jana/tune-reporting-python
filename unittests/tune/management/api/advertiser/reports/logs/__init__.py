@@ -32,25 +32,22 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
 from .unittest_clicks import (
-    UnittestTuneManagementApiAdvertiserReportsLogsClicks
+    UnittestReportsLogsClicks
 )
 from .unittest_event_items import (
-    UnittestTuneManagementApiAdvertiserReportsLogsEventItems
+    UnittestReportsLogsEventItems
 )
 from .unittest_events import (
-    UnittestTuneManagementApiAdvertiserReportsLogsEvents
+    UnittestReportsLogsEvents
 )
 from .unittest_installs import (
-    UnittestTuneManagementApiAdvertiserReportsLogsInstalls
+    UnittestReportsLogsInstalls
 )
 from .unittest_postbacks import (
-    UnittestTuneManagementApiAdvertiserReportsLogsPostbacks
-)
-from .unittest_updates import (
-    UnittestTuneManagementApiAdvertiserReportsLogsUpdates
+    UnittestReportsLogsPostbacks
 )

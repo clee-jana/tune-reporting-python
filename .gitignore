@@ -1,47 +1,23 @@
-# Byte-compiled / optimized / DLL files
+vendor/
+composer.lock
+
+*.dump
+
+# tune-api-php
+tune-api-php/doc/phpdoc/
+tune-api-php/doc/doxygen/
+tune-api-php/README.md.bak
+
+# tune-api-python
+tune-api-python/tune.egg-info
+tune-api-python/build/
 __pycache__/
-*.py[cod]
+*.pyc
+tune-api-python/doc/doxygen/*
+tune-api-python/README.md.bak
 
-# C extensions
-*.so
-
-# Distribution / packaging
-bin/
-build/
-develop-eggs/
-dist/
-eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-.tox/
-.coverage
-.cache
-nosetests.xml
-coverage.xml
-
-# Translations
-*.mo
-
-# Mr Developer
-.mr.developer.cfg
-.project
 .pydevproject
-
-# Sphinx documentation
-docs/_build/
-
-# Composer vendors
-Vendors
-_files/
+.idea
+.dartignore
+.metadata/
+*.komodoproject

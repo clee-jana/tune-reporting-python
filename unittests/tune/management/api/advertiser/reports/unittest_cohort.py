@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -41,7 +41,7 @@ import datetime
 
 from tune.management.api.advertiser import (LTV)
 
-class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
+class UnittestReportsCohort(unittest.TestCase):
 
     def __init__(self, api_key):
         self.__api_key = api_key
@@ -62,6 +62,7 @@ class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
         try:
             ltv = LTV(
                 self.__api_key,
+                validate = True
             )
 
             response = ltv.count(
@@ -69,7 +70,7 @@ class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
                     self.__end_date,
                     cohort_type         = "click",
                     cohort_interval     = "year_day",
-                    group               = "site_id,campaign_id,publisher_id",
+                    group               = "site_id,publisher_id",
                     filter              = "(publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"
                 )
@@ -89,6 +90,7 @@ class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
         try:
             ltv = LTV(
                 self.__api_key,
+                validate = True
             )
 
             response = ltv.find(
@@ -96,11 +98,13 @@ class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
                     self.__end_date,
                     cohort_type         = "click",
                     aggregation_type    = "cumulative",
-                    group               = "site_id,campaign_id,publisher_id",
-                    fields              = "site_id,site.name,campaign_id" \
-                        ",campaign.name,publisher_id,publisher.name" \
-                        ",installs,events,purchases,opens,cpi,rpi,epi" \
-                        ",opi,currency_code",
+                    group               = "site_id,publisher_id",
+                    fields = "site_id \
+                    ,site.name \
+                    ,publisher_id \
+                    ,publisher.name \
+                    ,rpi \
+                    ,epi",
                     cohort_interval     = "year_day",
                     filter              = "(publisher_id > 0)",
                     limit               = 10,
@@ -124,6 +128,7 @@ class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
         try:
             ltv = LTV(
                 self.__api_key,
+                validate = True
             )
 
             response = ltv.export(
@@ -131,11 +136,13 @@ class UnittestTuneManagementApiAdvertiserReportsCohort(unittest.TestCase):
                     self.__end_date,
                     cohort_type         = "click",
                     aggregation_type    = "cumulative",
-                    group               = "site_id,campaign_id,publisher_id",
-                    fields              = "site_id,site.name,campaign_id" \
-                        ",campaign.name,publisher_id,publisher.name" \
-                        ",installs,events,purchases,opens,cpi,rpi,epi" \
-                        ",opi,currency_code",
+                    group               = "site_id,publisher_id",
+                    fields = "site_id \
+                    ,site.name \
+                    ,publisher_id \
+                    ,publisher.name \
+                    ,rpi \
+                    ,epi",
                     cohort_interval     = "year_day",
                     filter              = "(publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"

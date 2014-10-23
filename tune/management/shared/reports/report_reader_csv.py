@@ -35,7 +35,7 @@ Downloads remote CSV file from Amazon S3 repository and creates a reader.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -74,11 +74,11 @@ class ReportReaderCSV(ReportReaderBase):
         """Read CSV data provided remote path report_url."""
         self.data = []
         proxy = TuneProxy(self.report_url)
-        proxy.execute()
-        report_reader = csv.reader(codecs.iterdecode(proxy.response, 'utf-8'))
+        if proxy.execute():
+            report_reader = csv.reader(proxy.response)
 
-        if not report_reader:
-            raise TuneSdkException("CSV Reader not provided.")
+            if not report_reader:
+                raise TuneSdkException("CSV Reader not provided.")
 
-        for row in report_reader:
-            self.data.append(row)
+            for row in report_reader:
+                self.data.append(row)

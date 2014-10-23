@@ -35,7 +35,7 @@ Tune Management API endpoints of /advertiser/stats/*
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -45,7 +45,6 @@ from .events import (Events)
 from .installs import (Installs)
 from .ltv import (LTV)
 from .postbacks import (Postbacks)
-from .updates import (Updates)
 from .retention import (Retention)
 
 from tune.management.shared import (

@@ -33,7 +33,7 @@ Tune Management API endpoint /export/
 # @author    Jeff Tanner <jefft@tune.com>
 # @copyright 2014 Tune (http://www.tune.com)
 # @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# @version   0.9.3
+# @version   0.9.5
 # @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -61,7 +61,8 @@ class Export(ReportsBase):
             filter_test_profile_id=False
         )
 
-    ## Request status from export queue for report. When completed, url will be provided for downloading report.
+    ## Request status from export queue for report. When completed,
+    #  url will be provided for downloading report.
     #  @param str job_id   Job identifier assigned for report export.
     #  @return object @see Response
     def download(
@@ -87,15 +88,14 @@ class Export(ReportsBase):
     #  Starts worker thread for polling export queue.
     #
     #  @param string job_id        Job identifier assigned for report export.
-    #  @param string report_format Report export content format expectation: csv, json
-    #  @param bool   verbose       For debug purposes to monitor job export completion status.
+    #  @param bool   verbose       For debug purposes to monitor job export
+    #                              completion status.
     #  @param int    sleep         Polling delay for checking job completion status.
     #
     #  @return object Document contents
     def fetch(
         self,
         job_id,
-        report_format,
         verbose=False,
         sleep=60, # seconds
     ):
@@ -110,7 +110,6 @@ class Export(ReportsBase):
             "Export",
             "download",
             job_id,
-            report_format,
             verbose,
             sleep
         )
