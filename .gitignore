@@ -1,23 +1,6 @@
-vendor/
-composer.lock
-
-*.dump
-
-# tune-api-php
-tune-api-php/doc/phpdoc/
-tune-api-php/doc/doxygen/
-tune-api-php/README.md.bak
 
 # tune-api-python
-tune-api-python/tune.egg-info
-tune-api-python/build/
+tune.egg-info
+build/
 __pycache__/
 *.pyc
-tune-api-python/doc/doxygen/*
-tune-api-python/README.md.bak
-
-.pydevproject
-.idea
-.dartignore
-.metadata/
-*.komodoproject

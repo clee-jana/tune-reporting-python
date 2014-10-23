@@ -7,3 +7,5 @@ include README.txt
 include README.rst
 include README.md
 recursive-include tune *.py
+recursive-include examples *.py
+include scripts/tune_examples.sh

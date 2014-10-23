@@ -40,13 +40,24 @@ To use SDK, it requires you to generate API Key:
 Installation
 =============
 
-You can install **tune-api-python** via PyPi or by installing from source.
+You can install `tune-api-python` via PyPi or by installing from source.
 
 -------------
 Via PyPi using pip:
 -------------
 
-*TODO*
+Install from PyPi using `pip`, a package manager for Python.
+.. pip: http://www.pip-installer.org/en/latest/
+
+.. code-block:: bash
+    $ pip install tune
+
+
+Don't have pip installed? Try installing it, by running this from the command
+line:
+
+.. code-block:: bash
+    $ curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python
 
 -------------
 Via ZIP file:
@@ -56,26 +67,16 @@ you can download the source code ZIP
 .. ZIP: https://github.com/MobileAppTracking/tune-api-python/zipball/master
 
 .. code-block:: bash
-    python setup.py install
+    $ python setup.py install
 
 You may need to run the above commands with `sudo`.
 
 =============
 Code Samples
 =============
--------------
-SDK Examples
--------------
 
 .. code-block:: bash
     $ ./scripts/tune_examples.sh [API_KEY]
-
--------------
-SDK Unittests
--------------
-
-.. code-block:: bash
-    $ ./scripts/tune_tests.sh [API_KEY]
 
 =============
 License
