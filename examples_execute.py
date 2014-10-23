@@ -41,8 +41,7 @@ from examples.tune.management.api import (
     ExampleEventItems,
     ExampleEvents,
     ExampleInstalls,
-    ExamplePostbackUrls,
-    ExampleUpdates,
+    ExamplePostbacks,
     ExampleActuals,
     ExampleCohort,
     ExampleRetention
@@ -69,10 +68,7 @@ if __name__ == '__main__':
         example = ExampleInstalls()
         example.run(api_key)
         
-        example = ExamplePostbackUrls()
-        example.run(api_key)
-        
-        example = ExampleUpdates()
+        example = ExamplePostbacks()
         example.run(api_key)
         
         example = ExampleActuals()

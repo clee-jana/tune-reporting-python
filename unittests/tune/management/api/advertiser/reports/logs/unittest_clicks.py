@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -40,8 +40,9 @@ import unittest
 import datetime
 
 from tune.management.api.advertiser import (Clicks)
+from tune.shared import (TuneSdkException)
 
-class UnittestTuneManagementApiAdvertiserReportsLogsClicks(unittest.TestCase):
+class UnittestReportsLogsClicks(unittest.TestCase):
 
     def __init__(self, api_key):
         self.__api_key = api_key
@@ -92,12 +93,18 @@ class UnittestTuneManagementApiAdvertiserReportsLogsClicks(unittest.TestCase):
             response = clicks.find(
                     self.__start_date,
                     self.__end_date,
-                    filter              = None,
-                    fields              = "created,site.name,campaign.name \
-                                          ,publisher.name,is_unique,publisher_ref_id \
-                                          ,country.name,region.name,agency.name \
-                                          ,site_id,campaign_id,publisher_id \
-                                          ,agency_id,country_id,region_id",
+                    filter = None,
+                    fields = "id \
+                    ,created \
+                    ,site_id \
+                    ,site.name \
+                    ,publisher_id \
+                    ,publisher.name \
+                    ,is_unique \
+                    ,advertiser_sub_campaign_id \
+                    ,advertiser_sub_campaign.ref \
+                    ,publisher_sub_campaign_id \
+                    ,publisher_sub_campaign.ref",
                     limit               = 5,
                     page                = None,
                     sort                = {"created": "DESC"},
@@ -112,7 +119,76 @@ class UnittestTuneManagementApiAdvertiserReportsLogsClicks(unittest.TestCase):
         self.assertIsNone(response.errors)
         self.assertIsInstance(response.data, list)
         self.assertLessEqual(len(response.data), 10)
-        
+
+    def test_FindInvalidFields(self):
+        response = None
+
+        try:
+            clicks = Clicks(
+                self.__api_key,
+                validate = True
+            )
+
+            response = clicks.find(
+                    self.__start_date,
+                    self.__end_date,
+                    filter = None,
+                    fields = "id \
+                    ,created \
+                    ,site_id \
+                    ,site.name \
+                    ,publisher_id \
+                    ,publisher.name \
+                    ,foo \
+                    ,advertiser_sub_campaign_id \
+                    ,advertiser_sub_campaign.ref \
+                    ,publisher_sub_campaign_id \
+                    ,publisher_sub_campaign.ref",
+                    limit               = 5,
+                    page                = None,
+                    sort                = {"created": "DESC"},
+                    response_timezone   = "America/Los_Angeles"
+                )
+        except TuneSdkException:
+            pass
+        except Exception as exc:
+            self.fail("Exception: {0}".format(exc))
+
+    def test_FindInvalidFilter(self):
+        response = None
+
+        try:
+            clicks = Clicks(
+                self.__api_key,
+                validate = True
+            )
+
+            response = clicks.find(
+                    self.__start_date,
+                    self.__end_date,
+                    filter = "(foo > 0)",
+                    fields = "id \
+                    ,created \
+                    ,site_id \
+                    ,site.name \
+                    ,publisher_id \
+                    ,publisher.name \
+                    ,is_unique \
+                    ,advertiser_sub_campaign_id \
+                    ,advertiser_sub_campaign.ref \
+                    ,publisher_sub_campaign_id \
+                    ,publisher_sub_campaign.ref",
+                    limit               = 5,
+                    page                = None,
+                    sort                = {"created": "DESC"},
+                    response_timezone   = "America/Los_Angeles"
+                )
+        except TuneSdkException:
+            pass
+        except Exception as exc:
+            self.fail("Exception: {0}".format(exc))
+
+
     def test_Export(self):
         response = None
 
@@ -126,11 +202,17 @@ class UnittestTuneManagementApiAdvertiserReportsLogsClicks(unittest.TestCase):
                     self.__start_date,
                     self.__end_date,
                     filter              = None,
-                    fields              = "created,site.name,campaign.name \
-                                          ,publisher.name,is_unique,publisher_ref_id \
-                                          ,country.name,region.name,agency.name \
-                                          ,site_id,campaign_id,publisher_id \
-                                          ,agency_id,country_id,region_id",
+                    fields = "id \
+                    ,created \
+                    ,site_id \
+                    ,site.name \
+                    ,publisher_id \
+                    ,publisher.name \
+                    ,is_unique \
+                    ,advertiser_sub_campaign_id \
+                    ,advertiser_sub_campaign.ref \
+                    ,publisher_sub_campaign_id \
+                    ,publisher_sub_campaign.ref",
                     format              = "csv",
                     response_timezone   = "America/Los_Angeles"
                 )
@@ -141,9 +223,11 @@ class UnittestTuneManagementApiAdvertiserReportsLogsClicks(unittest.TestCase):
         self.assertIsNotNone(response.data)
         self.assertEqual(response.http_code, 200)
         self.assertIsNone(response.errors)
-        
+
     def runTest (self):
         self.test_ApiKey()
         self.test_Count()
         self.test_Find()
+        self.test_FindInvalidFields()
+        self.test_FindInvalidFilter()
         self.test_Export()

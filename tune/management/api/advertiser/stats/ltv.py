@@ -35,7 +35,7 @@ Tune Management API endpoint /advertiser/stats/ltv
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -70,7 +70,6 @@ class LTV(ReportsInsightBase):
     ## Helper function for fetching report document given provided job identifier.
     #
     #  @param string job_id            Job Identifier of report on queue.
-    #  @param string report_format     Requested document format: csv, json
     #  @param bool   verbose           For debugging purposes only.
     #  @param int    sleep             How long thread should sleep before
     #                                   next status request.
@@ -79,16 +78,14 @@ class LTV(ReportsInsightBase):
     def fetch(
         self,
         job_id,
-        report_format="csv",
         verbose=False,
-        sleep=60 # seconds             #
+        sleep=10             #
     ):
         return ReportsInsightBase.fetch(
             self,
             "tune.management.api.advertiser.stats.ltv",
             self.__class__.__name__,
             job_id,
-            report_format,
             verbose,
             sleep # seconds
         )

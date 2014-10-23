@@ -35,7 +35,7 @@ Downloads remote JSON file from Amazon S3 repository and creates a reader.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -56,6 +56,16 @@ from tune.shared import (
     TuneProxy
 )
 
+def __json_unicode_to_utf8_convert(input):
+    if isinstance(input, dict):
+        return {convert(key): convert(value) for key, value in input.iteritems()}
+    elif isinstance(input, list):
+        return [convert(element) for element in input]
+    elif isinstance(input, unicode):
+        return input.encode('utf-8')
+    else:
+        return input
+
 class ReportReaderJSON(ReportReaderBase):
     """Helper class for reading reading remote JSON file"""
 
@@ -72,8 +82,10 @@ class ReportReaderJSON(ReportReaderBase):
         self.data = None
 
         proxy = TuneProxy(self.report_url)
-        proxy.execute()
-        report_content = proxy.response.read()
-        report_utf8_str = report_content.decode("utf8")
-        self.data = json.loads(report_utf8_str)
-
+        if proxy.execute():
+            report_content = proxy.response.read()
+            report_utf8_str = report_content.decode("utf8")
+            self.data = json.loads(
+                report_content,
+                object_hook=__json_unicode_to_utf8_convert
+                )

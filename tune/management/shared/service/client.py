@@ -35,7 +35,7 @@ Client class used for connecting with Tune Management API service.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -58,7 +58,7 @@ python_check_version(__python_required_version__)
 ## Tune MobileAppTracking Management API access class
 #
 #  @example example_client.py
-# 
+#
 class TuneManagementClient(object):
     """
     A client for accessing the Tune Management API service
@@ -77,7 +77,7 @@ class TuneManagementClient(object):
     __response = None
 
      ## Constructor
-     # 
+     #
      #  @param string      controller           Tune Management API endpoint name
      #  @param string      action               Tune Management API endpoint's action name
      #  @param string      api_key              Tune MobileAppTracking API Key
@@ -140,7 +140,7 @@ class TuneManagementClient(object):
                     response_json,
                     response_http_code,
                     response_headers,
-                    request_url= self.__request.url
+                    request_url=self.__request.url
                     )
 
                 if response_http_code == 200:
@@ -152,7 +152,7 @@ class TuneManagementClient(object):
                     str(self.__request),
                     str(e)
                     ),
-                e )
+                e)
 
         return response_success;
 

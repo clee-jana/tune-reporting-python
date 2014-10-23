@@ -35,7 +35,7 @@ Tune SDK shared helper functions.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -67,18 +67,15 @@ def python_check_version(required_version):
         sys.exit(-1)
     return 0
 
-##
-def validate_date(date_text):
-    try:
-        datetime.strptime(date_text, '%Y-%m-%d')
-        return True
-    except ValueError:
+## Check if string has balance parentheses.
+#
+def is_parentheses_balanced(s, i=0, cnt=0):
+    if i == len(s):
+        return cnt == 0
+    if cnt < 0:
         return False
-
-##
-def validate_datetime(date_time_text):
-    try:
-        datetime.strptime(date_time_text, '%Y-%m-%d %H:%M:%S')
-        return True
-    except ValueError:
-        return False
+    if s[i] == "(":
+        return is_parentheses_balanced(s, i + 1, cnt + 1)
+    elif s[i] == ")":
+        return is_parentheses_balanced(s, i + 1, cnt - 1)
+    return is_parentheses_balanced(s, i + 1, cnt)

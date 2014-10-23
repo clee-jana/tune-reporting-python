@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -41,7 +41,7 @@ import datetime
 
 from tune.management.api.advertiser import (Stats)
 
-class UnittestTuneManagementApiAdvertiserReportsActuals(unittest.TestCase):
+class UnittestReportsActuals(unittest.TestCase):
 
     def __init__(self, api_key):
         self.__api_key = api_key
@@ -62,6 +62,7 @@ class UnittestTuneManagementApiAdvertiserReportsActuals(unittest.TestCase):
         try:
             stats = Stats(
                 self.__api_key,
+                validate = True
             )
 
             response = stats.count(
@@ -88,17 +89,34 @@ class UnittestTuneManagementApiAdvertiserReportsActuals(unittest.TestCase):
         try:
             stats = Stats(
                 self.__api_key,
+                validate = True
             )
 
             response = stats.find(
                     self.__start_date,
                     self.__end_date,
-                    filter              = "(publisher_id = 0)",
-                    fields              = "site_id,site.name,publisher_id,publisher.name,campaign_id,campaign.name,site_event_id,site_event.name,match_type,advertiser_sub_publisher_id,advertiser_sub_publisher.name,advertiser_sub_site_id,advertiser_sub_site.name,advertiser_sub_campaign_id,advertiser_sub_campaign.name,agency_id,agency.name,ad_clicks,ad_clicks_unique,installs,updates,opens,events,payouts,revenues_usd,country_id,country.name,currency_code",
+                    filter = "(publisher_id > 0)",
+                    fields = "site_id \
+                    ,site.name \
+                    ,publisher_id \
+                    ,publisher.name \
+                    ,ad_impressions \
+                    ,ad_impressions_unique \
+                    ,ad_clicks \
+                    ,ad_clicks_unique \
+                    ,paid_installs \
+                    ,paid_installs_assists \
+                    ,non_installs_assists \
+                    ,paid_events \
+                    ,paid_events_assists \
+                    ,non_events_assists \
+                    ,paid_opens \
+                    ,paid_opens_assists \
+                    ,non_opens_assists",
                     limit               = 10,
                     page                = None,
                     sort                = {"installs": "DESC"},
-                    group               = "site_id,publisher_id,campaign_id,site_event_id,match_type,advertiser_sub_publisher_id,advertiser_sub_site_id,advertiser_sub_campaign_id,agency_id,country_id",
+                    group               = "site_id,publisher_id",
                     timestamp           = "datehour",  # Set to breakdown stats by timestamp choices: hour, datehour, date, week, month
                     response_timezone   = "America/Los_Angeles"
                 )
@@ -111,8 +129,52 @@ class UnittestTuneManagementApiAdvertiserReportsActuals(unittest.TestCase):
         self.assertIsNone(response.errors)
         self.assertIsInstance(response.data, list)
         self.assertLessEqual(len(response.data), 10)
+        
+    def test_Export(self):
+        response = None
+
+        try:
+            stats = Stats(
+                self.__api_key,
+                validate = True
+            )
+
+            response = stats.export(
+                    self.__start_date,
+                    self.__end_date,
+                    filter = "(publisher_id > 0)",
+                    fields = "site_id \
+                    ,site.name \
+                    ,publisher_id \
+                    ,publisher.name \
+                    ,ad_impressions \
+                    ,ad_impressions_unique \
+                    ,ad_clicks \
+                    ,ad_clicks_unique \
+                    ,paid_installs \
+                    ,paid_installs_assists \
+                    ,non_installs_assists \
+                    ,paid_events \
+                    ,paid_events_assists \
+                    ,non_events_assists \
+                    ,paid_opens \
+                    ,paid_opens_assists \
+                    ,non_opens_assists",
+                    format              = "csv",
+                    group               = "site_id,publisher_id",
+                    timestamp           = "datehour",
+                    response_timezone   = "America/Los_Angeles"
+                )
+        except Exception as exc:
+            self.fail("Exception: {0}".format(exc))
+
+        self.assertIsNotNone(response)
+        self.assertIsNotNone(response.data)
+        self.assertEqual(response.http_code, 200)
+        self.assertIsNone(response.errors)
 
     def runTest (self):
         self.test_ApiKey()
         self.test_Count()
         self.test_Find()
+        self.test_Export()

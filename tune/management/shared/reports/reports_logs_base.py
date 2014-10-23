@@ -35,14 +35,13 @@ Base class for handling all Tune Management API endpoints that deal with log rep
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
 from .reports_base import (
     ReportsBase
 )
-from tune.shared import (validate_date, validate_datetime)
 from tune.management.shared.service import (
     TuneManagementBase
 )
@@ -106,7 +105,8 @@ class ReportsLogsBase(ReportsBase):
         if end_date is not None and isinstance(end_date, str):
             TuneManagementBase.validate_datetime('end_date', end_date)
 
-        filter = TuneManagementBase.validate_filter(self, filter)
+        if filter is not None and isinstance(filter, str): 
+            filter = TuneManagementBase.validate_filter(self, filter)
 
         return ReportsBase.call(
             self,
@@ -155,9 +155,12 @@ class ReportsLogsBase(ReportsBase):
         if end_date is not None and isinstance(end_date, str):
             TuneManagementBase.validate_datetime('end_date', end_date)
 
-        fields = TuneManagementBase.validate_fields(self, fields)
-        filter = TuneManagementBase.validate_filter(self, filter)
-        sort = TuneManagementBase.validate_sort(self, sort)
+        if fields is not None:
+            fields = TuneManagementBase.validate_fields(self, fields)
+        if filter is not None:
+            filter = TuneManagementBase.validate_filter(self, filter)
+        if sort is not None:
+            sort = TuneManagementBase.validate_sort(self, sort)
 
         return ReportsBase.call(
             self,
@@ -203,11 +206,12 @@ class ReportsLogsBase(ReportsBase):
             TuneManagementBase.validate_datetime('start_date', start_date)
         if end_date is not None and isinstance(end_date, str):
             TuneManagementBase.validate_datetime('end_date', end_date)
-
-        fields = TuneManagementBase.validate_fields(self, fields)
-        filter = TuneManagementBase.validate_filter(self, filter)
-
-        TuneManagementBase.validate_format(format)
+        if fields is not None:
+            fields = TuneManagementBase.validate_fields(self, fields)
+        if filter is not None:
+            filter = TuneManagementBase.validate_filter(self, filter)
+        if format is not None:
+            TuneManagementBase.validate_format(format)
 
         return ReportsBase.call(
             self,

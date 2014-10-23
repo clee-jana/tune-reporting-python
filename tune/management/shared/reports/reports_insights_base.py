@@ -35,7 +35,7 @@ Base class for handling all Tune Management API endpoints that deal with log rep
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -166,14 +166,23 @@ class ReportsInsightBase(ReportsBase):
         filter=None,
         response_timezone=None
     ):
+        if start_date is None or not start_date:
+            raise ValueError("Parameter 'start_date' is not defined.")
+        if end_date is None or not end_date:
+            raise ValueError("Parameter 'end_date' is not defined.")
+        if cohort_type is None or not cohort_type:
+            raise ValueError("Parameter 'cohort_type' is not defined.")
+        if group is None or not group:
+            raise ValueError("Parameter 'group' is not defined.")
+
         TuneManagementBase.validate_datetime('start_date', start_date)
         TuneManagementBase.validate_datetime('end_date', end_date)
 
         self.validate_cohort_type(cohort_type)
-        if isinstance(cohort_interval, str):
+        
+        if cohort_interval is not None:
             self.validate_cohort_interval(cohort_interval)
-
-        if isinstance(filter, str):
+        if filter is not None:
             filter = TuneManagementBase.validate_filter(self, filter)
 
         return ReportsBase.call(
@@ -229,6 +238,17 @@ class ReportsInsightBase(ReportsBase):
         format=None,
         response_timezone=None
     ):
+        if start_date is None or not start_date:
+            raise ValueError("Parameter 'start_date' is not defined.")
+        if end_date is None or not end_date:
+            raise ValueError("Parameter 'end_date' is not defined.")
+        if cohort_type is None or not cohort_type:
+            raise ValueError("Parameter 'cohort_type' is not defined.")
+        if aggregation_type is None or not aggregation_type:
+            raise ValueError("Parameter 'aggregation_type' is not defined.")
+        if group is None or not group:
+            raise ValueError("Parameter 'group' is not defined.")
+
         TuneManagementBase.validate_datetime('start_date', start_date)
         TuneManagementBase.validate_datetime('end_date', end_date)
 
@@ -300,6 +320,18 @@ class ReportsInsightBase(ReportsBase):
         filter=None,
         response_timezone=None
     ):
+        if start_date is None or not start_date:
+            raise ValueError("Parameter 'start_date' is not defined.")
+        if end_date is None or not end_date:
+            raise ValueError("Parameter 'end_date' is not defined.")
+        if cohort_type is None or not cohort_type:
+            raise ValueError("Parameter 'cohort_type' is not defined.")
+        if aggregation_type is None or not aggregation_type:
+            raise ValueError("Parameter 'aggregation_type' is not defined.")
+        if group is None or not group:
+            raise ValueError("Parameter 'group' is not defined.")
+        if fields is None or not fields:
+            raise ValueError("Parameter 'fields' is not defined.")
         TuneManagementBase.validate_datetime('start_date', start_date)
         TuneManagementBase.validate_datetime('end_date', end_date)
 
@@ -363,7 +395,6 @@ class ReportsInsightBase(ReportsBase):
     #  @param string mod_export_class  Requesting report class for this export.
     #  @param string job_id            Provided Job Identifier to reference
     #                                  requested report on export queue.
-    #  @param string report_format     Expected content format of exported report.
     #  @param bool   verbose           Debug purposes only to view progress of
     #                                  job on export queue.
     #  @param int    sleep             Polling delay between querying job
@@ -375,15 +406,12 @@ class ReportsInsightBase(ReportsBase):
         mod_export_namespace,
         mod_export_class,
         job_id,
-        report_format,
         verbose=False,
-        sleep=60 # seconds
+        sleep=10
     ):
         # job_id
         if not job_id or len(job_id) < 1:
             raise ValueError("Parameter 'job_id' is not defined.")
-
-        TuneManagementBase.validate_format(report_format)
 
         return ReportsBase.fetch(
             self,
@@ -391,7 +419,6 @@ class ReportsInsightBase(ReportsBase):
             mod_export_class,
             "status",
             job_id,
-            report_format,
             verbose,
             sleep # seconds
         )

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-## example_actuals.py
+## example_postback_urls.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,13 +35,17 @@
 #  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
-#  The Actuals report gives you quick insight into the performance of your apps
-#  and advertising partners (publishers). Use this report for reconciliation,
-#  testing, debugging, and ensuring that all measurement and attribution continues
-#  to operate smoothly. MAT generates this report by aggregating all the logs of
-#  each request (MAT updates the report every 5 minutes).
+#  You can use the Logs report in the same way as the Actuals reports, but
+#  instead of being aggregated by request type, the Logs report contains the
+#  logs of each individual request (including the logs for Clicks, Installs,
+#  Updates, Events, Event Items, and Postback URLs). The log data is available
+#  in real-time, so you can use it for testing, debugging, and ensuring that
+#  all measurement and attribution continues to operate smoothly. MAT updates
+#  the Logs report every 1 minute.
 #
-#  API call(s) stats/
+#  @link https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=postbacks @endlink
+#
+#  Postback API call: stats/postbacks
 #
 
 import os
@@ -53,13 +57,13 @@ import tune
 
 try:
     from tune.shared import (TuneSdkException, TuneServiceException)
-    from tune.management.api import (Stats, Export)
+    from tune.management.api import (Postbacks, Export)
     from tune.management.shared import (ReportReaderCSV, ReportReaderJSON)
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
     raise
 
-class ExampleActuals(object):
+class ExamplePostbacks(object):
     """Example using Tune Management API client."""
 
     def __init__(self):
@@ -76,37 +80,34 @@ class ExampleActuals(object):
             raise ValueError("Parameter 'api_key' is not defined.")
 
         print "========================================================="
-        print "= Tune Management API Advertiser Reports Actuals        ="
+        print "= Tune Management API Advertiser Reports Logs Postbacks ="
         print "========================================================="
 
         try:
-            week_ago = datetime.date.fromordinal(datetime.date.today().toordinal()-8)
             yesterday = datetime.date.fromordinal(datetime.date.today().toordinal()-1)
-            start_date  = "{} 00:00:00".format(week_ago)
+            start_date  = "{} 00:00:00".format(yesterday)
             end_date    = "{} 23:59:59".format(yesterday)
 
-            stats = Stats(api_key, validate = True)
+            postbacks = Postbacks(api_key, validate = True)
 
             print ""
             print "======================================================"
-            print " Fields of Advertiser Actuals records.                "
+            print " Fields of Advertiser Logs Postbacks records.         "
             print "======================================================"
-
-            response = stats.fields()
+            response = postbacks.fields()
             for field in response:
                 print str(field)
 
             print ""
             print "======================================================"
-            print " Count Advertiser Actuals records.                    "
+            print " Count Advertiser Logs Postbacks records.             "
             print "======================================================"
 
-            response = stats.count(
+            response = postbacks.count(
                     start_date,
                     end_date,
-                    filter = "(publisher_id > 0)",
-                    group = "site_id,publisher_id",
-                    response_timezone = "America/Los_Angeles"
+                    filter = "(status = 'approved')",
+                    response_timezone   = "America/Los_Angeles"
                 )
 
             if response.http_code != 200:
@@ -119,38 +120,35 @@ class ExampleActuals(object):
 
             print ""
             print "======================================================"
-            print " Find Advertiser Actuals records.                     "
+            print " Find Advertiser Logs Postbacks records.              "
             print "======================================================"
 
-            response = stats.find(
+            response = postbacks.find(
                     start_date,
                     end_date,
-                    filter = "(publisher_id > 0)",
-                    fields = "site_id \
+                    filter = "(status = 'approved')",
+                    fields = "id \
+                    ,stat_install_id \
+                    ,stat_event_id \
+                    ,stat_open_id \
+                    ,created \
+                    ,status \
+                    ,site_id \
                     ,site.name \
+                    ,site_event_id \
+                    ,site_event.name \
+                    ,site_event.type \
                     ,publisher_id \
                     ,publisher.name \
-                    ,ad_impressions \
-                    ,ad_impressions_unique \
-                    ,ad_clicks \
-                    ,ad_clicks_unique \
-                    ,paid_installs \
-                    ,paid_installs_assists \
-                    ,non_installs_assists \
-                    ,paid_events \
-                    ,paid_events_assists \
-                    ,non_events_assists \
-                    ,paid_opens \
-                    ,paid_opens_assists \
-                    ,non_opens_assists",
+                    ,attributed_publisher_id \
+                    ,attributed_publisher.name \
+                    ,url \
+                    ,http_result",
                     limit               = 5,
                     page                = None,
-                    sort                = {"installs": "DESC"},
-                    group               = "site_id,publisher_id",
-                    timestamp           = "datehour",
+                    sort                = {"created": "DESC"},
                     response_timezone   = "America/Los_Angeles"
                 )
-
             print "= Response:"
             print str(response)
 
@@ -159,36 +157,33 @@ class ExampleActuals(object):
 
             print ""
             print "=========================================================="
-            print " Request Advertiser Actuals CSV report for export.        "
+            print " Request Advertiser Logs Postbacks CSV report for export. "
             print "=========================================================="
 
-            response = stats.export(
+            response = postbacks.export(
                     start_date,
                     end_date,
-                    filter = "(publisher_id > 0)",
-                    fields = "site_id \
+                    filter = "(status = 'approved')",
+                    fields = "id \
+                    ,stat_install_id \
+                    ,stat_event_id \
+                    ,stat_open_id \
+                    ,created \
+                    ,status \
+                    ,site_id \
                     ,site.name \
+                    ,site_event_id \
+                    ,site_event.name \
+                    ,site_event.type \
                     ,publisher_id \
                     ,publisher.name \
-                    ,ad_impressions \
-                    ,ad_impressions_unique \
-                    ,ad_clicks \
-                    ,ad_clicks_unique \
-                    ,paid_installs \
-                    ,paid_installs_assists \
-                    ,non_installs_assists \
-                    ,paid_events \
-                    ,paid_events_assists \
-                    ,non_events_assists \
-                    ,paid_opens \
-                    ,paid_opens_assists \
-                    ,non_opens_assists",
+                    ,attributed_publisher_id \
+                    ,attributed_publisher.name \
+                    ,url \
+                    ,http_result",
                     format              = "csv",
-                    group               = "site_id,publisher_id",
-                    timestamp           = "datehour",
                     response_timezone   = "America/Los_Angeles"
                 )
-
             print "= Response:"
             print str(response)
 
@@ -206,9 +201,9 @@ class ExampleActuals(object):
             print "Job ID: {}".format(job_id)
 
             print ""
-            print "================================================================="
-            print " Export Status of Advertiser Actuals CSV report not threaded "
-            print "================================================================="
+            print "===================================================================="
+            print " Export Status of Advertiser Logs Postbacks CSV report not threaded "
+            print "===================================================================="
 
             export = Export(api_key)
 
@@ -272,42 +267,39 @@ class ExampleActuals(object):
 
             print ""
             print "========================================================"
-            print " Read Actuals CSV report and pretty print 5 lines.      "
+            print " Read Postbacks CSV report and pretty print 5 lines.    "
             print "========================================================"
-
             csv_report_reader = ReportReaderCSV(csv_report_url);
             csv_report_reader.read()
             csv_report_reader.pretty_print(limit=5)
 
             print ""
             print "==========================================================="
-            print " Request Advertiser Actuals JSON report for export.        "
+            print " Request Advertiser Logs Postbacks JSON report for export. "
             print "==========================================================="
 
-            response = stats.export(
+            response = postbacks.export(
                     start_date,
                     end_date,
-                    filter = "(publisher_id > 0)",
-                    fields = "site_id \
+                    filter = "(status = 'approved')",
+                    fields = "id \
+                    ,stat_install_id \
+                    ,stat_event_id \
+                    ,stat_open_id \
+                    ,created \
+                    ,status \
+                    ,site_id \
                     ,site.name \
+                    ,site_event_id \
+                    ,site_event.name \
+                    ,site_event.type \
                     ,publisher_id \
                     ,publisher.name \
-                    ,ad_impressions \
-                    ,ad_impressions_unique \
-                    ,ad_clicks \
-                    ,ad_clicks_unique \
-                    ,paid_installs \
-                    ,paid_installs_assists \
-                    ,non_installs_assists \
-                    ,paid_events \
-                    ,paid_events_assists \
-                    ,non_events_assists \
-                    ,paid_opens \
-                    ,paid_opens_assists \
-                    ,non_opens_assists",
+                    ,attributed_publisher_id \
+                    ,attributed_publisher.name \
+                    ,url \
+                    ,http_result",
                     format              = "json",
-                    group               = "site_id,publisher_id",
-                    timestamp           = "datehour",
                     response_timezone   = "America/Los_Angeles"
                 )
 
@@ -317,11 +309,18 @@ class ExampleActuals(object):
             if response.http_code != 200:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
+            if response.data is None:
+                raise Exception("Failed to return data: {}".format(str(response)))
+
             job_id = response.data
+
+            if not job_id or len(job_id) < 1:
+                raise Exception("Failed to return Job ID: {}".format(str(response)))
+
             print "Job ID: {}".format(job_id)
 
             print "========================================================"
-            print "Fetching Advertiser Actuals report threaded             "
+            print "Fetching Advertiser Logs Postbacks report threaded      "
             print "========================================================"
 
             export = Export(api_key)
@@ -335,11 +334,15 @@ class ExampleActuals(object):
             print "= Response:"
             print str(export_fetch_response)
 
+            if export_fetch_response is None:
+                print "Exit"
+                return
+
             json_report_url  = Export.parse_response_url(export_fetch_response)
             print "JSON Report URL: {}".format(json_report_url)
 
             print "========================================================"
-            print " Read Actuals JSON report and pretty print 5 lines.     "
+            print " Read Postbacks JSON report and pretty print 5 lines.   "
             print "========================================================"
 
             json_report_reader = ReportReaderJSON(json_report_url);
@@ -385,7 +388,7 @@ if __name__ == '__main__':
         if len(sys.argv) < 2:
             raise ValueError("{} [api_key].".format(sys.argv[0]))
         api_key = sys.argv[1]
-        example = ExampleActuals()
+        example = ExamplePostbacks()
         example.run(api_key)
     except Exception as exc:
         print "Exception: {0}".format(exc)

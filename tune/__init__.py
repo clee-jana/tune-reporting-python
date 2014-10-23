@@ -32,17 +32,19 @@ Tune SDK
 # @author    Jeff Tanner <jefft@tune.com>
 # @copyright 2014 Tune (http://www.tune.com)
 # @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# @version   0.9.3
+# @version   0.9.5
 # @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
+import sys
+
 __title__ = 'tune'
-__build__ = 0x000092
+__build__ = 0x000095
 __author__ = 'Tune, Inc.'
 __license__ = 'LICENSE.md'
 __copyright__ = 'Copyright 2014 Tune, Inc'
 
-from .shared import (python_check_version)
+from .shared import (python_check_version, TuneSdkException, TuneServiceException)
 from .version import __python_required_version__
 
 python_check_version(__python_required_version__)

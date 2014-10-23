@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -41,7 +41,7 @@ import datetime
 
 from tune.management.api.advertiser import (Retention)
 
-class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
+class UnittestReportsRetention(unittest.TestCase):
 
     def __init__(self, api_key):
         self.__api_key = api_key
@@ -62,6 +62,7 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
         try:
             retention = Retention(
                 self.__api_key,
+                validate = True
             )
 
             response = retention.count(
@@ -69,8 +70,8 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
                     self.__end_date,
                     cohort_type         = "click",
                     cohort_interval     = "year_day",
-                    group               = "ad_network_id",
-                    filter              = None,
+                    group = "site_id,install_publisher_id",
+                    filter = "(install_publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"
                 )
         except Exception as exc:
@@ -89,6 +90,7 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
         try:
             retention = Retention(
                 self.__api_key,
+                validate = True
             )
 
             response = retention.find(
@@ -96,12 +98,15 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
                     self.__end_date,
                     cohort_type         = "install",
                     aggregation_type    = "cumulative",
-                    group               = "ad_network_id,install_publisher_id,country_id",
-                    fields              = "installs,opens,ad_network.name" \
-                        ",install_publisher.name,country.name" \
-                        ",ad_network_id,install_publisher_id,country_id",
+                    group = "site_id,install_publisher_id",
+                    fields              = "site_id \
+                    ,site.name \
+                    ,install_publisher_id \
+                    ,install_publisher.name \
+                    ,installs \
+                    ,opens",
                     cohort_interval     = "year_day",
-                    filter              = None,
+                    filter = "(install_publisher_id > 0)",
                     limit               = 5,
                     page                = None,
                     sort                = {"year_day": "asc", "install_publisher_id": "asc"},
@@ -123,6 +128,7 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
         try:
             retention = Retention(
                 self.__api_key,
+                validate = True
             )
 
             response = retention.export(
@@ -130,12 +136,15 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
                     self.__end_date,
                     cohort_type         = "install",
                     aggregation_type    = "cumulative",
-                    group               = "ad_network_id,install_publisher_id,country_id",
-                    fields              = "installs,opens,ad_network.name" \
-                        ",install_publisher.name,country.name" \
-                        ",ad_network_id,install_publisher_id,country_id",
+                    group = "site_id,install_publisher_id",
+                    fields              = "site_id \
+                    ,site.name \
+                    ,install_publisher_id \
+                    ,install_publisher.name \
+                    ,installs \
+                    ,opens",
                     cohort_interval     = "year_day",
-                    filter              = None,
+                    filter = "(install_publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"
                 )
         except Exception as exc:
@@ -150,3 +159,4 @@ class UnittestTuneManagementApiAdvertiserReportsRetention(unittest.TestCase):
         self.test_ApiKey()
         self.test_Count()
         self.test_Find()
+        self.test_Export()

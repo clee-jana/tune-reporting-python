@@ -35,7 +35,7 @@ Builds query string as expected for Tune Management API request.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -106,8 +106,9 @@ class QueryStringBuilder(object):
                 for sort_field, sort_direction in value.items():
                     sort_direction = sort_direction.upper()
                     if sort_direction != "ASC" and sort_direction != "DESC":
-                        raise ValueError("Parameter 'sort' has invalid direction: '{}'".format(
-                            sort_direction
+                        raise ValueError(
+                            "Parameter 'sort' has invalid direction: '{}'".format(
+                                sort_direction
                             )
                         )
                     sort_name = "sort[{}]".format(sort_field)

@@ -35,12 +35,13 @@ Base class to be used by all Tune Management API endpoints.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.3
+#  @version   0.9.5
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
 import time
 import string
+import re
 from datetime import datetime
 
 from tune.version import (
@@ -52,7 +53,8 @@ from .client import (
 
 from tune.shared import (
     TuneSdkException,
-    TuneServiceException
+    TuneServiceException,
+    is_parentheses_balanced
 )
 
 ## Base components for every Tune Management API request.
@@ -98,18 +100,14 @@ class TuneManagementBase(object):
         "<=",
         ">",
         ">=",
-        "IS NULL",
-        "IS NOT NULL",
+        "IS",
+        "NOT",
+        "NULL",
         "IN",
-        "NOT IN",
         "LIKE",
-        "NOT LIKE",
         "RLIKE",
-        "NOT RLIKE",
         "REGEXP",
-        "NOT REGEXP",
-        "BETWEEN",
-        "NOT BETWEEN"
+        "BETWEEN"
         ]
 
     ## Parameter 'sort' directions.
@@ -266,7 +264,7 @@ class TuneManagementBase(object):
 
         for field_name in field_names:
             field_names_merged.append(field_name)
-            if ((field_name != "_id") and field_name.endswith("_id")):
+            if (field_name != "_id") and field_name.endswith("_id"):
                 related_property = field_name[:-3]
 
                 if ((related_property in related_fields)
@@ -348,7 +346,9 @@ class TuneManagementBase(object):
             group_list = group
 
         if len(group_list) == 0:
-            raise TuneSdkException("Invalid parameter 'group' provided: '{}'".format(group))
+            raise TuneSdkException(
+                "Invalid parameter 'group' provided: '{}'".format(group)
+                )
 
         if self.__validate:
             if self.__fields is None:
@@ -376,31 +376,91 @@ class TuneManagementBase(object):
             if self.__fields is None:
                 self.fields()
 
-            for sort_field, sort_direction in sort.items():
+        sort_build = {}
+        for sort_field, sort_direction in sort.items():
+            if self.__validate:
                 if sort_field not in self.__fields:
                     raise TuneSdkException(
                         "Parameter 'sort' contains an invalid field: '{}'.".format(
                             sort_field
                             )
                         )
-                if sort_direction not in self.__sort_directions:
-                    raise TuneSdkException(
-                        "Parameter 'sort' contains an invalid direction: '{}'.".format(
-                            sort_direction
-                            )
+            sort_direction = sort_direction.upper()
+            if sort_direction not in self.__sort_directions:
+                raise TuneSdkException(
+                    "Parameter 'sort' contains an invalid direction: '{}'.".format(
+                        sort_direction
                         )
-        return sort
+                    )
+
+            sort_build[sort_field] = sort_direction
+
+        return sort_build
 
     ## Validate filter parameter
     #
     def validate_filter(self, filter):
-        if filter is None:
-            return filter
 
-        if not isinstance(filter, str) and not isinstance(filter, list):
+        if not isinstance(filter, str) or not filter:
+            raise TuneSdkException(
+                "Parameter 'filter' is invalid: '{}'.".format(
+                    filter
+                    )
+                )
+        
+        if self.__validate:
+            if self.__fields is None:
+                self.fields()
+        
+        filter = re.sub(' +', ' ', filter)
+        
+        if not is_parentheses_balanced(filter):
             raise TuneSdkException("Invalid parameter 'filter' provided.")
+        
+        filter_no_parentheses = re.sub('[()]', ' ', filter)
+        filter_no_parentheses = re.sub(' +', ' ', filter_no_parentheses)
+        filter_no_parentheses = filter_no_parentheses.strip()
+        
+        filter_parts = filter_no_parentheses.split(' ')
+        
+        for filter_part in filter_parts:
+            filter_part = filter_part.strip()
+            
+            if isinstance(filter_part, str) and not filter_part:
+                continue
+            
+            m = re.match(r"\B'\w+'\B", filter_part)
+            if (m is not None
+                and (m.group(0) == filter_part)):
+                continue
+            
+            if filter_part.isdigit():
+                continue
+            
+            if filter_part in self.__filter_operations:
+                continue
+            
+            if filter_part in self.__filter_conjunctions:
+                continue
+            
+            m = re.match(r"[a-z0-9\.\_]+", filter_part)
+            if (m is not None
+                and (m.group(0) == filter_part)):
+            
+                if self.__validate:
+                    if filter_part in self.__fields:
+                        continue;
+                    
+                else:
+                    continue
+            
+            raise TuneSdkException(
+                "Parameter 'filter' is invalid: '{}'.".format(
+                    filter
+                    )
+                )
 
-        return filter
+        return "({})".format(filter)
 
     ## Validate 'format' parameter
     #  @param null|str format
