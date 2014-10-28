@@ -1,4 +1,4 @@
-# tune-api-python Changelog
+## tune-api-python Changelog
 =======================
 
 Here you can see the full list of changes between each `tune-api-python` release.
