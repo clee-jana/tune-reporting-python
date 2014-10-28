@@ -36,7 +36,6 @@
 #
 
 sudo rm -fR ./build/*
-sudo python ./setup.py uninstall
 sudo python ./setup.py clean
 sudo python ./setup.py build
 sudo python ./setup.py install

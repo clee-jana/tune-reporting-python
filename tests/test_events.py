@@ -37,7 +37,11 @@
 #
 import unittest
 import datetime
-
+import sys
+import os
+current_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(current_dir + "/.." )
+import tune
 try:
     from tune import (
         TuneSdkException,
