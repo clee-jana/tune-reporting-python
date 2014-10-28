@@ -1,4 +1,4 @@
-<h1>tune-api-python</h1>
+<h2>tune-api-python</h2>
 <h2>Tune API SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate Tune API services.</h3>
 <h4>Update:  2014-10-27</h4>
@@ -73,7 +73,7 @@ You may need to run the above commands with `sudo`.
 
 Run the following script to view execution of all unittests:
 ```bash
-    $ ./scripts/tune_unittests.sh [API_KEY]
+    $ ./scripts/tune_examples.sh [API_KEY]
 ```
 
 <a name="sdk_unittests"></a>
@@ -81,7 +81,7 @@ Run the following script to view execution of all unittests:
 
 Run the following script to view execution of all unittests:
 ```bash
-    $ ./scripts/tune_unittests.sh [API_KEY]
+    $ ./scripts/tune_tests.sh [API_KEY]
 ```
 
 <a name="license"></a>
