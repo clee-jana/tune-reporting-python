@@ -22,25 +22,25 @@
 #    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #    THE SOFTWARE.
 #
-#    Python 3.3
+#    Python 2.7
 #
 #    category    Tune
 #    package     SDK
-#    version     2014-10-05
+#    version     2014-10-28
 #    copyright   Copyright (c) 2014, Tune (http://www.tune.com)
 #
 
 import sys
 
-from examples.example_client import ExampleClient
-from examples.example_clicks import ExampleClicks
-from examples.example_event_items import ExampleEventItems
-from examples.example_events import ExampleEvents
-from examples.example_installs import ExampleInstalls
-from examples.example_postbacks import ExamplePostbacks
-from examples.example_actuals import ExampleActuals
-from examples.example_cohort import ExampleCohort
-from examples.example_retention import ExampleRetention
+from example_client import ExampleClient
+from example_clicks import ExampleClicks
+from example_event_items import ExampleEventItems
+from example_events import ExampleEvents
+from example_installs import ExampleInstalls
+from example_postbacks import ExamplePostbacks
+from example_actuals import ExampleActuals
+from example_cohort import ExampleCohort
+from example_retention import ExampleRetention
 
 if __name__ == '__main__':
     try:
