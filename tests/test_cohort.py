@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -43,7 +43,8 @@ try:
     from tune import (
         TuneSdkException,
         TuneServiceException,
-        LTV
+        LTV,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -64,13 +65,24 @@ class TestCohort(unittest.TestCase):
     def test_ApiKey(self):
         self.assertIsNotNone(self.__api_key)
 
+    def test_Fields(self):
+        response = None
+
+        ltv = LTV(
+            self.__api_key,
+            validate_fields = True
+        )
+        response = ltv.fields(TUNE_FIELDS_RECOMMENDED)
+        self.assertIsNotNone(response)
+        self.assertGreater(len(response), 0)
+
     def test_Count(self):
         response = None
 
         try:
             ltv = LTV(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = ltv.count(
@@ -98,7 +110,7 @@ class TestCohort(unittest.TestCase):
         try:
             ltv = LTV(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = ltv.find(
@@ -107,12 +119,7 @@ class TestCohort(unittest.TestCase):
                     cohort_type         = "click",
                     aggregation_type    = "cumulative",
                     group               = "site_id,publisher_id",
-                    fields="site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,rpi \
-                    ,epi",
+                    fields=ltv.fields(TUNE_FIELDS_RECOMMENDED),
                     cohort_interval     = "year_day",
                     filter="(publisher_id > 0)",
                     limit=10,
@@ -136,7 +143,7 @@ class TestCohort(unittest.TestCase):
         try:
             ltv = LTV(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = ltv.export(
@@ -145,12 +152,7 @@ class TestCohort(unittest.TestCase):
                     cohort_type         = "click",
                     aggregation_type    = "cumulative",
                     group               = "site_id,publisher_id",
-                    fields="site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,rpi \
-                    ,epi",
+                    fields=ltv.fields(TUNE_FIELDS_RECOMMENDED),
                     cohort_interval     = "year_day",
                     filter="(publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"

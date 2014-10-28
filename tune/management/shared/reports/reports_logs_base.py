@@ -35,7 +35,7 @@ Base class for handling all Tune Management API endpoints that deal with log rep
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -59,14 +59,14 @@ class ReportsLogsBase(ReportsBase):
     #  @param string api_key                 Tune MobileAppTracking API Key.
     #  @param bool   filter_debug_mode       Remove debug mode information from results.
     #  @param bool   filter_test_profile_id  Remove test profile information from results.
-    #  @param bool   validate                Validate fields used by actions' parameters.
+    #  @param bool   validate_fields                Validate fields used by actions' parameters.
     def __init__(
         self,
         controller,
         api_key,
         filter_debug_mode,
         filter_test_profile_id,
-        validate=False
+        validate_fields=False
     ):
         # controller
         if not controller or len(controller) < 1:
@@ -81,7 +81,7 @@ class ReportsLogsBase(ReportsBase):
             api_key,
             filter_debug_mode,
             filter_test_profile_id,
-            validate
+            validate_fields
         )
 
     ## Counts all existing records that match filter criteria

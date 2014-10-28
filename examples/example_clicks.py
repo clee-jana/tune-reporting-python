@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 #
@@ -54,6 +54,7 @@ import sys
 import traceback
 import datetime
 import time
+import tune
 
 try:
     from tune import (
@@ -62,7 +63,8 @@ try:
         Clicks,
         Export,
         ReportReaderCSV,
-        ReportReaderJSON
+        ReportReaderJSON,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -93,14 +95,14 @@ class ExampleClicks(object):
             start_date = "{} 00:00:00".format(yesterday)
             end_date = "{} 23:59:59".format(yesterday)
 
-            clicks = Clicks(api_key, validate=True)
+            clicks = Clicks(api_key, validate_fields=True)
 
             print ""
             print "======================================================"
             print " Fields of Advertiser Logs Clicks records.            "
             print "======================================================"
 
-            response = clicks.fields()
+            response = clicks.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print str(field)
 
@@ -133,17 +135,7 @@ class ExampleClicks(object):
                     start_date,
                     end_date,
                     filter=None,
-                    fields="id \
-                    ,created \
-                    ,site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,is_unique \
-                    ,advertiser_sub_campaign_id \
-                    ,advertiser_sub_campaign.ref \
-                    ,publisher_sub_campaign_id \
-                    ,publisher_sub_campaign.ref",
+                    fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
                     limit=5,
                     page=None,
                     sort={"created": "DESC"},
@@ -165,17 +157,7 @@ class ExampleClicks(object):
                     start_date,
                     end_date,
                     filter=None,
-                    fields="id \
-                    ,created \
-                    ,site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,is_unique \
-                    ,advertiser_sub_campaign_id \
-                    ,advertiser_sub_campaign.ref \
-                    ,publisher_sub_campaign_id \
-                    ,publisher_sub_campaign.ref",
+                    fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
                     format="csv",
                     response_timezone="America/Los_Angeles"
                 )
@@ -194,72 +176,22 @@ class ExampleClicks(object):
             if not job_id or len(job_id) < 1:
                 raise Exception("Failed to return Job ID: {}".format(str(response)))
 
-            print "Job ID: {}".format(job_id)
+            print "= CSV Job ID: {}".format(job_id)
 
             print ""
             print "================================================================="
-            print " Export Status of Advertiser Logs Clicks CSV report not threaded "
+            print " Fetching Advertiser Logs Clicks CSV report                      "
             print "================================================================="
 
             export = Export(api_key)
+            export_fetch_response = export.fetch(
+                job_id,
+                verbose=True,
+                sleep=10
+                )
 
-            status = None
-            export_download_response = None
-            attempt = 0
-            verbose = True
-            sleep = 10 # seconds
-
-            try:
-                while True:
-                    export_download_response = export.download(job_id)
-
-                    if not export_download_response:
-                        raise TuneSdkException(
-                            "No response returned from export request."
-                        )
-
-                    if not export_download_response.data:
-                        raise TuneSdkException(
-                            "No response data returned from export. Request URL: {}".format(
-                                export_download_response.request_url
-                            )
-                        )
-
-                    if export_download_response.http_code != 200:
-                        raise TuneServiceException(
-                            "Request failed: HTTP Error Code: {}: {}".format(
-                                export_download_response.http_code,
-                                export_download_response.request_url
-                            )
-                        )
-
-                    status = export_download_response.data["status"]
-                    if status == "complete" or status == "fail":
-                        break
-
-                    attempt += 1
-                    if verbose:
-                        print "= attempt: {}, response: {}".format(
-                            attempt,
-                            export_download_response
-                        )
-
-                    time.sleep(sleep)
-            except (TuneSdkException, TuneServiceException):
-                raise
-            except Exception as ex:
-                raise TuneSdkException(
-                    "Failed get export status: (Error:{0})".format(
-                        str(ex)
-                        ),
-                    ex
-                    )
-
-            print "= Response:"
-            print str(export_download_response)
-
-            csv_report_url = Export.parse_response_url(export_download_response)
-            print "CVS Report URL: {}".format(csv_report_url)
+            csv_report_url = Export.parse_response_url(export_fetch_response)
+            print "= CVS Report URL: {}".format(csv_report_url)
 
             print ""
             print "========================================================"
@@ -278,17 +210,8 @@ class ExampleClicks(object):
             response = clicks.export(
                     start_date,
                     end_date,
-                    fields="id \
-                    ,created \
-                    ,site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,is_unique \
-                    ,advertiser_sub_campaign_id \
-                    ,advertiser_sub_campaign.ref \
-                    ,publisher_sub_campaign_id \
-                    ,publisher_sub_campaign.ref",
+                    filter=None,
+                    fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
                     format="json",
                     response_timezone="America/Los_Angeles"
                 )
@@ -307,14 +230,13 @@ class ExampleClicks(object):
             if not job_id or len(job_id) < 1:
                 raise Exception("Failed to return Job ID: {}".format(str(response)))
 
-            print "Job ID: {}".format(job_id)
+            print "= JSON Job ID: {}".format(job_id)
 
             print "========================================================"
-            print "Fetching Advertiser Logs Clicks report threaded         "
+            print " Fetching Advertiser Logs Clicks JSON report.           "
             print "========================================================"
 
             export = Export(api_key)
-
             export_fetch_response = export.fetch(
                 job_id,
                 verbose=True,
@@ -329,7 +251,7 @@ class ExampleClicks(object):
                 return
 
             json_report_url = Export.parse_response_url(export_fetch_response)
-            print "JSON Report URL: {}".format(json_report_url)
+            print "= JSON Report URL: {}".format(json_report_url)
 
             print "========================================================"
             print " Read Clicks JSON report and pretty print 5 lines.      "

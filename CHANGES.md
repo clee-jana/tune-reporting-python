@@ -33,9 +33,15 @@ Version 0.9.5
 Initial public release on October 22, 2014
 * Field validation for parameter fields, sort, filter, group
 
-
 Version 0.9.6
 --------------
 
 Beta public release on October 23, 2014
 * Refactored layout of setup, examples, and tests.
+
+Version 0.9.7
+--------------
+
+Beta public release on October 27, 2014
+* Removed threading from fetch()
+* Provided recommended values for exports()

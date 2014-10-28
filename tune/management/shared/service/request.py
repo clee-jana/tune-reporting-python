@@ -35,7 +35,7 @@ Container of complete request Tune Management API request.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -85,7 +85,7 @@ class Request(object):
 
         """
         # -----------------------------------------------------------------
-        # validate inputs
+        # validate_fields inputs
         # -----------------------------------------------------------------
 
         # controller

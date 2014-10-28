@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 #  Retention Report
@@ -70,6 +70,7 @@ import sys
 import traceback
 import datetime
 import time
+import tune
 
 try:
     from tune import (
@@ -77,7 +78,8 @@ try:
         TuneServiceException,
         Retention,
         ReportReaderCSV,
-        ReportReaderJSON
+        ReportReaderJSON,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -99,7 +101,7 @@ class ExampleRetention(object):
             raise ValueError("Parameter 'api_key' is not defined.")
 
         print "========================================================="
-        print "= Tune Management API Advertiser Reports Cohort         ="
+        print "= Tune Management API Advertiser Reports Retention      ="
         print "========================================================="
 
         try:
@@ -108,14 +110,14 @@ class ExampleRetention(object):
             start_date = "{} 00:00:00".format(week_ago)
             end_date = "{} 23:59:59".format(yesterday)
 
-            retention = Retention(api_key, validate=True)
+            retention = Retention(api_key, validate_fields=True)
 
             print ""
             print "======================================================"
             print " Fields of Advertiser Retention records.              "
             print "======================================================"
 
-            response = retention.fields()
+            response = retention.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print str(field)
 
@@ -177,12 +179,7 @@ class ExampleRetention(object):
                     cohort_type="install",
                     aggregation_type="cumulative",
                     group="site_id,install_publisher_id",
-                    fields="site_id \
-                    ,site.name \
-                    ,install_publisher_id \
-                    ,install_publisher.name \
-                    ,installs \
-                    ,opens",
+                    fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
                     cohort_interval="year_day",
                     filter="(install_publisher_id > 0)",
                     limit=10,
@@ -198,121 +195,8 @@ class ExampleRetention(object):
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print ""
-            print "========================================================="
-            print " Find Advertiser Retention 'click/incremental' records.  "
-            print "========================================================="
-
-            response = retention.export(
-                    start_date,
-                    end_date,
-                    cohort_type="install",
-                    aggregation_type="cumulative",
-                    group="site_id,install_publisher_id",
-                    fields="site_id \
-                    ,site.name \
-                    ,install_publisher_id \
-                    ,install_publisher.name \
-                    ,installs \
-                    ,opens",
-                    cohort_interval="year_day",
-                    filter="(install_publisher_id > 0)",
-                    response_timezone="America/Los_Angeles"
-                )
-
-            print "= Response:"
-            print str(response)
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
-
-            if response.data is None:
-                raise Exception("Failed to return data: {}".format(str(response)))
-
-            if "job_id" not in response.data:
-                raise Exception("Failed to return 'job_id': {}".format(str(response)))
-
-            job_id = response.data['job_id']
-
-            if not job_id or len(job_id) < 1:
-                raise Exception("Failed to return Job ID: {}".format(str(response)))
-
-            print "Job ID: {}".format(job_id)
-
-            print ""
-            print "================================================================="
-            print " Export Status of Advertiser Retention CSV report not threaded   "
-            print "================================================================="
-
-            status = None
-            export_download_response = None
-            attempt = 0
-            verbose = True
-            sleep = 10 # seconds
-
-            try:
-                while True:
-                    export_download_response = retention.status(job_id)
-
-                    if not export_download_response:
-                        raise TuneSdkException(
-                            "No response returned from export request."
-                        )
-
-                    if not export_download_response.data:
-                        raise TuneSdkException(
-                            "No response data returned from export. Request URL: {}".format(
-                                export_download_response.request_url
-                            )
-                        )
-
-                    if export_download_response.http_code != 200:
-                        raise TuneServiceException(
-                            "Request failed: HTTP Error Code: {}: {}".format(
-                                export_download_response.http_code,
-                                export_download_response.request_url
-                            )
-                        )
-
-                    status = export_download_response.data["status"]
-                    if status == "complete" or status == "fail":
-                        break
-
-                    attempt += 1
-                    if verbose:
-                        print "= attempt: {}, response: {}".format(
-                            attempt,
-                            export_download_response
-                        )
-
-                    time.sleep(sleep)
-            except (TuneSdkException, TuneServiceException):
-                raise
-            except Exception as ex:
-                raise TuneSdkException(
-                    "Failed get export status: (Error:{0})".format(
-                        str(ex)
-                        ),
-                    ex
-                    )
-
-            print "= Response:"
-            print str(export_download_response)
-
-            csv_report_url = Retention.parse_response_url(export_download_response)
-            print "CVS Report URL: {}".format(csv_report_url)
-
-            print ""
-            print "========================================================"
-            print " Read Retention CSV report and pretty print 5 lines.    "
-            print "========================================================"
-
-            csv_report_reader = ReportReaderCSV(csv_report_url);
-            csv_report_reader.read()
-            csv_report_reader.pretty_print(limit=5)
-
-            print ""
             print "==========================================================="
-            print " Request Advertiser Retention JSON report for export.      "
+            print " Request Advertiser Retention CSV report for export.       "
             print "==========================================================="
 
             response = retention.export(
@@ -321,12 +205,7 @@ class ExampleRetention(object):
                     cohort_type="click",
                     aggregation_type="incremental",
                     group="site_id,install_publisher_id",
-                    fields="site_id \
-                    ,site.name \
-                    ,install_publisher_id \
-                    ,install_publisher.name \
-                    ,installs \
-                    ,opens",
+                    fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
                     cohort_interval="year_day",
                     filter="(install_publisher_id > 0)",
                     response_timezone="America/Los_Angeles"
@@ -349,10 +228,10 @@ class ExampleRetention(object):
             if not job_id or len(job_id) < 1:
                 raise Exception("Failed to return Job ID: {}".format(str(response)))
 
-            print "Job ID: {}".format(job_id)
+            print "= CSV Job ID: {}".format(job_id)
 
             print "========================================================"
-            print "Fetching Advertiser Retention report threaded           "
+            print " Fetching Advertiser Retention CSV report               "
             print "========================================================"
 
             export_fetch_response = retention.fetch(

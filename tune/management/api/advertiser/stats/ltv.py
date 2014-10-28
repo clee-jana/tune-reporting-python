@@ -35,7 +35,7 @@ Tune Management API endpoint /advertiser/stats/ltv
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -51,12 +51,12 @@ class LTV(ReportsInsightBase):
     ## The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
-    #  @param bool  validate    Validate fields used by actions.
+    #  @param bool  validate_fields    Validate fields used by actions.
     #
     def __init__(
         self,
         api_key,
-        validate=False
+        validate_fields=False
         ):
         ReportsInsightBase.__init__(
             self,
@@ -64,8 +64,17 @@ class LTV(ReportsInsightBase):
             api_key,
             False,
             True,
-            validate
+            validate_fields
         )
+
+        self.fields_recommended = [
+             "site_id"
+            ,"site.name"
+            ,"publisher_id"
+            ,"publisher.name"
+            ,"rpi"
+            ,"epi"
+        ]
 
     ## Helper function for fetching report document given provided job identifier.
     #

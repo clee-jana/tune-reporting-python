@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -43,7 +43,8 @@ try:
     from tune import (
         TuneSdkException,
         TuneServiceException,
-        Retention
+        Retention,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -64,13 +65,23 @@ class TestRetention(unittest.TestCase):
     def test_ApiKey(self):
         self.assertIsNotNone(self.__api_key)
 
+    def test_Fields(self):
+        response = None
+        retention = Retention(
+            self.__api_key,
+            validate_fields = True
+        )
+        response = retention.fields(TUNE_FIELDS_RECOMMENDED)
+        self.assertIsNotNone(response)
+        self.assertGreater(len(response), 0)
+
     def test_Count(self):
         response = None
 
         try:
             retention = Retention(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = retention.count(
@@ -98,7 +109,7 @@ class TestRetention(unittest.TestCase):
         try:
             retention = Retention(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = retention.find(
@@ -107,12 +118,7 @@ class TestRetention(unittest.TestCase):
                     cohort_type         = "install",
                     aggregation_type    = "cumulative",
                     group="site_id,install_publisher_id",
-                    fields="site_id \
-                    ,site.name \
-                    ,install_publisher_id \
-                    ,install_publisher.name \
-                    ,installs \
-                    ,opens",
+                    fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
                     cohort_interval     = "year_day",
                     filter = "(install_publisher_id > 0)",
                     limit=5,
@@ -136,7 +142,7 @@ class TestRetention(unittest.TestCase):
         try:
             retention = Retention(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = retention.export(
@@ -145,12 +151,7 @@ class TestRetention(unittest.TestCase):
                     cohort_type         = "install",
                     aggregation_type    = "cumulative",
                     group="site_id,install_publisher_id",
-                    fields="site_id \
-                    ,site.name \
-                    ,install_publisher_id \
-                    ,install_publisher.name \
-                    ,installs \
-                    ,opens",
+                    fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
                     cohort_interval     = "year_day",
                     filter = "(install_publisher_id > 0)",
                     response_timezone   = "America/Los_Angeles"

@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -43,7 +43,8 @@ try:
     from tune import (
         TuneSdkException,
         TuneServiceException,
-        Clicks
+        Clicks,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -63,23 +64,33 @@ class TestClicks(unittest.TestCase):
     def test_ApiKey(self):
         self.assertIsNotNone(self.__api_key)
 
+    def test_Fields(self):
+        response = None
+
+        clicks = Clicks(
+            self.__api_key,
+            validate_fields = True
+        )
+
+        response = clicks.fields(TUNE_FIELDS_RECOMMENDED)
+
+        self.assertIsNotNone(response)
+        self.assertGreater(len(response), 0)
+
     def test_Count(self):
         response = None
 
-        try:
-            clicks = Clicks(
-                self.__api_key,
-                validate = True
-            )
+        clicks = Clicks(
+            self.__api_key,
+            validate_fields = True
+        )
 
-            response = clicks.count(
-                    self.__start_date,
-                    self.__end_date,
-                    filter=None,
-                    response_timezone   = "America/Los_Angeles"
-                )
-        except Exception as exc:
-            self.fail("Exception: {0}".format(exc))
+        response = clicks.count(
+                self.__start_date,
+                self.__end_date,
+                filter=None,
+                response_timezone   = "America/Los_Angeles"
+            )
 
         self.assertIsNotNone(response)
         self.assertIsNotNone(response.data)
@@ -94,24 +105,14 @@ class TestClicks(unittest.TestCase):
         try:
             clicks = Clicks(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = clicks.find(
                     self.__start_date,
                     self.__end_date,
                     filter = None,
-                    fields="id \
-                    ,created \
-                    ,site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,is_unique \
-                    ,advertiser_sub_campaign_id \
-                    ,advertiser_sub_campaign.ref \
-                    ,publisher_sub_campaign_id \
-                    ,publisher_sub_campaign.ref",
+                    fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
                     limit=5,
                     page=None,
                     sort                = {"created": "DESC"},
@@ -133,24 +134,14 @@ class TestClicks(unittest.TestCase):
         try:
             clicks = Clicks(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = clicks.find(
                     self.__start_date,
                     self.__end_date,
                     filter = None,
-                    fields="id \
-                    ,created \
-                    ,site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,foo \
-                    ,advertiser_sub_campaign_id \
-                    ,advertiser_sub_campaign.ref \
-                    ,publisher_sub_campaign_id \
-                    ,publisher_sub_campaign.ref",
+                    fields="foo",
                     limit=5,
                     page=None,
                     sort                = {"created": "DESC"},
@@ -167,24 +158,14 @@ class TestClicks(unittest.TestCase):
         try:
             clicks = Clicks(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = clicks.find(
                     self.__start_date,
                     self.__end_date,
                     filter = "(foo > 0)",
-                    fields="id \
-                    ,created \
-                    ,site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,is_unique \
-                    ,advertiser_sub_campaign_id \
-                    ,advertiser_sub_campaign.ref \
-                    ,publisher_sub_campaign_id \
-                    ,publisher_sub_campaign.ref",
+                    fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
                     limit=5,
                     page=None,
                     sort                = {"created": "DESC"},
@@ -202,24 +183,14 @@ class TestClicks(unittest.TestCase):
         try:
             clicks = Clicks(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = clicks.export(
                     self.__start_date,
                     self.__end_date,
                     filter=None,
-                    fields="id \
-                    ,created \
-                    ,site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,is_unique \
-                    ,advertiser_sub_campaign_id \
-                    ,advertiser_sub_campaign.ref \
-                    ,publisher_sub_campaign_id \
-                    ,publisher_sub_campaign.ref",
+                    fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
                     format="csv",
                     response_timezone   = "America/Los_Angeles"
                 )

@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 #  You can use the Logs report in the same way as the Actuals reports, but
@@ -61,7 +61,8 @@ try:
         Postbacks,
         Export,
         ReportReaderCSV,
-        ReportReaderJSON
+        ReportReaderJSON,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -92,13 +93,13 @@ class ExamplePostbacks(object):
             start_date = "{} 00:00:00".format(yesterday)
             end_date = "{} 23:59:59".format(yesterday)
 
-            postbacks = Postbacks(api_key, validate=True)
+            postbacks = Postbacks(api_key, validate_fields=True)
 
             print ""
             print "======================================================"
             print " Fields of Advertiser Logs Postbacks records.         "
             print "======================================================"
-            response = postbacks.fields()
+            response = postbacks.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print str(field)
 
@@ -131,23 +132,7 @@ class ExamplePostbacks(object):
                     start_date,
                     end_date,
                     filter="(status = 'approved')",
-                    fields="id \
-                    ,stat_install_id \
-                    ,stat_event_id \
-                    ,stat_open_id \
-                    ,created \
-                    ,status \
-                    ,site_id \
-                    ,site.name \
-                    ,site_event_id \
-                    ,site_event.name \
-                    ,site_event.type \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,attributed_publisher_id \
-                    ,attributed_publisher.name \
-                    ,url \
-                    ,http_result",
+                    fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
                     limit=5,
                     page=None,
                     sort={"created": "DESC"},
@@ -168,23 +153,7 @@ class ExamplePostbacks(object):
                     start_date,
                     end_date,
                     filter="(status = 'approved')",
-                    fields="id \
-                    ,stat_install_id \
-                    ,stat_event_id \
-                    ,stat_open_id \
-                    ,created \
-                    ,status \
-                    ,site_id \
-                    ,site.name \
-                    ,site_event_id \
-                    ,site_event.name \
-                    ,site_event.type \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,attributed_publisher_id \
-                    ,attributed_publisher.name \
-                    ,url \
-                    ,http_result",
+                    fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
                     format="csv",
                     response_timezone="America/Los_Angeles"
                 )
@@ -202,76 +171,26 @@ class ExamplePostbacks(object):
             if not job_id or len(job_id) < 1:
                 raise Exception("Failed to return Job ID: {}".format(str(response)))
 
-            print "Job ID: {}".format(job_id)
+            print "= CSV Job ID: {}".format(job_id)
 
             print ""
-            print "===================================================================="
-            print " Export Status of Advertiser Logs Postbacks CSV report not threaded "
-            print "===================================================================="
+            print "================================================================="
+            print " Fetching Advertiser Logs Postbacks CSV report                   "
+            print "================================================================="
 
             export = Export(api_key)
+            export_fetch_response = export.fetch(
+                job_id,
+                verbose=True,
+                sleep=10
+                )
 
-            status = None
-            export_download_response = None
-            attempt = 0
-            verbose = True
-            sleep = 10 # seconds
-
-            try:
-                while True:
-                    export_download_response = export.download(job_id)
-
-                    if not export_download_response:
-                        raise TuneSdkException(
-                            "No response returned from export request."
-                        )
-
-                    if not export_download_response.data:
-                        raise TuneSdkException(
-                            "No response data returned from export. Request URL: {}".format(
-                                export_download_response.request_url
-                            )
-                        )
-
-                    if export_download_response.http_code != 200:
-                        raise TuneServiceException(
-                            "Request failed: HTTP Error Code: {}: {}".format(
-                                export_download_response.http_code,
-                                export_download_response.request_url
-                            )
-                        )
-
-                    status = export_download_response.data["status"]
-                    if status == "complete" or status == "fail":
-                        break
-
-                    attempt += 1
-                    if verbose:
-                        print "= attempt: {}, response: {}".format(
-                            attempt,
-                            export_download_response
-                        )
-
-                    time.sleep(sleep)
-            except (TuneSdkException, TuneServiceException):
-                raise
-            except Exception as ex:
-                raise TuneSdkException(
-                    "Failed get export status: (Error:{0})".format(
-                        str(ex)
-                        ),
-                    ex
-                    )
-
-            print "= Response:"
-            print str(export_download_response)
-
-            csv_report_url = Export.parse_response_url(export_download_response)
-            print "CVS Report URL: {}".format(csv_report_url)
+            csv_report_url = Export.parse_response_url(export_fetch_response)
+            print "= CVS Report URL: {}".format(csv_report_url)
 
             print ""
             print "========================================================"
-            print " Read Postbacks CSV report and pretty print 5 lines.    "
+            print " Read Postbacks CSV report and pretty print 5 lines.       "
             print "========================================================"
             csv_report_reader = ReportReaderCSV(csv_report_url);
             csv_report_reader.read()
@@ -286,23 +205,7 @@ class ExamplePostbacks(object):
                     start_date,
                     end_date,
                     filter="(status = 'approved')",
-                    fields="id \
-                    ,stat_install_id \
-                    ,stat_event_id \
-                    ,stat_open_id \
-                    ,created \
-                    ,status \
-                    ,site_id \
-                    ,site.name \
-                    ,site_event_id \
-                    ,site_event.name \
-                    ,site_event.type \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,attributed_publisher_id \
-                    ,attributed_publisher.name \
-                    ,url \
-                    ,http_result",
+                    fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
                     format="json",
                     response_timezone="America/Los_Angeles"
                 )
@@ -321,10 +224,10 @@ class ExamplePostbacks(object):
             if not job_id or len(job_id) < 1:
                 raise Exception("Failed to return Job ID: {}".format(str(response)))
 
-            print "Job ID: {}".format(job_id)
+            print "= JSON Job ID: {}".format(job_id)
 
             print "========================================================"
-            print "Fetching Advertiser Logs Postbacks report threaded      "
+            print " Fetching Advertiser Logs Postbacks JSON report.        "
             print "========================================================"
 
             export = Export(api_key)
@@ -343,7 +246,7 @@ class ExamplePostbacks(object):
                 return
 
             json_report_url = Export.parse_response_url(export_fetch_response)
-            print "JSON Report URL: {}".format(json_report_url)
+            print "= JSON Report URL: {}".format(json_report_url)
 
             print "========================================================"
             print " Read Postbacks JSON report and pretty print 5 lines.   "

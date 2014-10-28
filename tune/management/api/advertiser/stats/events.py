@@ -35,7 +35,7 @@ Tune Management API endpoint /advertiser/stats/events
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 from tune.management.shared import (
@@ -50,12 +50,12 @@ class Events(ReportsLogsBase):
     ## The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
-    #  @param bool  validate    Validate fields used by actions.
+    #  @param bool  validate_fields    Validate fields used by actions.
     #
     def __init__(
         self,
         api_key,
-        validate=False
+        validate_fields=False
         ):
         ReportsLogsBase.__init__(
             self,
@@ -63,5 +63,34 @@ class Events(ReportsLogsBase):
             api_key,
             True,
             True,
-            validate
+            validate_fields
         )
+
+        self.fields_recommended = [
+            "id"
+            ,"stat_install_id"
+            ,"created"
+            ,"status"
+            ,"site_id"
+            ,"site.name"
+            ,"site_event_id"
+            ,"site_event.name"
+            ,"site_event.type"
+            ,"publisher_id"
+            ,"publisher.name"
+            ,"advertiser_ref_id"
+            ,"advertiser_sub_campaign_id"
+            ,"advertiser_sub_campaign.ref"
+            ,"publisher_sub_campaign_id"
+            ,"publisher_sub_campaign.ref"
+            ,"user_id"
+            ,"device_id"
+            ,"os_id"
+            ,"google_aid"
+            ,"ios_ifa"
+            ,"ios_ifv"
+            ,"windows_aid"
+            ,"referral_url"
+            ,"is_view_through"
+            ,"is_reengagement"
+        ]

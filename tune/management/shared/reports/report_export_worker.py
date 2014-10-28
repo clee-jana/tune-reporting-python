@@ -1,5 +1,5 @@
 """
-Worker thread for polling download status of requested report.
+Worker for polling download status of requested report.
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -35,25 +35,22 @@ Worker thread for polling download status of requested report.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
 import time
-import subprocess
 
 from tune.shared import (
     TuneSdkException,
     TuneServiceException
 )
-from threading import (
-    Thread,
-    current_thread
-)
 
-class ReportExportWorker(Thread):
+## Worker for handle polling of report request on export queue.
+#
+class ReportExportWorker(object):
     """
-    Threaded worker for handle polling of report request on export queue.
+    Worker for handle polling of report request on export queue.
     """
 
     ## The constructor
@@ -95,26 +92,18 @@ class ReportExportWorker(Thread):
         # Create an instance of it
         instance = loaded_class(api_key)
 
-        Thread.__init__(self)
         self.__api_key = api_key
         self.__job_id = job_id
         self.__sleep = sleep
         self.__report = None
         self.__verbose = verbose
         self.__class_export = instance
-        self.__process = None
         self.__mod_export_function = mod_export_function
         self.__response = None
 
-    ## Poll export for download URL. Method representing
-    #   the thread's activity.
+    ## Poll export for download URL.
     #
     def run(self):
-        cmd = ["bash", 'process.sh']
-        self.__process = subprocess.Popen(cmd,
-                     stdout=subprocess.PIPE,
-                     stderr=subprocess.STDOUT)
-
         status = None
         response = None
         attempt = 0
@@ -151,8 +140,7 @@ class ReportExportWorker(Thread):
 
                 attempt += 1
                 if self.__verbose:
-                    print("= thread id {}: attempt: {}, response: {}".format(
-                            current_thread().ident,
+                    print("= attempt: {}, response: {}".format(
                             attempt,
                             response
                         )
@@ -170,21 +158,14 @@ class ReportExportWorker(Thread):
                 )
 
         if self.__verbose:
-            print("= thread id {}: response: {}".format(
-                    current_thread().ident,
+            print("= response: {}".format(
                     response
                 )
             )
 
         self.__response = response
-
-    def stop(self):
-        """Terminate thread."""
-        if self.__verbose:
-            print("= {}: Trying to stop".format(current_thread()))
-        if self.__process is not None:
-            self.__process.terminate()
-            self.__process = None
+        
+        return True
 
     @property
     def response(self):

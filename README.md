@@ -1,8 +1,8 @@
 <h1>tune-api-python</h1>
 <h2>Tune API Python SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate Tune API services.</h3>
-<h4>Update:  2014-10-23</h4>
-<h4>Version: 0.9.6</h4>
+<h4>Update:  2014-10-27</h4>
+<h4>Version: 0.9.7</h4>
 ===
 
 ## Overview
