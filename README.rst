@@ -75,9 +75,21 @@ You may need to run the above commands with `sudo`.
 =============
 Code Samples
 =============
+-------------
+SDK Examples
+-------------
 
+Run the following script to view execution of all examples:
 .. code-block:: bash
     $ ./scripts/tune_examples.sh [API_KEY]
+    
+-------------
+SDK Unittests
+-------------
+
+Run the following script to view execution of all unittests:
+.. code-block:: bash
+    $ ./scripts/tune_tests.sh [API_KEY]
 
 =============
 License

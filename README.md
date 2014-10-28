@@ -65,11 +65,23 @@ source code") for `tune-api-python`, and then run:
 
 You may need to run the above commands with `sudo`.
 
-<a name="sdk_examples"></a>
+<a name="sdk_code_samples"></a>
 ## Code Samples
 
+<a name="sdk_examples"></a>
+#### SDK Examples
+
+Run the following script to view execution of all unittests:
 ```bash
-    $ ./scripts/tune_examples.sh [API_KEY]
+    $ ./scripts/tune_unittests.sh [API_KEY]
+```
+
+<a name="sdk_unittests"></a>
+#### SDK Unittests
+
+Run the following script to view execution of all unittests:
+```bash
+    $ ./scripts/tune_unittests.sh [API_KEY]
 ```
 
 <a name="license"></a>
