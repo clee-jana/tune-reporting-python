@@ -27,7 +27,7 @@
 #
 #    category    Tune
 #    package     SDK
-#    version     2014-10-01
+#    version     2014-10-28
 #    copyright   Copyright (c) 2014, Tune (http://www.tune.com)
 #
 
@@ -43,9 +43,6 @@ import tune
 #
 # python setup.py install
 #
-# You need to have the setuptools module installed. Try reading the setuptools
-# documentation: http://pypi.python.org/pypi/setuptools
-from setuptools import setup, find_packages
 
 __version__ = None
 with open('tune/version.py') as f:
@@ -58,6 +55,19 @@ except ImportError:
 
 REQUIRES = [
 ]
+PACKAGES = [
+      'tune'
+    , 'tune.shared'
+    , 'tune.management'
+    , 'tune.management.shared'
+    , 'tune.management.api'
+    , 'tune.management.shared.reports'
+    , 'tune.management.shared.service'
+    , 'tune.management.api.advertiser'
+    , 'tune.management.api.account'
+    , 'tune.management.api.advertiser.stats'
+    , 'tune.management.api.account.users'
+]
 
 setup(
     name='tune',
@@ -68,7 +78,7 @@ setup(
     url = "https://github.com/MobileAppTracking/tune-api-python",
     keywords = ["tune", "mobileapptracking", "management api"],
     install_requires = REQUIRES,
-    packages = find_packages(),
+    packages = PACKAGES,
     package_dir={'tune': 'tune'},
     license="MIT License",
     classifiers= [

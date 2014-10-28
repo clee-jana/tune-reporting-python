@@ -1,10 +1,6 @@
-"""
-Downloads remote JSON file from Amazon S3 repository and creates a reader.
-"""
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-## report_reader_json.py
+#!/bin/bash
+#
+#  Build script
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -31,7 +27,7 @@ Downloads remote JSON file from Amazon S3 repository and creates a reader.
 #  Python 2.7
 #
 #  @category  Tune
-#  @package   Tune_PHP_SDK
+#  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
@@ -39,47 +35,8 @@ Downloads remote JSON file from Amazon S3 repository and creates a reader.
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
-import json
-import sys
-
-if sys.version_info[0] == 3:
-    import urllib.request
-else:
-    import urllib2
-
-from .report_reader_base import (
-    ReportReaderBase
-)
-from tune.shared import (
-    TuneSdkException,
-    TuneServiceException,
-    TuneProxy,
-    json_convert
-)
-
-    
-## Helper class for reading reading remote JSON file
-#
-class ReportReaderJSON(ReportReaderBase):
-    """Helper class for reading reading remote JSON file"""
-
-    ## The constructor
-    #  @param string report_url Download report URL
-    #                           of requested report to be exported.
-    def __init__(self, report_url):
-        ReportReaderBase.__init__(self, report_url)
-
-    ## Using provided report download URL, extract JSON contents.
-    #
-    def read(self):
-        """Read JSON data provided remote path report_url."""
-        self.data = None
-
-        proxy = TuneProxy(self.report_url)
-        if proxy.execute():
-            report_content = proxy.response.read()
-            report_utf8_str = report_content.decode("utf8")
-            self.data = json.loads(
-                report_content,
-                object_hook=json_convert
-                )
+sudo rm -fR ./build/*
+sudo python ./setup.py uninstall
+sudo python ./setup.py clean
+sudo python ./setup.py build
+sudo python ./setup.py install

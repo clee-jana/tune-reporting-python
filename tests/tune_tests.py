@@ -22,11 +22,11 @@
 #    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #    THE SOFTWARE.
 #
-#    Python 3.3
+#    Python 2.7
 #
 #    category    Tune
 #    package     SDK
-#    version     2014-10-05
+#    version     2014-10-28
 #    copyright   Copyright (c) 2014, Tune (http://www.tune.com)
 #
 
