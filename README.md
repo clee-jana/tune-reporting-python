@@ -1,5 +1,5 @@
 <h1>tune-api-python</h1>
-<h2>Tune API Python SDK for Python 2.7 and 3.0</h2>
+<h2>Tune API SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate Tune API services.</h3>
 <h4>Update:  2014-10-27</h4>
 <h4>Version: 0.9.7</h4>
@@ -35,6 +35,8 @@ You can install **tune-api-python** via PyPi or by installing from source.
 
 <a name="sdk_installation_pip"></a>
 #### Via PyPi using pip:
+
+PyPi registered package: [Tune API client library](https://pypi.python.org/pypi/tune/0.9.7)
 
 Install from PyPi using [pip](http://www.pip-installer.org/en/latest/), a
 package manager for Python.
