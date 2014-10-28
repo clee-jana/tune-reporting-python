@@ -36,9 +36,13 @@
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
-import sys
 import unittest
+import sys
+import os
 
+current_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(current_dir + "/.." )
+import tune
 try:
     from tune import (
         TuneSdkException,
@@ -114,21 +118,7 @@ class TestClient(unittest.TestCase):
         self.assertIsNotNone(client.response.data)
         self.assertEqual(len(client.response.data), 5)
 
-
     def runTest (self):
         self.test_ApiKey()
         self.test_Count()
         self.test_Find()
-
-
-if __name__ == '__main__':
-
-    try:
-        if len(sys.argv) > 1:
-            api_key = sys.argv.pop()
-            UnittestTuneManagementClient.API_KEY = api_key
-
-        unittest.main()
-    except Exception as exc:
-        print("Exception: {0}".format(exc))
-        raise
