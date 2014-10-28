@@ -35,7 +35,7 @@ Tune Management API endpoint /advertiser/stats/postbacks
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -51,12 +51,12 @@ class Postbacks(ReportsLogsBase):
     ## The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
-    #  @param bool  validate    Validate fields used by actions.
+    #  @param bool  validate_fields    Validate fields used by actions.
     #
     def __init__(
         self,
         api_key,
-        validate=False
+        validate_fields=False
         ):
         ReportsLogsBase.__init__(
             self,
@@ -64,5 +64,25 @@ class Postbacks(ReportsLogsBase):
             api_key,
             False,
             True,
-            validate
+            validate_fields
         )
+
+        self.fields_recommended = [
+             "id"
+            ,"stat_install_id"
+            ,"stat_event_id"
+            ,"stat_open_id"
+            ,"created"
+            ,"status"
+            ,"site_id"
+            ,"site.name"
+            ,"site_event_id"
+            ,"site_event.name"
+            ,"site_event.type"
+            ,"publisher_id"
+            ,"publisher.name"
+            ,"attributed_publisher_id"
+            ,"attributed_publisher.name"
+            ,"url"
+            ,"http_result"
+        ]

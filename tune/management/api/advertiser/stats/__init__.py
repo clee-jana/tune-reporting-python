@@ -35,7 +35,7 @@ Tune Management API endpoints of /advertiser/stats/*
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -61,12 +61,12 @@ class Stats(ReportsActualsBase):
     ## The constructor.
     #
     #  @param str   api_key                    MobileAppTracking API Key.
-    #  @param bool  validate                   Validate fields used by actions'
+    #  @param bool  validate_fields                   Validate fields used by actions'
     #
     def __init__(
         self,
         api_key,
-        validate=False
+        validate_fields=False
         ):
         ReportsActualsBase.__init__(
             self,
@@ -74,5 +74,25 @@ class Stats(ReportsActualsBase):
             api_key,
             True,
             True,
-            validate
+            validate_fields
         )
+        
+        self.fields_recommended = [
+             "site_id"
+            ,"site.name"
+            ,"publisher_id"
+            ,"publisher.name"
+            ,"ad_impressions"
+            ,"ad_impressions_unique"
+            ,"ad_clicks"
+            ,"ad_clicks_unique"
+            ,"paid_installs"
+            ,"paid_installs_assists"
+            ,"non_installs_assists"
+            ,"paid_events"
+            ,"paid_events_assists"
+            ,"non_events_assists"
+            ,"paid_opens"
+            ,"paid_opens_assists"
+            ,"non_opens_assists"
+        ]

@@ -35,7 +35,7 @@ Tune Management API endpoint /advertiser/stats/event_items
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -51,12 +51,12 @@ class EventItems(ReportsLogsBase):
     ## The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
-    #  @param bool  validate    Validate fields used by actions.
+    #  @param bool  validate_fields    Validate fields used by actions.
     #
     def __init__(
         self,
         api_key,
-        validate=False
+        validate_fields=False
         ):
         ReportsLogsBase.__init__(
             self,
@@ -64,5 +64,32 @@ class EventItems(ReportsLogsBase):
             api_key,
             False,
             True,
-            validate
+            validate_fields
         )
+
+        self.fields_recommended = [
+            "id"
+            ,"created"
+            ,"site_id"
+            ,"site.name"
+            ,"campaign_id"
+            ,"campaign.name"
+            ,"site_event_id"
+            ,"site_event.name"
+            ,"site_event_item_id"
+            ,"site_event_item.name"
+            ,"quantity"
+            ,"value_usd"
+            ,"country_id"
+            ,"country.name"
+            ,"region_id"
+            ,"region.name"
+            ,"agency_id"
+            ,"agency.name"
+            ,"advertiser_sub_site_id"
+            ,"advertiser_sub_site.name"
+            ,"advertiser_sub_campaign_id"
+            ,"advertiser_sub_campaign.name"
+            ,"currency_code"
+            ,"value"
+        ]

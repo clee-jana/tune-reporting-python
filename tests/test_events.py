@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 import unittest
@@ -42,7 +42,8 @@ try:
     from tune import (
         TuneSdkException,
         TuneServiceException,
-        Events
+        Events,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -62,13 +63,23 @@ class TestEvents(unittest.TestCase):
     def test_ApiKey(self):
         self.assertIsNotNone(self.__api_key)
 
+    def test_Fields(self):
+        response = None
+        events = Events(
+            self.__api_key,
+            validate_fields = True
+        )
+        response = events.fields(TUNE_FIELDS_RECOMMENDED)
+        self.assertIsNotNone(response)
+        self.assertGreater(len(response), 0)
+
     def test_Count(self):
         response = None
 
         try:
             events = Events(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = events.count(
@@ -94,39 +105,14 @@ class TestEvents(unittest.TestCase):
         try:
             events = Events(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = events.find(
                     self.__start_date,
                     self.__end_date,
                     filter="(status = 'approved')",
-                    fields="id \
-                    ,stat_install_id \
-                    ,created \
-                    ,status \
-                    ,site_id \
-                    ,site.name \
-                    ,site_event_id \
-                    ,site_event.name \
-                    ,site_event.type \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,advertiser_ref_id \
-                    ,advertiser_sub_campaign_id \
-                    ,advertiser_sub_campaign.ref \
-                    ,publisher_sub_campaign_id \
-                    ,publisher_sub_campaign.ref \
-                    ,user_id \
-                    ,device_id \
-                    ,os_id \
-                    ,google_aid \
-                    ,ios_ifa \
-                    ,ios_ifv \
-                    ,windows_aid \
-                    ,referral_url \
-                    ,is_view_through \
-                    ,is_reengagement",
+                    fields=events.fields(TUNE_FIELDS_RECOMMENDED),
                     limit=10,
                     page=None,
                     sort                = {"created": "DESC"},
@@ -148,34 +134,14 @@ class TestEvents(unittest.TestCase):
         try:
             events = Events(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = events.export(
                     self.__start_date,
                     self.__end_date,
                     filter = "(status = 'approved')",
-                    fields="id \
-                    ,created \
-                    ,status \
-                    ,site_id \
-                    ,site.name \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,advertiser_ref_id \
-                    ,advertiser_sub_campaign_id \
-                    ,advertiser_sub_campaign.ref \
-                    ,publisher_sub_campaign_id \
-                    ,publisher_sub_campaign.ref \
-                    ,user_id \
-                    ,device_id \
-                    ,os_id \
-                    ,google_aid \
-                    ,ios_ifa \
-                    ,ios_ifv \
-                    ,windows_aid \
-                    ,referral_url \
-                    ,is_view_through",
+                    fields=events.fields(TUNE_FIELDS_RECOMMENDED),
                     format="csv",
                     response_timezone   = "America/Los_Angeles"
                 )

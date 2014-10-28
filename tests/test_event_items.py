@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -43,7 +43,8 @@ try:
     from tune import (
         TuneSdkException,
         TuneServiceException,
-        EventItems
+        EventItems,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -63,13 +64,24 @@ class TestEventItems(unittest.TestCase):
     def test_ApiKey(self):
         self.assertIsNotNone(self.__api_key)
 
+    def test_Fields(self):
+        response = None
+
+        event_items = EventItems(
+            self.__api_key,
+            validate_fields = True
+        )
+        response = event_items.fields(TUNE_FIELDS_RECOMMENDED)
+        self.assertIsNotNone(response)
+        self.assertGreater(len(response), 0)
+
     def test_Count(self):
         response = None
 
         try:
             event_items = EventItems(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = event_items.count(
@@ -94,36 +106,14 @@ class TestEventItems(unittest.TestCase):
         try:
             event_items = EventItems(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = event_items.find(
                     self.__start_date,
                     self.__end_date,
                     filter = None,
-                    fields="created \
-                    ,site.name \
-                    ,campaign.name \
-                    ,site_event.name \
-                    ,site_event_item.name \
-                    ,quantity \
-                    ,value_usd \
-                    ,country.name \
-                    ,region.name \
-                    ,agency.name \
-                    ,advertiser_sub_site.name \
-                    ,advertiser_sub_campaign.name \
-                    ,site_id \
-                    ,campaign_id \
-                    ,agency_id \
-                    ,site_event_id \
-                    ,country_id \
-                    ,region_id \
-                    ,site_event_item_id \
-                    ,advertiser_sub_site_id \
-                    ,advertiser_sub_campaign_id \
-                    ,currency_code \
-                    ,value",
+                    fields=event_items.fields(TUNE_FIELDS_RECOMMENDED),
                     limit=10,
                     page=None,
                     sort                = {"created": "DESC"},
@@ -145,36 +135,14 @@ class TestEventItems(unittest.TestCase):
         try:
             event_items = EventItems(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = event_items.export(
                     self.__start_date,
                     self.__end_date,
                     filter = None,
-                    fields="created \
-                    ,site.name \
-                    ,campaign.name \
-                    ,site_event.name \
-                    ,site_event_item.name \
-                    ,quantity \
-                    ,value_usd \
-                    ,country.name \
-                    ,region.name \
-                    ,agency.name \
-                    ,advertiser_sub_site.name \
-                    ,advertiser_sub_campaign.name \
-                    ,site_id \
-                    ,campaign_id \
-                    ,agency_id \
-                    ,site_event_id \
-                    ,country_id \
-                    ,region_id \
-                    ,site_event_item_id \
-                    ,advertiser_sub_site_id \
-                    ,advertiser_sub_campaign_id \
-                    ,currency_code \
-                    ,value",
+                    fields=event_items.fields(TUNE_FIELDS_RECOMMENDED),
                     format="csv",
                     response_timezone   = "America/Los_Angeles"
                 )

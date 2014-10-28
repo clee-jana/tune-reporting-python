@@ -35,7 +35,7 @@ Base class for handling all Tune Management API endpoints that deal with reports
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -79,7 +79,7 @@ class ReportsBase(TuneManagementBase):
     #                                           from results.
     #  @param bool  filter_test_profile_id     Remove test profile information
     #                                           from results.
-    #  @param bool  validate                   Validate fields used by actions'
+    #  @param bool  validate_fields                   Validate fields used by actions'
     #                                           parameters.
     def __init__(
         self,
@@ -87,7 +87,7 @@ class ReportsBase(TuneManagementBase):
         api_key,
         filter_debug_mode,
         filter_test_profile_id,
-        validate=False
+        validate_fields=False
         ):
 
         if not isinstance(controller, str) or len(controller) < 1:
@@ -115,7 +115,7 @@ class ReportsBase(TuneManagementBase):
             self,
             controller,
             api_key,
-            validate
+            validate_fields
             )
 
     ## Prepare action with provided query str parameters, then call
@@ -198,8 +198,8 @@ class ReportsBase(TuneManagementBase):
     #  @param str    mod_export_function     Report function performing status request.
     #  @param str    job_id                  Job Identifier of report on queue.
     #  @param bool   verbose                 For debugging purposes only.
-    #  @param int    sleep                   How long thread should sleep before
-    #                                           next status request.
+    #  @param int    sleep                   How long should sleep before next
+    #                                        status request.
     #
     #  @return object Report reader
     #  @throws ValueError
@@ -239,20 +239,16 @@ class ReportsBase(TuneManagementBase):
             verbose,
             sleep
         )
-        thread_killed = False
+
         try:
             if verbose:
                 print("Starting...")
-            export_worker.start()
-            if verbose:
-                print("Waiting...")
-            export_worker.join()
-            if verbose:
-                print("Completed...")
-                print(export_worker.response)
+            if export_worker.run():
+                if verbose:
+                    print("Completed...")
+                    print(export_worker.response)
         except (KeyboardInterrupt, SystemExit):
-            print("\n! Received keyboard interrupt, quitting threads.\n")
-            thread_killed = True
+            print("\n! Received keyboard interrupt, quitting.\n")
             export_worker.stop()
         except TuneSdkException as ex:
             raise
@@ -263,9 +259,6 @@ class ReportsBase(TuneManagementBase):
                     ),
                 ex
                 )
-
-        if thread_killed:
-            return None
 
         if (not export_worker.response
             or export_worker.response.http_code != 200

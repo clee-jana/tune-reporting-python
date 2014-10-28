@@ -35,7 +35,7 @@ Tune Management API endpoints of /account/users/*
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -53,14 +53,14 @@ class Users(TuneManagementBase):
     ## The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
-    #  @param bool  validate    Validate fields used by actions.
+    #  @param bool  validate_fields    Validate fields used by actions.
     #
     def __init__(
         self,
         api_key,
-        validate=False
+        validate_fields=False
         ):
-        TuneManagementBase.__init__(self, "account/users", api_key, validate)
+        TuneManagementBase.__init__(self, "account/users", api_key, validate_fields)
 
     ## Counts all existing records that match filter criteria.
     #

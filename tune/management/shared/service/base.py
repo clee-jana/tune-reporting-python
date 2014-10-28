@@ -35,7 +35,7 @@ Base class to be used by all Tune Management API endpoints.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.5
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -57,9 +57,16 @@ from tune.shared import (
     is_parentheses_balanced
 )
 
+TUNE_FIELDS_ALL = 0
+TUNE_FIELDS_DEFAULT = 1
+TUNE_FIELDS_RELATED = 2
+TUNE_FIELDS_MINIMAL = 4
+TUNE_FIELDS_RECOMMENDED = 8
+
 ## Base components for every Tune Management API request.
 #
 class TuneManagementBase(object):
+
     """
     Base components for every Tune Management API request.
     """
@@ -78,7 +85,7 @@ class TuneManagementBase(object):
 
     ## Validate action's parameters against this endpoint' fields.
     #  @var bool
-    __validate = False
+    __validate_fields = False
 
     ## Endpoint's model name
     #  @var str
@@ -110,24 +117,28 @@ class TuneManagementBase(object):
         "BETWEEN"
         ]
 
-    ## Parameter 'sort' directions.
+    ## Parameter 'filter' conjunction operations.
     #  @var list
     __filter_conjunctions = [
         "AND",
         "OR"
         ]
+    
+    ## Recommended fields for report exports
+    #  @var list
+    __fields_recommended = None
 
      ## Constructor
      #
-     #  @param string controller    Tune Management API Endpoint
-     #  @param string api_key       MobileAppTracking API Key
-     #  @param bool   validate      Validate fields used by actions' parameters.
+     #  @param string controller        Tune Management API Endpoint
+     #  @param string api_key           MobileAppTracking API Key
+     #  @param bool   validate_fields   Validate fields used by actions' parameters.
      #
     def __init__(
         self,
         controller,
         api_key,
-        validate
+        validate_fields
         ):
         """Constructor a new request object.
 
@@ -137,7 +148,7 @@ class TuneManagementBase(object):
 
         """
         # -----------------------------------------------------------------
-        # validate inputs
+        # validate_fields inputs
         # -----------------------------------------------------------------
 
         # controller
@@ -149,7 +160,7 @@ class TuneManagementBase(object):
 
         self.__controller = controller
         self.__api_key = api_key
-        self.__validate = validate
+        self.__validate_fields = validate_fields
 
     ## Get controller
     #  @return string
@@ -199,11 +210,70 @@ class TuneManagementBase(object):
     ## Get all fields for assigned endpoint.
     #  @return list endpoint fields
     #  @throws TuneServiceException
-    def fields(self):
+    def fields(self, enum_fields_selection=TUNE_FIELDS_ALL):
+        
+        if ((self.__validate_fields
+             or not (enum_fields_selection & TUNE_FIELDS_RECOMMENDED))
+            and self.__fields is None):
+            self.__endpoint_fields()
+            
+        if enum_fields_selection & TUNE_FIELDS_RECOMMENDED:
+            if self.fields_recommended is None:
+                raise TuneSdkException(
+                    "Property 'fields_recommended' not defined."
+                    )
+            return self.fields_recommended
+        
+        if (not (enum_fields_selection & TUNE_FIELDS_DEFAULT)
+            and (enum_fields_selection & TUNE_FIELDS_RELATED)):
+            fields = self.__fields.keys();
+            fields.sort()
+            return fields
+        
+        fields_filtered = {}
+        
+        for field_name, field_info in self.__fields.items():
+            if (not (enum_fields_selection & TUNE_FIELDS_RELATED)
+                and not (enum_fields_selection & TUNE_FIELDS_MINIMAL)
+                and field_info["related"]):
+                continue
+            
+            if (not (enum_fields_selection & TUNE_FIELDS_DEFAULT)
+                and not field_info["related"]):
+                fields_filtered[field_name] = field_info
+                continue
+            
+            if ((enum_fields_selection & TUNE_FIELDS_DEFAULT)
+                and field_info["default"]):
+                if ((enum_fields_selection & TUNE_FIELDS_MINIMAL)
+                    and field_info["related"]):
+                    
+                    for related_field in [".name", ".ref"]:
+                        if field_name.endswith(related_field):
+                            fields_filtered[field_name] = field_info
+                            
+                    continue
+                
+                fields_filtered[field_name] = field_info
+                continue
+            
+            if ((enum_fields_selection & TUNE_FIELDS_RELATED)
+                and field_info["related"]):
+                fields_filtered[field_name] = field_info
+                continue
+        
+        fields = fields_filtered.keys();
+        fields.sort()
+        return fields
+    
+    ## Fetch all fields from model and related models of this endpoint.
+    #  @return list endpoint fields
+    #  @throws TuneServiceException
+    def __endpoint_fields(self):
         query_string_dict = {
-                'controllers': self.__controller,
-                'details': 'modelName,fields'
-            }
+            'controllers': self.__controller,
+            'details': 'modelName,fields'
+        }
 
         client = TuneManagementClient(
             "apidoc",
@@ -234,10 +304,9 @@ class TuneManagementBase(object):
         fields = client.response.data[0]["fields"]
         self.__model_name = client.response.data[0]["modelName"]
 
-        field_names = []
+        fields_found = {}
         related_fields = {}
         for field in fields:
-
             if field["related"] == 1:
                 if field["type"] == "property":
                     related_property = field["name"]
@@ -256,34 +325,48 @@ class TuneManagementBase(object):
                 continue
 
             field_name = field["name"]
-            field_names.append(field_name)
+            fields_found[field_name] = {
+                "default": field["fieldDefault"],
+                "related": False
+                }
 
-        field_names_merged = []
+        fields_found_merged = {}
 
-        field_names.sort()
-
-        for field_name in field_names:
-            field_names_merged.append(field_name)
+        for field_name, field_info in fields_found.items():
+            fields_found_merged[field_name] = field_info
             if (field_name != "_id") and field_name.endswith("_id"):
                 related_property = field_name[:-3]
 
                 if ((related_property in related_fields)
                     and (len(related_fields[related_property]) > 0)):
+                    
                     for related_field_name in related_fields[related_property]:
-                        field_names_merged.append("{}.{}".format(
+                        
+                        # Not including duplicate data.
+                        if related_field_name == "id":
+                            continue
+
+                        related_property_field_name = "{}.{}".format(
                             related_property,
                             related_field_name
-                            )
-                        )
+                            );
+                        fields_found_merged[related_property_field_name] = {
+                            "default": field["fieldDefault"],
+                            "related": True
+                            }
                 else:
-                    field_names_merged.append("{}.name".format(
-                        related_property
-                        )
-                    )
+                    related_property_field_name = "{}.{}".format(
+                        related_property,
+                        "name"
+                        );
+                    fields_found_merged[related_property_field_name] = {
+                        "default": field["fieldDefault"],
+                        "related": True
+                        }
 
-        self.__fields = field_names_merged
-
-        return self.__fields
+        self.__fields = fields_found_merged
+        
+        return self.__fields;
 
     ## Get model name for this endpoint.
     #  @return string model name
@@ -314,7 +397,7 @@ class TuneManagementBase(object):
             raise TuneSdkException(
                 "Invalid parameter 'fields' provided: '{}'".format(fields))
 
-        if self.__validate:
+        if self.__validate_fields:
             if self.__fields is None:
                 self.fields()
 
@@ -350,7 +433,7 @@ class TuneManagementBase(object):
                 "Invalid parameter 'group' provided: '{}'".format(group)
                 )
 
-        if self.__validate:
+        if self.__validate_fields:
             if self.__fields is None:
                 self.fields()
 
@@ -372,13 +455,13 @@ class TuneManagementBase(object):
         if not isinstance(sort, dict):
             raise TuneSdkException("Invalid parameter 'sort' provided.")
 
-        if self.__validate:
+        if self.__validate_fields:
             if self.__fields is None:
                 self.fields()
 
         sort_build = {}
         for sort_field, sort_direction in sort.items():
-            if self.__validate:
+            if self.__validate_fields:
                 if sort_field not in self.__fields:
                     raise TuneSdkException(
                         "Parameter 'sort' contains an invalid field: '{}'.".format(
@@ -408,7 +491,7 @@ class TuneManagementBase(object):
                     )
                 )
         
-        if self.__validate:
+        if self.__validate_fields:
             if self.__fields is None:
                 self.fields()
         
@@ -447,7 +530,7 @@ class TuneManagementBase(object):
             if (m is not None
                 and (m.group(0) == filter_part)):
             
-                if self.__validate:
+                if self.__validate_fields:
                     if filter_part in self.__fields:
                         continue;
                     
@@ -514,3 +597,12 @@ class TuneManagementBase(object):
     def __str__(self):
         """For debug purposes, provide string representation of this object."""
         return "{}, {}".format(self.__controller, self.__api_key)
+    
+    @property
+    def fields_recommended(self):
+        return self.__fields_recommended
+
+    @fields_recommended.setter
+    def fields_recommended(self, value):
+        """Provide data value."""
+        self.__fields_recommended = value

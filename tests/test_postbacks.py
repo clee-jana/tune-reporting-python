@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -43,7 +43,8 @@ try:
     from tune import (
         TuneSdkException,
         TuneServiceException,
-        Postbacks
+        Postbacks,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -63,13 +64,23 @@ class TestPostbacks(unittest.TestCase):
     def test_ApiKey(self):
         self.assertIsNotNone(self.__api_key)
 
+    def test_Fields(self):
+        response = None
+        postbacks = Postbacks(
+            self.__api_key,
+            validate_fields = True
+        )
+        response = postbacks.fields(TUNE_FIELDS_RECOMMENDED)
+        self.assertIsNotNone(response)
+        self.assertGreater(len(response), 0)
+
     def test_Count(self):
         response = None
 
         try:
             postbacks = Postbacks(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = postbacks.count(
@@ -95,30 +106,14 @@ class TestPostbacks(unittest.TestCase):
         try:
             postbacks = Postbacks(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = postbacks.find(
                     self.__start_date,
                     self.__end_date,
                     filter = "(status = 'approved')",
-                    fields="id \
-                    ,stat_install_id \
-                    ,stat_event_id \
-                    ,stat_open_id \
-                    ,created \
-                    ,status \
-                    ,site_id \
-                    ,site.name \
-                    ,site_event_id \
-                    ,site_event.name \
-                    ,site_event.type \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,attributed_publisher_id \
-                    ,attributed_publisher.name \
-                    ,url \
-                    ,http_result",
+                    fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
                     limit=10,
                     page=None,
                     sort                = {"created": "DESC"},
@@ -140,30 +135,14 @@ class TestPostbacks(unittest.TestCase):
         try:
             postbacks = Postbacks(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = postbacks.export(
                     self.__start_date,
                     self.__end_date,
                     filter = "(status = 'approved')",
-                    fields="id \
-                    ,stat_install_id \
-                    ,stat_event_id \
-                    ,stat_open_id \
-                    ,created \
-                    ,status \
-                    ,site_id \
-                    ,site.name \
-                    ,site_event_id \
-                    ,site_event.name \
-                    ,site_event.type \
-                    ,publisher_id \
-                    ,publisher.name \
-                    ,attributed_publisher_id \
-                    ,attributed_publisher.name \
-                    ,url \
-                    ,http_result",
+                    fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
                     format="csv",
                     response_timezone   = "America/Los_Angeles"
                 )

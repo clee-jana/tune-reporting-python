@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.6
+#  @version   0.9.7
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -43,7 +43,8 @@ try:
     from tune import (
         TuneSdkException,
         TuneServiceException,
-        Installs
+        Installs,
+        TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -94,7 +95,7 @@ class TestInstalls(unittest.TestCase):
         try:
             installs = Installs(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = installs.find(
@@ -143,7 +144,7 @@ class TestInstalls(unittest.TestCase):
         try:
             installs = Installs(
                 self.__api_key,
-                validate = True
+                validate_fields = True
             )
 
             response = installs.export(
