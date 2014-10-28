@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.8
+#  @version   0.9.9
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 #
@@ -168,13 +168,7 @@ class ExampleClicks(object):
             if response.http_code != 200:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
-            if response.data is None:
-                raise Exception("Failed to return data: {}".format(str(response)))
-
-            job_id = response.data
-
-            if not job_id or len(job_id) < 1:
-                raise Exception("Failed to return Job ID: {}".format(str(response)))
+            job_id = Clicks.parse_response_report_job_id(response)
 
             print "= CSV Job ID: {}".format(job_id)
 
@@ -183,14 +177,13 @@ class ExampleClicks(object):
             print " Fetching Advertiser Logs Clicks CSV report                      "
             print "================================================================="
 
-            export = Export(api_key)
-            export_fetch_response = export.fetch(
+            export_fetch_response = clicks.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
                 )
 
-            csv_report_url = Export.parse_response_url(export_fetch_response)
+            csv_report_url = Clicks.parse_response_report_url(export_fetch_response)
             print "= CVS Report URL: {}".format(csv_report_url)
 
             print ""
@@ -222,13 +215,7 @@ class ExampleClicks(object):
             if response.http_code != 200:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
-            if response.data is None:
-                raise Exception("Failed to return data: {}".format(str(response)))
-
-            job_id = response.data
-
-            if not job_id or len(job_id) < 1:
-                raise Exception("Failed to return Job ID: {}".format(str(response)))
+            job_id = Clicks.parse_response_report_job_id(response)
 
             print "= JSON Job ID: {}".format(job_id)
 
@@ -236,8 +223,7 @@ class ExampleClicks(object):
             print " Fetching Advertiser Logs Clicks JSON report.           "
             print "========================================================"
 
-            export = Export(api_key)
-            export_fetch_response = export.fetch(
+            export_fetch_response = clicks.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
@@ -250,7 +236,7 @@ class ExampleClicks(object):
                 print "Exit"
                 return
 
-            json_report_url = Export.parse_response_url(export_fetch_response)
+            json_report_url = Clicks.parse_response_report_url(export_fetch_response)
             print "= JSON Report URL: {}".format(json_report_url)
 
             print "========================================================"

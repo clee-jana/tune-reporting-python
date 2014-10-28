@@ -31,11 +31,11 @@ Base class for handling all Tune Management API endpoints that deal with log rep
 #  Python 2.7
 #
 #  @category  Tune
-#  @package   Tune_PHP_SDK
+#  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.8
+#  @version   0.9.9
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -179,7 +179,7 @@ class ReportsInsightBase(ReportsBase):
         TuneManagementBase.validate_datetime('end_date', end_date)
 
         self.validate_cohort_type(cohort_type)
-        
+
         if cohort_interval is not None:
             self.validate_cohort_interval(cohort_interval)
         if filter is not None:
@@ -427,7 +427,7 @@ class ReportsInsightBase(ReportsBase):
     #  @param @see Response
     #  @return str Report Url
     @staticmethod
-    def parse_response_url(
+    def parse_response_report_url(
         response
     ):
         """Helper function for parsing export status response to gather report url.
@@ -445,3 +445,25 @@ class ReportsInsightBase(ReportsBase):
             url = str(url)
 
         return url
+
+    ## Helper function for parsing export response to gather job identifier.
+    #  @param @see Response
+    #  @return str Report Url
+    @staticmethod
+    def parse_response_report_job_id(
+        response
+    ):
+        if not response:
+            raise ValueError("Parameter 'response' is not defined.")
+        if not response.data:
+            raise ValueError("Parameter 'response.data' is not defined.")
+        if "job_id" not in response.data:
+            raise ValueError("Failed to return 'job_id': {}".format(str(response)))
+
+        job_id = response.data['job_id']
+
+        if not job_id or len(job_id) < 1:
+            raise Exception("Failed to return Job ID: {}".format(str(response)))
+
+        return job_id
+

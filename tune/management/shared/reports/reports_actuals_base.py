@@ -31,11 +31,11 @@ Base class for handling all Tune Management API endpoints that deal with reports
 #  Python 2.7
 #
 #  @category  Tune
-#  @package   Tune_PHP_SDK
+#  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.8
+#  @version   0.9.9
 #  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
@@ -44,6 +44,9 @@ from .reports_base import (
 )
 from tune.management.shared.service import (
     TuneManagementBase
+)
+from tune.management.api.export import (
+    Export
 )
 
 ## Base class intended for gathering from Advertiser Stats actuals.
@@ -245,6 +248,86 @@ class ReportsActualsBase(ReportsBase):
                 'response_timezone': response_timezone
             }
         )
+
+    ## Query status of insight reports. Upon completion will
+    #  return url to download requested report.
+    #
+    #  @param string job_id    Provided Job Identifier to reference requested report on export queue.
+    def status(
+        self,
+        job_id              # Export queue identifier
+    ):
+        """Query status of insight reports. Upon completion will return url to
+        download requested report.
+
+            Args:
+        """
+
+        # job_id
+        if not job_id or len(job_id) < 1:
+            raise ValueError("Parameter 'job_id' is not defined.")
+
+        export = Export(self.api_key)
+        return export.download(
+            job_id
+            )
+
+    ## Helper function for fetching report upon completion.
+    #  Starts worker thread for polling export queue.
+    #
+    #  @param string mod_export_class  Requesting report class for this export.
+    #  @param string job_id            Provided Job Identifier to reference
+    #                                  requested report on export queue.
+    #  @param bool   verbose           Debug purposes only to view progress of
+    #                                  job on export queue.
+    #  @param int    sleep             Polling delay between querying job
+    #                                  status on export queue.
+    #
+    #  @return object @see report_reader_base.py
+    def fetch(
+        self,
+        job_id,
+        verbose=False,
+        sleep=10
+    ):
+        # job_id
+        if not job_id or len(job_id) < 1:
+            raise ValueError("Parameter 'job_id' is not defined.")
+
+        export = Export(self.api_key)
+        return export.fetch(
+            job_id,
+            verbose=True,
+            sleep=10
+            )
+
+    ## Helper function for parsing export status response to gather report url.
+    #  @param @see Response
+    #  @return str Report Url
+    @staticmethod
+    def parse_response_report_url(
+        response
+    ):
+        return Export.parse_response_report_url(response)
+
+    ## Helper function for parsing export response to gather job identifier.
+    #  @param @see Response
+    #  @return str Report Url
+    @staticmethod
+    def parse_response_report_job_id(
+        response
+    ):
+        if not response:
+            raise ValueError("Parameter 'response' is not defined.")
+        if not response.data:
+            raise ValueError("Parameter 'response.data' is not defined.")
+
+        job_id = response.data
+
+        if not job_id or len(job_id) < 1:
+            raise Exception("Failed to return Job ID: {}".format(str(response)))
+
+        return job_id
 
     ## Validate 'timestamp' parameter
     #  @param null|string timestamp

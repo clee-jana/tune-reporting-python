@@ -29,15 +29,15 @@ Tune Management API endpoint /export/
 #    Python 2.7
 #
 # @category  Tune
-# @package   Tune_PHP_SDK
+# @package   Tune_API_Python
 # @author    Jeff Tanner <jefft@tune.com>
 # @copyright 2014 Tune (http://www.tune.com)
 # @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# @version   0.9.8
+# @version   0.9.9
 # @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
 #
 
-from tune.management.shared import (
+from tune.management.shared.reports.reports_base import (
     ReportsBase
 )
 
@@ -118,7 +118,7 @@ class Export(ReportsBase):
     #  @param @see Response
     #  @return str Report Url
     @staticmethod
-    def parse_response_url(
+    def parse_response_report_url(
         response
     ):
         if not response:
@@ -136,3 +136,4 @@ class Export(ReportsBase):
             url = str(url)
 
         return url
+
