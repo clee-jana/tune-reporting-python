@@ -1,10 +1,7 @@
-"""
-Container of complete request Tune Management API request.
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## request.py
+#
+#  request.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,8 +32,8 @@ Container of complete request Tune Management API request.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from .query_string_builder import (
@@ -46,6 +43,7 @@ from tune.shared import (
     TuneSdkException
 )
 
+
 class Request(object):
     """Base components for every Tune Management API request.
 
@@ -54,7 +52,7 @@ class Request(object):
         __action            Tune Management API action
         __api_key           Tune Management API key of user
         __query_string_dict Query String parameters
-        __api_url_base      Tune Management API base URL
+        __api_url_endpoint  Tune Management API endpoint_base URL
         __api_url_version   Tune Management API version
     """
 
@@ -62,7 +60,7 @@ class Request(object):
     __action = None
     __api_key = None
     __query_string_dict = None
-    __api_url_base = None
+    __api_url_endpoint = None
     __api_url_version = None
 
     def __init__(
@@ -71,19 +69,9 @@ class Request(object):
         action,
         api_key,
         query_string_dict,
-        api_url_base,
+        api_url_endpoint,
         api_url_version
-        ):
-        """Constructor a new request object.
-
-            Args:
-                controller (str): Controller portion of Tune Service request.\n
-                action (str): Action portion of Tune Service request.\n
-                api_key (str): User's Tune API Key.\n
-                query_string_dict (dictionary, optional): Other attributes
-                to be included in the request's query string.\n
-
-        """
+    ):
         # -----------------------------------------------------------------
         # validate_fields inputs
         # -----------------------------------------------------------------
@@ -98,8 +86,8 @@ class Request(object):
         if not api_key or len(api_key) < 1:
             raise ValueError("Parameter 'api_key' is not defined.")
 
-        if not api_url_base or len(api_url_base) < 1:
-            raise ValueError("Parameter 'api_url_base' is not defined.")
+        if not api_url_endpoint or len(api_url_endpoint) < 1:
+            raise ValueError("Parameter 'api_url_endpoint' is not defined.")
         if not api_url_version or len(api_url_version) < 1:
             raise ValueError("Parameter 'api_url_version' is not defined.")
 
@@ -107,7 +95,7 @@ class Request(object):
         self.__action = action
         self.__api_key = api_key
         self.__query_string_dict = query_string_dict
-        self.__api_url_base = api_url_base
+        self.__api_url_endpoint = api_url_endpoint
         self.__api_url_version = api_url_version
 
     @property
@@ -121,9 +109,9 @@ class Request(object):
         return self.__action
 
     @property
-    def base(self):
-        """Tune Management API base URL"""
-        return self.__api_url_base
+    def endpoint_base(self):
+        """Tune Management API endpoint_base URL"""
+        return self.__api_url_endpoint
 
     @property
     def version(self):
@@ -137,7 +125,9 @@ class Request(object):
 
     @property
     def query_string_dict(self):
-        """Tune Management API query string dictionary used to build Query String."""
+        """
+        Tune Management API query string dictionary used to build Query String.
+        """
         return self.__query_string_dict
 
     @property
@@ -162,11 +152,11 @@ class Request(object):
     def path(self):
         """Tune Management API service path"""
         request_path = "{0}/{1}/{2}/{3}".format(
-                self.__api_url_base,
-                self.__api_url_version,
-                self.__controller,
-                self.__action
-            )
+            self.__api_url_endpoint,
+            self.__api_url_version,
+            self.__controller,
+            self.__action
+        )
 
         return request_path
 
@@ -174,9 +164,9 @@ class Request(object):
     def url(self):
         """Tune Management API full service request."""
         request_url = "{0}?{1}".format(
-                    self.path,
-                    self.query_string
-                )
+            self.path,
+            self.query_string
+        )
 
         return request_url
 
@@ -186,7 +176,7 @@ class Request(object):
             Returns:
                 string
         """
-        pretty = "\napi_url_base:\t " + str(self.__api_url_base)
+        pretty = "\napi_url_endpoint_base:\t " + str(self.__api_url_endpoint)
         pretty += "\napi_url_version:\t " + str(self.__api_url_version)
         pretty += "\ncontroller:\t " + str(self.__controller)
         pretty += "\naction:\t " + str(self.__action)

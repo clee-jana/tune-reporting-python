@@ -32,15 +32,15 @@
 
 import sys
 
-from example_client import ExampleClient
-from example_clicks import ExampleClicks
-from example_event_items import ExampleEventItems
-from example_events import ExampleEvents
-from example_installs import ExampleInstalls
-from example_postbacks import ExamplePostbacks
-from example_actuals import ExampleActuals
-from example_cohort import ExampleCohort
-from example_retention import ExampleRetention
+from example_client_account_users import ExampleClientAccountUsers
+from example_reports_clicks import ExampleReportsClicks
+from example_reports_event_items import ExampleReportsEventItems
+from example_reports_events import ExampleReportsEvents
+from example_reports_installs import ExampleReportsInstalls
+from example_reports_postbacks import ExampleReportsPostbacks
+from example_reports_actuals import ExampleReportsActuals
+from example_reports_cohort import ExampleReportsCohort
+from example_reports_retention import ExampleReportsRetention
 
 if __name__ == '__main__':
     try:
@@ -51,31 +51,31 @@ if __name__ == '__main__':
 
         api_key = sys.argv[1]
 
-        example = ExampleClient()
+        example = ExampleClientAccountUsers()
         example.run(api_key)
 
-        example = ExampleClicks()
+        example = ExampleReportsClicks()
         example.run(api_key)
 
-        example = ExampleEventItems()
+        example = ExampleReportsEventItems()
         example.run(api_key)
 
-        example = ExampleEvents()
+        example = ExampleReportsEvents()
         example.run(api_key)
 
-        example = ExampleInstalls()
+        example = ExampleReportsInstalls()
         example.run(api_key)
 
-        example = ExamplePostbacks()
+        example = ExampleReportsPostbacks()
         example.run(api_key)
 
-        example = ExampleActuals()
+        example = ExampleReportsActuals()
         example.run(api_key)
 
-        example = ExampleCohort()
+        example = ExampleReportsCohort()
         example.run(api_key)
 
-        example = ExampleRetention()
+        example = ExampleReportsRetention()
         example.run(api_key)
 
     except Exception as exc:

@@ -46,16 +46,21 @@ Beta public release on October 27, 2014
 * Removed threading from fetch()
 * Provided recommended values for exports()
 
-
 Version 0.9.8
 --------------
 
 Beta public release on October 28, 2014
 * Unittest fixes for Jenkins
 
-
 Version 0.9.9
 --------------
 
 Beta public release on October 28, 2014
 * fetch() and status() on all reporting classes.
+
+Version 0.9.10
+--------------
+
+Beta public release on October 30, 2014
+* Created endpoint base classes.
+* Removed bash scripts and provided Makefile instead.

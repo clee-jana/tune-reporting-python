@@ -1,10 +1,7 @@
-"""
-Tune Management API endpoints of /advertiser/*
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## __init__.py
+#
+#  __init__.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,33 +32,33 @@ Tune Management API endpoints of /advertiser/*
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune.management.shared import (
-    TuneManagementBase
+    ItemsEndpointBase
+)
+from .stats import (
+    Stats,          # Actuals
+    Clicks,         # Logs
+    EventItems,     # Logs
+    Events,         # Logs
+    Installs,       # Logs
+    Postbacks,      # Logs
+    Retention,      # Retention
+    LTV             # Cohort
 )
 
-from .stats import (
-        Stats,          # Actuals
-        Clicks,         # Logs
-        EventItems,     # Logs
-        Events,         # Logs
-        Installs,       # Logs
-        Postbacks,      # Logs
-        Retention,      # Retention
-        LTV             # Cohort
-    )
 
-## Endpoint '/advertisers'
+#  Endpoint '/advertisers'
 #
-class Advertiser(TuneManagementBase):
+class Advertiser(ItemsEndpointBase):
     """
     Tune Management API endpoint '/advertiser/'
     """
 
-    ## The constructor.
+    #  The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
     #  @param bool  validate_fields    Validate fields used by actions.
@@ -70,64 +67,10 @@ class Advertiser(TuneManagementBase):
         self,
         api_key,
         validate_fields=False
-        ):
-        TuneManagementBase.__init__(self, "account", api_key, validate_fields)
-
-    ## Counts all existing records that match filter criteria.
-    #
-    #  @param string filter Filter the results and apply conditions
-    #                       that must be met for records to be included in data.
-    def count(
-        self,
-        filter=None
-        ):
-        """Count advertisers based upon provided constraints."""
-        return TuneManagementBase.call(
+    ):
+        ItemsEndpointBase.__init__(
             self,
-            action="count",
-            query_string_dict={
-                'filter': filter
-            }
+            "advertisers",
+            api_key,
+            validate_fields
         )
-
-    ## Finds all existing records that match filter criteria
-    #  and returns an array of found model data.
-    #
-    #  @param string filter   Filter the results and apply conditions
-    #                         that must be met for records to be
-    #                         included in data.
-    #  @param string fields   No value returns default fields, "#  "
-    #                         returns all available fields,
-    #                         or provide specific fields.
-    #  @param int    limit    Limit number of results, default 10,
-    #                         0 shows all.
-    #  @param int    page     Pagination, default 1.
-    #  @param dict   sort     Expression defining sorting found
-    #                         records in result set base upon provided
-    #                         fields and its modifier (ASC or DESC).
-    #
-    #  @return object @see Response
-    def find(
-        self,
-        fields=None,
-        filter=None,
-        limit=None,
-        page=None,
-        sort=None
-        ):
-        """Find advertisers based upon provided constraints."""
-        return TuneManagementBase.call(
-            self,
-            action="find",
-            query_string_dict={
-                'fields': fields,
-                'filter': filter,
-                'limit': limit,
-                'page': page,
-                'sort': sort
-            }
-        )
-
-    @staticmethod
-    def version():
-        return TuneManagementBase.version()

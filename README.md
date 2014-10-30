@@ -1,8 +1,8 @@
 <h2>tune-api-python</h2>
 <h2>Tune API SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate Tune API services.</h3>
-<h4>Update:  2014-10-28</h4>
-<h4>Version: 0.9.9</h4>
+<h4>Update:  2014-10-30</h4>
+<h4>Version: 0.9.10</h4>
 ===
 
 ## Overview
@@ -22,6 +22,13 @@ Please see documentation here:
 #### Prerequisites
 
     * Python 2.7 or Python 3.0
+
+##### For Test
+
+```bash
+    $ sudo apt-get install python-pip
+    $ sudo pip install virtualenv
+```
 
 <a name="generate_api_key"></a>
 #### Generate API Key
@@ -73,7 +80,7 @@ You may need to run the above commands with `sudo`.
 
 Run the following script to view execution of all unittests:
 ```bash
-    $ ./scripts/tune_examples.sh [API_KEY]
+    $ make api_key=[API_KEY] examples
 ```
 
 <a name="sdk_unittests"></a>
@@ -81,8 +88,20 @@ Run the following script to view execution of all unittests:
 
 Run the following script to view execution of all unittests:
 ```bash
-    $ ./scripts/tune_tests.sh [API_KEY]
+    $ sudo make install
+    $ sudo make test-install
+    $ make api_key=[API_KEY] tests
 ```
+
+<a name="sdk_docs"></a>
+#### SDK Documentation
+
+Run the following script to generate Doxygen-based documentation:
+```bash
+    $ make docs
+```
+
+Requires installation of [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.html).
 
 <a name="license"></a>
 ## License

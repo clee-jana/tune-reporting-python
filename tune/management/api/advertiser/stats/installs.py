@@ -1,10 +1,7 @@
-"""
-Tune Management API endpoint /advertiser/stats/installs
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## installs.py
+#
+#  installs.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,20 +32,21 @@ Tune Management API endpoint /advertiser/stats/installs
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune.management.shared import (
-    ReportsLogsBase
+    ReportsLogsEndpointBase
 )
 
-## /advertiser/stats/installs
-#  @example example_installs.py
-class Installs(ReportsLogsBase):
+
+#  /advertiser/stats/installs
+#  @example example_reports_installs.py
+class Installs(ReportsLogsEndpointBase):
     """Advertiser Stats logs pertaining to installs."""
 
-    ## The constructor.
+    #  The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
     #  @param bool  validate_fields    Validate fields used by actions.
@@ -57,8 +55,8 @@ class Installs(ReportsLogsBase):
         self,
         api_key,
         validate_fields=False
-        ):
-        ReportsLogsBase.__init__(
+    ):
+        ReportsLogsEndpointBase.__init__(
             self,
             "advertiser/stats/installs",
             api_key,
@@ -68,25 +66,25 @@ class Installs(ReportsLogsBase):
         )
 
         self.fields_recommended = [
-             "id"
-            ,"created"
-            ,"status"
-            ,"site_id"
-            ,"site.name"
-            ,"publisher_id"
-            ,"publisher.name"
-            ,"advertiser_ref_id"
-            ,"advertiser_sub_campaign_id"
-            ,"advertiser_sub_campaign.ref"
-            ,"publisher_sub_campaign_id"
-            ,"publisher_sub_campaign.ref"
-            ,"user_id"
-            ,"device_id"
-            ,"os_id"
-            ,"google_aid"
-            ,"ios_ifa"
-            ,"ios_ifv"
-            ,"windows_aid"
-            ,"referral_url"
-            ,"is_view_through"
+            "id",
+            "created",
+            "status",
+            "site_id",
+            "site.name",
+            "publisher_id",
+            "publisher.name",
+            "advertiser_ref_id",
+            "advertiser_sub_campaign_id",
+            "advertiser_sub_campaign.ref",
+            "publisher_sub_campaign_id",
+            "publisher_sub_campaign.ref",
+            "user_id",
+            "device_id",
+            "os_id",
+            "google_aid",
+            "ios_ifa",
+            "ios_ifv",
+            "windows_aid",
+            "referral_url",
+            "is_view_through"
         ]

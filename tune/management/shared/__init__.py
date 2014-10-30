@@ -1,8 +1,7 @@
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## __init__.py
+#
+#  __init__.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -33,25 +32,23 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
-from .reports import (
-    ReportsBase,
-    ReportsActualsBase,
-    ReportsInsightBase,
-    ReportsLogsBase,
-    ReportReaderCSV,
-    ReportReaderJSON
-    )
-
 from .service import (
-    TuneManagementClient,
-    TuneManagementBase,
+    TuneManagementClient
+)
+from .endpoints import (
+    EndpointBase,
+    ItemsEndpointBase,
+    ReportsEndpointBase,
+    ReportsActualsEndpointBase,
+    ReportsInsightEndpointBase,
+    ReportsLogsEndpointBase,
     TUNE_FIELDS_ALL,
     TUNE_FIELDS_DEFAULT,
     TUNE_FIELDS_RELATED,
     TUNE_FIELDS_MINIMAL,
     TUNE_FIELDS_RECOMMENDED
-    )
+)

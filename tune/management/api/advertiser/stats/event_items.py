@@ -1,10 +1,7 @@
-"""
-Tune Management API endpoint /advertiser/stats/event_items
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## event_items.py
+#
+#  event_items.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,20 +32,21 @@ Tune Management API endpoint /advertiser/stats/event_items
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune.management.shared import (
-    ReportsLogsBase
+    ReportsLogsEndpointBase
 )
 
-## /advertiser/stats/event/items
-#  @example example_event_items.py
-class EventItems(ReportsLogsBase):
+
+#  /advertiser/stats/event/items
+#  @example example_reports_event_items.py
+class EventItems(ReportsLogsEndpointBase):
     """Advertiser Stats logs pertaining to event items."""
 
-    ## The constructor.
+    #  The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
     #  @param bool  validate_fields    Validate fields used by actions.
@@ -57,8 +55,8 @@ class EventItems(ReportsLogsBase):
         self,
         api_key,
         validate_fields=False
-        ):
-        ReportsLogsBase.__init__(
+    ):
+        ReportsLogsEndpointBase.__init__(
             self,
             "advertiser/stats/event/items",
             api_key,
@@ -68,28 +66,28 @@ class EventItems(ReportsLogsBase):
         )
 
         self.fields_recommended = [
-            "id"
-            ,"created"
-            ,"site_id"
-            ,"site.name"
-            ,"campaign_id"
-            ,"campaign.name"
-            ,"site_event_id"
-            ,"site_event.name"
-            ,"site_event_item_id"
-            ,"site_event_item.name"
-            ,"quantity"
-            ,"value_usd"
-            ,"country_id"
-            ,"country.name"
-            ,"region_id"
-            ,"region.name"
-            ,"agency_id"
-            ,"agency.name"
-            ,"advertiser_sub_site_id"
-            ,"advertiser_sub_site.name"
-            ,"advertiser_sub_campaign_id"
-            ,"advertiser_sub_campaign.name"
-            ,"currency_code"
-            ,"value"
+            "id",
+            "created",
+            "site_id",
+            "site.name",
+            "campaign_id",
+            "campaign.name",
+            "site_event_id",
+            "site_event.name",
+            "site_event_item_id",
+            "site_event_item.name",
+            "quantity",
+            "value_usd",
+            "country_id",
+            "country.name",
+            "region_id",
+            "region.name",
+            "agency_id",
+            "agency.name",
+            "advertiser_sub_site_id",
+            "advertiser_sub_site.name",
+            "advertiser_sub_campaign_id",
+            "advertiser_sub_campaign.name",
+            "currency_code",
+            "value"
         ]

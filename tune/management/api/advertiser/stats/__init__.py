@@ -1,10 +1,7 @@
-"""
-Tune Management API endpoints of /advertiser/stats/*
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## __init__.py
+#
+#  __init__.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,8 +32,8 @@ Tune Management API endpoints of /advertiser/stats/*
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from .clicks import (Clicks)
@@ -48,27 +45,28 @@ from .postbacks import (Postbacks)
 from .retention import (Retention)
 
 from tune.management.shared import (
-    ReportsActualsBase
+    ReportsActualsEndpointBase
 )
 
-## /advertiser/stats
-#  @example example_actuals.py
-class Stats(ReportsActualsBase):
+
+#  /advertiser/stats
+#  @example example_reports_actuals.py
+class Stats(ReportsActualsEndpointBase):
     """
     Tune Management API endpoint '/advertiser/stats/'
     """
 
-    ## The constructor.
+    #  The constructor.
     #
-    #  @param str   api_key                    MobileAppTracking API Key.
-    #  @param bool  validate_fields                   Validate fields used by actions'
+    #  @param str   api_key         MobileAppTracking API Key.
+    #  @param bool  validate_fields Validate fields used by actions'
     #
     def __init__(
         self,
         api_key,
         validate_fields=False
-        ):
-        ReportsActualsBase.__init__(
+    ):
+        ReportsActualsEndpointBase.__init__(
             self,
             "advertiser/stats",
             api_key,
@@ -76,23 +74,23 @@ class Stats(ReportsActualsBase):
             True,
             validate_fields
         )
-        
+
         self.fields_recommended = [
-             "site_id"
-            ,"site.name"
-            ,"publisher_id"
-            ,"publisher.name"
-            ,"ad_impressions"
-            ,"ad_impressions_unique"
-            ,"ad_clicks"
-            ,"ad_clicks_unique"
-            ,"paid_installs"
-            ,"paid_installs_assists"
-            ,"non_installs_assists"
-            ,"paid_events"
-            ,"paid_events_assists"
-            ,"non_events_assists"
-            ,"paid_opens"
-            ,"paid_opens_assists"
-            ,"non_opens_assists"
+            "site_id",
+            "site.name",
+            "publisher_id",
+            "publisher.name",
+            "ad_impressions",
+            "ad_impressions_unique",
+            "ad_clicks",
+            "ad_clicks_unique",
+            "paid_installs",
+            "paid_installs_assists",
+            "non_installs_assists",
+            "paid_events",
+            "paid_events_assists",
+            "non_events_assists",
+            "paid_opens",
+            "paid_opens_assists",
+            "non_opens_assists"
         ]

@@ -61,7 +61,7 @@ PACKAGES = [
     , 'tune.management'
     , 'tune.management.shared'
     , 'tune.management.api'
-    , 'tune.management.shared.reports'
+    , 'tune.management.shared.endpoints'
     , 'tune.management.shared.service'
     , 'tune.management.api.advertiser'
     , 'tune.management.api.account'

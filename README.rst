@@ -81,7 +81,7 @@ SDK Examples
 
 Run the following script to view execution of all examples:
 .. code-block:: bash
-    $ ./scripts/tune_examples.sh [API_KEY]
+    $ make api_key=[API_KEY] examples
     
 -------------
 SDK Unittests
@@ -89,7 +89,18 @@ SDK Unittests
 
 Run the following script to view execution of all unittests:
 .. code-block:: bash
-    $ ./scripts/tune_tests.sh [API_KEY]
+    $ make api_key=[API_KEY] tests
+    
+-------------
+SDK Document
+-------------
+
+Run the following script to generate Doxygen-based documentation:
+.. code-block:: bash
+    $ make docs
+    
+Requires installation of Doxygen: 
+.. Doxygen: http://www.stack.nl/~dimitri/doxygen/index.html
 
 =============
 License

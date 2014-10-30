@@ -1,10 +1,7 @@
-"""
-Builds query string as expected for Tune Management API request.
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## query_string_builder.py
+#
+#  query_string_builder.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,8 +32,8 @@ Builds query string as expected for Tune Management API request.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import sys
@@ -51,6 +48,7 @@ from tune.shared import (
     TuneSdkException,
     TuneServiceException
 )
+
 
 #
 # Build Query String provide with dictionary of query parameters.
@@ -101,13 +99,16 @@ class QueryStringBuilder(object):
 
             elif name == "sort":
                 if type(value) is not dict:
-                    raise ValueError("Parameter 'sort' value is not a dictionary.")
+                    raise ValueError(
+                        "Parameter 'sort' value is not a dictionary."
+                    )
 
                 for sort_field, sort_direction in value.items():
                     sort_direction = sort_direction.upper()
                     if sort_direction != "ASC" and sort_direction != "DESC":
                         raise ValueError(
-                            "Parameter 'sort' has invalid direction: '{}'".format(
+                            "Parameter 'sort' has invalid "
+                            "direction: '{}'".format(
                                 sort_direction
                             )
                         )
@@ -126,9 +127,9 @@ class QueryStringBuilder(object):
                 self._encode(name, group_value)
 
             elif isinstance(value, bool):
-                if value == False:
+                if value is False:
                     bool_value = "false"
-                elif value == True:
+                elif value is True:
                     bool_value = "true"
 
                 self._encode(name, bool_value)
@@ -143,7 +144,7 @@ class QueryStringBuilder(object):
                     name,
                     value,
                     str(ex)
-                    ),
+                ),
                 ex
             )
 
@@ -159,9 +160,9 @@ class QueryStringBuilder(object):
                 self.__query += "&"
 
             if sys.version_info[0] == 3:
-                param = urllib.parse.urlencode({name : value})
+                param = urllib.parse.urlencode({name: value})
             else:
-                param = urllib.urlencode({name : value})
+                param = urllib.urlencode({name: value})
             self.__query += param
         except Exception as ex:
             raise TuneSdkException(
@@ -169,7 +170,7 @@ class QueryStringBuilder(object):
                     name,
                     value,
                     str(ex)
-                    ),
+                ),
                 ex
             )
 

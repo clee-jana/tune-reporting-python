@@ -1,10 +1,7 @@
-"""
-Tune Management API endpoint /advertiser/stats/clicks
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## clicks.py
+#
+#  clicks.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,25 +32,26 @@ Tune Management API endpoint /advertiser/stats/clicks
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune.management.shared import (
-    ReportsLogsBase,
-    TuneManagementBase
+    ReportsLogsEndpointBase,
+    EndpointBase
 )
 
-## /advertiser/stats/clicks
+
+#  /advertiser/stats/clicks
 #
-#  @example example_clicks.py
+#  @example example_reports_clicks.py
 #
-class Clicks(ReportsLogsBase):
+class Clicks(ReportsLogsEndpointBase):
     """
     Tune Management API endpoint '/advertiser/stats/clicks'
     """
 
-    ## The constructor.
+    #  The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
     #  @param bool  validate_fields    Validate fields used by actions.
@@ -62,8 +60,8 @@ class Clicks(ReportsLogsBase):
         self,
         api_key,
         validate_fields=False
-        ):
-        ReportsLogsBase.__init__(
+    ):
+        ReportsLogsEndpointBase.__init__(
             self,
             "advertiser/stats/clicks",
             api_key,
@@ -73,15 +71,15 @@ class Clicks(ReportsLogsBase):
         )
 
         self.fields_recommended = [
-             "id"
-            ,"created"
-            ,"site_id"
-            ,"site.name"
-            ,"publisher_id"
-            ,"publisher.name"
-            ,"is_unique"
-            ,"advertiser_sub_campaign_id"
-            ,"advertiser_sub_campaign.ref"
-            ,"publisher_sub_campaign_id"
-            ,"publisher_sub_campaign.ref"
+            "id",
+            "created",
+            "site_id",
+            "site.name",
+            "publisher_id",
+            "publisher.name",
+            "is_unique",
+            "advertiser_sub_campaign_id",
+            "advertiser_sub_campaign.ref",
+            "publisher_sub_campaign_id",
+            "publisher_sub_campaign.ref"
         ]

@@ -72,13 +72,17 @@ You may need to run the above commands with `sudo`.
 Code Samples
 =============
 
+=============
+Code Samples
+=============
+
 -------------
 SDK Examples
 -------------
 
 Run the following script to view execution of all examples:
 ```
-    $ ./scripts/tune_examples.sh [API_KEY]
+    $ make api_key=[API_KEY] examples
 ```
 
 -------------
@@ -87,8 +91,19 @@ SDK Unittests
 
 Run the following script to view execution of all unittests:
 ```
-    $ ./scripts/tune_tests.sh [API_KEY]
+    $ make api_key=[API_KEY] tests
 ```
+
+-------------
+SDK Document
+-------------
+
+Run the following script to generate Doxygen-based documentation:
+```
+    $ make docs
+```
+
+Requires installation of Doxygen: http://www.stack.nl/~dimitri/doxygen/index.html
 
 =============
 License
