@@ -1,65 +1,52 @@
-"""
-Tune SDK
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#    Copyright (c) 2014 Tune, Inc
-#    All rights reserved.
+#  Copyright (c) 2014 Tune, Inc
+#  All rights reserved.
 #
-#    Permission is hereby granted, free of charge, to any person obtaining a copy
-#    of this software and associated documentation files (the "Software"), to deal
-#    in the Software without restriction, including without limitation the rights
-#    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#    copies of the Software, and to permit persons to whom the Software is
-#    furnished to do so, subject to the following conditions:
+#  Permission is hereby granted, free of charge, to any person obtaining
+#  a copy of this software and associated documentation files
+#  (the "Software"), to deal in the Software without restriction, including
+#  without limitation the rights to use, copy, modify, merge, publish,
+#  distribute, sublicense, and/or sell copies of the Software, and to permit
+#  persons to whom the Software is furnished to do so, subject to the
+#  following conditions:
 #
-#    The above copyright notice and this permission notice shall be included in
-#    all copies or substantial portions of the Software.
+#  The above copyright notice and this permission notice shall be included in
+#  all copies or substantial portions of the Software.
 #
-#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#    FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-#    THE SOFTWARE.
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL
+#  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#  DEALINGS IN THE SOFTWARE.
 #
-#    Python 2.7
+#  Python 2.7
 #
-# @category  Tune
-# @package   Tune_API_Python
-# @author    Jeff Tanner <jefft@tune.com>
-# @copyright 2014 Tune (http://www.tune.com)
-# @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# @version   0.9.9
-# @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @category  Tune
+#  @package   Tune_API_Python
+#  @author    Jeff Tanner <jefft@tune.com>
+#  @copyright 2014 Tune (http://www.tune.com)
+#  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import sys
 
-__title__ = 'tune'
-__build__ = 0x000095
-__author__ = 'Tune, Inc.'
-__license__ = 'LICENSE.md'
-__copyright__ = 'Copyright 2014 Tune, Inc'
-
 from .shared import (
     python_check_version,
     TuneSdkException,
-    TuneServiceException
-    )
+    TuneServiceException,
+    ReportExportWorker,
+    ReportReaderCSV,
+    ReportReaderJSON,
+)
 from .version import __python_required_version__
 
 python_check_version(__python_required_version__)
-
-from .shared import (
-    python_check_version,
-    is_parentheses_balanced,
-    TuneSdkException,
-    TuneServiceException,
-    TuneProxy
-    )
 
 from .management import (
     Account,
@@ -74,10 +61,8 @@ from .management import (
     Retention,      # Retention
     LTV,            # Cohort
     Export,
-    ReportReaderCSV,
-    ReportReaderJSON,
     TuneManagementClient,
-    TuneManagementBase,
+    EndpointBase,
     TUNE_FIELDS_ALL,
     TUNE_FIELDS_DEFAULT,
     TUNE_FIELDS_RELATED,

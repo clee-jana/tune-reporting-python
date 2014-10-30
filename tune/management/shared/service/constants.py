@@ -1,10 +1,7 @@
-"""
-Constants representing Tune Management API service.
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## constants.py
+#
+#  constants.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,9 +32,9 @@ Constants representing Tune Management API service.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
-__tune_management_api_base_url__ = 'https://api.mobileapptracking.com'
+__tune_management_api_endpoint__ = 'https://api.mobileapptracking.com'
 __tune_management_api_version__ = 'v2'

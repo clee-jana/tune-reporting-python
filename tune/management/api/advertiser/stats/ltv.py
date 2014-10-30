@@ -1,10 +1,7 @@
-"""
-Tune Management API endpoint /advertiser/stats/ltv
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## ltv.py
+#
+#  ltv.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,20 +32,21 @@ Tune Management API endpoint /advertiser/stats/ltv
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune.management.shared import (
-    ReportsInsightBase
+    ReportsInsightEndpointBase
 )
 
-## /advertiser/stats/ltv
-#  @example example_cohort.py
-class LTV(ReportsInsightBase):
+
+#  /advertiser/stats/ltv
+#  @example example_reports_cohort.py
+class LTV(ReportsInsightEndpointBase):
     """Tune Management API controller 'advertiser/stats/ltv'"""
 
-    ## The constructor.
+    #  The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
     #  @param bool  validate_fields    Validate fields used by actions.
@@ -57,8 +55,8 @@ class LTV(ReportsInsightBase):
         self,
         api_key,
         validate_fields=False
-        ):
-        ReportsInsightBase.__init__(
+    ):
+        ReportsInsightEndpointBase.__init__(
             self,
             "advertiser/stats/ltv",
             api_key,
@@ -68,20 +66,21 @@ class LTV(ReportsInsightBase):
         )
 
         self.fields_recommended = [
-             "site_id"
-            ,"site.name"
-            ,"publisher_id"
-            ,"publisher.name"
-            ,"rpi"
-            ,"epi"
+            "site_id",
+            "site.name",
+            "publisher_id",
+            "publisher.name",
+            "rpi",
+            "epi"
         ]
 
-    ## Helper function for fetching report document given provided job identifier.
+    #  Helper function for fetching report document given provided
+    #   job identifier.
     #
     #  @param string job_id            Job Identifier of report on queue.
     #  @param bool   verbose           For debugging purposes only.
     #  @param int    sleep             How long thread should sleep before
-    #                                   next status request.
+    #                                 next status request.
     #
     #  @return object
     def fetch(
@@ -90,11 +89,11 @@ class LTV(ReportsInsightBase):
         verbose=False,
         sleep=10             #
     ):
-        return ReportsInsightBase.fetch(
+        return ReportsInsightEndpointBase.fetch(
             self,
             "tune.management.api.advertiser.stats.ltv",
             self.__class__.__name__,
             job_id,
             verbose,
-            sleep # seconds
+            sleep
         )

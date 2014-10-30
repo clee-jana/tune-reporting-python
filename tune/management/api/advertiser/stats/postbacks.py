@@ -1,10 +1,7 @@
-"""
-Tune Management API endpoint /advertiser/stats/postbacks
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## postback.py
+#
+#  postback.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,20 +32,21 @@ Tune Management API endpoint /advertiser/stats/postbacks
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune.management.shared import (
-    ReportsLogsBase
+    ReportsLogsEndpointBase
 )
 
-## /advertiser/stats/postbacks
-#  @example example_postback_urls.py
-class Postbacks(ReportsLogsBase):
+
+#  /advertiser/stats/postbacks
+#  @example example_reports_postbacks.py
+class Postbacks(ReportsLogsEndpointBase):
     """Advertiser Stats logs pertaining to postbacks."""
 
-    ## The constructor.
+    #  The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
     #  @param bool  validate_fields    Validate fields used by actions.
@@ -57,8 +55,8 @@ class Postbacks(ReportsLogsBase):
         self,
         api_key,
         validate_fields=False
-        ):
-        ReportsLogsBase.__init__(
+    ):
+        ReportsLogsEndpointBase.__init__(
             self,
             "advertiser/stats/postbacks",
             api_key,
@@ -68,21 +66,21 @@ class Postbacks(ReportsLogsBase):
         )
 
         self.fields_recommended = [
-             "id"
-            ,"stat_install_id"
-            ,"stat_event_id"
-            ,"stat_open_id"
-            ,"created"
-            ,"status"
-            ,"site_id"
-            ,"site.name"
-            ,"site_event_id"
-            ,"site_event.name"
-            ,"site_event.type"
-            ,"publisher_id"
-            ,"publisher.name"
-            ,"attributed_publisher_id"
-            ,"attributed_publisher.name"
-            ,"url"
-            ,"http_result"
+            "id",
+            "stat_install_id",
+            "stat_event_id",
+            "stat_open_id",
+            "created",
+            "status",
+            "site_id",
+            "site.name",
+            "site_event_id",
+            "site_event.name",
+            "site_event.type",
+            "publisher_id",
+            "publisher.name",
+            "attributed_publisher_id",
+            "attributed_publisher.name",
+            "url",
+            "http_result"
         ]

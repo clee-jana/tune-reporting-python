@@ -1,10 +1,7 @@
-"""
-Tune Management API endpoint /advertiser/stats/retention
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## retention.py
+#
+#  retention.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,22 +32,23 @@ Tune Management API endpoint /advertiser/stats/retention
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune.management.shared import (
-    ReportsInsightBase
+    ReportsInsightEndpointBase
 )
 
-## /advertiser/stats/retention
-#  @example example_retention.py
-class Retention(ReportsInsightBase):
+
+#  /advertiser/stats/retention
+#  @example example_reports_retention.py
+class Retention(ReportsInsightEndpointBase):
     """
     Tune Management API controller 'advertiser/stats/retention'
     """
 
-    ## The constructor.
+    #  The constructor.
     #
     #  @param str   api_key     MobileAppTracking API Key.
     #  @param bool  validate_fields    Validate fields used by actions.
@@ -59,8 +57,8 @@ class Retention(ReportsInsightBase):
         self,
         api_key,
         validate_fields=False
-        ):
-        ReportsInsightBase.__init__(
+    ):
+        ReportsInsightEndpointBase.__init__(
             self,
             "advertiser/stats/retention",
             api_key,
@@ -70,33 +68,34 @@ class Retention(ReportsInsightBase):
         )
 
         self.fields_recommended = [
-             "site_id"
-            ,"site.name"
-            ,"install_publisher_id"
-            ,"install_publisher.name"
-            ,"installs"
-            ,"opens"
+            "site_id",
+            "site.name",
+            "install_publisher_id",
+            "install_publisher.name",
+            "installs",
+            "opens"
         ]
 
-    ## Helper function for fetching report document given provided job identifier.
+    #  Helper function for fetching report document given provided job
+    #  identifier.
     #
     #  @param string job_id            Job Identifier of report on queue.
     #  @param bool   verbose           For debugging purposes only.
     #  @param int    sleep             How long thread should sleep before
-    #                                   next status request.
+    #                                 next status request.
     #
     #  @return object
     def fetch(
         self,
         job_id,
         verbose=False,
-        sleep=60, # seconds            #
+        sleep=60            #
     ):
-        return ReportsInsightBase.fetch(
+        return ReportsInsightEndpointBase.fetch(
             self,
             "tune.management.api.advertiser.stats.retention",
             self.__class__.__name__,
             job_id,
             verbose,
-            sleep, # seconds
+            sleep
         )

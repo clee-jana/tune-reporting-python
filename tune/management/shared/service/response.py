@@ -1,10 +1,7 @@
-"""
-Container of response returned from Tune Management API service.
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## response.py
+#
+#  response.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,8 +32,8 @@ Container of response returned from Tune Management API service.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import time
@@ -47,15 +44,8 @@ from tune.shared import (
     TuneServiceException
 )
 
-class Response(object):
-    """
-    Base components for every Tune Management API response.
 
-    Attributes:
-        response_json - Full JSON response returned from Tune Management API Service.\n
-        response_http_code - HTTP Code for connection with Tune Management API Service.\n
-        response_headers - HTTP Code for connection with Tune Management API Service.\n
-    """
+class Response(object):
 
     __response_json = None
     __response_http_code = None
@@ -63,12 +53,12 @@ class Response(object):
     __request_url = None
 
     def __init__(
-         self,
-         response_json=None,
-         response_http_code=None,
-         response_headers=None,
-         request_url=None
-     ):
+        self,
+        response_json=None,
+        response_http_code=None,
+        response_headers=None,
+        request_url=None
+    ):
         self.__response_json = response_json
         self.__response_http_code = response_http_code
         self.__response_headers = response_headers
@@ -154,13 +144,13 @@ class Response(object):
             sort_keys=True,
             indent=4,
             separators=(',', ': ')
-            )
+        )
         pretty += "\nerrors:\t\t" + json.dumps(
             self.errors,
             sort_keys=True,
             indent=4,
             separators=(',', ': ')
-            )
+        )
         pretty += "\nhttp_code:\t\t" + str(self.http_code)
         pretty += "\nheaders:\n" + str(self.headers)
         return pretty

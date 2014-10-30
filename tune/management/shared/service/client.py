@@ -1,10 +1,7 @@
-"""
-Client class used for connecting with Tune Management API service.
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-## client.py
+#  client.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,8 +32,8 @@ Client class used for connecting with Tune Management API service.
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import time
@@ -45,53 +42,58 @@ import json
 from tune.shared import (
     TuneSdkException,
     TuneServiceException,
-    TuneProxy,
     python_check_version
-    )
-from tune.version import __version__, __python_required_version__
+)
+from tune.version import (
+    __version__,
+    __python_required_version__
+)
 from .request import (Request)
 from .response import (Response)
-from .constants import (__tune_management_api_base_url__, __tune_management_api_version__)
+from .constants import (
+    __tune_management_api_endpoint__,
+    __tune_management_api_version__
+)
+from .proxy import (
+    TuneProxy
+)
 
 python_check_version(__python_required_version__)
 
-## Tune MobileAppTracking Management API access class
+
+#  Tune MobileAppTracking Management API access class
 #
-#  @example example_client.py
+#  @example example_client_account_users.py
 #
 class TuneManagementClient(object):
-    """
-    A client for accessing the Tune Management API service
 
-    :param str controller: Controller portion of Tune Management API service request.
-    :param str action: Action portion of Tune Management API service request.
-    :param str api_key: Users management API Key
-    :param dict query_string_dict: Query string parameters.
-
-    Attributes:
-        __request:    Tune Management API request object\n
-        __response:   Tune Management API response object\n
-    """
-
+    #
+    #  Request
+    #
     __request = None
+
+    #
+    #  Response
+    #
     __response = None
 
-     ## Constructor
-     #
-     #  @param string      controller           Tune Management API endpoint name
-     #  @param string      action               Tune Management API endpoint's action name
-     #  @param string      api_key              Tune MobileAppTracking API Key
-     #  @param null|array  query_string_dict    Action's query string parameters
-     #  @param null|string api_url_base         Tune Management API base path
-     #  @param null|string api_url_version      Tune Management API version
-     #
+    #  Constructor
+    #
+    #  @param string      controller          Tune Management API endpoint name
+    #  @param string      action              Tune Management API endpoint's
+    #                                         action name
+    #  @param string      api_key             Tune MobileAppTracking API Key
+    #  @param null|array  query_string_dict   Action's query string parameters
+    #  @param null|string api_url_endpoint    Tune Management API endpoint path
+    #  @param null|string api_url_version     Tune Management API version
+    #
     def __init__(
         self,
         controller,
         action,
         api_key,
         query_string_dict=None,
-        api_url_base=__tune_management_api_base_url__,
+        api_url_endpoint=__tune_management_api_endpoint__,
         api_url_version=__tune_management_api_version__
     ):
         # controller
@@ -106,20 +108,21 @@ class TuneManagementClient(object):
 
         # set up the request
         self.__request = Request(
-                controller.strip(),
-                action.strip(),
-                api_key.strip(),
-                query_string_dict,
-                api_url_base,
-                api_url_version
-            )
+            controller.strip(),
+            action.strip(),
+            api_key.strip(),
+            query_string_dict,
+            api_url_endpoint,
+            api_url_version
+        )
 
     @staticmethod
     def version():
         """Get SDK version."""
         return __version__
 
-    ## Sends a request and gets a response from the Tune Management API Service.
+    #  Sends a request and gets a response from the Tune Management
+    #  API Service.
     #
     def call(self):
         response_success = False
@@ -141,7 +144,7 @@ class TuneManagementClient(object):
                     response_http_code,
                     response_headers,
                     request_url=self.__request.url
-                    )
+                )
 
                 if response_http_code == 200:
                     response_success = True
@@ -151,10 +154,11 @@ class TuneManagementClient(object):
                 "Failed to execute client request ({}): ({})".format(
                     str(self.__request),
                     str(e)
-                    ),
-                e)
+                ),
+                e
+            )
 
-        return response_success;
+        return response_success
 
     @property
     def request(self):

@@ -1,10 +1,7 @@
-"""
-Tune SDK Exceptions
-"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-## exceptions.py
+#
+#  exceptions.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -35,9 +32,10 @@ Tune SDK Exceptions
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.9
-#  @link      https://developers.mobileapptracking.com Tune Developer Community @endlink
+#  @version   0.9.10
+#  @link      https://developers.mobileapptracking.com @endlink
 #
+
 
 class TuneSdkException(Exception):
     """Exception raised for errors when using Tune SDK
@@ -61,7 +59,7 @@ class TuneSdkException(Exception):
         if message is None:
             message = "Tune SDK error"
 
-        # Call the base class constructor with the parameters it needs
+        # Call the endpoint_base class constructor with the parameters it needs
         Exception.__init__(self, message)
 
         # Now for your custom code...
@@ -71,6 +69,7 @@ class TuneSdkException(Exception):
     def errors(self):
         """Get property of error object."""
         return self.__errors
+
 
 class TuneServiceException(Exception):
     """Exception raised when error is returned from Tune Service
@@ -94,7 +93,7 @@ class TuneServiceException(Exception):
         if message is None:
             message = "Tune Service error"
 
-        # Call the base class constructor with the parameters it needs
+        # Call the endpoint_base class constructor with the parameters it needs
         Exception.__init__(self, message)
 
         # Now for your custom code...
