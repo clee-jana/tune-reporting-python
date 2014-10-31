@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.10
+#  @version   0.9.11
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -68,12 +68,12 @@ python_check_version(__python_required_version__)
 class TuneManagementClient(object):
 
     #
-    #  Request
+    #  @var object @see Request
     #
     __request = None
 
     #
-    #  Response
+    #  @var object @see Response
     #
     __response = None
 

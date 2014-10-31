@@ -27,7 +27,7 @@
 #
 #    category    Tune
 #    package     SDK
-#    version     2014-10-28
+#    version     2014-10-31
 #    copyright   Copyright (c) 2014, Tune (http://www.tune.com)
 #
 

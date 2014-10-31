@@ -2,8 +2,8 @@
 tune-api-python
 Tune API SDK for Python 2.7 and 3.0
 Incorporate Tune API services.
-Update:  2014-10-28
-Version: 0.9.9
+Update:  2014-10-31
+Version: 0.9.11
 ****************************************
 
 =============
@@ -82,6 +82,7 @@ SDK Examples
 
 Run the following script to view execution of all examples:
 ```
+    $ make installs
     $ make api_key=[API_KEY] examples
 ```
 
@@ -91,6 +92,7 @@ SDK Unittests
 
 Run the following script to view execution of all unittests:
 ```
+    $ make tests-installs
     $ make api_key=[API_KEY] tests
 ```
 

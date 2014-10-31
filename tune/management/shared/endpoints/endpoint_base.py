@@ -30,7 +30,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.10
+#  @version   0.9.11
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -48,8 +48,10 @@ from tune.management.shared.service import (
 from tune.shared import (
     TuneSdkException,
     TuneServiceException,
-    ReportExportWorker,
     is_parentheses_balanced
+)
+from tune.shared.report_export_worker import (
+    ReportExportWorker
 )
 
 TUNE_FIELDS_ALL = 0
@@ -185,7 +187,6 @@ class EndpointBase(object):
     ):
         """Call Tune Management API service requesting response
         endpoint_base upon provided controller/action?query_string.
-
         """
         client = TuneManagementClient(
             self.controller,
@@ -611,13 +612,12 @@ class EndpointBase(object):
     #
     #  Requesting for report url is not the same for all report endpoints.
     #
-    #  @param str    mod_export_class       Report class.
-    #  @param str    mod_export_function    Report function performing status
-    #                                       request.
-    #  @param str    job_id                 Job Identifier of report on queue.
-    #  @param bool   verbose                For debugging purposes only.
-    #  @param int    sleep                  How long should sleep before next
-    #                                      status request.
+    #  @param string    export_controller   Export controller.
+    #  @param string    export_action       Export status action.
+    #  @param str       job_id              Job Identifier of report on queue.
+    #  @param bool      verbose             For debugging purposes only.
+    #  @param int       sleep               How long should sleep before next
+    #                                       status request.
     #
     #  @return object @see Response
     #  @throws ValueError
@@ -625,9 +625,8 @@ class EndpointBase(object):
     #
     def fetch(
         self,
-        mod_export_namespace,
-        mod_export_class,
-        mod_export_function,
+        export_controller,
+        export_action,
         job_id,
         verbose=False,
         sleep=10
@@ -637,27 +636,25 @@ class EndpointBase(object):
         job identifier.
         """
 
-        if not mod_export_namespace or len(mod_export_namespace) < 1:
+        # export_controller
+        if not export_controller or len(export_controller) < 1:
             raise ValueError(
-                "Parameter 'mod_export_namespace' is not defined."
+                "Parameter 'export_controller' is not defined."
             )
-        if not mod_export_class or len(mod_export_class) < 1:
+        # export_action
+        if not export_action or len(export_action) < 1:
             raise ValueError(
-                "Parameter 'mod_export_function' is not defined."
+                "Parameter 'export_action' is not defined."
             )
-        if not mod_export_function or len(mod_export_function) < 1:
-            raise ValueError(
-                "Parameter 'mod_export_function' is not defined."
-            )
+        # job_id
         if not job_id or len(job_id) < 1:
             raise ValueError(
                 "Parameter 'job_id' is not defined."
             )
 
         export_worker = ReportExportWorker(
-            mod_export_namespace,
-            mod_export_class,
-            mod_export_function,
+            export_controller,
+            export_action,
             self.api_key,
             job_id,
             verbose,

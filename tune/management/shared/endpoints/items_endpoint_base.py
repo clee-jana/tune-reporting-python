@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.10
+#  @version   0.9.11
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -235,8 +235,7 @@ class ItemsEndpointBase(EndpointBase):
 
         return EndpointBase.fetch(
             self,
-            "tune.management.api.export",
-            "Export",
+            "export",
             "download",
             job_id,
             verbose,

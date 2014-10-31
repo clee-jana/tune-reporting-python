@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.10
+#  @version   0.9.11
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -79,10 +79,10 @@ class Retention(ReportsInsightEndpointBase):
     #  Helper function for fetching report document given provided job
     #  identifier.
     #
-    #  @param string job_id            Job Identifier of report on queue.
-    #  @param bool   verbose           For debugging purposes only.
-    #  @param int    sleep             How long thread should sleep before
-    #                                 next status request.
+    #  @param string job_id     Job Identifier of report on queue.
+    #  @param bool   verbose    For debugging purposes only.
+    #  @param int    sleep      How long thread should sleep before
+    #                           next status request.
     #
     #  @return object
     def fetch(
@@ -91,10 +91,9 @@ class Retention(ReportsInsightEndpointBase):
         verbose=False,
         sleep=60            #
     ):
-        return ReportsInsightEndpointBase.fetch(
-            self,
-            "tune.management.api.advertiser.stats.retention",
-            self.__class__.__name__,
+        return super(Retention, self).fetch(
+            self.controller,
+            "status",
             job_id,
             verbose,
             sleep
