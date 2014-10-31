@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.10
+#  @version   0.9.11
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -41,6 +41,9 @@ import time
 from tune.shared import (
     TuneSdkException,
     TuneServiceException
+)
+from tune.management.shared.service import (
+    TuneManagementClient
 )
 
 
@@ -51,12 +54,45 @@ class ReportExportWorker(object):
     Worker for handle polling of report request on export queue.
     """
 
+    #
+    #  @var string
+    #
+    __export_controller = None
+
+    #
+    #  @var string
+    #
+    __export_action = None
+
+    #
+    #  @var string
+    #
+    __api_key = None
+
+    #
+    #  @var string
+    #
+    __job_id = None
+
+    #
+    #  @var int
+    #
+    __sleep = None
+
+    #
+    #  @var boolean
+    #
+    __verbose = None
+
+    #
+    #  @var object @see Response
+    #
+    __response = None
+
     #  The constructor
     #
-    #  @param string   mod_export_class     Reference class name for worker to
-    #                                       perform download status query.
-    #  @param string   mod_export_function  Reference class function name
-    #                                       for worker to perform download
+    #  @param string    export_controller   Export controller.
+    #  @param string    export_action       Export status action.
     #                                       status query.
     #  @param string   api_key              MobileAppTracking API Key
     #  @param string   job_id               Provided Job Identifier to
@@ -68,40 +104,40 @@ class ReportExportWorker(object):
     #                                       status on export queue.
     def __init__(
         self,
-        mod_export_namespace,
-        mod_export_class,
-        mod_export_function,
+        export_controller,
+        export_action,
         api_key,
         job_id,
         verbose=False,
         sleep=10
     ):
+        # export_controller
+        if not export_controller or len(export_controller) < 1:
+            raise ValueError(
+                "Parameter 'export_controller' is not defined."
+            )
+        # export_action
+        if not export_action or len(export_action) < 1:
+            raise ValueError(
+                "Parameter 'export_action' is not defined."
+            )
         # api_key
         if not api_key or len(api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined.")
-
+            raise ValueError(
+                "Parameter 'api_key' is not defined."
+            )
         # job_id
         if not job_id or len(job_id) < 1:
-            raise ValueError("Parameter 'job_id' is not defined.")
+            raise ValueError(
+                "Parameter 'job_id' is not defined."
+            )
 
-        loaded_mod = __import__(
-            mod_export_namespace,
-            fromlist=[mod_export_namespace]
-        )
-
-        # Load it from imported module
-        loaded_class = getattr(loaded_mod, mod_export_class)
-
-        # Create an instance of it
-        instance = loaded_class(api_key)
-
+        self.__export_controller = export_controller
+        self.__export_action = export_action
         self.__api_key = api_key
         self.__job_id = job_id
         self.__sleep = sleep
-        self.__report = None
         self.__verbose = verbose
-        self.__class_export = instance
-        self.__mod_export_function = mod_export_function
         self.__response = None
 
     #  Poll export for download URL.
@@ -111,14 +147,20 @@ class ReportExportWorker(object):
         response = None
         attempt = 0
 
+        client = TuneManagementClient(
+            self.__export_controller,
+            self.__export_action,
+            self.__api_key,
+            query_string_dict={
+                'job_id': self.__job_id
+            }
+        )
+
         try:
             while True:
-                response = getattr(
-                    self.__class_export,
-                    self.__mod_export_function
-                )(
-                    self.__job_id
-                )
+                client.call()
+
+                response = client.response
 
                 if not response:
                     raise TuneSdkException(

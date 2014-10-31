@@ -1,8 +1,8 @@
 <h2>tune-api-python</h2>
 <h2>Tune API SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate Tune API services.</h3>
-<h4>Update:  2014-10-30</h4>
-<h4>Version: 0.9.10</h4>
+<h4>Update:  2014-10-31</h4>
+<h4>Version: 0.9.11</h4>
 ===
 
 ## Overview
@@ -80,6 +80,7 @@ You may need to run the above commands with `sudo`.
 
 Run the following script to view execution of all unittests:
 ```bash
+    $ sudo make install
     $ make api_key=[API_KEY] examples
 ```
 
@@ -88,7 +89,6 @@ Run the following script to view execution of all unittests:
 
 Run the following script to view execution of all unittests:
 ```bash
-    $ sudo make install
     $ sudo make test-install
     $ make api_key=[API_KEY] tests
 ```

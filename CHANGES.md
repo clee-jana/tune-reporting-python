@@ -64,3 +64,10 @@ Version 0.9.10
 Beta public release on October 30, 2014
 * Created endpoint base classes.
 * Removed bash scripts and provided Makefile instead.
+
+
+Version 0.9.11
+--------------
+
+Beta public release on October 31, 2014
+* Revised fetch to use controller/action.

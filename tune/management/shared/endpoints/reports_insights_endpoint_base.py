@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.10
+#  @version   0.9.11
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -398,40 +398,6 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
             {
                 'job_id': job_id
             }
-        )
-
-    #  Helper function for fetching report upon completion.
-    #  Starts worker thread for polling export queue.
-    #
-    #  @param string mod_export_class  Requesting report class for this export.
-    #  @param string job_id            Provided Job Identifier to reference
-    #                                requested report on export queue.
-    #  @param bool   verbose           Debug purposes only to view progress of
-    #                                job on export queue.
-    #  @param int    sleep             Polling delay between querying job
-    #                                status on export queue.
-    #
-    #  @return object @see Response
-    def fetch(
-        self,
-        mod_export_namespace,
-        mod_export_class,
-        job_id,
-        verbose=False,
-        sleep=10
-    ):
-        # job_id
-        if not job_id or len(job_id) < 1:
-            raise ValueError("Parameter 'job_id' is not defined.")
-
-        return ReportsEndpointBase.fetch(
-            self,
-            mod_export_namespace,
-            mod_export_class,
-            "status",
-            job_id,
-            verbose,
-            sleep
         )
 
     #  Helper function for parsing export status response to gather report url.
