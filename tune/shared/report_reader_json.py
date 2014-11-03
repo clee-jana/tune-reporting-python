@@ -1,3 +1,7 @@
+"""
+Tune JSON Report Reader
+=======================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,47 +29,39 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import json
-import sys
-
-if sys.version_info[0] == 3:
-    import urllib.request
-else:
-    import urllib2
 
 from .report_reader_base import (
     ReportReaderBase
 )
-from tune.shared import (
-    TuneSdkException,
-    TuneServiceException,
-    json_convert
-)
 from tune.management.shared.service import (
-    TuneProxy
+    TuneManagementProxy
 )
 
-
-#  Helper class for reading reading remote JSON file
+## Helper class for reading reading remote JSON file
 #
 class ReportReaderJSON(ReportReaderBase):
     """Helper class for reading reading remote JSON file"""
 
     #  The constructor
-    #  @param string report_url Download report URL
+    #  @param str report_url Download report URL
     #                         of requested report to be exported.
     def __init__(self, report_url):
+        """The constructor.
+
+            :param str report_url: Report URL to be downloaded.
+        """
         ReportReaderBase.__init__(self, report_url)
 
     #  Using provided report download URL, extract JSON contents.
@@ -74,10 +70,27 @@ class ReportReaderJSON(ReportReaderBase):
         """Read JSON data provided remote path report_url."""
         self.data = None
 
-        proxy = TuneProxy(self.report_url)
+        proxy = TuneManagementProxy(self.report_url)
+
         if proxy.execute():
-            report_content = proxy.response.read()
-            self.data = json.loads(
-                report_content,
-                object_hook=json_convert
-            )
+            utf8_report_content = proxy.response.read().decode('utf-8')
+            self.data = json.loads(utf8_report_content)
+            self.count = len(self.data)
+
+    def pretty_print(self, limit=0):
+        """Pretty print exported data.
+
+            :param int limit: Number of rows to print.
+        """
+        print("Report REPORT_URL: {}".format(self.report_url))
+        print("Report total row count: {}".format(self.count))
+        if self.count > 0:
+            print("------------------")
+            rows = list(self.data)
+            i = 0
+            for row in enumerate(rows):
+                i = i + 1
+                print("{}. {}".format(i, str(row)))
+                if (limit > 0) and (i >= limit):
+                    break
+            print("------------------")

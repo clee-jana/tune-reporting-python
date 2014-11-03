@@ -1,3 +1,5 @@
+"""tune report_reader_base
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,14 +27,14 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -46,11 +48,16 @@ class ReportReaderBase(object):
 
     __report_url = None
     __report_data = None
+    __row_count = None
 
     #  The constructor
-    #  @param string report_url Download report URL
+    #  @param str report_url Download report URL
     #                         of requested report to be exported.
     def __init__(self, report_url):
+        """Constructor
+
+            :param str report_url: Download report URL.
+        """
         if not report_url or \
            not isinstance(report_url, str) or \
            len(report_url) < 1:
@@ -61,7 +68,7 @@ class ReportReaderBase(object):
 
     @abstractproperty
     def read(self):
-        """Get property for Request Action Name."""
+        """Get property for TuneManagementRequest Action Name."""
         return
 
     @property
@@ -81,18 +88,15 @@ class ReportReaderBase(object):
 
     @property
     def count(self):
-        """Count number of row within gather file data."""
-        return len(self.__report_data)
+        """Count number of row within gather file data.
 
-    def pretty_print(self, limit=0):
-        """Pretty print exported data."""
-        print("Report REPORT_URL: {}".format(self.report_url))
-        print("Report total row count: {}".format(self.count))
-        if self.count > 0:
-            print("------------------")
-            rows = list(self.data)
-            for i, row in enumerate(rows):
-                print("{}. {}".format(i + 1, str(row)))
-                if (limit > 0) and (i > limit):
-                    break
-            print("------------------")
+            :return: Count
+            :rtype: int
+        """
+        return self.__row_count
+
+    @count.setter
+    def count(self, value):
+        """Provide data value."""
+        self.__row_count = value
+

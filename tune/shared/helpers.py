@@ -1,3 +1,7 @@
+"""
+Tune Shared Helper Functions
+=============================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,27 +29,26 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import sys
-import codecs
-
-from datetime import datetime
 
 
 #  Check Python Version
 #
 def python_check_version(required_version):
-    """Check Python Version"""
+    """Check Python Version
+    :param: required_version
+    """
     current_version = sys.version_info
     if current_version[0] == required_version[0] and \
        current_version[1] >= required_version[1]:
@@ -70,29 +73,39 @@ def python_check_version(required_version):
 
 #  Check if string has balance parentheses.
 #
-def is_parentheses_balanced(s, i=0, cnt=0):
-    if i == len(s):
+def is_parentheses_balanced(string, i=0, cnt=0):
+    """Check if string has balance parentheses.
+
+        :param str string: Expression with parentheses.
+        :return: True if balanced.
+        :rtype: bool
+    """
+    if i == len(string):
         return cnt == 0
     if cnt < 0:
         return False
-    if s[i] == "(":
-        return is_parentheses_balanced(s, i + 1, cnt + 1)
-    elif s[i] == ")":
-        return is_parentheses_balanced(s, i + 1, cnt - 1)
-    return is_parentheses_balanced(s, i + 1, cnt)
+    if string[i] == "(":
+        return is_parentheses_balanced(string, i + 1, cnt + 1)
+    if string[i] == ")":
+        return is_parentheses_balanced(string, i + 1, cnt - 1)
+    return is_parentheses_balanced(string, i + 1, cnt)
 
 
 #  Convert unicode contents of JSON file to utf-8
 #
-def json_convert(input):
-    if isinstance(input, dict):
+def json_convert(json_str):
+    """Convert unicode contents of JSON file to utf-8
+
+        :param str json_str: JSON string
+    """
+    if isinstance(json_str, dict):
         return {
             json_convert(key):
-                json_convert(value) for key, value in input.iteritems()
+                json_convert(value) for key, value in json_str.iteritems()
         }
-    elif isinstance(input, list):
-        return [json_convert(element) for element in input]
-    elif isinstance(input, unicode):
-        return input.encode('utf-8')
+    elif isinstance(json_str, list):
+        return [json_convert(element) for element in json_str]
+    elif isinstance(json_str, unicode):
+        return json_str.encode('utf-8')
     else:
-        return input
+        return json_str

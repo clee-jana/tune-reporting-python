@@ -4,4 +4,10 @@ tune.egg-info
 build/
 __pycache__/
 *.pyc
+doc/doxygen/
+doc/sphinx/build/
+.pydevproject
+.idea
+.dartignore
+.metadata/
 *.komodoproject

@@ -1,3 +1,5 @@
+"""tune shared module
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,14 +27,14 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -41,8 +43,10 @@ from .helpers import (
     is_parentheses_balanced,
     json_convert
 )
-from .exceptions import (
-    TuneSdkException,
+from .sdk_exception import (
+    TuneSdkException
+)
+from .service_exception import (
     TuneServiceException
 )
 from .report_reader_csv import (

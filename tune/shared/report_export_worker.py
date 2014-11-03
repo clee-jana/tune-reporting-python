@@ -1,3 +1,7 @@
+"""
+Tune Reports Export Status Worker
+=============================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,14 +29,14 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -50,8 +54,7 @@ from tune.management.shared.service import (
 #  Worker for handle polling of report request on export queue.
 #
 class ReportExportWorker(object):
-    """
-    Worker for handle polling of report request on export queue.
+    """Worker for handle polling of report request on export queue.
     """
 
     #
@@ -85,32 +88,44 @@ class ReportExportWorker(object):
     __verbose = None
 
     #
-    #  @var object @see Response
+    #  @var object @see TuneManagementResponse
     #
     __response = None
 
     #  The constructor
     #
-    #  @param string    export_controller   Export controller.
-    #  @param string    export_action       Export status action.
+    #  @param str    export_controller   Export controller.
+    #  @param str    export_action       Export status action.
     #                                       status query.
-    #  @param string   api_key              MobileAppTracking API Key
-    #  @param string   job_id               Provided Job Identifier to
+    #  @param str   api_key              MobileAppTracking API Key
+    #  @param str   job_id               Provided Job Identifier to
     #                                       reference requested report on
     #                                       export queue.
     #  @param bool     verbose              Debug purposes only to view
     #                                       progress of job on export queue.
     #  @param int      sleep                Polling delay between querying job
     #                                       status on export queue.
-    def __init__(
-        self,
-        export_controller,
-        export_action,
-        api_key,
-        job_id,
-        verbose=False,
-        sleep=10
-    ):
+    def __init__(self,
+                 export_controller,
+                 export_action,
+                 api_key,
+                 job_id,
+                 verbose=False,
+                 sleep=10):
+        """The constructor.
+
+                :param str      export_controller:  Export controller.
+                :param str      export_action:      Export status action.
+                                                    status query.
+                :param str      api_key:            MobileAppTracking API Key
+                :param str      job_id:     Provided Job Identifier to
+                                            reference requested report on
+                                            export queue.
+                :param bool     verbose:    Debug purposes only to view
+                                            progress of job on export queue.
+                :param int      sleep:  Polling delay between querying job
+                                                    status on export queue.
+        """
         # export_controller
         if not export_controller or len(export_controller) < 1:
             raise ValueError(
@@ -143,6 +158,12 @@ class ReportExportWorker(object):
     #  Poll export for download URL.
     #
     def run(self):
+        """Poll status until status of "complete" or "fail" to
+        gather download URL for report export.
+
+            :return: True upon success.
+            :rtype: bool
+        """
         status = None
         response = None
         attempt = 0
@@ -170,14 +191,15 @@ class ReportExportWorker(object):
                 if not response.data:
                     raise TuneSdkException(
                         "No response data returned from export. "
-                        "Request URL: {}".format(
+                        "TuneManagementRequest URL: {}".format(
                             response.request_url
                         )
                     )
 
                 if response.http_code != 200:
                     raise TuneServiceException(
-                        "Request failed: HTTP Error Code: {}: {}".format(
+                        "TuneManagementRequest failed: "
+                        "HTTP Error Code: {}: {}".format(
                             response.http_code,
                             response.request_url
                         )
@@ -213,8 +235,10 @@ class ReportExportWorker(object):
 
     @property
     def response(self):
-        """
-        Property that will hold completed report downloaded
+        """Property that will hold completed report downloaded
         from Management API service.
+
+            :return: Response
+            :rtype: TuneManagementResponse
         """
         return self.__response

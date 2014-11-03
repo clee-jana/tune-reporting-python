@@ -1,3 +1,5 @@
+"""export.py
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -23,30 +25,36 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
-# @category  Tune
-# @package   Tune_API_Python
-# @author    Jeff Tanner <jefft@tune.com>
-# @copyright 2014 Tune (http://www.tune.com)
-# @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# @version   0.9.11
+#  @category  Tune
+#  @package   Tune_API_Python
+#  @author    Jeff Tanner <jefft@tune.com>
+#  @copyright 2014 Tune (http://www.tune.com)
+#  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
+
+import sys
 
 from tune.management.shared import (
     EndpointBase
 )
 
 
-#  /export
+## Tune Mangement API endpoint '/export'
 #
 class Export(EndpointBase):
-    """Tune Management API controller '/export/'."""
+    """Tune Management API endpoint '/export/'."""
 
     #  Constructor
     #  @param str api_key  Tune MobileAppTracking API Key
     def __init__(self, api_key):
+        """The constructor.
+
+            :param str api_key:             MobileAppTracking API Key.
+        """
         if not api_key or len(api_key) < 1:
             raise ValueError("Parameter 'api_key' is not defined.")
 
@@ -58,17 +66,19 @@ class Export(EndpointBase):
             validate_fields=False
         )
 
-    #  Request status from export queue for report. When completed,
-    #  url will be provided for downloading report.
+    ## TuneManagementRequest status from export queue for report.
+    #  When completed, url will be provided for downloading report.
+    #
     #  @param str job_id   Job identifier assigned for report export.
-    #  @return object @see Response
-    def download(
-        self,
-        job_id              # Export queue identifier
-    ):
+    #  @return object @see TuneManagementResponse
+    def download(self,
+                 job_id):
         """
         Action 'download' for polling export queue for status information on
         request report to be exported.
+
+            :param str job_id:   Job identifier assigned for report export.
+            :return: TuneManagementResponse
         """
         if not job_id or len(job_id) < 1:
             raise ValueError("Parameter 'job_id' is not defined.")
@@ -81,29 +91,36 @@ class Export(EndpointBase):
             }
         )
 
-    #  Helper function for fetching report upon completion.
-    #  Starts worker thread for polling export queue.
+    ## Helper function for fetching report upon completion.
+    #  Starts worker for polling export queue.
     #
-    #  @param string job_id         Job identifier assigned for report export.
+    #  @param str job_id         Job identifier assigned for report export.
     #  @param bool   verbose        For debug purposes to monitor job export
     #                               completion status.
     #  @param int    sleep          Polling delay for checking job completion
     #                               status.
     #
     #  @return object Document contents
-    def fetch(
-        self,
-        job_id,
-        verbose=False,
-        sleep=60
-    ):
+    def fetch(self,
+              job_id,
+              verbose=False,
+              sleep=60):
+        """Helper function for fetching report upon completion.
+        Starts worker for polling export queue.
+
+            :param str    job_id:    Job identifier assigned for report export.
+            :param bool   verbose:   For debug purposes to monitor job export
+                                    completion status.
+            :param int    sleep:     Polling delay for checking job completion
+                                    status.
+            :return:   Document contents
+        """
         if not self.__api_key or len(self.__api_key) < 1:
             raise ValueError("Parameter 'api_key' is not defined.")
         if not job_id or len(job_id) < 1:
             raise ValueError("Parameter 'job_id' is not defined.")
 
-        return EndpointBase.fetch(
-            self,
+        return self._fetch(
             "export",
             "download",
             job_id,
@@ -111,13 +128,17 @@ class Export(EndpointBase):
             sleep
         )
 
-    #  Helper function for parsing export status response to gather report url.
-    #  @param @see Response
+    ## Helper function for parsing export status response to gather report url.
+    #  @param @see TuneManagementResponse
     #  @return str Report Url
     @staticmethod
-    def parse_response_report_url(
-        response
-    ):
+    def parse_response_report_url(response):
+        """Helper function for parsing export status response to gather report url
+
+            :param object response: TuneManagementResponse
+            :return (str): Report Url
+            :throws: TuneSdkException
+        """
         if not response:
             raise ValueError("Parameter 'response' is not defined.")
         if not response.data:
@@ -133,7 +154,12 @@ class Export(EndpointBase):
 
         url = response.data["data"]["url"]
 
-        if isinstance(url, unicode):
-            url = str(url)
+        if sys.version_info >= (3, 0, 0):
+            # for Python 3
+            if isinstance(url, bytes):
+                url = url.decode('ascii')  # or  s = str(s)[2:-1]
+        else:
+            if isinstance(url, unicode):
+                url = str(url)
 
         return url

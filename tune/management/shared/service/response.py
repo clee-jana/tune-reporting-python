@@ -1,3 +1,7 @@
+"""
+Tune Mangement API Response
+=============================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,40 +29,41 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
-import time
 import json
 
-from tune.shared import (
-    TuneSdkException,
-    TuneServiceException
-)
 
-
-class Response(object):
+class TuneManagementResponse(object):
+    """Response container of Tune Management API.
+    """
 
     __response_json = None
     __response_http_code = None
     __response_headers = None
     __request_url = None
 
-    def __init__(
-        self,
-        response_json=None,
-        response_http_code=None,
-        response_headers=None,
-        request_url=None
-    ):
+    def __init__(self,
+                 response_json=None,
+                 response_http_code=None,
+                 response_headers=None,
+                 request_url=None):
+        """The constructor.
+
+            :param str response_json:       Service full response.
+            :param str response_http_code:  Service returned HTTP code.
+            :param array response_headers:  Service returned HTTP headers.
+            :param str request_url:         Provided request URL.
+        """
         self.__response_json = response_json
         self.__response_http_code = response_http_code
         self.__response_headers = response_headers
@@ -67,7 +72,7 @@ class Response(object):
     @property
     def request_url(self):
         """
-        Initial Request URL to Tune Management API Service.
+        Initial TuneManagementRequest URL to Tune Management API Service.
         """
         return self.__request_url
 

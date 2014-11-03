@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -122,7 +122,7 @@ class TestReportsActuals(unittest.TestCase):
                 fields=stats.fields(TUNE_FIELDS_RECOMMENDED),
                 limit=10,
                 page=None,
-                sort={"installs": "DESC"},
+                sort={"site.name": "DESC"},
                 group="site_id,publisher_id",
                 timestamp="datehour",  # Set to breakdown stats by timestamp choices: hour, datehour, date, week, month
                 response_timezone="America/Los_Angeles"
