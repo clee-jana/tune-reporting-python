@@ -1,3 +1,7 @@
+"""
+Tune Mangement API Service Proxy
+=============================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,20 +29,20 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
-import time
+
 import sys
 
-if sys.version_info[0] == 3:
+if sys.version_info >= (3, 0, 0):
     import urllib.request
 else:
     import urllib2
@@ -54,12 +58,8 @@ from tune.shared import (
 #
 # package Tune_Python_SDK
 #
-class TuneProxy(object):
+class TuneManagementProxy(object):
     """Service proxy class for connecting to Tune Management API service.
-
-    Attributes:
-        __request:     Tune Management API request object\n
-        __response:    Tune Management API response object\n
     """
 
     __request_url = None
@@ -70,7 +70,13 @@ class TuneProxy(object):
         """Full response object to Tune Management API service."""
         return self.__response
 
+    ## Constructor
+    #  @param str request_url
     def __init__(self, request_url):
+        """The constructor
+
+            :param str request_url:
+        """
         if request_url is None or not isinstance(request_url, str):
             raise ValueError(
                 "Invalid 'request_url' provided: '{}'".format(request_url)
@@ -85,10 +91,10 @@ class TuneProxy(object):
                 bool: True upon success.
         """
         if self.__request_url is None:
-            raise TuneSdkException('Request is not set.')
+            raise TuneSdkException('TuneManagementRequest is not set.')
 
         self.__response = None
-        if sys.version_info[0] == 3:
+        if sys.version_info >= (3, 0, 0):
             try:
                 self.__response = urllib.request.urlopen(self.__request_url)
             except TuneSdkException as ex:
@@ -126,17 +132,17 @@ class TuneProxy(object):
                 raise
             except TuneServiceException as ex:
                 raise
-            except urllib2.URLError as ex:
+            except urllib2.HTTPError as ex:
                 raise TuneServiceException(
-                    "URLError: (Error:{0}, Url:{1})".format(
+                    "HTTPError: (Error:{0}, Url:{1})".format(
                         str(ex),
                         self.__request_url
                     ),
                     ex
                 )
-            except urllib2.HTTPError as ex:
+            except urllib2.URLError as ex:
                 raise TuneServiceException(
-                    "HTTPError: (Error:{0}, Url:{1})".format(
+                    "URLError: (Error:{0}, Url:{1})".format(
                         str(ex),
                         self.__request_url
                     ),

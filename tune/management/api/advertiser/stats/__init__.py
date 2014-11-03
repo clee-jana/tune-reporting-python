@@ -1,3 +1,7 @@
+"""
+Tune Mangement API '/advertiser/stats/'
+====================================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,14 +29,14 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -56,16 +60,19 @@ class Stats(ReportsActualsEndpointBase):
     Tune Management API endpoint '/advertiser/stats/'
     """
 
-    #  The constructor.
+    ## The constructor.
     #
     #  @param str   api_key         MobileAppTracking API Key.
     #  @param bool  validate_fields Validate fields used by actions'
     #
-    def __init__(
-        self,
-        api_key,
-        validate_fields=False
-    ):
+    def __init__(self,
+                 api_key,
+                 validate_fields=False):
+        """The constructor.
+
+            :param str api_key:             MobileAppTracking API Key.
+            :param bool validate_fields:    Validate fields used by actions.
+        """
         ReportsActualsEndpointBase.__init__(
             self,
             "advertiser/stats",

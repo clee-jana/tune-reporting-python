@@ -1,3 +1,7 @@
+"""
+Tune Mangement API Query String Builder
+=============================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,28 +29,27 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import sys
 import re
 
-if sys.version_info[0] == 3:
+if sys.version_info >= (3, 0, 0):
     import urllib.parse
 else:
     import urllib
 
 from tune.shared import (
-    TuneSdkException,
-    TuneServiceException
+    TuneSdkException
 )
 
 
@@ -60,20 +63,16 @@ class QueryStringBuilder(object):
 
     def __init__(self, name=None, value=None):
         """Constructor a query string builder.
-
-            Args:
-                name (str, optional): query string parameter's key.\n
-                value (str, optional): query string parameter's value.\n
+        :param name (str, optional): query string parameter's key.
+        :param value (str, optional): query string parameter's value.
         """
         if name is not None and isinstance(name, str) and len(name) > 0:
             self.add(name, value)
 
     def add(self, name, value):
         """Add query string parameter.
-
-            Args:
-                name (str): query string parameter's key.\n
-                value (str): query string parameter's value.\n
+        :param name (str): query string parameter's key.\n
+        :param value (str): query string parameter's value.\n
         """
         if value is None:
             return
@@ -150,16 +149,14 @@ class QueryStringBuilder(object):
 
     def _encode(self, name, value):
         """URL Encode query string parameter.
-
-            Args:
-                name (str): query string parameter's key.\n
-                value (str): query string parameter's value.\n
+        :param name (str): query string parameter's key.
+        :param value (str): query string parameter's value.
         """
         try:
             if self.__query:
                 self.__query += "&"
 
-            if sys.version_info[0] == 3:
+            if sys.version_info >= (3, 0, 0):
                 param = urllib.parse.urlencode({name: value})
             else:
                 param = urllib.urlencode({name: value})

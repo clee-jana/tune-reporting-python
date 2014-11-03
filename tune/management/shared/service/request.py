@@ -1,3 +1,7 @@
+"""
+Tune Mangement API Request
+=============================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,35 +29,27 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
-from .query_string_builder import (
-    QueryStringBuilder
-)
 from tune.shared import (
     TuneSdkException
 )
+from .query_string_builder import (
+    QueryStringBuilder
+)
 
 
-class Request(object):
+class TuneManagementRequest(object):
     """Base components for every Tune Management API request.
-
-    Attributes:
-        __controller        Tune Management API controller
-        __action            Tune Management API action
-        __api_key           Tune Management API key of user
-        __query_string_dict Query String parameters
-        __api_url_endpoint  Tune Management API endpoint_base URL
-        __api_url_version   Tune Management API version
     """
 
     __controller = None
@@ -63,15 +59,25 @@ class Request(object):
     __api_url_endpoint = None
     __api_url_version = None
 
-    def __init__(
-        self,
-        controller,
-        action,
-        api_key,
-        query_string_dict,
-        api_url_endpoint,
-        api_url_version
-    ):
+    def __init__(self,
+                 controller,
+                 action,
+                 api_key,
+                 query_string_dict,
+                 api_url_endpoint,
+                 api_url_version):
+        """The constructor.
+
+            :param str      controller: Tune Management API endpoint name
+            :param str      action:     Tune Management API endpoint's
+                                        action name
+            :param str      api_key:    Tune MobileAppTracking API Key
+            :param array    query_string_dict:  Action's query string
+                                                parameters
+            :param str      api_url_endpoint:   Tune Management API
+                                                endpoint path
+            :param str      api_url_version:    Tune Management API version
+        """
         # -----------------------------------------------------------------
         # validate_fields inputs
         # -----------------------------------------------------------------
@@ -173,8 +179,7 @@ class Request(object):
     def __str__(self):
         """Pretty print.
 
-            Returns:
-                string
+            :rtype: str
         """
         pretty = "\napi_url_endpoint_base:\t " + str(self.__api_url_endpoint)
         pretty += "\napi_url_version:\t " + str(self.__api_url_version)

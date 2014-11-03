@@ -5,4 +5,5 @@ coverage
 nosexcover
 flake8
 mccabe
+pylint
 wheel>=0.22.0

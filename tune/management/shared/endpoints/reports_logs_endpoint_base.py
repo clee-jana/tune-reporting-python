@@ -1,3 +1,7 @@
+"""
+Tune Mangement Logs Reports Endpoint base
+=============================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,54 +29,60 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from .reports_endpoint_base import (
     ReportsEndpointBase
 )
-from tune.management.shared.endpoints import (
-    EndpointBase
-)
 from tune.management.shared.service import (
     TuneManagementClient
 )
 
 
-#  Base class intended for gathering from Advertiser Stats logs.
+## Base class intended for gathering from Advertiser Stats logs.
 ##
 class ReportsLogsEndpointBase(ReportsEndpointBase):
     """
     Base class intended for gathering from Advertiser Stats logs.
     """
 
-    #  The constructor.
+    ## The constructor.
     #
-    #  @param string controller                 Tune Management API endpoint
+    #  @param str controller                 Tune Management API endpoint
     #                                           name.
-    #  @param string api_key                    Tune MobileAppTracking API Key.
+    #  @param str api_key                    Tune MobileAppTracking API Key.
     #  @param bool   filter_debug_mode          Remove debug mode information
     #                                           from results.
     #  @param bool   filter_test_profile_id     Remove test profile information
     #                                           from results.
     #  @param bool   validate_fields            Validate fields used by
     #                                           actions' parameters.
-    def __init__(
-        self,
-        controller,
-        api_key,
-        filter_debug_mode,
-        filter_test_profile_id,
-        validate_fields=False
-    ):
+    def __init__(self,
+                 controller,
+                 api_key,
+                 filter_debug_mode,
+                 filter_test_profile_id,
+                 validate_fields=False):
+        """The constructor.
+
+            :param str controller:          Tune Management API endpoint name.
+            :param str api_key:             Tune MobileAppTracking API Key.
+            :param bool filter_debug_mode:  Remove debug mode information
+                                                    from results.
+            :param bool filter_test_profile_id: Remove test profile information
+                                                    from results.
+            :param bool validate_fields:    Validate fields used
+                                            by actions' parameters.
+        """
         # controller
         if not controller or len(controller) < 1:
             raise ValueError("Parameter 'controller' is not defined.")
@@ -89,29 +99,39 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
             validate_fields
         )
 
-    #  Counts all existing records that match filter criteria
+    ## Counts all existing records that match filter criteria
     #  and returns an array of found model data.
     #
-    #  @param string start_date         YYYY-MM-DD HH:MM:SS
-    #  @param string end_date           YYYY-MM-DD HH:MM:SS
-    #  @param string filter             Filter the results and apply
+    #  @param str start_date         YYYY-MM-DD HH:MM:SS
+    #  @param str end_date           YYYY-MM-DD HH:MM:SS
+    #  @param str filter             Filter the results and apply
     #                                   conditions that must be met
     #                                   for records to be included in data.
-    #  @param string response_timezone  Setting expected time for data
-    def count(
-        self,
-        start_date=None,
-        end_date=None,
-        filter=None,
-        response_timezone=None
-    ):
+    #  @param str response_timezone  Setting expected time for data
+    def count(self,
+              start_date=None,
+              end_date=None,
+              filter=None,
+              response_timezone=None):
+        """Counts all existing records that match filter criteria
+        and returns an array of found model data.
+
+            :param str  start_date:    YYYY-MM-DD HH:MM:SS
+            :param str  end_date:      YYYY-MM-DD HH:MM:SS
+            :param str  filter:        Filter the results and apply
+                                            conditions that must be met for
+                                            records to be included in data.
+            :param str  response_timezone:   Setting expected timezone
+                                        for data. Default is set by account.
+            :return: (TuneManagementResponse)
+        """
         if start_date is not None and isinstance(start_date, str):
-            EndpointBase.validate_datetime('start_date', start_date)
+            self._validate_datetime('start_date', start_date)
         if end_date is not None and isinstance(end_date, str):
-            EndpointBase.validate_datetime('end_date', end_date)
+            self._validate_datetime('end_date', end_date)
 
         if filter is not None and isinstance(filter, str):
-            filter = EndpointBase.validate_filter(self, filter)
+            filter = self._validate_filter(filter)
 
         return ReportsEndpointBase.call(
             self,
@@ -124,15 +144,15 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
             }
         )
 
-    #  Finds all existing records that match filter criteria
+    ## Finds all existing records that match filter criteria
     #  and returns an array of found model data.
     #
-    #  @param string start_date             YYYY-MM-DD HH:MM:SS
-    #  @param string end_date               YYYY-MM-DD HH:MM:SS
-    #  @param string filter                 Filter the results and apply
+    #  @param str start_date             YYYY-MM-DD HH:MM:SS
+    #  @param str end_date               YYYY-MM-DD HH:MM:SS
+    #  @param str filter                 Filter the results and apply
     #                                       conditions that must be met for
     #                                       records to be included in data.
-    #  @param string fields                 No value returns default fields,
+    #  @param str fields                 No value returns default fields,
     #                                       "*" returns all available fields,
     #                                       or provide specific fields.
     #  @param int    limit                  Limit number of results, default
@@ -143,31 +163,52 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
     #                                       upon provided fields and its
     #                                       order modifier:
     #                                       (ASC or DESC).
-    #  @param string response_timezone      Setting expected timezone for
+    #  @param str response_timezone      Setting expected timezone for
     #                                       results, default is set in account.
     #  @return object
-    def find(
-        self,
-        start_date=None,
-        end_date=None,
-        filter=None,
-        fields=None,
-        limit=None,
-        page=None,
-        sort=None,
-        response_timezone=None
-    ):
+    def find(self,
+             start_date=None,
+             end_date=None,
+             filter=None,
+             fields=None,
+             limit=None,
+             page=None,
+             sort=None,
+             response_timezone=None):
+        """Finds all existing records that match filter criteria
+        and returns an array of found model data.
+
+            :param str    start_date:    YYYY-MM-DD HH:MM:SS
+            :param str    end_date:      YYYY-MM-DD HH:MM:SS
+            :param str    filter:        Filter the results and apply
+                                            conditions that must be met for
+                                            records to be included in data.
+            :param str    fields:        No value returns default fields,
+                                            "*" returns all available fields,
+                                            or provide specific fields.
+            :param int   limit:         Limit number of results, default
+                                            10.
+            :param int   page:          Pagination, default 1.
+            :param array     sort:          Sort by field name, ASC (default)
+                                            or DESC
+            :param str    timestamp:     Set to breakdown stats by
+                                            timestamp choices: hour, datehour,
+                                            date, week, month.
+            :param str    response_timezone:   Setting expected timezone
+                                        for data. Default is set by account.
+            :return: (TuneManagementResponse)
+        """
         if start_date is not None and isinstance(start_date, str):
-            EndpointBase.validate_datetime('start_date', start_date)
+            self._validate_datetime('start_date', start_date)
         if end_date is not None and isinstance(end_date, str):
-            EndpointBase.validate_datetime('end_date', end_date)
+            self._validate_datetime('end_date', end_date)
 
         if fields is not None:
-            fields = EndpointBase.validate_fields(self, fields)
+            fields = self._validate_fields(fields)
         if filter is not None:
-            filter = EndpointBase.validate_filter(self, filter)
+            filter = self._validate_filter(filter)
         if sort is not None:
-            sort = EndpointBase.validate_sort(self, sort)
+            sort = self._validate_sort(sort)
 
         return ReportsEndpointBase.call(
             self,
@@ -184,41 +225,58 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
             }
         )
 
-    #  Places a job into a queue to generate a report that will contain
+    ## Places a job into a queue to generate a report that will contain
     #  records that match provided filter criteria, and it returns a job
     #  identifier to be provided to action /export/download.json to download
     #  completed report.
     #
-    #  @param string start_date            YYYY-MM-DD HH:MM:SS
-    #  @param string end_date              YYYY-MM-DD HH:MM:SS
-    #  @param string filter                Filter the results and apply
+    #  @param str start_date            YYYY-MM-DD HH:MM:SS
+    #  @param str end_date              YYYY-MM-DD HH:MM:SS
+    #  @param str filter                Filter the results and apply
     #                                   conditions that must be met for
     #                                   records to be included in data.
-    #  @param string fields                Provide fields if format is 'csv'.
-    #  @param string format                Export format: csv, json
-    #  @param string response_timezone     Setting expected timezone for
+    #  @param str fields                Provide fields if format is 'csv'.
+    #  @param str format                Export format: csv, json
+    #  @param str response_timezone     Setting expected timezone for
     #                                   results, default is set in account.
     #
     #  @return object
-    def export(
-        self,
-        start_date=None,
-        end_date=None,
-        filter=None,
-        fields=None,
-        format=None,
-        response_timezone=None
-    ):
+    def export(self,
+               start_date=None,
+               end_date=None,
+               filter=None,
+               fields=None,
+               format=None,
+               response_timezone=None):
+        """Places a job into a queue to generate a report that will contain
+        records that match provided filter criteria, and it returns a job
+        identifier to be provided to action /export/download.json to download
+        completed report.
+
+            :param str  start_date:   YYYY-MM-DD HH:MM:SS
+            :param str  end_date:     YYYY-MM-DD HH:MM:SS
+            :param str  filter:       Filter the results and apply conditions
+                                        that must be met for records to be
+                                        included in data.
+            :param str  fields:       No value returns default fields, "# "
+                                        returns all available fields, or
+                                        provide specific fields.
+            :param str  format:       Export format for downloaded report:
+                                        choices: json, csv.
+            :param str  response_timezone:   Setting expected timezone
+                                        for data. Default is set by account.
+            :return: (TuneManagementResponse)
+        """
         if start_date is not None and isinstance(start_date, str):
-            EndpointBase.validate_datetime('start_date', start_date)
+            self._validate_datetime('start_date', start_date)
         if end_date is not None and isinstance(end_date, str):
-            EndpointBase.validate_datetime('end_date', end_date)
+            self._validate_datetime('end_date', end_date)
         if fields is not None:
-            fields = EndpointBase.validate_fields(self, fields)
+            fields = self._validate_fields(fields)
         if filter is not None:
-            filter = EndpointBase.validate_filter(self, filter)
+            filter = self._validate_filter(filter)
         if format is not None:
-            EndpointBase.validate_format(format)
+            self._validate_format(format)
 
         return ReportsEndpointBase.call(
             self,
@@ -233,19 +291,18 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
             }
         )
 
-    #  Query status of insight reports. Upon completion will
+    ## Query status of insight reports. Upon completion will
     #  return url to download requested report.
     #
-    #  @param string job_id    Provided Job Identifier to reference requested
+    #  @param str job_id    Provided Job Identifier to reference requested
     #                                   report on export queue.
-    def status(
-        self,
-        job_id              # Export queue identifier
-    ):
+    def status(self,
+               job_id):
         """Query status of insight reports. Upon completion will return url to
         download requested report.
 
-            Args:
+            :param str job_id: Export queue identifier
+            :return: (TuneManagementResponse)
         """
 
         # job_id
@@ -263,31 +320,35 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
 
         return client.call()
 
-    #  Helper function for fetching report upon completion.
-    #  Starts worker thread for polling export queue.
+    ## Helper function for fetching report upon completion.
     #
-    #  @param string mod_export_class  Requesting report class for this
-    #                                   export.
-    #  @param string job_id            Provided Job Identifier to reference
+    #  @param str    job_id            Provided Job Identifier to reference
     #                                   requested report on export queue.
     #  @param bool   verbose           Debug purposes only to view progress
     #                                   of job on export queue.
     #  @param int    sleep             Polling delay between querying job
     #                                   status on export queue.
     #
-    #  @return object @see Response
-    def fetch(
-        self,
-        job_id,
-        verbose=False,
-        sleep=10
-    ):
+    #  @return object @see TuneManagementResponse
+    def fetch(self,
+              job_id,
+              verbose=False,
+              sleep=10):
+        """Helper function for fetching report upon completion.
+
+            :param str    job_id:   Provided Job Identifier to reference
+                                    requested report on export queue.
+            :param bool   verbose:  Debug purposes only to view progress
+                                                of job on export queue.
+            :param int    sleep:    Polling delay between querying job
+                                                status on export queue.
+            :return: (TuneManagementResponse)
+        """
         # job_id
         if not job_id or len(job_id) < 1:
             raise ValueError("Parameter 'job_id' is not defined.")
 
-        return EndpointBase.fetch(
-            self,
+        return self._fetch(
             "export",
             "download",
             job_id,

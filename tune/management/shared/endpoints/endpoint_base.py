@@ -1,3 +1,7 @@
+"""
+Tune Mangement Endpoint base
+============================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -23,20 +27,19 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
-import time
-import string
 import re
+import sys
 from datetime import datetime
 
 from tune.version import (
@@ -61,12 +64,10 @@ TUNE_FIELDS_MINIMAL = 4
 TUNE_FIELDS_RECOMMENDED = 8
 
 
-#  Base components for every Tune Management API request.
+## Base components for every Tune Management API request.
 #
 class EndpointBase(object):
-
-    """
-    Base components for every Tune Management API request.
+    """Base components for every Tune Management API request.
     """
 
     #  Tune Management API Endpoint
@@ -81,9 +82,9 @@ class EndpointBase(object):
     #  @var list
     __fields = None
 
-    #  Validate action's parameters against this endpoint' fields.
+    ## Validate action's parameters against this endpoint' fields.
     #  @var bool
-    __validate_fields = False
+    validate_fields = False
 
     #  Endpoint's model name
     #  @var str
@@ -128,23 +129,21 @@ class EndpointBase(object):
 
     #  Constructor
     #
-    #  @param string controller         Tune Management API Endpoint
-    #  @param string api_key            MobileAppTracking API Key
+    #  @param str controller         Tune Management API Endpoint
+    #  @param str api_key            MobileAppTracking API Key
     #  @param bool   validate_fields    Validate fields used by actions'
     #                                   parameters.
     #
-    def __init__(
-        self,
-        controller,
-        api_key,
-        validate_fields
-    ):
-        """Constructor a new request object.
+    def __init__(self,
+                 controller,
+                 api_key,
+                 validate_fields):
+        """The constructor.
 
-            Args:
-                controller (str): Controller portion of Tune Service request.\n
-                api_key (str): User's Tune API Key.\n
-
+            :param controller (string):     Tune Management API endpoint name.
+            :param api_key (string):        Tune MobileAppTracking API Key.
+            :param bool validate_fields:    Validate fields used by
+                                            actions' parameters.
         """
         # -----------------------------------------------------------------
         # validate_fields inputs
@@ -159,7 +158,7 @@ class EndpointBase(object):
 
         self.__controller = controller
         self.__api_key = api_key
-        self.__validate_fields = validate_fields
+        self.validate_fields = validate_fields
 
     #  Get controller
     #  @return string
@@ -176,17 +175,21 @@ class EndpointBase(object):
         return self.__api_key
 
     #  Call Tune Management API service for this controller.
-    # @param string action              Tune Management API endpoint's
+    #  @param str action              Tune Management API endpoint's
     #                                   action name.
-    # @param array  query_string_dict   Action's query string parameters
-    # @return object @see Response
-    def call(
-        self,
-        action,
-        query_string_dict=None
-    ):
+    #  @param array  query_string_dict   Action's query string parameters
+    #  @return object @see TuneManagementResponse
+    def call(self,
+             action,
+             query_string_dict=None):
         """Call Tune Management API service requesting response
         endpoint_base upon provided controller/action?query_string.
+
+            :param str      action:     Tune Management API endpoint's
+                                        action name.
+            :param array    query_string_dict:  Action's query string
+                                        parameters.
+            :return: TuneManagementResponse
         """
         client = TuneManagementClient(
             self.controller,
@@ -200,8 +203,12 @@ class EndpointBase(object):
         return client.response
 
     #  Provide complete definition for this endpoint.
-    #  @return object @see Response
+    #  @return object @see TuneManagementResponse
     def define(self):
+        """Gather all metadata for this endpoint.
+
+            :return:                   TuneManagementResponse:
+        """
         return self.call(
             action="define"
         )
@@ -209,12 +216,18 @@ class EndpointBase(object):
     #  Get all fields for assigned endpoint.
     #  @return list endpoint fields
     #  @throws TuneServiceException
-    def fields(self, enum_fields_selection=TUNE_FIELDS_ALL):
+    def fields(self,
+               enum_fields_selection=TUNE_FIELDS_ALL):
+        """Gather specific set of fields for this endpoint.
 
-        if (self.__validate_fields or
-           not (enum_fields_selection & TUNE_FIELDS_RECOMMENDED)) and \
-           self.__fields is None:
-            self.__endpoint_fields()
+            :param int: TUNE_FIELDS_ALL, TUNE_FIELDS_DEFAULT,
+                TUNE_FIELDS_RECOMMENDED
+            :return (array): list endpoint fields
+        """
+        if (self.validate_fields or
+                not (enum_fields_selection & TUNE_FIELDS_RECOMMENDED)):
+            if self.__fields is None:
+                self.__endpoint_fields()
 
         if enum_fields_selection & TUNE_FIELDS_RECOMMENDED:
             if self.fields_recommended is None:
@@ -261,14 +274,19 @@ class EndpointBase(object):
                 fields_filtered[field_name] = field_info
                 continue
 
-        fields = fields_filtered.keys()
+        fields = list(fields_filtered.keys())
         fields.sort()
         return fields
 
-    #  Fetch all fields from model and related models of this endpoint.
+    ## Fetch all fields from model and related models of this endpoint.
     #  @return list endpoint fields
     #  @throws TuneServiceException
     def __endpoint_fields(self):
+        """Gather all available fields for this endpoint.
+
+            :return: list endpoint fields
+            :throws: TuneServiceException
+        """
         query_string_dict = {
             'controllers': self.__controller,
             'details': 'modelName,fields'
@@ -291,9 +309,14 @@ class EndpointBase(object):
                 )
             )
 
-        if ((client.response.data is None)
-            or (isinstance(client.response.data, list)
-                and (len(client.response.data) == 0))):
+        if client.response.data is None:
+            raise TuneServiceException(
+                "Failed to get fields for "
+                "endpoint: '{}'".format(self.__controller)
+            )
+
+        if (isinstance(client.response.data, list) and
+                len(client.response.data) == 0):
             raise TuneServiceException(
                 "Failed to get fields for "
                 "endpoint: '{}'".format(self.__controller)
@@ -349,7 +372,7 @@ class EndpointBase(object):
                             related_field_name
                         )
                         fields_found_merged[related_property_field_name] = {
-                            "default": field["fieldDefault"],
+                            "default": field_info["default"],
                             "related": True
                         }
                 else:
@@ -358,7 +381,7 @@ class EndpointBase(object):
                         "name"
                     )
                     fields_found_merged[related_property_field_name] = {
-                        "default": field["fieldDefault"],
+                        "default": field_info["default"],
                         "related": True
                     }
 
@@ -369,17 +392,26 @@ class EndpointBase(object):
     #  Get model name for this endpoint.
     #  @return string model name
     def model_name(self):
+        """Get model name for this endpoint.
+        """
         if self.__fields is None:
             self.fields()
 
         return self.__model_name
 
-    #  Validate query string parameter 'fields' having valid
+    ## Validate query string parameter 'fields' having valid
     #  endpoint's fields
     #  @param array|string fields
     #  @return string
     #  @throws TuneSdkException
-    def validate_fields(self, fields):
+    def _validate_fields(self, fields):
+        """Validate query string parameter 'fields' having
+        valid endpoint fields.
+
+            :param array|(str): fields
+            :return (str): fields
+            :throws: TuneSdkException
+        """
         if not isinstance(fields, str) and not isinstance(fields, list):
             raise TuneSdkException(
                 "Invalid parameter 'fields' provided: '{}'".format(fields))
@@ -396,7 +428,7 @@ class EndpointBase(object):
             raise TuneSdkException(
                 "Invalid parameter 'fields' provided: '{}'".format(fields))
 
-        if self.__validate_fields:
+        if self.validate_fields:
             if self.__fields is None:
                 self.fields()
 
@@ -411,11 +443,18 @@ class EndpointBase(object):
 
         return ",".join(fields_list)
 
-    #  Validate query string parameter 'group' having valid endpoint's fields
+    ## Validate query string parameter 'group' having valid endpoint's fields
     #  @param array|string group
     #  @return string
     #  @throws TuneSdkException
-    def validate_group(self, group):
+    def _validate_group(self, group):
+        """Validate query string parameter 'group' having
+        valid endpoint's fields.
+
+        :param array|(str): group
+        :return (str): group
+        :throws: TuneSdkException
+        """
         if not isinstance(group, str) and not isinstance(group, list):
             raise TuneSdkException(
                 "Invalid parameter 'group' provided: '{}'".format(group))
@@ -433,7 +472,7 @@ class EndpointBase(object):
                 "Invalid parameter 'group' provided: '{}'".format(group)
             )
 
-        if self.__validate_fields:
+        if self.validate_fields:
             if self.__fields is None:
                 self.fields()
 
@@ -448,21 +487,28 @@ class EndpointBase(object):
 
         return ",".join(group_list)
 
-    #  Validate query string parameter 'sort' having valid endpoint's fields
+    ## Validate query string parameter 'sort' having valid endpoint's fields
     #  @param dict sort
     #  @return dict
     #  @throws TuneSdkException
-    def validate_sort(self, sort):
+    def _validate_sort(self, sort):
+        """Validate query string parameter 'sort'
+        having valid endpoint's fields.
+
+            :param array|(str): sort
+            :return (str): sort
+            :throws: TuneSdkException
+        """
         if not isinstance(sort, dict):
             raise TuneSdkException("Invalid parameter 'sort' provided.")
 
-        if self.__validate_fields:
+        if self.validate_fields:
             if self.__fields is None:
                 self.fields()
 
         sort_build = {}
         for sort_field, sort_direction in sort.items():
-            if self.__validate_fields:
+            if self.validate_fields:
                 if sort_field not in self.__fields:
                     raise TuneSdkException(
                         "Parameter 'sort' contains "
@@ -483,10 +529,16 @@ class EndpointBase(object):
 
         return sort_build
 
-    #  Validate filter parameter
-    #
-    def validate_filter(self, filter):
+    ## Validate filter parameter
+    #  @param str filter
+    #  @return string
+    def _validate_filter(self, filter):
+        """Validate 'filter' parameter.
 
+            :param str filter: Query String filter
+            :return (str): filter
+            :throws: TuneSdkException
+        """
         if not isinstance(filter, str) or not filter:
             raise TuneSdkException(
                 "Parameter 'filter' is invalid: '{}'.".format(
@@ -494,7 +546,7 @@ class EndpointBase(object):
                 )
             )
 
-        if self.__validate_fields:
+        if self.validate_fields:
             if self.__fields is None:
                 self.fields()
 
@@ -515,8 +567,9 @@ class EndpointBase(object):
             if isinstance(filter_part, str) and not filter_part:
                 continue
 
-            m = re.match(r"\B'\w+'\B", filter_part)
-            if (m is not None and (m.group(0) == filter_part)):
+            filter_part_match = re.match(r"\B'\w+'\B", filter_part)
+            if filter_part_match is not None and \
+               (filter_part_match.group(0) == filter_part):
                 continue
 
             if filter_part.isdigit():
@@ -528,10 +581,11 @@ class EndpointBase(object):
             if filter_part in self.__filter_conjunctions:
                 continue
 
-            m = re.match(r"[a-z0-9\.\_]+", filter_part)
-            if (m is not None and (m.group(0) == filter_part)):
+            filter_part_match = re.match(r"[a-z0-9\.\_]+", filter_part)
+            if filter_part_match is not None \
+               and (filter_part_match.group(0) == filter_part):
 
-                if self.__validate_fields:
+                if self.validate_fields:
                     if filter_part in self.__fields:
                         continue
 
@@ -546,10 +600,16 @@ class EndpointBase(object):
 
         return "({})".format(filter)
 
-    #  Validate 'format' parameter
-    #  @param null|str format
+    ## Validate 'format' parameter
+    #  @param str format
     @staticmethod
-    def validate_format(format):
+    def _validate_format(format):
+        """Validate 'format' parameter of query string.
+
+            :param str format: Query String format parameter
+            :return (str): format
+            :throws: TuneSdkException
+        """
         report_export_formats = [
             "csv",
             "json"
@@ -557,19 +617,25 @@ class EndpointBase(object):
         if format is None:
             return format
 
-        if (isinstance(format, str) and (format not in report_export_formats)):
+        if isinstance(format, str) and (format not in report_export_formats):
             raise TuneSdkException(
                 "Parameter 'format' is invalid: '{}'.".format(format)
             )
 
         return True
 
-    #  Validate parameters of type datetime.
+    ## Validate parameters of type datetime.
     #  @param str param_name
     #  @param str datetime
     @staticmethod
-    def validate_datetime(param_name, date_time):
+    def _validate_datetime(param_name, date_time):
+        """Validate parameters of type datetime.
 
+            :param str param_name:   Query String date_time parameter name
+            :param str date_time:    Query String date_time parameter value
+            :return (bool): Valid datatime string
+            :throws: TuneSdkException
+        """
         try:
             datetime.strptime(date_time, '%Y-%m-%d')
             return True
@@ -589,48 +655,55 @@ class EndpointBase(object):
     #  @return string
     @staticmethod
     def version():
-        """Get SDK version."""
+        """Get SDK version.
+        """
         return __version__
 
     #  To string
     #  @return string
     def __str__(self):
-        """For debug purposes, provide string representation of this object."""
+        """For debug purposes, provide string representation of this object.
+        """
         return "{}, {}".format(self.__controller, self.__api_key)
 
+    #  Property returning recommended and valid fields for an endpoint.
+    #
     @property
     def fields_recommended(self):
+        """ Property getter recommended and valid fields for an endpoint.
+        """
         return self.__fields_recommended
 
     @fields_recommended.setter
-    def fields_recommended(self, value):
-        """Provide data value."""
-        self.__fields_recommended = value
+    def fields_recommended(self, fields_recommended):
+        """ Property setter recommended and valid fields for an endpoint.
 
-    #  Helper function for fetching report document given provided
+            :param array fields_recommended: Recommended fields
+        """
+        self.__fields_recommended = fields_recommended
+
+    ## Helper function for fetching report document given provided
     #  job identifier.
     #
     #  Requesting for report url is not the same for all report endpoints.
     #
-    #  @param string    export_controller   Export controller.
-    #  @param string    export_action       Export status action.
+    #  @param str    export_controller   Export controller.
+    #  @param str    export_action       Export status action.
     #  @param str       job_id              Job Identifier of report on queue.
     #  @param bool      verbose             For debugging purposes only.
     #  @param int       sleep               How long should sleep before next
     #                                       status request.
     #
-    #  @return object @see Response
+    #  @return object @see TuneManagementResponse
     #  @throws ValueError
     #  @throws TuneServiceException
     #
-    def fetch(
-        self,
-        export_controller,
-        export_action,
-        job_id,
-        verbose=False,
-        sleep=10
-    ):
+    def _fetch(self,
+               export_controller,
+               export_action,
+               job_id,
+               verbose=False,
+               sleep=10):
         """
         Helper function for fetching report document given provided
         job identifier.
@@ -670,7 +743,6 @@ class EndpointBase(object):
                     print(export_worker.response)
         except (KeyboardInterrupt, SystemExit):
             print("\n! Received keyboard interrupt, quitting.\n")
-            export_worker.stop()
         except TuneSdkException as ex:
             raise
         except Exception as ex:
@@ -695,14 +767,19 @@ class EndpointBase(object):
 
         return export_worker.response
 
-    #  Helper function for parsing export status response to
+    ## Helper function for parsing export status response to
     #  gather report url.
-    #  @param @see Response
+    #  @param @see TuneManagementResponse
     #  @return str Report Url
     @staticmethod
-    def parse_response_report_url(
-        response
-    ):
+    def parse_response_report_url(response):
+        """Helper function for parsing export status response to
+        gather report url.
+
+            :param object response: TuneManagementResponse
+            :return (str): Report Url
+            :throws: TuneSdkException
+        """
         if not response:
             raise ValueError(
                 "Parameter 'response' is not defined."
@@ -722,18 +799,29 @@ class EndpointBase(object):
 
         url = response.data["data"]["url"]
 
-        if isinstance(url, unicode):
-            url = str(url)
+        if sys.version_info >= (3, 0, 0):
+            # for Python 3
+            if isinstance(url, bytes):
+                url = url.decode('ascii')  # or  s = str(s)[2:-1]
+        else:
+            if isinstance(url, unicode):
+                url = str(url)
 
         return url
 
-    #  Helper function for parsing export response to gather job identifier.
-    #  @param @see Response
+    ## Helper function for parsing export response to gather job identifier.
+    #  @param @see TuneManagementResponse
     #  @return str Report Url
+    #  @throws TuneSdkException
     @staticmethod
-    def parse_response_report_job_id(
-        response
-    ):
+    def parse_response_report_job_id(response):
+        """Helper function for parsing export response to
+        gather job identifier.
+
+            :param (TuneManagementResponse) response:
+            :return (str): Report Job identifier
+            :throws: (TuneSdkException)
+        """
         if not response:
             raise ValueError(
                 "Parameter 'response' is not defined."
@@ -746,7 +834,7 @@ class EndpointBase(object):
         job_id = response.data
 
         if not job_id or len(job_id) < 1:
-            raise Exception(
+            raise TuneSdkException(
                 "Failed to return Job ID: {}".format(str(response))
             )
 

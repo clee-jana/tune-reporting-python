@@ -1,3 +1,7 @@
+"""
+Tune Mangement Reports Endpoint base
+============================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,31 +29,26 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune.management.shared.endpoints import (
     EndpointBase
 )
-from tune.shared import (
-    TuneSdkException,
-    TuneServiceException
-)
 
 
-#  Base components for every Tune Management API reports.
+## Base components for every Tune Management API reports.
 #
 class ReportsEndpointBase(EndpointBase):
-    """
-    Base components for every Tune Management API reports.
+    """Base components for every Tune Management API reports.
     """
 
     #  Remove debug mode information from results.
@@ -60,24 +59,33 @@ class ReportsEndpointBase(EndpointBase):
     #  @var bool
     __filter_test_profile_id = False
 
-    #  The constructor.
+    ## The constructor.
     #
     #  @param str   controller               Tune Management API endpoint name.
     #  @param str   api_key                  MobileAppTracking API Key.
     #  @param bool  filter_debug_mode        Remove debug mode information
-    #                                      from results.
+    #                                        from results.
     #  @param bool  filter_test_profile_id   Remove test profile information
-    #                                      from results.
+    #                                        from results.
     #  @param bool  validate_fields          Validate fields used by actions'
-    #                                      parameters.
-    def __init__(
-        self,
-        controller,
-        api_key,
-        filter_debug_mode,
-        filter_test_profile_id,
-        validate_fields=False
-    ):
+    #                                        parameters.
+    def __init__(self,
+                 controller,
+                 api_key,
+                 filter_debug_mode,
+                 filter_test_profile_id,
+                 validate_fields=False):
+        """The constructor.
+
+            :param controller (string): Tune Management API endpoint name.
+            :param api_key (string):          Tune MobileAppTracking API Key.
+            :param bool filter_debug_mode:  Remove debug mode information
+                                                    from results.
+            :param bool filter_test_profile_id: Remove test profile
+                                                information from results.
+            :param bool validate_fields:    Validate fields used
+                                            by actions' parameters.
+        """
 
         if not isinstance(controller, str) or len(controller) < 1:
             raise ValueError(
@@ -113,17 +121,13 @@ class ReportsEndpointBase(EndpointBase):
     #  @param str   action Endpoint action to be called.
     #  @param dict  query_string_dict Query str parameters for this action.
     #
-    def call(
-        self,
-        action,
-        query_string_dict
-    ):
+    def call(self, action, query_string_dict):
         """
         Make service request for report.
 
-        Parameters:
-            action (str) - Endpoint action name.
-            query_string_dict(dict) - Query str parameters of action.
+            :param action (str): Endpoint action name.
+            :param query_string_dict (dict): Query str parameters of action.
+            :returns (object): TuneManagementResponse
         """
         if not isinstance(action, str) or len(action) < 1:
             raise ValueError(

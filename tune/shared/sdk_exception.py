@@ -1,3 +1,7 @@
+"""
+Tune SDK Exception
+==================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,24 +29,20 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
 
 class TuneSdkException(Exception):
     """Exception raised for errors when using Tune SDK
-
-    Attributes:
-        message  -- explanation of the error
-        exc -- initial exception
     """
 
     #
@@ -50,11 +50,13 @@ class TuneSdkException(Exception):
     #
     __errors = None
 
+    ## Constructor
+    #
     def __init__(self, message=None, errors=None):
         """Tune SDK exception constructor
-            Args:
-                message (str, optional): Message describing error.
-                exc (Exception, optional): Caught exception.
+
+            :param str          message:    Message describing error.
+            :param Exception    exc:        Caught exception.
         """
         if message is None:
             message = "Tune SDK error"
@@ -69,32 +71,3 @@ class TuneSdkException(Exception):
     def errors(self):
         """Get property of error object."""
         return self.__errors
-
-
-class TuneServiceException(Exception):
-    """Exception raised when error is returned from Tune Service
-
-    Attributes:
-        message  -- explanation of the error
-        exc -- initial exception
-    """
-
-    #
-    # Failure response type
-    #
-    __errors = None
-
-    def __init__(self, message=None, errors=None):
-        """Tune SDK exception constructor
-            Args:
-                message (str, optional): Message describing error.
-                exc (Exception, optional): Caught exception.
-        """
-        if message is None:
-            message = "Tune Service error"
-
-        # Call the endpoint_base class constructor with the parameters it needs
-        Exception.__init__(self, message)
-
-        # Now for your custom code...
-        self.__errors = errors

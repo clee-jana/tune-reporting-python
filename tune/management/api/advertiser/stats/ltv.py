@@ -1,3 +1,7 @@
+"""
+Tune Mangement API '/advertiser/stats/ltv/'
+====================================================
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -25,14 +29,14 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -46,17 +50,20 @@ from tune.management.shared import (
 class LTV(ReportsInsightEndpointBase):
     """Tune Management API controller 'advertiser/stats/ltv'"""
 
-    #  The constructor.
+    ## The constructor.
     #
-    #  @param string api_key            Tune MobileAppTracking API Key.
+    #  @param str api_key            Tune MobileAppTracking API Key.
     #  @param bool   validate_fields    Validate fields used by actions'
     #                                   parameters.
     #
-    def __init__(
-        self,
-        api_key,
-        validate_fields=False
-    ):
+    def __init__(self,
+                 api_key,
+                 validate_fields=False):
+        """The constructor.
+
+            :param str api_key:             MobileAppTracking API Key.
+            :param bool validate_fields:    Validate fields used by actions.
+        """
         ReportsInsightEndpointBase.__init__(
             self,
             "advertiser/stats/ltv",
@@ -75,22 +82,31 @@ class LTV(ReportsInsightEndpointBase):
             "epi"
         ]
 
-    #  Helper function for fetching report document given provided
+    ## Helper function for fetching report document given provided
     #   job identifier.
     #
-    #  @param string job_id            Job Identifier of report on queue.
+    #  @param str job_id            Job Identifier of report on queue.
     #  @param bool   verbose           For debugging purposes only.
     #  @param int    sleep             How long thread should sleep before
     #                                 next status request.
     #
     #  @return object
-    def fetch(
-        self,
-        job_id,
-        verbose=False,
-        sleep=10
-    ):
-        return super(LTV, self).fetch(
+    def fetch(self,
+              job_id,
+              verbose=False,
+              sleep=10):
+        """Helper function for fetching report upon completion.
+        Starts worker for polling export queue.
+
+            :param str    job_id:     Provided Job Identifier to reference
+                                        requested report on export queue.
+            :param bool   verbose:    Debug purposes only to view progress of
+                                        job on export queue.
+            :param int    sleep:      Polling delay between querying job
+                                        status on export queue.
+            :return: (TuneManagementResponse)
+        """
+        return super(LTV, self)._fetch(
             self.controller,
             "status",
             job_id,

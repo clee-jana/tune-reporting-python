@@ -3,7 +3,7 @@ tune-api-python
 Tune API SDK for Python 2.7 and 3.0
 Incorporate Tune API services.
 Update:  2014-10-31
-Version: 0.9.11
+Version: 0.9.13
 ****************************************
 
 =============

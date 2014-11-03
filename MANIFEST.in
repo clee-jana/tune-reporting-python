@@ -6,6 +6,16 @@ include README
 include README.txt
 include README.rst
 include README.md
+include Makefile
+include requirements.txt
+include tests/requirements.txt
+include docs/requirements.txt
 recursive-include tune *.py
 recursive-include examples *.py
-include scripts/tune_examples.sh
+recursive-include tests *.py
+include docs/tune-logo-with-dial.png
+include docs/favicon.ico
+include docs/Doxyfile
+include docs/config.dox
+recursive-include docs/doxypy-0.4.2 *.*
+recursive-include doc/sphinx *.*

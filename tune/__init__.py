@@ -1,3 +1,5 @@
+"""tune module
+"""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -23,14 +25,14 @@
 #  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #  DEALINGS IN THE SOFTWARE.
 #
-#  Python 2.7
+#  Python 2.7 and 3.0
 #
 #  @category  Tune
 #  @package   Tune_API_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.11
+#  @version   0.9.13
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -43,9 +45,12 @@ from .shared import (
     ReportReaderCSV,
     ReportReaderJSON,
 )
-from .version import __python_required_version__
+from .version import (
+    __python_required_version__,
+    __version_info__,
+    __version__
+)
 
-python_check_version(__python_required_version__)
 
 from .management import (
     Account,
@@ -68,3 +73,5 @@ from .management import (
     TUNE_FIELDS_MINIMAL,
     TUNE_FIELDS_RECOMMENDED
 )
+
+python_check_version(__python_required_version__)
