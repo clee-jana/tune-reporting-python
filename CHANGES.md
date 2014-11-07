@@ -65,18 +65,19 @@ Beta public release on October 30, 2014
 * Created endpoint base classes.
 * Removed bash scripts and provided Makefile instead.
 
-
 Version 0.9.11
 --------------
 
 Beta public release on October 31, 2014
 * Revised fetch to use controller/action.
+
 Version 0.9.12
 --------------
 
 Beta public release on October 31, 2014
 * Refactor: Class names of service module.
 * Python 3.0 fixes.
+
 Version 0.9.13
 --------------
 
@@ -84,3 +85,9 @@ Beta public release on Novenber 03, 2014
 * Documentation reST compliant.
 * Sphinx generated documentation.
 * Report Reader fixed
+
+Version 0.9.14
+--------------
+
+Beta public release on Novenber 06, 2014
+* Fixes to Cohort and Actuals reports

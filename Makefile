@@ -1,6 +1,4 @@
-.PHONY: clean venv install analysis tests tests-install build dist register docs-sphinx docs-doxygen
-
-path_to_python3=$(which python3)
+.PHONY: clean venv install analysis examples tests tests-install build dist register docs-sphinx docs-doxygen
 
 venv:
 	virtualenv venv
@@ -12,7 +10,8 @@ tests-install: install
 	. venv/bin/activate; pip install -r tests/requirements.txt
 
 clean:
-	sudo rm -fR ./doc/doxygen/*
+	sudo rm -fR ./build/*
+	sudo rm -fR ./docs/doxygen/*
 	sudo rm -fR ./docs/sphinx/_build
 	sudo rm -fR build/*
 	rm -rf venv
@@ -34,10 +33,10 @@ build:
 register:
 	sudo python setup.py register
 
-tests: build
+tests:
 	python ./tests/tune_tests.py $(api_key)
 
-examples: build
+examples:
 	python ./examples/tune_examples.py $(api_key)
 
 analysis: install
@@ -52,7 +51,10 @@ docs-install:
 docs-sphinx: docs-install
 	sudo rm -fR ./docs/sphinx/_build
 	cd docs/sphinx && make html
+	x-www-browser docs/sphinx/_build/html/index.html
 	
 docs-doxygen:
 	sudo rm -fR ./docs/doxygen/*
 	sudo doxygen docs/Doxyfile
+	x-www-browser docs/doxygen/html/index.html
+

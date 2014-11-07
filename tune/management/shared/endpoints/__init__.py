@@ -34,13 +34,15 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.13
+#  @version   $Date: 2014-11-06 17:54:12 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from .endpoint_base import (
     EndpointBase,
+    TUNE_FIELDS_UNDEFINED,
     TUNE_FIELDS_ALL,
+    TUNE_FIELDS_ENDPOINT,
     TUNE_FIELDS_DEFAULT,
     TUNE_FIELDS_RELATED,
     TUNE_FIELDS_MINIMAL,

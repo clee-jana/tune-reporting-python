@@ -1,22 +1,22 @@
 <h2>tune-api-python</h2>
 <h2>Tune API SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate Tune API services.</h3>
-<h4>Update:  2014-10-31</h4>
-<h4>Version: 0.9.13</h4>
+<h4>Update:  2014-11-06</h4>
+<h4>Version: 0.9.14</h4>
 ===
 
-## Overview
+### Overview
 
 The utility focus of the SDKs is upon the Advertiser Reporting endpoints. Even though the the breadth of the Management API goes beyond just reports, it is these endpoints that our customers primarily access. The second goal of the SDKs is to assure that our customers’ developers are using best practices in gathering reports in the most optimal way.
 
-## Documentation
+### Documentation
 
 Please see documentation here:
 
 [Tune API SDKs](https://developers.mobileapptracking.com/tune-api-sdks/)
 
 <a name="sdk_requirements"></a>
-## SDK Requirements
+### SDK Requirements
 
 <a name="sdk_prerequisites"></a>
 #### Prerequisites
@@ -36,7 +36,7 @@ Please see documentation here:
 To use SDK, it requires you to [Generate API Key](http://developers.mobileapptracking.com/generate-api-key/)
 
 <a name="sdk_installation"></a>
-## Installation
+### Installation
 
 You can install **tune-api-python** via PyPi or by installing from source.
 
@@ -73,7 +73,7 @@ source code") for `tune-api-python`, and then run:
 You may need to run the above commands with `sudo`.
 
 <a name="sdk_code_samples"></a>
-## Code Samples
+### Code Samples
 
 <a name="sdk_examples"></a>
 #### SDK Examples
@@ -81,7 +81,7 @@ You may need to run the above commands with `sudo`.
 Run the following script to view execution of all unittests:
 ```bash
     $ sudo make install
-    $ make api_key=[API_KEY] examples
+    $ make API_KEY=[API_KEY] examples
 ```
 
 <a name="sdk_unittests"></a>
@@ -90,26 +90,38 @@ Run the following script to view execution of all unittests:
 Run the following script to view execution of all unittests:
 ```bash
     $ sudo make test-install
-    $ make api_key=[API_KEY] tests
+    $ make API_KEY=[API_KEY] tests
 ```
 
-<a name="sdk_docs"></a>
-#### SDK Documentation
+<a name="sdk_docs_sphinx"></a>
+#### SDK Documentation -- Sphinx
+
+Run the following script to generate Sphnix-based documentation:
+
+```bash
+    $ make tests-installs
+    $ make docs-sphinx
+```
+
+<a name="sdk_docs_doxygen"></a>
+#### SDK Documentation -- Doxygen
 
 Run the following script to generate Doxygen-based documentation:
+
 ```bash
-    $ make docs
+    $ make tests-installs
+    $ make docs-doxygen
 ```
 
 Requires installation of [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.html).
 
 <a name="license"></a>
-## License
+### License
 
 [MIT License](http://opensource.org/licenses/MIT)
 
 <a name="sdk_reporting_issues"></a>
-## Reporting Issues
+### Reporting Issues
 
 We would love to hear your feedback.
 
