@@ -36,7 +36,7 @@ Tune Mangement Actuals Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.13
+#  @version   $Date: 2014-11-03 15:19:08 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -45,6 +45,9 @@ from .reports_endpoint_base import (
 )
 from tune.management.shared.service import (
     TuneManagementClient
+)
+from tune.management.shared.endpoints import (
+    TUNE_FIELDS_DEFAULT
 )
 
 
@@ -220,6 +223,17 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
             group = self._validate_group(group)
         if filter is not None:
             filter = self._validate_filter(filter)
+
+        if fields is not None:
+            fields = self._validate_fields(fields)
+        else:
+            fields = self.fields(TUNE_FIELDS_DEFAULT)
+
+        if sort is not None:
+            sort_result = self._validate_sort(fields, sort)
+            sort = sort_result["sort"]
+            fields = sort_result["fields"]
+
         if fields is not None:
             fields = self._validate_fields(fields)
 

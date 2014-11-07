@@ -34,7 +34,7 @@ Tune Mangement Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.13
+#  @version   $Date: 2014-11-06 17:54:12 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -57,11 +57,13 @@ from tune.shared.report_export_worker import (
     ReportExportWorker
 )
 
-TUNE_FIELDS_ALL = 0
-TUNE_FIELDS_DEFAULT = 1
-TUNE_FIELDS_RELATED = 2
-TUNE_FIELDS_MINIMAL = 4
-TUNE_FIELDS_RECOMMENDED = 8
+TUNE_FIELDS_UNDEFINED     = 0
+TUNE_FIELDS_ALL           = 1
+TUNE_FIELDS_ENDPOINT      = 2
+TUNE_FIELDS_DEFAULT       = 4
+TUNE_FIELDS_RELATED       = 8
+TUNE_FIELDS_MINIMAL       = 16
+TUNE_FIELDS_RECOMMENDED   = 32
 
 
 ## Base components for every Tune Management API request.
@@ -217,43 +219,54 @@ class EndpointBase(object):
     #  @return list endpoint fields
     #  @throws TuneServiceException
     def fields(self,
-               enum_fields_selection=TUNE_FIELDS_ALL):
+               enum_fields_selection=TUNE_FIELDS_DEFAULT):
         """Gather specific set of fields for this endpoint.
 
             :param int: TUNE_FIELDS_ALL, TUNE_FIELDS_DEFAULT,
                 TUNE_FIELDS_RECOMMENDED
             :return (array): list endpoint fields
         """
-        if (self.validate_fields or
-                not (enum_fields_selection & TUNE_FIELDS_RECOMMENDED)):
-            if self.__fields is None:
-                self.__endpoint_fields()
+        if (self.__fields is None or not self.__fields):
+            self.__endpoint_fields()
 
-        if enum_fields_selection & TUNE_FIELDS_RECOMMENDED:
-            if self.fields_recommended is None:
-                raise TuneSdkException(
-                    "Property 'fields_recommended' not defined."
-                )
-            return self.fields_recommended
-
-        if not (enum_fields_selection & TUNE_FIELDS_DEFAULT) \
-           and (enum_fields_selection & TUNE_FIELDS_RELATED):
+        if ((enum_fields_selection & TUNE_FIELDS_ALL) or
+                (not (enum_fields_selection & TUNE_FIELDS_DEFAULT) and
+                (enum_fields_selection & TUNE_FIELDS_RELATED))):
             fields = self.__fields.keys()
             fields.sort()
+            return fields
+
+        if enum_fields_selection & TUNE_FIELDS_RECOMMENDED:
+            fields = self.fields_recommended
+
+            if (fields is None or not fields):
+                fields = self.fields(TUNE_FIELDS_DEFAULT)
+
+            if (fields is None or not fields):
+                fields = self.fields(TUNE_FIELDS_ENDPOINT)
+
+            if (fields is None or not fields):
+                raise TuneSdkException(
+                    "No fields found for TUNE_FIELDS_RECOMMENDED."
+                )
+
             return fields
 
         fields_filtered = {}
 
         for field_name, field_info in self.__fields.items():
+
+            if (((enum_fields_selection & TUNE_FIELDS_ENDPOINT) or
+                    not (enum_fields_selection & TUNE_FIELDS_DEFAULT)) and
+                    not field_info["related"]):
+                fields_filtered[field_name] = field_info
+                continue
+
             if not (enum_fields_selection & TUNE_FIELDS_RELATED) \
                and not (enum_fields_selection & TUNE_FIELDS_MINIMAL) \
                and field_info["related"]:
                 continue
 
-            if not (enum_fields_selection & TUNE_FIELDS_DEFAULT) \
-               and not field_info["related"]:
-                fields_filtered[field_name] = field_info
-                continue
 
             if (enum_fields_selection & TUNE_FIELDS_DEFAULT) \
                and field_info["default"]:
@@ -275,6 +288,24 @@ class EndpointBase(object):
                 continue
 
         fields = list(fields_filtered.keys())
+
+        if ((enum_fields_selection & TUNE_FIELDS_DEFAULT) and
+            (fields is None or not fields)):
+            fields = self.fields_recommended
+
+            if (fields is None or not fields):
+                fields = self.fields(TUNE_FIELDS_RECOMMENDED)
+
+            if (fields is None or not fields):
+                fields = self.fields(TUNE_FIELDS_ENDPOINT)
+
+            if (fields is None or not fields):
+                raise TuneSdkException(
+                    "No fields found for TUNE_FIELDS_DEFAULT."
+                )
+
+            return fields
+
         fields.sort()
         return fields
 
@@ -412,9 +443,21 @@ class EndpointBase(object):
             :return (str): fields
             :throws: TuneSdkException
         """
-        if not isinstance(fields, str) and not isinstance(fields, list):
+        if not isinstance(fields, str):
+            if sys.version_info >= (3, 0, 0):
+                # for Python 3
+                if isinstance(fields, bytes):
+                    fields = fields.decode('ascii')
+            else:
+                if isinstance(fields, unicode):
+                    fields = str(fields)
+
+        if (not isinstance(fields, str) and
+            not isinstance(fields, list)):
             raise TuneSdkException(
-                "Invalid parameter 'fields' provided: '{}'".format(fields))
+                "Invalid type for parameter 'fields' "
+                "provided: '{}', type: '{}'".format(fields, type(fields))
+            )
 
         fields_list = None
         if isinstance(fields, str):
@@ -488,19 +531,32 @@ class EndpointBase(object):
         return ",".join(group_list)
 
     ## Validate query string parameter 'sort' having valid endpoint's fields
+    #  @param dict fields
     #  @param dict sort
     #  @return dict
     #  @throws TuneSdkException
-    def _validate_sort(self, sort):
+    def _validate_sort(self, fields, sort):
         """Validate query string parameter 'sort'
         having valid endpoint's fields.
 
+            :param array|(str): fields
             :param array|(str): sort
             :return (str): sort
             :throws: TuneSdkException
         """
         if not isinstance(sort, dict):
             raise TuneSdkException("Invalid parameter 'sort' provided.")
+
+        fields_arr = None
+        if fields is None:
+            fields_arr = []
+        elif isinstance(fields, list):
+            fields_arr = fields
+        elif isinstance(fields, str):
+            if not fields:
+                fields_arr = []
+            else:
+                fields_arr = fields.split(",")
 
         if self.validate_fields:
             if self.__fields is None:
@@ -516,6 +572,10 @@ class EndpointBase(object):
                             sort_field
                         )
                     )
+
+            if sort_field not in fields_arr:
+                fields_arr.append(sort_field)
+
             sort_direction = sort_direction.upper()
             if sort_direction not in self.__sort_directions:
                 raise TuneSdkException(
@@ -527,7 +587,17 @@ class EndpointBase(object):
 
             sort_build[sort_field] = sort_direction
 
-        return sort_build
+        if isinstance(fields, str):
+            fields = ",".join(fields_arr)
+        else:
+            fields = fields_arr
+
+        results = {
+            "sort": sort_build,
+            "fields": fields
+        }
+
+        return results
 
     ## Validate filter parameter
     #  @param str filter
@@ -802,7 +872,7 @@ class EndpointBase(object):
         if sys.version_info >= (3, 0, 0):
             # for Python 3
             if isinstance(url, bytes):
-                url = url.decode('ascii')  # or  s = str(s)[2:-1]
+                url = url.decode('ascii')
         else:
             if isinstance(url, unicode):
                 url = str(url)

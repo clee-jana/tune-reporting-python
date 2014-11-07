@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.13
+#  @version   $Date: 2014-11-06 17:54:12 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -61,9 +61,11 @@ class ExampleClientAccountUsers(object):
     def run(self, api_key):
         """Run Example\n"""
 
-        print("======================================")
-        print("= Tune Management API Client Example =")
-        print("======================================")
+        print("")
+        print("==============================================================")
+        print("= Tune Management API Client Account Users                   =")
+        print("==============================================================")
+
         print("    Tune SDK version: {0}".format(
             TuneManagementClient.version()
             ))

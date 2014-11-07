@@ -2,8 +2,8 @@
 tune-api-python
 Tune API SDK for Python 2.7 and 3.0
 Incorporate Tune API services.
-Update:  2014-10-31
-Version: 0.9.13
+Update:  2014-11-06
+Version: 0.9.14
 ****************************************
 
 =============
@@ -83,7 +83,7 @@ SDK Examples
 Run the following script to view execution of all examples:
 ```
     $ sudo make install
-    $ make api_key=[API_KEY] examples
+    $ make API_KEY=[API_KEY] examples
 ```
 
 -------------
@@ -93,19 +93,32 @@ SDK Unittests
 Run the following script to view execution of all unittests:
 ```
     $ sudo make tests-install
-    $ make api_key=[API_KEY] tests
+    $ make API_KEY=[API_KEY] tests
 ```
 
--------------
-SDK Document
--------------
+---------------------------
+SDK Documentation -- Sphinx
+---------------------------
+
+Run the following script to generate Sphnix-based documentation:
+
+```
+    $ make tests-installs
+    $ make docs-sphinx
+```
+
+----------------------------
+SDK Documentation -- Doxygen
+----------------------------
 
 Run the following script to generate Doxygen-based documentation:
+
 ```
-    $ make docs
+    $ make tests-installs
+    $ make docs-doxygen
 ```
 
-Requires installation of Doxygen: http://www.stack.nl/~dimitri/doxygen/index.html
+Requires installation of Doxygen: http://www.stack.nl/~dimitri/doxygen/index.html.
 
 =============
 License

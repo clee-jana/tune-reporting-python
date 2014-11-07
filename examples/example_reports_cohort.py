@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.13
+#  @version   $Date: 2014-11-06 17:54:12 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  Cohort Report
@@ -74,7 +74,8 @@ try:
         TuneSdkException,
         LTV,
         ReportReaderCSV,
-        TUNE_FIELDS_RECOMMENDED
+        TUNE_FIELDS_RECOMMENDED,
+        TUNE_FIELDS_DEFAULT
     )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -111,7 +112,16 @@ class ExampleReportsCohort(object):
 
             print("")
             print("======================================================")
-            print(" Fields of Advertiser Cohort records.              ")
+            print(" Fields of Advertiser Cohort records -- Default.  ")
+            print("======================================================")
+
+            response = ltv.fields(TUNE_FIELDS_DEFAULT)
+            for field in response:
+                print(str(field))
+
+            print("")
+            print("======================================================")
+            print(" Fields of Advertiser Cohort records -- Recommended.  ")
             print("======================================================")
 
             response = ltv.fields(TUNE_FIELDS_RECOMMENDED)
@@ -166,6 +176,32 @@ class ExampleReportsCohort(object):
             print(str(response))
             print("= Count:")
             print(str(response.data))
+
+            print("")
+            print("==========================================================")
+            print(" Find Advertiser Cohort 'click/cumulative' records.       ")
+            print("==========================================================")
+
+            response = ltv.find(
+                start_date,
+                end_date,
+                cohort_type="click",
+                aggregation_type="cumulative",
+                group="site_id,publisher_id",
+                fields=None,
+                cohort_interval="year_day",
+                filter="(publisher_id > 0)",
+                limit=5,
+                page=None,
+                sort=None,
+                response_timezone="America/Los_Angeles"
+            )
+
+            print("= TuneManagementResponse:")
+            print(str(response))
+
+            if response.http_code != 200:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("==========================================================")

@@ -4,8 +4,8 @@ Tune API SDK for Python documentation
     :package: `tune-api-python <https://github.com/MobileAppTracking/tune-api-python>`_
     :label: Tune API SDK for Python 2.7 and 3.0
     :purpose: Incorporate Tune API services.
-    :update:  2014-11-03
-    :version: 0.9.13
+    :update:  2014-11-06
+    :version: 0.9.14
 
 Overview
 ####################
@@ -79,7 +79,7 @@ Run the following script to view execution of all examples:
     :linenos:
 
     $ make installs
-    $ make api_key=[API_KEY] examples
+    $ make API_KEY=[API_KEY] examples
 
 SDK Unittests
 ********************
@@ -90,8 +90,7 @@ Run the following script to view execution of all unittests:
     :linenos:
 
     $ make tests-installs
-    $ make api_key=[API_KEY] tests
-
+    $ make API_KEY=[API_KEY] tests
 
 SDK Documentation -- Sphinx
 ****************************

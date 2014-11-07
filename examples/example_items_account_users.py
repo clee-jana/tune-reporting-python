@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.13
+#  @version   $Date: 2014-11-06 17:54:12 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #
@@ -82,7 +82,7 @@ class ExampleItemsAccountUsers(object):
 
         print("")
         print("==============================================================")
-        print("= Tune Management API Account Users         =")
+        print("= Tune Management API Item Account Users                     =")
         print("==============================================================")
 
         try:
@@ -93,8 +93,8 @@ class ExampleItemsAccountUsers(object):
             print(" Fields of Advertiser Account Users records.            ")
             print("======================================================")
 
-            response = users.fields()
-            for field in response:
+            fields = users.fields()
+            for field in fields:
                 print(str(field))
 
             print("")

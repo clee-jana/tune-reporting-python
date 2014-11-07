@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.13
+#  @version   $Date: 2014-11-06 17:54:12 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #
@@ -59,7 +59,8 @@ try:
         Clicks,
         ReportReaderCSV,
         ReportReaderJSON,
-        TUNE_FIELDS_RECOMMENDED
+        TUNE_FIELDS_RECOMMENDED,
+        TUNE_FIELDS_DEFAULT
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -96,8 +97,17 @@ class ExampleReportsClicks(object):
 
             print("")
             print("======================================================")
-            print(" Fields of Advertiser Logs Clicks records.            ")
+            print(" Fields of Advertiser Logs Clicks records - Default.  ")
             print("======================================================")
+
+            response = clicks.fields(TUNE_FIELDS_DEFAULT)
+            for field in response:
+                print(str(field))
+
+            print("")
+            print("========================================================")
+            print(" Fields of Advertiser Logs Clicks records - Recommended.")
+            print("========================================================")
 
             response = clicks.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
@@ -125,8 +135,31 @@ class ExampleReportsClicks(object):
 
             print("")
             print("======================================================")
-            print(" Find Advertiser Logs Clicks records.                 ")
+            print(" Find Advertiser Logs Clicks records - Default fields.")
             print("======================================================")
+
+            response = clicks.find(
+                start_date,
+                end_date,
+                filter=None,
+                fields=None,
+                limit=5,
+                page=None,
+                sort={"created": "DESC"},
+                response_timezone="America/Los_Angeles"
+            )
+
+            print("= TuneManagementResponse:")
+            print(str(response))
+
+            if response.http_code != 200:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+
+
+            print("")
+            print("==========================================================")
+            print(" Find Advertiser Logs Clicks records - Recommended fields.")
+            print("==========================================================")
 
             response = clicks.find(
                 start_date,

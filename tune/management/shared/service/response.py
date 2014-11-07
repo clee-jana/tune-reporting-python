@@ -36,7 +36,7 @@ Tune Mangement API Response
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.13
+#  @version   $Date: 2014-11-03 15:19:08 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -59,10 +59,14 @@ class TuneManagementResponse(object):
                  request_url=None):
         """The constructor.
 
-            :param str response_json:       Service full response.
-            :param str response_http_code:  Service returned HTTP code.
-            :param array response_headers:  Service returned HTTP headers.
-            :param str request_url:         Provided request URL.
+            :param str   response_json:         Tune Management API Service
+                                                full response.
+            :param str   response_http_code:    Tune Management API Service
+                                                response HTTP code.
+            :param array response_headers:      Tune Management API Service
+                                                response HTTP headers.
+            :param str   request_url:           Tune Management API request
+                                                URL.
         """
         self.__response_json = response_json
         self.__response_http_code = response_http_code

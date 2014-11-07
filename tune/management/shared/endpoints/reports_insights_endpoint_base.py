@@ -36,7 +36,7 @@ Tune Mangement Insights Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   0.9.13
+#  @version   $Date: 2014-11-03 15:19:08 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -48,7 +48,9 @@ from .reports_endpoint_base import (
 from tune.shared import (
     TuneSdkException
 )
-
+from tune.management.shared.endpoints import (
+    TUNE_FIELDS_DEFAULT
+)
 
 ## Base class for handling Tune Management API Insight stats reports.
 #
@@ -266,10 +268,19 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
 
         if filter is not None:
             filter = self._validate_filter(filter)
+
         if fields is not None:
             fields = self._validate_fields(fields)
+        else:
+            fields = self.fields(TUNE_FIELDS_DEFAULT)
+
         if sort is not None:
-            sort = self._validate_sort(sort)
+            sort_result = self._validate_sort(fields, sort)
+            sort = sort_result["sort"]
+            fields = sort_result["fields"]
+
+        if fields is not None:
+            fields = self._validate_fields(fields)
 
         return ReportsEndpointBase.call(
             self,
