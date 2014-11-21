@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-06 17:54:12 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  Cohort Report
@@ -108,14 +108,14 @@ class ExampleReportsCohort(object):
             start_date = "{} 00:00:00".format(week_ago)
             end_date = "{} 23:59:59".format(yesterday)
 
-            ltv = LTV(api_key, validate_fields=True)
+            reports_cohort = LTV(api_key, validate_fields=True)
 
             print("")
             print("======================================================")
             print(" Fields of Advertiser Cohort records -- Default.  ")
             print("======================================================")
 
-            response = ltv.fields(TUNE_FIELDS_DEFAULT)
+            response = reports_cohort.fields(TUNE_FIELDS_DEFAULT)
             for field in response:
                 print(str(field))
 
@@ -124,7 +124,7 @@ class ExampleReportsCohort(object):
             print(" Fields of Advertiser Cohort records -- Recommended.  ")
             print("======================================================")
 
-            response = ltv.fields(TUNE_FIELDS_RECOMMENDED)
+            response = reports_cohort.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
@@ -133,7 +133,7 @@ class ExampleReportsCohort(object):
             print(" Count Advertiser Cohort click records.               ")
             print("======================================================")
 
-            response = ltv.count(
+            response = reports_cohort.count(
                 start_date,
                 end_date,
                 cohort_type="click",
@@ -143,11 +143,12 @@ class ExampleReportsCohort(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
+
             print("= Count:")
             print(str(response.data))
 
@@ -156,7 +157,7 @@ class ExampleReportsCohort(object):
             print(" Count Advertiser Cohort install records.             ")
             print("======================================================")
 
-            response = ltv.count(
+            response = reports_cohort.count(
                 start_date,
                 end_date,
                 cohort_type="install",
@@ -166,11 +167,11 @@ class ExampleReportsCohort(object):
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("= TuneManagementResponse:")
             print(str(response))
@@ -182,14 +183,14 @@ class ExampleReportsCohort(object):
             print(" Find Advertiser Cohort 'click/cumulative' records.       ")
             print("==========================================================")
 
-            response = ltv.find(
+            response = reports_cohort.find(
                 start_date,
                 end_date,
                 cohort_type="click",
-                aggregation_type="cumulative",
-                group="site_id,publisher_id",
-                fields=None,
                 cohort_interval="year_day",
+                aggregation_type="cumulative",
+                fields= "site_id,site.name,publisher_id,publisher.name,rpi,epi",
+                group="site_id,publisher_id",
                 filter="(publisher_id > 0)",
                 limit=5,
                 page=None,
@@ -197,25 +198,25 @@ class ExampleReportsCohort(object):
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("==========================================================")
             print(" Find Advertiser Cohort 'click/cumulative' records.       ")
             print("==========================================================")
 
-            response = ltv.find(
+            response = reports_cohort.find(
                 start_date,
                 end_date,
                 cohort_type="click",
-                aggregation_type="cumulative",
-                group="site_id,publisher_id",
-                fields=ltv.fields(TUNE_FIELDS_RECOMMENDED),
                 cohort_interval="year_day",
+                aggregation_type="cumulative",
+                fields=reports_cohort.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,publisher_id",
                 filter="(publisher_id > 0)",
                 limit=5,
                 page=None,
@@ -223,34 +224,34 @@ class ExampleReportsCohort(object):
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("==========================================================")
             print(" Advertiser Cohort CSV report for export.                 ")
             print("==========================================================")
 
-            response = ltv.export(
+            response = reports_cohort.export(
                 start_date,
                 end_date,
                 cohort_type="click",
-                aggregation_type="incremental",
-                group="site_id,publisher_id",
-                fields=ltv.fields(TUNE_FIELDS_RECOMMENDED),
                 cohort_interval="year_day",
+                aggregation_type="incremental",
+                fields=reports_cohort.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,publisher_id",
                 filter="(publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             job_id = LTV.parse_response_report_job_id(response)
 
@@ -261,7 +262,7 @@ class ExampleReportsCohort(object):
             print(" Fetching Advertiser Cohort CSV report.                 ")
             print("========================================================")
 
-            export_fetch_response = ltv.fetch(
+            export_fetch_response = reports_cohort.fetch(
                 job_id,
                 verbose=True,
                 sleep=10

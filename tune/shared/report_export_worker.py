@@ -36,7 +36,7 @@ Tune Reports Export Status Worker
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 21:21:08 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -183,28 +183,35 @@ class ReportExportWorker(object):
 
                 response = client.response
 
+                # Failed to return response.
                 if not response:
                     raise TuneSdkException(
                         "No response returned from export request."
                     )
 
+                # Failed to get successful service response.
+                if response.http_code != 200 or response.errors:
+                    raise TuneServiceException(
+                        "Service failed: {}: {}".format(response.http_code, str(response))
+                    )
+
+                # Failed to get data.
                 if not response.data:
                     raise TuneSdkException(
-                        "No response data returned from export. "
-                        "TuneManagementRequest URL: {}".format(
-                            response.request_url
+                        "No response data returned from export, response: {}".format(
+                            str(response)
                         )
                     )
-
-                if response.http_code != 200:
-                    raise TuneServiceException(
-                        "TuneManagementRequest failed: "
-                        "HTTP Error Code: {}: {}".format(
-                            response.http_code,
-                            response.request_url
+                
+                # Failed to get status.
+                if "status" not in response.data:
+                    raise TuneSdkException(
+                        "Export data does not contain report 'status', response: {}".format(
+                            str(response)
                         )
                     )
-
+                
+                # Get status.
                 status = response.data["status"]
                 if status == "complete" or status == "fail":
                     break

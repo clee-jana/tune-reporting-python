@@ -4,8 +4,8 @@ Tune API SDK for Python documentation
     :package: `tune-api-python <https://github.com/MobileAppTracking/tune-api-python>`_
     :label: Tune API SDK for Python 2.7 and 3.0
     :purpose: Incorporate Tune API services.
-    :update:  2014-11-06
-    :version: 0.9.14
+    :update:  $Date: 2014-11-21 14:12:20 $
+    :version: $Version: 0.9.16 $
 
 Overview
 ####################
@@ -95,7 +95,7 @@ Run the following script to view execution of all unittests:
 SDK Documentation -- Sphinx
 ****************************
 
-Run the following script to generate Sphnix-based documentation:
+The following will generate `Sphinx <http://en.wikipedia.org/wiki/Sphinx_(documentation_generator)>`_ documentation from Python codebase:
 
 .. code-block:: bash
     :linenos:
@@ -106,7 +106,7 @@ Run the following script to generate Sphnix-based documentation:
 SDK Documentation -- Doxygen
 ****************************
 
-Run the following script to generate Doxygen-based documentation:
+The following will generate `Doxygen <http://en.wikipedia.org/wiki/Doxygen>`_ documentation from Python codebase:
 
 .. code-block:: bash
     :linenos:

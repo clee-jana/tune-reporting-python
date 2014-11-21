@@ -34,7 +34,7 @@ Tune Mangement Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-06 17:54:12 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -706,6 +706,16 @@ class EndpointBase(object):
             :return (bool): Valid datatime string
             :throws: TuneSdkException
         """
+        if (param_name is None
+                or not isinstance(param_name, str)
+                or not param_name):
+            raise ValueError("Parameter 'param_name' is not defined.")
+        if (date_time is None
+                or not isinstance(date_time, str)
+                or not date_time):
+            raise ValueError(
+                "Parameter '{}' is not defined.".format(param_name))
+
         try:
             datetime.strptime(date_time, '%Y-%m-%d')
             return True

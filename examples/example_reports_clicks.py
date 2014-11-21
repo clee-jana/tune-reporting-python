@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  example_clicks.py
+#  example_reports_log_clicks.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-06 17:54:12 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #
@@ -93,14 +93,14 @@ class ExampleReportsClicks(object):
             start_date = "{} 00:00:00".format(yesterday)
             end_date = "{} 23:59:59".format(yesterday)
 
-            clicks = Clicks(api_key, validate_fields=True)
+            reports_log_clicks = Clicks(api_key, validate_fields=True)
 
             print("")
             print("======================================================")
             print(" Fields of Advertiser Logs Clicks records - Default.  ")
             print("======================================================")
 
-            response = clicks.fields(TUNE_FIELDS_DEFAULT)
+            response = reports_log_clicks.fields(TUNE_FIELDS_DEFAULT)
             for field in response:
                 print(str(field))
 
@@ -109,7 +109,7 @@ class ExampleReportsClicks(object):
             print(" Fields of Advertiser Logs Clicks records - Recommended.")
             print("========================================================")
 
-            response = clicks.fields(TUNE_FIELDS_RECOMMENDED)
+            response = reports_log_clicks.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
@@ -118,7 +118,7 @@ class ExampleReportsClicks(object):
             print(" Count Advertiser Logs Clicks records.                ")
             print("======================================================")
 
-            response = clicks.count(
+            response = reports_log_clicks.count(
                 start_date,
                 end_date,
                 filter=None,
@@ -138,22 +138,22 @@ class ExampleReportsClicks(object):
             print(" Find Advertiser Logs Clicks records - Default fields.")
             print("======================================================")
 
-            response = clicks.find(
+            response = reports_log_clicks.find(
                 start_date,
                 end_date,
-                filter=None,
                 fields=None,
+                filter=None,
                 limit=5,
                 page=None,
                 sort={"created": "DESC"},
                 response_timezone="America/Los_Angeles"
             )
 
-            print("= TuneManagementResponse:")
-            print(str(response))
-
             if response.http_code != 200:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+
+            print("= TuneManagementResponse:")
+            print(str(response))
 
 
             print("")
@@ -161,11 +161,11 @@ class ExampleReportsClicks(object):
             print(" Find Advertiser Logs Clicks records - Recommended fields.")
             print("==========================================================")
 
-            response = clicks.find(
+            response = reports_log_clicks.find(
                 start_date,
                 end_date,
+                fields=reports_log_clicks.fields(TUNE_FIELDS_RECOMMENDED),
                 filter=None,
-                fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
                 limit=5,
                 page=None,
                 sort={"created": "DESC"},
@@ -183,20 +183,20 @@ class ExampleReportsClicks(object):
             print(" Advertiser Logs Clicks CSV report for export.            ")
             print("==========================================================")
 
-            response = clicks.export(
+            response = reports_log_clicks.export(
                 start_date,
                 end_date,
+                fields=reports_log_clicks.fields(TUNE_FIELDS_RECOMMENDED),
                 filter=None,
-                fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
                 format="csv",
                 response_timezone="America/Los_Angeles"
             )
 
-            print("= TuneManagementResponse:")
-            print(str(response))
-
             if response.http_code != 200:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+
+            print("= TuneManagementResponse:")
+            print(str(response))
 
             job_id = Clicks.parse_response_report_job_id(response)
 
@@ -207,7 +207,7 @@ class ExampleReportsClicks(object):
             print(" Fetching Advertiser Logs Clicks CSV report                      ")
             print("=================================================================")
 
-            export_fetch_response = clicks.fetch(
+            export_fetch_response = reports_log_clicks.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
@@ -231,20 +231,20 @@ class ExampleReportsClicks(object):
             print(" Advertiser Logs Clicks JSON report for export.            ")
             print("===========================================================")
 
-            response = clicks.export(
+            response = reports_log_clicks.export(
                 start_date,
                 end_date,
+                fields=reports_log_clicks.fields(TUNE_FIELDS_RECOMMENDED),
                 filter=None,
-                fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
                 format="json",
                 response_timezone="America/Los_Angeles"
             )
 
-            print("= TuneManagementResponse:")
-            print(str(response))
-
             if response.http_code != 200:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+
+            print("= TuneManagementResponse:")
+            print(str(response))
 
             job_id = Clicks.parse_response_report_job_id(response)
 
@@ -255,7 +255,7 @@ class ExampleReportsClicks(object):
             print(" Fetching Advertiser Logs Clicks JSON report.           ")
             print("========================================================")
 
-            export_fetch_response = clicks.fetch(
+            export_fetch_response = reports_log_clicks.fetch(
                 job_id,
                 verbose=True,
                 sleep=10

@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -114,8 +114,8 @@ class TestReportsPostbacks(unittest.TestCase):
             response = postbacks.find(
                 self.__start_date,
                 self.__end_date,
-                filter="(status = 'approved')",
                 fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
+                filter="(status = 'approved')",
                 limit=10,
                 page=None,
                 sort={"created": "DESC"},
@@ -143,8 +143,8 @@ class TestReportsPostbacks(unittest.TestCase):
             response = postbacks.export(
                 self.__start_date,
                 self.__end_date,
-                filter="(status = 'approved')",
                 fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
+                filter="(status = 'approved')",
                 format="csv",
                 response_timezone="America/Los_Angeles"
             )

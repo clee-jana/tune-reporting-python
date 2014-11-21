@@ -36,7 +36,7 @@ Tune Mangement Insights Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -102,10 +102,10 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
     #  @param str start_date         YYYY-MM-DD HH:MM:SS
     #  @param str end_date           YYYY-MM-DD HH:MM:SS
     #  @param str cohort_type        Cohort types: click, install
-    #  @param str group              Group results using this endpoint's
-    #                                   fields.
     #  @param str cohort_interval    Cohort intervals:
     #                                   year_day, year_week, year_month, year
+    #  @param str group              Group results using this endpoint's
+    #                                   fields.
     #  @param str filter             Apply constraints endpoint_based upon
     #                                   values associated with this endpoint's
     #                                   fields.
@@ -117,8 +117,8 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
               start_date,
               end_date,
               cohort_type,
+              cohort_interval,
               group,
-              cohort_interval=None,
               filter=None,
               response_timezone=None):
         """Counts all existing records that match filter criteria
@@ -126,11 +126,11 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
 
             :param str    start_date:     YYYY-MM-DD HH:MM:SS
             :param str    end_date:       YYYY-MM-DD HH:MM:SS
-            :param str    cohort_type:    Cohort types - click, install
+            :param str    cohort_type:    Cohort types - click, install.
+            :param str    cohort_interval:  Cohort intervals -
+                                            year_day, year_week, year_month, year.
             :param str    group:          Group results using this endpoint's
                                             fields.
-            :param str    cohort_interval:    Cohort intervals - year_day,
-                                            year_week, year_month, year
             :param str    filter:         Filter the results and apply
                                             conditions that must be met for
                                             records to be included in data.
@@ -138,19 +138,14 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
                                         for data. Default is set by account.
             :return: TuneManagementResponse
         """
-        if start_date is None or not start_date:
-            raise ValueError("Parameter 'start_date' is not defined.")
-        if end_date is None or not end_date:
-            raise ValueError("Parameter 'end_date' is not defined.")
-        if cohort_type is None or not cohort_type:
-            raise ValueError("Parameter 'cohort_type' is not defined.")
-        if group is None or not group:
-            raise ValueError("Parameter 'group' is not defined.")
-
         self._validate_datetime('start_date', start_date)
         self._validate_datetime('end_date', end_date)
 
         self._validate_cohort_type(cohort_type)
+
+
+        if group is None or not group:
+            raise ValueError("Parameter 'group' is not defined.")
 
         if cohort_interval is not None:
             self._validate_cohort_interval(cohort_interval)
@@ -167,238 +162,6 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
                 'group': group,
                 'interval': cohort_interval,
                 'filter': filter,
-                'response_timezone': response_timezone
-            }
-        )
-
-    ## Finds all existing records that match filter criteria
-    #  and returns an array of found model data.
-    #
-    #  @param str start_date         YYYY-MM-DD HH:MM:SS
-    #  @param str end_date           YYYY-MM-DD HH:MM:SS
-    #  @param str cohort_type        Cohort types: click, install
-    #  @param str aggregation_type   Aggregation types:
-    #                                   cumulative, incremental
-    #  @param str group              Group results using this endpoint's
-    #                                   fields.
-    #  @param str fields             Present results using these endpoint's
-    #                                   fields.
-    #  @param str cohort_interval    Cohort intervals:
-    #                                   year_day, year_week, year_month, year
-    #  @param str filter             Apply constraints endpoint_based upon
-    #                                   values associated with this endpoint's
-    #                                   fields.
-    #  @param int limit              Limit number of results, default 10,
-    #                                   0 shows all
-    #  @param int page               Pagination, default 1.
-    #  @param str sort               Sort results using this endpoint's
-    #                                   fields.
-    #                                   Directions: DESC, ASC
-    #  @param str format
-    #  @param str response_timezone  Setting expected timezone for
-    #                                   results, default is set in account.
-    #
-    #  @return object @see response.py
-    def find(self,
-             start_date,
-             end_date,
-             cohort_type,
-             aggregation_type,
-             group,
-             fields=None,
-             cohort_interval=None,
-             filter=None,
-             limit=None,
-             page=None,
-             sort=None,
-             format=None,
-             response_timezone=None):
-        """Finds all existing records that match filter criteria
-        and returns an array of found model data.
-
-            :param str    start_date:    YYYY-MM-DD HH:MM:SS
-            :param str    end_date:      YYYY-MM-DD HH:MM:SS
-            :param str    cohort_type:        Cohort types:
-                                                click, install
-            :param str    aggregation_type:   Aggregation types:
-                                                cumulative, incremental
-            :param str    group:           Group results using this endpoint's
-                                            fields.
-            :param str    filter:         Filter the results and apply
-                                            conditions that must be met for
-                                            records to be included in data.
-            :param str    fields:         No value returns default fields,
-                                            "*" returns all available fields,
-                                            or provide specific fields.
-            :param str    cohort_interval:    Cohort intervals:
-                                year_day, year_week, year_month, year
-            :param int    limit:          Limit number of results, default
-                                            10.
-            :param int    page:           Pagination, default 1.
-            :param array  sort:           Sort by field name, ASC (default)
-                                            or DESC
-            :param str    timestamp:      Set to breakdown stats by
-                                            timestamp choices: hour, datehour,
-                                            date, week, month.
-            :param str  response_timezone:   Setting expected timezone
-                                        for data. Default is set by account.
-            :return: (TuneManagementResponse)
-        """
-        if start_date is None or not start_date:
-            raise ValueError("Parameter 'start_date' is not defined.")
-        if end_date is None or not end_date:
-            raise ValueError("Parameter 'end_date' is not defined.")
-        if cohort_type is None or not cohort_type:
-            raise ValueError("Parameter 'cohort_type' is not defined.")
-        if aggregation_type is None or not aggregation_type:
-            raise ValueError("Parameter 'aggregation_type' is not defined.")
-        if group is None or not group:
-            raise ValueError("Parameter 'group' is not defined.")
-
-        self._validate_datetime('start_date', start_date)
-        self._validate_datetime('end_date', end_date)
-
-        self._validate_cohort_type(cohort_type)
-        self._validate_aggregation_type(aggregation_type)
-
-        group = self._validate_group(group)
-
-        if cohort_interval is not None:
-            self._validate_cohort_interval(cohort_interval)
-
-        if filter is not None:
-            filter = self._validate_filter(filter)
-
-        if fields is not None:
-            fields = self._validate_fields(fields)
-        else:
-            fields = self.fields(TUNE_FIELDS_DEFAULT)
-
-        if sort is not None:
-            sort_result = self._validate_sort(fields, sort)
-            sort = sort_result["sort"]
-            fields = sort_result["fields"]
-
-        if fields is not None:
-            fields = self._validate_fields(fields)
-
-        return ReportsEndpointBase.call(
-            self,
-            action="find",
-            query_string_dict={
-                'start_date': start_date,
-                'end_date': end_date,
-                'cohort_type': cohort_type,
-                'aggregation_type': aggregation_type,
-                'group': group,
-                'interval': cohort_interval,
-                'filter': filter,
-                'fields': fields,
-                'limit': limit,
-                'page': page,
-                'sort': sort,
-                'format': format,
-                'response_timezone': response_timezone
-            }
-        )
-
-    ## Places a job into a queue to generate a report that will contain
-    #  records that match provided filter criteria, and it returns a job
-    #  identifier to be provided to action /export/download.json to download
-    #  completed report.
-    #
-    #  @param str start_date         YYYY-MM-DD HH:MM:SS
-    #  @param str end_date           YYYY-MM-DD HH:MM:SS
-    #  @param str cohort_type        Cohort types: click, install
-    #  @param str aggregation_type   Aggregation types:
-    #                                   cumulative, incremental
-    #  @param str group              Group results using this endpoint's
-    #                                   fields.
-    #  @param str cohort_interval    Cohort intervals:
-    #                                   year_day, year_week, year_month, year
-    #  @param str filter             Apply constraints endpoint_based upon
-    #                                   values associated with this endpoint's
-    #                                   fields.
-    #  @param str fields             Present results using these endpoint's
-    #                                   fields.
-    #  @param str response_timezone  Setting expected timezone for results,
-    #                                   default is set in account.
-    #
-    #  @return object @see response.py
-    #
-    def export(self,
-               start_date,
-               end_date,
-               cohort_type,
-               aggregation_type,
-               group,
-               fields,
-               cohort_interval=None,
-               filter=None,
-               response_timezone=None):
-        """Places a job into a queue to generate a report that will contain
-        records that match provided filter criteria, and it returns a job
-        identifier to be provided to action /export/download.json to download
-        completed report.
-
-            :param str    start_date:    YYYY-MM-DD HH:MM:SS
-            :param str    end_date:      YYYY-MM-DD HH:MM:SS
-            :param str    cohort_type:        Cohort types - click, install
-            :param str    aggregation_type:   Aggregation types -
-                                            cumulative, incremental
-            :param str    group:          Group results using this endpoint's
-                                            fields.
-            :param str    fields:        No value returns default fields,
-                                            "*" returns all available fields,
-                                            or provide specific fields.
-            :param str    cohort_interval:    Cohort intervals -
-                                        year_day, year_week, year_month, year
-            :param str    filter:        Filter the results and apply
-                                            conditions that must be met for
-                                            records to be included in data.
-            :param str  response_timezone:   Setting expected timezone
-                                        for data. Default is set by account.
-            :return: (TuneManagementResponse)
-        """
-        if start_date is None or not start_date:
-            raise ValueError("Parameter 'start_date' is not defined.")
-        if end_date is None or not end_date:
-            raise ValueError("Parameter 'end_date' is not defined.")
-        if cohort_type is None or not cohort_type:
-            raise ValueError("Parameter 'cohort_type' is not defined.")
-        if aggregation_type is None or not aggregation_type:
-            raise ValueError("Parameter 'aggregation_type' is not defined.")
-        if group is None or not group:
-            raise ValueError("Parameter 'group' is not defined.")
-        if fields is None or not fields:
-            raise ValueError("Parameter 'fields' is not defined.")
-        self._validate_datetime('start_date', start_date)
-        self._validate_datetime('end_date', end_date)
-
-        self._validate_cohort_type(cohort_type)
-        self._validate_aggregation_type(aggregation_type)
-
-        group = self._validate_group(group)
-        fields = self._validate_fields(fields)
-
-        if cohort_interval is not None:
-            self._validate_cohort_interval(cohort_interval)
-
-        if filter is not None:
-            filter = self._validate_filter(filter)
-
-        return ReportsEndpointBase.call(
-            self,
-            action="export",
-            query_string_dict={
-                'start_date': start_date,
-                'end_date': end_date,
-                'cohort_type': cohort_type,
-                'aggregation_type': aggregation_type,
-                'interval': cohort_interval,
-                'filter': filter,
-                'fields': fields,
-                'group': group,
                 'response_timezone': response_timezone
             }
         )
@@ -473,7 +236,8 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
             "year_month",
             "year"
         ]
-
+        if cohort_interval is None or not cohort_interval:
+            raise ValueError("Parameter 'cohort_interval' is not defined.")
         if (not isinstance(cohort_interval, str)
                 or (cohort_interval not in cohort_intervals)):
             raise TuneSdkException(
@@ -496,7 +260,8 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
             "click",
             "install"
         ]
-
+        if cohort_type is None or not cohort_type:
+            raise ValueError("Parameter 'cohort_type' is not defined.")
         if (not isinstance(cohort_type, str) or
                 (cohort_type not in cohort_types)):
             raise TuneSdkException(
@@ -520,6 +285,8 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
             "cumulative"
         ]
 
+        if aggregation_type is None or not aggregation_type:
+            raise ValueError("Parameter 'aggregation_type' is not defined.")
         if (not isinstance(aggregation_type, str) or
                 (aggregation_type not in aggregation_types)):
             raise TuneSdkException(

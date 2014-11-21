@@ -2,8 +2,8 @@
 tune-api-python
 Tune API SDK for Python 2.7 and 3.0
 Incorporate Tune API services.
-Update:  2014-11-06
-Version: 0.9.14
+Update:  $Date: 2014-11-21 14:12:20 $
+Version: $Version: 0.9.16 $
 ****************************************
 
 =============
@@ -68,14 +68,6 @@ https://github.com/MobileAppTracking/tune-api-python/zipball/master:
 
 You may need to run the above commands with `sudo`.
 
-=============
-Code Samples
-=============
-
-=============
-Code Samples
-=============
-
 -------------
 SDK Examples
 -------------
@@ -100,7 +92,7 @@ Run the following script to view execution of all unittests:
 SDK Documentation -- Sphinx
 ---------------------------
 
-Run the following script to generate Sphnix-based documentation:
+The following will generate Sphinx documentation, see http://en.wikipedia.org/wiki/Sphinx_(documentation_generator), from Python codebase:
 
 ```
     $ make tests-installs
@@ -111,7 +103,7 @@ Run the following script to generate Sphnix-based documentation:
 SDK Documentation -- Doxygen
 ----------------------------
 
-Run the following script to generate Doxygen-based documentation:
+The following will generate Doxygen documentation, see http://en.wikipedia.org/wiki/Doxygen, from Python codebase:
 
 ```
     $ make tests-installs
