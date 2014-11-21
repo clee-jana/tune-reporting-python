@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-06 17:54:12 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  Retention Report
@@ -143,11 +143,12 @@ class ExampleReportsRetention(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
+
             print("= Count:")
             print(str(response.data))
 
@@ -169,11 +170,12 @@ class ExampleReportsRetention(object):
             print("= TuneManagementResponse:")
             print(str(response))
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
+
             print("= Count:")
             print(str(response.data))
 
@@ -186,10 +188,9 @@ class ExampleReportsRetention(object):
                 start_date,
                 end_date,
                 cohort_type="install",
-                aggregation_type="cumulative",
-                group="site_id,install_publisher_id",
-                fields=null,
                 cohort_interval="year_day",
+                group="site_id,install_publisher_id",
+                fields=None,
                 filter="(install_publisher_id > 0)",
                 limit=10,
                 page=None,
@@ -197,11 +198,11 @@ class ExampleReportsRetention(object):
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("====================================================================")
@@ -212,10 +213,9 @@ class ExampleReportsRetention(object):
                 start_date,
                 end_date,
                 cohort_type="install",
-                aggregation_type="cumulative",
-                group="site_id,install_publisher_id",
-                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
                 cohort_interval="year_day",
+                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,install_publisher_id",
                 filter="(install_publisher_id > 0)",
                 limit=10,
                 page=None,
@@ -238,19 +238,18 @@ class ExampleReportsRetention(object):
                 start_date,
                 end_date,
                 cohort_type="click",
-                aggregation_type="incremental",
-                group="site_id,install_publisher_id",
-                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
                 cohort_interval="year_day",
+                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,install_publisher_id",
                 filter="(install_publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             job_id = Retention.parse_response_report_job_id(response)
 

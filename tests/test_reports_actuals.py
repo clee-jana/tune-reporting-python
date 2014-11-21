@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -69,12 +69,12 @@ class TestReportsActuals(unittest.TestCase):
     def test_Fields(self):
         response = None
 
-        stats = Stats(
+        reports_actuals = Stats(
             self.__api_key,
             validate_fields=True
         )
 
-        response = stats.fields(TUNE_FIELDS_RECOMMENDED)
+        response = reports_actuals.fields(TUNE_FIELDS_RECOMMENDED)
 
         self.assertIsNotNone(response)
         self.assertGreater(len(response), 0)
@@ -83,16 +83,16 @@ class TestReportsActuals(unittest.TestCase):
         response = None
 
         try:
-            stats = Stats(
+            reports_actuals = Stats(
                 self.__api_key,
                 validate_fields=True
             )
 
-            response = stats.count(
+            response = reports_actuals.count(
                 self.__start_date,
                 self.__end_date,
-                filter="(publisher_id > 0)",
                 group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
             )
         except Exception as exc:
@@ -110,20 +110,20 @@ class TestReportsActuals(unittest.TestCase):
         response = None
 
         try:
-            stats = Stats(
+            reports_actuals = Stats(
                 self.__api_key,
                 validate_fields=True
             )
 
-            response = stats.find(
+            response = reports_actuals.find(
                 self.__start_date,
                 self.__end_date,
+                fields=reports_actuals.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,publisher_id",
                 filter="(publisher_id > 0)",
-                fields=stats.fields(TUNE_FIELDS_RECOMMENDED),
                 limit=10,
                 page=None,
                 sort={"site.name": "DESC"},
-                group="site_id,publisher_id",
                 timestamp="datehour",  # Set to breakdown stats by timestamp choices: hour, datehour, date, week, month
                 response_timezone="America/Los_Angeles"
             )
@@ -141,18 +141,18 @@ class TestReportsActuals(unittest.TestCase):
         response = None
 
         try:
-            stats = Stats(
+            reports_actuals = Stats(
                 self.__api_key,
                 validate_fields=True
             )
 
-            response = stats.export(
+            response = reports_actuals.export(
                 self.__start_date,
                 self.__end_date,
-                filter="(publisher_id > 0)",
-                fields=stats.fields(TUNE_FIELDS_RECOMMENDED),
-                format="csv",
+                fields=reports_actuals.fields(TUNE_FIELDS_RECOMMENDED),
                 group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
+                format="csv",
                 timestamp="datehour",
                 response_timezone="America/Los_Angeles"
             )

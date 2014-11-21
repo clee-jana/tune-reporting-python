@@ -36,14 +36,16 @@ Tune Mangement API '/advertiser/stats/retention/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune.management.shared import (
     ReportsInsightEndpointBase
 )
-
+from tune.management.shared.endpoints import (
+    TUNE_FIELDS_DEFAULT
+)
 
 #  /advertiser/stats/retention
 #  @example example_reports_retention.py
@@ -82,6 +84,204 @@ class Retention(ReportsInsightEndpointBase):
             "installs",
             "opens"
         ]
+
+    ## Finds all existing records that match filter criteria
+    #  and returns an array of found model data.
+    #
+    #  @param str start_date         YYYY-MM-DD HH:MM:SS
+    #  @param str end_date           YYYY-MM-DD HH:MM:SS
+    #  @param str cohort_type        Cohort types: click, install
+    #  @param str cohort_interval    Cohort intervals:
+    #                                   year_day, year_week, year_month, year
+    #  @param str fields             Present results using these endpoint's
+    #                                   fields.
+    #  @param str group              Group results using this endpoint's
+    #                                   fields.
+    #  @param str filter             Apply constraints endpoint_based upon
+    #                                   values associated with this endpoint's
+    #                                   fields.
+    #  @param int limit              Limit number of results, default 10,
+    #                                   0 shows all
+    #  @param int page               Pagination, default 1.
+    #  @param str sort               Sort results using this endpoint's
+    #                                   fields.
+    #                                   Directions: DESC, ASC
+    #  @param str format
+    #  @param str response_timezone  Setting expected timezone for
+    #                                   results, default is set in account.
+    #
+    #  @return object @see response.py
+    def find(self,
+             start_date,
+             end_date,
+             cohort_type,
+             cohort_interval,
+             fields,
+             group,
+             filter=None,
+             limit=None,
+             page=None,
+             sort=None,
+             format=None,
+             response_timezone=None):
+        """Finds all existing records that match filter criteria
+        and returns an array of found model data.
+
+            :param str    start_date:    YYYY-MM-DD HH:MM:SS
+            :param str    end_date:      YYYY-MM-DD HH:MM:SS
+            :param str    cohort_type:        Cohort types:
+                                                click, install
+            :param str    cohort_interval:    Cohort intervals:
+                                year_day, year_week, year_month, year
+            :param str    fields:         No value returns default fields,
+                                            "*" returns all available fields,
+                                            or provide specific fields.
+            :param str    group:           Group results using this endpoint's
+                                            fields.
+            :param str    filter:         Filter the results and apply
+                                            conditions that must be met for
+                                            records to be included in data.
+            :param int    limit:          Limit number of results, default
+                                            10.
+            :param int    page:           Pagination, default 1.
+            :param array  sort:           Sort by field name, ASC (default)
+                                            or DESC
+            :param str    timestamp:      Set to breakdown stats by
+                                            timestamp choices: hour, datehour,
+                                            date, week, month.
+            :param str  response_timezone:   Setting expected timezone
+                                        for data. Default is set by account.
+            :return: (TuneManagementResponse)
+        """
+
+        self._validate_datetime('start_date', start_date)
+        self._validate_datetime('end_date', end_date)
+
+        self._validate_cohort_type(cohort_type)
+        self._validate_cohort_interval(cohort_interval)
+
+        if group is None or not group:
+            raise ValueError("Parameter 'group' is not defined.")
+
+        group = self._validate_group(group)
+
+        if filter is not None:
+            filter = self._validate_filter(filter)
+
+        if fields is not None:
+            fields = self._validate_fields(fields)
+        else:
+            fields = self.fields(TUNE_FIELDS_DEFAULT)
+
+        if sort is not None:
+            sort_result = self._validate_sort(fields, sort)
+            sort = sort_result["sort"]
+            fields = sort_result["fields"]
+
+        if fields is not None:
+            fields = self._validate_fields(fields)
+
+        return self.call(
+            action="find",
+            query_string_dict={
+                'start_date': start_date,
+                'end_date': end_date,
+                'cohort_type': cohort_type,
+                'interval': cohort_interval,
+                'group': group,
+                'filter': filter,
+                'fields': fields,
+                'limit': limit,
+                'page': page,
+                'sort': sort,
+                'format': format,
+                'response_timezone': response_timezone
+            }
+        )
+
+    ## Places a job into a queue to generate a report that will contain
+    #  records that match provided filter criteria, and it returns a job
+    #  identifier to be provided to action /export/download.json to download
+    #  completed report.
+    #
+    #  @param str start_date         YYYY-MM-DD HH:MM:SS
+    #  @param str end_date           YYYY-MM-DD HH:MM:SS
+    #  @param str cohort_type        Cohort types: click, install
+    #  @param str cohort_interval    Cohort intervals:
+    #                                   year_day, year_week, year_month, year
+    #  @param str fields             Present results using these endpoint's
+    #                                   fields.
+    #  @param str group              Group results using this endpoint's
+    #                                   fields.
+    #  @param str filter             Apply constraints endpoint_based upon
+    #                                   values associated with this endpoint's
+    #                                   fields.
+    #  @param str response_timezone  Setting expected timezone for results,
+    #                                   default is set in account.
+    #
+    #  @return object @see response.py
+    #
+    def export(self,
+               start_date,
+               end_date,
+               cohort_type,
+               cohort_interval,
+               fields,
+               group,
+               filter=None,
+               response_timezone=None):
+        """Places a job into a queue to generate a report that will contain
+        records that match provided filter criteria, and it returns a job
+        identifier to be provided to action /export/download.json to download
+        completed report.
+
+            :param str    start_date:    YYYY-MM-DD HH:MM:SS
+            :param str    end_date:      YYYY-MM-DD HH:MM:SS
+            :param str    cohort_type:        Cohort types - click, install
+            :param str    cohort_interval:    Cohort intervals -
+                                        year_day, year_week, year_month, year
+            :param str    fields:        No value returns default fields,
+                                            "*" returns all available fields,
+                                            or provide specific fields.
+            :param str    group:          Group results using this endpoint's
+                                            fields.
+            :param str    filter:        Filter the results and apply
+                                            conditions that must be met for
+                                            records to be included in data.
+            :param str  response_timezone:   Setting expected timezone
+                                        for data. Default is set by account.
+            :return: (TuneManagementResponse)
+        """
+        self._validate_datetime('start_date', start_date)
+        self._validate_datetime('end_date', end_date)
+
+        self._validate_cohort_type(cohort_type)
+        self._validate_cohort_interval(cohort_interval)
+
+        if group is None or not group:
+            raise ValueError("Parameter 'group' is not defined.")
+        if fields is None or not fields:
+            raise ValueError("Parameter 'fields' is not defined.")
+
+        group = self._validate_group(group)
+        fields = self._validate_fields(fields)
+
+        if filter is not None:
+            filter = self._validate_filter(filter)
+
+        return self.call(
+            action="export",
+            query_string_dict={
+                'start_date': start_date,
+                'end_date': end_date,
+                'cohort_type': cohort_type,
+                'interval': cohort_interval,
+                'filter': filter,
+                'fields': fields,
+                'group': group,
+                'response_timezone': response_timezone
+            }
+        )
 
     ## Helper function for fetching report document given provided job
     #  identifier.

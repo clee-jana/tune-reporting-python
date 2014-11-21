@@ -36,7 +36,7 @@ Tune Mangement Items Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -116,12 +116,12 @@ class ItemsEndpointBase(EndpointBase):
     ## Finds all existing records that match filter criteria
     #  and returns an array of found model data.
     #
-    #  @param str filter             Filter the results and apply conditions
-    #                                   that must be met for records to be
-    #                                   included in data.
     #  @param str fields             No value returns default fields, "*"
     #                                   returns all available fields,
     #                                   or provide specific fields.
+    #  @param str filter             Filter the results and apply conditions
+    #                                   that must be met for records to be
+    #                                   included in data.
     #  @param int    limit              Limit number of results, default 10,
     #                                   0 shows all.
     #  @param int    page               Pagination, default 1.
@@ -131,20 +131,20 @@ class ItemsEndpointBase(EndpointBase):
     #                                   (ASC or DESC).
     #  @return object
     def find(self,
-             filter=None,
              fields=None,
+             filter=None,
              limit=None,
              page=None,
              sort=None):
         """Finds all existing records that match filter criteria
         and returns an array of found model data.
 
-            :param str    filter:         Filter the results and apply
-                                            conditions that must be met for
-                                            records to be included in data.
             :param str    fields:         No value returns default fields,
                                             "*" returns all available fields,
                                             or provide specific fields.
+            :param str    filter:         Filter the results and apply
+                                            conditions that must be met for
+                                            records to be included in data.
             :param int    limit:           Limit number of results, default
                                             10.
             :param int    page:           Pagination, default 1.
@@ -185,28 +185,28 @@ class ItemsEndpointBase(EndpointBase):
     #  identifier to be provided to action /export/download.json to download
     #  completed report.
     #
+    #  @param str fields             Provide fields if format is 'csv'.
     #  @param str filter             Filter the results and apply conditions
     #                                   that must be met for records to be
     #                                   included in data.
-    #  @param str fields             Provide fields if format is 'csv'.
     #  @param str format             Export format: csv, json
     #
     #  @return object
     def export(self,
-               filter=None,
                fields=None,
+               filter=None,
                format=None):
         """Places a job into a queue to generate a report that will contain
         records that match provided filter criteria, and it returns a job
         identifier to be provided to action /export/download.json to download
         completed report.
 
-            :param str    filter:     Filter the results and apply
-                                        conditions that must be met for
-                                        records to be included in data.
             :param str    fields:     No value returns default fields,
                                         "*" returns all available fields,
                                         or provide specific fields.
+            :param str    filter:     Filter the results and apply
+                                        conditions that must be met for
+                                        records to be included in data.
             :param str    format:     Export format for downloaded report:
                                         choices: json, csv.
             :return: (TuneManagementResponse)

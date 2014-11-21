@@ -36,7 +36,7 @@ Tune Mangement Logs Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -112,8 +112,8 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
     #                                   for records to be included in data.
     #  @param str response_timezone  Setting expected time for data
     def count(self,
-              start_date=None,
-              end_date=None,
+              start_date,
+              end_date,
               filter=None,
               response_timezone=None):
         """Counts all existing records that match filter criteria
@@ -128,10 +128,8 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
                                         for data. Default is set by account.
             :return: (TuneManagementResponse)
         """
-        if start_date is not None and isinstance(start_date, str):
-            self._validate_datetime('start_date', start_date)
-        if end_date is not None and isinstance(end_date, str):
-            self._validate_datetime('end_date', end_date)
+        self._validate_datetime('start_date', start_date)
+        self._validate_datetime('end_date', end_date)
 
         if filter is not None and isinstance(filter, str):
             filter = self._validate_filter(filter)
@@ -170,10 +168,10 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
     #                                       results, default is set in account.
     #  @return object
     def find(self,
-             start_date=None,
-             end_date=None,
-             filter=None,
+             start_date,
+             end_date,
              fields=None,
+             filter=None,
              limit=None,
              page=None,
              sort=None,
@@ -201,10 +199,8 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
                                         for data. Default is set by account.
             :return: (TuneManagementResponse)
         """
-        if start_date is not None and isinstance(start_date, str):
-            self._validate_datetime('start_date', start_date)
-        if end_date is not None and isinstance(end_date, str):
-            self._validate_datetime('end_date', end_date)
+        self._validate_datetime('start_date', start_date)
+        self._validate_datetime('end_date', end_date)
 
         if filter is not None:
             filter = self._validate_filter(filter)
@@ -254,10 +250,10 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
     #
     #  @return object
     def export(self,
-               start_date=None,
-               end_date=None,
-               filter=None,
+               start_date,
+               end_date,
                fields=None,
+               filter=None,
                format=None,
                response_timezone=None):
         """Places a job into a queue to generate a report that will contain
@@ -279,10 +275,9 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
                                         for data. Default is set by account.
             :return: (TuneManagementResponse)
         """
-        if start_date is not None and isinstance(start_date, str):
-            self._validate_datetime('start_date', start_date)
-        if end_date is not None and isinstance(end_date, str):
-            self._validate_datetime('end_date', end_date)
+        self._validate_datetime('start_date', start_date)
+        self._validate_datetime('end_date', end_date)
+
         if fields is not None:
             fields = self._validate_fields(fields)
         if filter is not None:

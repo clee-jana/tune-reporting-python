@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -70,11 +70,11 @@ class TestReportsCohort(unittest.TestCase):
     def test_Fields(self):
         response = None
 
-        ltv = LTV(
+        reports_cohort = LTV(
             self.__api_key,
             validate_fields=True
         )
-        response = ltv.fields(TUNE_FIELDS_RECOMMENDED)
+        response = reports_cohort.fields(TUNE_FIELDS_RECOMMENDED)
         self.assertIsNotNone(response)
         self.assertGreater(len(response), 0)
 
@@ -82,12 +82,12 @@ class TestReportsCohort(unittest.TestCase):
         response = None
 
         try:
-            ltv = LTV(
+            reports_cohort = LTV(
                 self.__api_key,
                 validate_fields=True
             )
 
-            response = ltv.count(
+            response = reports_cohort.count(
                 self.__start_date,
                 self.__end_date,
                 cohort_type="click",
@@ -110,19 +110,19 @@ class TestReportsCohort(unittest.TestCase):
         response = None
 
         try:
-            ltv = LTV(
+            reports_cohort = LTV(
                 self.__api_key,
                 validate_fields=True
             )
 
-            response = ltv.find(
+            response = reports_cohort.find(
                 self.__start_date,
                 self.__end_date,
                 cohort_type="click",
-                aggregation_type="cumulative",
-                group="site_id,publisher_id",
-                fields=ltv.fields(TUNE_FIELDS_RECOMMENDED),
                 cohort_interval="year_day",
+                aggregation_type="cumulative",
+                fields=reports_cohort.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,publisher_id",
                 filter="(publisher_id > 0)",
                 limit=10,
                 page=None,
@@ -143,19 +143,19 @@ class TestReportsCohort(unittest.TestCase):
         response = None
 
         try:
-            ltv = LTV(
+            reports_cohort = LTV(
                 self.__api_key,
                 validate_fields=True
             )
 
-            response = ltv.export(
+            response = reports_cohort.export(
                 self.__start_date,
                 self.__end_date,
                 cohort_type="click",
-                aggregation_type="cumulative",
-                group="site_id,publisher_id",
-                fields=ltv.fields(TUNE_FIELDS_RECOMMENDED),
                 cohort_interval="year_day",
+                aggregation_type="cumulative",
+                fields=reports_cohort.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,publisher_id",
                 filter="(publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
             )

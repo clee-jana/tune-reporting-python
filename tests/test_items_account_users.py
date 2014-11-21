@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  test_items_account_users.py
+#  test_items_account_account_users.py
 #
 #  Copyright (c) 2014 Tune, Inc
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -61,12 +61,12 @@ class TestItemsAccountUsers(unittest.TestCase):
     def test_Fields(self):
         response = None
 
-        users = Users(
+        account_users = Users(
             self.__api_key,
             validate_fields=True
         )
 
-        response = users.fields()
+        response = account_users.fields()
 
         self.assertIsNotNone(response)
         self.assertGreater(len(response), 0)
@@ -75,12 +75,12 @@ class TestItemsAccountUsers(unittest.TestCase):
         response = None
 
         try:
-            users = Users(
+            account_users = Users(
                 self.__api_key,
                 validate_fields=True
             )
 
-            response = users.count(
+            response = account_users.count(
             )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))
@@ -97,14 +97,14 @@ class TestItemsAccountUsers(unittest.TestCase):
         response = None
 
         try:
-            users = Users(
+            account_users = Users(
                 self.__api_key,
                 validate_fields=True
             )
 
-            response = users.find(
+            response = account_users.find(
+                fields=account_users.fields(),
                 filter=None,
-                fields=users.fields(),
                 limit=10,
                 page=None
             )
@@ -122,14 +122,14 @@ class TestItemsAccountUsers(unittest.TestCase):
         response = None
 
         try:
-            users = Users(
+            account_users = Users(
                 self.__api_key,
                 validate_fields=True
             )
 
-            response = users.export(
+            response = account_users.export(
+                fields=account_users.fields(),
                 filter=None,
-                fields=users.fields(),
                 format="csv"
             )
         except Exception as exc:

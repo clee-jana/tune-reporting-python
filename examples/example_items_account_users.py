@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-06 17:54:12 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #
@@ -86,14 +86,14 @@ class ExampleItemsAccountUsers(object):
         print("==============================================================")
 
         try:
-            users = Users(api_key, validate_fields=True)
+            account_users = Users(api_key, validate_fields=True)
 
             print("")
             print("======================================================")
             print(" Fields of Advertiser Account Users records.            ")
             print("======================================================")
 
-            fields = users.fields()
+            fields = account_users.fields()
             for field in fields:
                 print(str(field))
 
@@ -102,15 +102,16 @@ class ExampleItemsAccountUsers(object):
             print(" Count Account Users records.                ")
             print("======================================================")
 
-            response = users.count(
+            response = account_users.count(
                 filter=None
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
+
             print("= Count:")
             print(str(response.data))
 
@@ -119,36 +120,36 @@ class ExampleItemsAccountUsers(object):
             print(" Find Account Users records.                 ")
             print("======================================================")
 
-            response = users.find(
+            response = account_users.find(
+                fields=account_users.fields(),
                 filter=None,
-                fields=users.fields(),
                 limit=5,
                 page=None,
                 sort={"created": "DESC"}
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("==========================================================")
             print(" Account Users CSV report for export.            ")
             print("==========================================================")
 
-            response = users.export(
+            response = account_users.export(
+                fields=account_users.fields(),
                 filter=None,
-                fields=users.fields(),
                 format="csv"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             job_id = Users.parse_response_report_job_id(response)
 
@@ -159,7 +160,7 @@ class ExampleItemsAccountUsers(object):
             print(" Fetching Account Users CSV report                      ")
             print("=================================================================")
 
-            export_fetch_response = users.fetch(
+            export_fetch_response = account_users.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
@@ -183,17 +184,17 @@ class ExampleItemsAccountUsers(object):
             print(" Account Users JSON report for export.            ")
             print("===========================================================")
 
-            response = users.export(
+            response = account_users.export(
+                fields=account_users.fields(),
                 filter=None,
-                fields=users.fields(),
                 format="json"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             job_id = Users.parse_response_report_job_id(response)
 
@@ -204,7 +205,7 @@ class ExampleItemsAccountUsers(object):
             print(" Fetching Account Users JSON report.           ")
             print("========================================================")
 
-            export_fetch_response = users.fetch(
+            export_fetch_response = account_users.fetch(
                 job_id,
                 verbose=True,
                 sleep=10

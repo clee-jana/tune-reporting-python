@@ -36,7 +36,7 @@ Tune Mangement Actuals Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -126,9 +126,6 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
             :param str    filter:         Filter the results and apply
                                             conditions that must be met for
                                             records to be included in data.
-            :param str    fields:         No value returns default fields,
-                                            "*" returns all available fields,
-                                            or provide specific fields.
             :param str    response_timezone:   Setting expected timezone
                                         for data. Default is set by account.
             :return: (TuneManagementResponse)
@@ -160,13 +157,13 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
     #
     #  @param str    start_date          YYYY-MM-DD HH:MM:SS
     #  @param str    end_date            YYYY-MM-DD HH:MM:SS
+    #  @param str    fields              No value returns default fields,
+    #                                       "*" returns all available fields,
+    #                                       or provide specific fields.
     #  @param str    group               Group by specific fields.
     #  @param str    filter              Filter the results and apply
     #                                       conditions that must be met for
     #                                       records to be included in data.
-    #  @param str    fields              No value returns default fields,
-    #                                       "*" returns all available fields,
-    #                                       or provide specific fields.
     #  @param integer   limit               Limit number of results, default
     #                                       10.
     #  @param integer   page                Pagination, default 1.
@@ -180,11 +177,11 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
     #
     #  @return object
     def find(self,
-             start_date=None,
-             end_date=None,
+             start_date,
+             end_date,
+             fields=None,
              group=None,
              filter=None,
-             fields=None,
              limit=None,
              page=None,
              sort=None,
@@ -195,13 +192,13 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
 
             :param str    start_date:     YYYY-MM-DD HH:MM:SS
             :param str    end_date:       YYYY-MM-DD HH:MM:SS
+            :param str    fields:         No value returns default fields,
+                                            "*" returns all available fields,
+                                            or provide specific fields.
             :param str    group:          Group by one of more field names.
             :param str    filter:         Filter the results and apply
                                             conditions that must be met for
                                             records to be included in data.
-            :param str    fields:         No value returns default fields,
-                                            "*" returns all available fields,
-                                            or provide specific fields.
             :param int   limit:           Limit number of results, default
                                             10.
             :param int    page:           Pagination, default 1.
@@ -214,10 +211,8 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
                                     for data. Default is set by account.
             :return: (TuneManagementResponse)
         """
-        if start_date is not None and isinstance(start_date, str):
-            self._validate_datetime('start_date', start_date)
-        if end_date is not None and isinstance(end_date, str):
-            self._validate_datetime('end_date', end_date)
+        self._validate_datetime('start_date', start_date)
+        self._validate_datetime('end_date', end_date)
 
         if group is not None:
             group = self._validate_group(group)
@@ -263,13 +258,13 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
     #
     #  @param str start_date            YYYY-MM-DD HH:MM:SS
     #  @param str end_date              YYYY-MM-DD HH:MM:SS
-    #  @param str filter                Filter the results and apply conditions
-    #                                   that must be met for records to be
-    #                                   included in data.
     #  @param str fields                No value returns default fields, "# "
     #                                   returns all available fields, or
     #                                   provide specific fields.
     #  @param str    group              Group by specific fields.
+    #  @param str filter                Filter the results and apply conditions
+    #                                   that must be met for records to be
+    #                                   included in data.
     #  @param str timestamp             Set to breakdown stats by timestamp
     #                                   choices:
     #                                   hour, datehour, date, week, month.
@@ -280,11 +275,11 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
     #
     #  @return object
     def export(self,
-               start_date=None,
-               end_date=None,
-               filter=None,
+               start_date,
+               end_date,
                fields=None,
                group=None,
+               filter=None,
                timestamp=None,
                format=None,
                response_timezone=None):
@@ -295,13 +290,13 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
 
             :param str start_date:    YYYY-MM-DD HH:MM:SS
             :param str end_date:      YYYY-MM-DD HH:MM:SS
-            :param str filter:        Filter the results and apply conditions
-                                        that must be met for records to be
-                                        included in data.
             :param str fields:        No value returns default fields, "# "
                                         returns all available fields, or
                                         provide specific fields.
             :param str    group:      Group by one of more field names.
+            :param str filter:        Filter the results and apply conditions
+                                        that must be met for records to be
+                                        included in data.
             :param str timestamp:     Set to breakdown stats by timestamp
                 choices: hour, datehour, date, week, month.
             :param str format:       Export format for downloaded report:
@@ -310,10 +305,8 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
                                                 Default is set by account.
             :return: (TuneManagementResponse)
         """
-        if start_date is not None and isinstance(start_date, str):
-            self._validate_datetime('start_date', start_date)
-        if end_date is not None and isinstance(end_date, str):
-            self._validate_datetime('end_date', end_date)
+        self._validate_datetime('start_date', start_date)
+        self._validate_datetime('end_date', end_date)
 
         if group is not None:
             group = self._validate_group(group)

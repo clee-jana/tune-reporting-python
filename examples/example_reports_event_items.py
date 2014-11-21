@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #
@@ -115,11 +115,12 @@ class ExampleReportsEventItems(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
+
             print("= Count:")
             print(str(response.data))
 
@@ -131,19 +132,19 @@ class ExampleReportsEventItems(object):
             response = event_items.find(
                 start_date,
                 end_date,
-                filter=None,
                 fields=event_items.fields(TUNE_FIELDS_RECOMMENDED),
+                filter=None,
                 limit=5,
                 page=None,
                 sort={"created": "DESC"},
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("==========================================================")
@@ -153,17 +154,17 @@ class ExampleReportsEventItems(object):
             response = event_items.export(
                 start_date,
                 end_date,
-                filter=None,
                 fields=event_items.fields(TUNE_FIELDS_RECOMMENDED),
+                filter=None,
                 format="csv",
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             job_id = EventItems.parse_response_report_job_id(response)
 
@@ -201,17 +202,17 @@ class ExampleReportsEventItems(object):
             response = event_items.export(
                 start_date,
                 end_date,
-                filter=None,
                 fields=event_items.fields(TUNE_FIELDS_RECOMMENDED),
+                filter=None,
                 format="json",
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             job_id = EventItems.parse_response_report_job_id(response)
 

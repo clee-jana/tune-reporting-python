@@ -29,7 +29,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-06 17:54:12 $
+#  @version   $Date: 2014-11-19 01:44:48 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -63,6 +63,15 @@ if __name__ == '__main__':
         example = ExampleItemsAccountUsers()
         example.run(api_key)
 
+        example = ExampleReportsActuals()
+        example.run(api_key)
+
+        example = ExampleReportsCohort()
+        example.run(api_key)
+
+        example = ExampleReportsRetention()
+        example.run(api_key)
+
         example = ExampleReportsClicks()
         example.run(api_key)
 
@@ -76,15 +85,6 @@ if __name__ == '__main__':
         example.run(api_key)
 
         example = ExampleReportsPostbacks()
-        example.run(api_key)
-
-        example = ExampleReportsActuals()
-        example.run(api_key)
-
-        example = ExampleReportsCohort()
-        example.run(api_key)
-
-        example = ExampleReportsRetention()
         example.run(api_key)
 
     except Exception as exc:

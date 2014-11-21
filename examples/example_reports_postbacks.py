@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  You can use the Logs report in the same way as the Actuals reports, but
@@ -114,11 +114,12 @@ class ExampleReportsPostbacks(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
+
             print("= Count:")
             print(str(response.data))
 
@@ -130,19 +131,19 @@ class ExampleReportsPostbacks(object):
             response = postbacks.find(
                 start_date,
                 end_date,
-                filter="(status = 'approved')",
                 fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
+                filter=None,
                 limit=5,
                 page=None,
                 sort={"created": "DESC"},
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("==========================================================")
@@ -152,17 +153,17 @@ class ExampleReportsPostbacks(object):
             response = postbacks.export(
                 start_date,
                 end_date,
-                filter="(status = 'approved')",
                 fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
+                filter=None,
                 format="csv",
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             job_id = Postbacks.parse_response_report_job_id(response)
 
@@ -200,8 +201,8 @@ class ExampleReportsPostbacks(object):
             response = postbacks.export(
                 start_date,
                 end_date,
-                filter="(status = 'approved')",
                 fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
+                filter=None,
                 format="json",
                 response_timezone="America/Los_Angeles"
             )

@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -118,10 +118,9 @@ class TestReportsRetention(unittest.TestCase):
                 self.__start_date,
                 self.__end_date,
                 cohort_type="install",
-                aggregation_type="cumulative",
-                group="site_id,install_publisher_id",
-                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
                 cohort_interval="year_day",
+                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,install_publisher_id",
                 filter="(install_publisher_id > 0)",
                 limit=5,
                 page=None,
@@ -151,10 +150,9 @@ class TestReportsRetention(unittest.TestCase):
                 self.__start_date,
                 self.__end_date,
                 cohort_type="install",
-                aggregation_type="cumulative",
-                group="site_id,install_publisher_id",
-                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
                 cohort_interval="year_day",
+                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,install_publisher_id",
                 filter="(install_publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
             )

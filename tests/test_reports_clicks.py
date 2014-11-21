@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -113,8 +113,8 @@ class TestReportsClicks(unittest.TestCase):
         response = clicks.find(
             self.__start_date,
             self.__end_date,
-            filter=None,
             fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
+            filter=None,
             limit=5,
             page=None,
             sort={"created": "DESC"},
@@ -138,8 +138,8 @@ class TestReportsClicks(unittest.TestCase):
             clicks.find(
                 self.__start_date,
                 self.__end_date,
-                filter=None,
                 fields="foo",
+                filter=None,
                 limit=5,
                 page=None,
                 sort={"created": "DESC"},
@@ -160,8 +160,8 @@ class TestReportsClicks(unittest.TestCase):
             clicks.find(
                 self.__start_date,
                 self.__end_date,
-                filter="(foo > 0)",
                 fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
+                filter="(foo > 0)",
                 limit=5,
                 page=None,
                 sort={"created": "DESC"},
@@ -184,8 +184,8 @@ class TestReportsClicks(unittest.TestCase):
             response = clicks.export(
                 self.__start_date,
                 self.__end_date,
-                filter=None,
                 fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
+                filter=None,
                 format="csv",
                 response_timezone="America/Los_Angeles"
             )

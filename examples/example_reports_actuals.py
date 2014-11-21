@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-11-19 07:02:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  The Actuals report gives you quick insight into the performance of your apps
@@ -89,14 +89,14 @@ class ExampleReportsActuals(object):
             start_date = "{} 00:00:00".format(week_ago)
             end_date = "{} 23:59:59".format(yesterday)
 
-            stats = Stats(api_key, validate_fields=True)
+            reports_actuals = Stats(api_key, validate_fields=True)
 
             print("")
             print("======================================================")
             print(" Fields of Advertiser Actuals records - Default.      ")
             print("======================================================")
 
-            response = stats.fields(TUNE_FIELDS_DEFAULT)
+            response = reports_actuals.fields(TUNE_FIELDS_DEFAULT)
             for field in response:
                 print(str(field))
 
@@ -105,7 +105,7 @@ class ExampleReportsActuals(object):
             print(" Fields of Advertiser Actuals records - Recommended.  ")
             print("======================================================")
 
-            response = stats.fields(TUNE_FIELDS_RECOMMENDED)
+            response = reports_actuals.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
@@ -114,7 +114,7 @@ class ExampleReportsActuals(object):
             print(" Count Advertiser Actuals records.           ")
             print("======================================================")
 
-            response = stats.count(
+            response = reports_actuals.count(
                 start_date,
                 end_date,
                 filter="(publisher_id > 0)",
@@ -122,11 +122,12 @@ class ExampleReportsActuals(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
+
             print("= Count:")
             print(str(response.data))
 
@@ -135,62 +136,62 @@ class ExampleReportsActuals(object):
             print(" Find Advertiser Actuals records - Default fields.    ")
             print("======================================================")
 
-            response = stats.find(
+            response = reports_actuals.find(
                 start_date,
                 end_date,
-                filter="(publisher_id > 0)",
                 fields=None,
+                group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
                 limit=5,
                 page=None,
                 sort={"installs": "DESC"},
-                group="site_id,publisher_id",
                 timestamp="datehour",
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("======================================================")
             print(" Find Advertiser Actuals records - Recommended fields.")
             print("======================================================")
 
-            response = stats.find(
+            response = reports_actuals.find(
                 start_date,
                 end_date,
+                fields=reports_actuals.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,publisher_id",
                 filter="(publisher_id > 0)",
-                fields=stats.fields(TUNE_FIELDS_RECOMMENDED),
                 limit=5,
                 page=None,
                 sort={"installs": "DESC"},
-                group="site_id,publisher_id",
                 timestamp="datehour",
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("==========================================================")
             print(" Advertiser Actuals CSV report for export.       ")
             print("==========================================================")
 
-            response = stats.export(
+            response = reports_actuals.export(
                 start_date,
                 end_date,
-                filter="(publisher_id > 0)",
-                fields=stats.fields(TUNE_FIELDS_RECOMMENDED),
-                format="csv",
+                fields=reports_actuals.fields(TUNE_FIELDS_RECOMMENDED),
                 group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
                 timestamp="datehour",
+                format="csv",
                 response_timezone="America/Los_Angeles"
             )
 
@@ -209,7 +210,7 @@ class ExampleReportsActuals(object):
             print(" Fetching Advertiser Actuals CSV report                 ")
             print("=================================================================")
 
-            export_fetch_response = stats.fetch(
+            export_fetch_response = reports_actuals.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
@@ -233,14 +234,14 @@ class ExampleReportsActuals(object):
             print(" Advertiser Actuals JSON report for export.       ")
             print("===========================================================")
 
-            response = stats.export(
+            response = reports_actuals.export(
                 start_date,
                 end_date,
-                filter="(publisher_id > 0)",
-                fields=stats.fields(TUNE_FIELDS_RECOMMENDED),
-                format="json",
+                fields=reports_actuals.fields(TUNE_FIELDS_RECOMMENDED),
                 group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
                 timestamp="datehour",
+                format="json",
                 response_timezone="America/Los_Angeles"
             )
 
@@ -259,7 +260,7 @@ class ExampleReportsActuals(object):
             print(" Fetching Advertiser Actuals JSON report.      ")
             print("========================================================")
 
-            export_fetch_response = stats.fetch(
+            export_fetch_response = reports_actuals.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
