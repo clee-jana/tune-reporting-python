@@ -1,13 +1,19 @@
 <h2>tune-api-python</h2>
 <h2>Tune API SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate Tune API services.</h3>
-<h4>Update:  $Date: 2014-11-21 14:12:20 $</h4>
+<h4>Update:  $Date: 2014-11-21 17:34:43 $</h4>
 <h4>Version: $Version: 0.9.16 $</h4>
 ===
 
 ### Overview
 
-The utility focus of the SDKs is upon the Advertiser Reporting endpoints. Even though the the breadth of the Management API goes beyond just reports, it is these endpoints that our customers primarily access. The second goal of the SDKs is to assure that our customers’ developers are using best practices in gathering reports in the most optimal way.
+Python helper library for Tune API services.
+
+The utility focus of this SDK is upon the Advertiser Reporting endpoints.
+
+Even though the the breadth of the Management API goes beyond just reports, it is these endpoints that our customers primarily access.
+
+The second goal of the SDKs is to assure that our customers’ developers are using best practices in gathering reports in the most optimal way.
 
 ### Documentation
 
