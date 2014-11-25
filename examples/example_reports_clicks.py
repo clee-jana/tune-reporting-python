@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-19 07:02:45 $
+#  @version   $Date: 2014-11-24 16:52:54 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #
@@ -125,8 +125,8 @@ class ExampleReportsClicks(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
@@ -149,12 +149,11 @@ class ExampleReportsClicks(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
-
 
             print("")
             print("==========================================================")
@@ -172,11 +171,11 @@ class ExampleReportsClicks(object):
                 response_timezone="America/Los_Angeles"
             )
 
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
             print("= TuneManagementResponse:")
             print(str(response))
-
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
             print("")
             print("==========================================================")
@@ -192,8 +191,8 @@ class ExampleReportsClicks(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))
@@ -240,8 +239,8 @@ class ExampleReportsClicks(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            if response.http_code != 200:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
             print("= TuneManagementResponse:")
             print(str(response))

@@ -18,4 +18,5 @@ include docs/favicon.ico
 include docs/Doxyfile
 include docs/config.dox
 recursive-include docs/doxypy-0.4.2 *.*
-recursive-include doc/sphinx *.*
+recursive-include docs/sphinx *.*
+

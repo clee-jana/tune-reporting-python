@@ -36,7 +36,7 @@ Tune Reports Export Status Worker
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-19 21:21:08 $
+#  @version   $Date: 2014-11-24 16:52:54 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -202,7 +202,7 @@ class ReportExportWorker(object):
                             str(response)
                         )
                     )
-                
+
                 # Failed to get status.
                 if "status" not in response.data:
                     raise TuneSdkException(
@@ -210,7 +210,7 @@ class ReportExportWorker(object):
                             str(response)
                         )
                     )
-                
+
                 # Get status.
                 status = response.data["status"]
                 if status == "complete" or status == "fail":

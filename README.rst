@@ -4,13 +4,15 @@ Tune API SDK for Python documentation
     :package: `tune-api-python <https://github.com/MobileAppTracking/tune-api-python>`_
     :label: Tune API SDK for Python 2.7 and 3.0
     :purpose: Incorporate Tune API services.
-    :update:  $Date: 2014-11-21 14:12:20 $
+    :update:  $Date: 2014-11-21 17:34:43 $
     :version: $Version: 0.9.16 $
 
 Overview
 ####################
 
-The utility focus of the SDKs is upon the Advertiser Reporting endpoints.
+Python helper library for Tune API services.
+
+The utility focus of this SDK is upon the Advertiser Reporting endpoints.
 
 Even though the the breadth of the Management API goes beyond just reports, it is these endpoints that our customers primarily access.
 
