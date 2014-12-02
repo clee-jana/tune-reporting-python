@@ -1,0 +1,15 @@
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+install:
+  - pip install . --use-mirrors
+  - pip install -r requirements.txt --use-mirrors
+  - pip install -r tests/requirements.txt --use-mirrors
+script: 
+  - flake8 --ignore=F401,E265,E129 tune
+  - flake8 --ignore=E123,E126,E128,E265,E501 tests
+  - make api_key=b951b30cc17b6a77dad4f1ef1471bd5d tests

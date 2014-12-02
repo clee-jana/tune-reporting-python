@@ -47,6 +47,7 @@ from tune.management.shared.endpoints import (
     TUNE_FIELDS_DEFAULT
 )
 
+
 #  /advertiser/stats/ltv
 #  @example example_reports_cohort.py
 class LTV(ReportsInsightEndpointBase):

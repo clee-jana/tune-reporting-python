@@ -36,7 +36,7 @@ Tune CSV Report Reader
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-12-02 12:30:00 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -99,10 +99,10 @@ class ReportReaderCSV(ReportReaderBase):
         print("------------------")
         i = 0
         while(True):
-            row = self.next();
+            row = self.next()
             if row is None:
-                break;
-            i = i + 1;
+                break
+            i = i + 1
             print("{}. {}".format(i, str(row)))
             if (limit > 0) and (i >= limit):
                 break
