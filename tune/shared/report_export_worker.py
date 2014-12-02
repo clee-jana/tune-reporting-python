@@ -36,7 +36,7 @@ Tune Reports Export Status Worker
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-24 16:52:54 $
+#  @version   $Date: 2014-12-02 12:30:00 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -192,13 +192,17 @@ class ReportExportWorker(object):
                 # Failed to get successful service response.
                 if response.http_code != 200 or response.errors:
                     raise TuneServiceException(
-                        "Service failed: {}: {}".format(response.http_code, str(response))
+                        "Service failed: {}: {}".format(
+                            response.http_code,
+                            str(response)
+                        )
                     )
 
                 # Failed to get data.
                 if not response.data:
                     raise TuneSdkException(
-                        "No response data returned from export, response: {}".format(
+                        "No response data returned from export,"
+                        "response: {}".format(
                             str(response)
                         )
                     )
@@ -206,7 +210,8 @@ class ReportExportWorker(object):
                 # Failed to get status.
                 if "status" not in response.data:
                     raise TuneSdkException(
-                        "Export data does not contain report 'status', response: {}".format(
+                        "Export data does not contain report 'status',"
+                        "response: {}".format(
                             str(response)
                         )
                     )

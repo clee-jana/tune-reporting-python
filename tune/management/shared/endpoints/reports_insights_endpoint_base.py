@@ -36,7 +36,7 @@ Tune Mangement Insights Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-19 07:02:45 $
+#  @version   $Date: 2014-12-02 12:30:00 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -51,6 +51,7 @@ from tune.shared import (
 from tune.management.shared.endpoints import (
     TUNE_FIELDS_DEFAULT
 )
+
 
 ## Base class for handling Tune Management API Insight stats reports.
 #
@@ -128,7 +129,8 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
             :param str    end_date:       YYYY-MM-DD HH:MM:SS
             :param str    cohort_type:    Cohort types - click, install.
             :param str    cohort_interval:  Cohort intervals -
-                                            year_day, year_week, year_month, year.
+                                            year_day, year_week,
+                                            year_month, year.
             :param str    group:          Group results using this endpoint's
                                             fields.
             :param str    filter:         Filter the results and apply
@@ -142,7 +144,6 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
         self._validate_datetime('end_date', end_date)
 
         self._validate_cohort_type(cohort_type)
-
 
         if group is None or not group:
             raise ValueError("Parameter 'group' is not defined.")

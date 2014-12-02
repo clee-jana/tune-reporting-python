@@ -36,7 +36,7 @@ Tune UTF-8 Recorder
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-12-02 12:30:00 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -44,6 +44,8 @@ import csv
 import codecs
 
 
+#  Iterator that reads an encoded stream and reencodes the input to UTF-8
+#
 class UTF8Recoder:
     """
     Iterator that reads an encoded stream and reencodes the input to UTF-8

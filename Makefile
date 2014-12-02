@@ -26,12 +26,12 @@
 # author    Jeff Tanner <jefft@tune.com>
 # copyright 2014 Tune (http://www.tune.com)
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# update    $Date: 2014-11-21 14:12:20 $
+# update    $Date: 2014-12-02 12:30:00 $
 # version   $Version: 0.9.16 $
 # link      https://developers.mobileapptracking.com
 #
 
-.PHONY: clean venv install analysis examples tests tests-install build dist register docs-sphinx docs-doxygen
+.PHONY: clean venv install analysis examples tests tests-travis-ci tests-install build dist register docs-sphinx docs-doxygen
 
 venv:
 	virtualenv venv
@@ -67,6 +67,11 @@ register:
 	sudo python setup.py register
 
 tests:
+	python ./tests/tune_tests.py $(api_key)
+	
+tests-travis-ci:
+	flake8 --ignore=F401,E265,E129 tune
+	flake8 --ignore=E123,E126,E128,E265,E501 tests
 	python ./tests/tune_tests.py $(api_key)
 
 examples:

@@ -36,7 +36,7 @@ Tune JSON Report Reader
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
+#  @version   $Date: 2014-12-02 12:30:00 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -48,6 +48,7 @@ from .report_reader_base import (
 from tune.management.shared.service import (
     TuneManagementProxy
 )
+
 
 ## Helper class for reading reading remote JSON file
 #

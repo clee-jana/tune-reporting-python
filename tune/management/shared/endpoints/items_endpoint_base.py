@@ -36,7 +36,7 @@ Tune Mangement Items Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-19 07:02:45 $
+#  @version   $Date: 2014-12-02 12:30:00 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -45,6 +45,9 @@ from .endpoint_base import (
 )
 from tune.management.shared.service import (
     TuneManagementClient
+)
+from tune.management.shared.endpoints import (
+    TUNE_FIELDS_DEFAULT
 )
 
 

@@ -36,7 +36,7 @@ Tune Mangement API '/advertiser/stats/retention/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-19 07:02:45 $
+#  @version   $Date: 2014-12-02 12:30:00 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -46,6 +46,7 @@ from tune.management.shared import (
 from tune.management.shared.endpoints import (
     TUNE_FIELDS_DEFAULT
 )
+
 
 #  /advertiser/stats/retention
 #  @example example_reports_retention.py

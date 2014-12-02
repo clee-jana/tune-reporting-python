@@ -34,7 +34,7 @@ Tune Mangement Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-19 07:02:45 $
+#  @version   $Date: 2014-12-02 12:30:00 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -57,13 +57,13 @@ from tune.shared.report_export_worker import (
     ReportExportWorker
 )
 
-TUNE_FIELDS_UNDEFINED     = 0
-TUNE_FIELDS_ALL           = 1
-TUNE_FIELDS_ENDPOINT      = 2
-TUNE_FIELDS_DEFAULT       = 4
-TUNE_FIELDS_RELATED       = 8
-TUNE_FIELDS_MINIMAL       = 16
-TUNE_FIELDS_RECOMMENDED   = 32
+TUNE_FIELDS_UNDEFINED = 0
+TUNE_FIELDS_ALL = 1
+TUNE_FIELDS_ENDPOINT = 2
+TUNE_FIELDS_DEFAULT = 4
+TUNE_FIELDS_RELATED = 8
+TUNE_FIELDS_MINIMAL = 16
+TUNE_FIELDS_RECOMMENDED = 32
 
 
 ## Base components for every Tune Management API request.
@@ -231,7 +231,7 @@ class EndpointBase(object):
 
         if ((enum_fields_selection & TUNE_FIELDS_ALL) or
                 (not (enum_fields_selection & TUNE_FIELDS_DEFAULT) and
-                (enum_fields_selection & TUNE_FIELDS_RELATED))):
+                    (enum_fields_selection & TUNE_FIELDS_RELATED))):
             fields = self.__fields.keys()
             fields.sort()
             return fields
@@ -266,7 +266,6 @@ class EndpointBase(object):
                and not (enum_fields_selection & TUNE_FIELDS_MINIMAL) \
                and field_info["related"]:
                 continue
-
 
             if (enum_fields_selection & TUNE_FIELDS_DEFAULT) \
                and field_info["default"]:
