@@ -1,15 +1,13 @@
-[![Build Status](https://secure.travis-ci.org/MobileAppTracking/tune-api-python.png?branch=master)](http://travis-ci.org/MobileAppTracking/tune-api-python)
-
-<h2>tune-api-python</h2>
-<h2>Tune API SDK for Python 2.7 and 3.0</h2>
-<h3>Incorporate Tune API services.</h3>
-<h4>Update:  $Date: 2014-12-02 12:30:00 $</h4>
-<h4>Version: $Version: 0.9.16 $</h4>
+<h2>tune-reporting-python</h2>
+<h2>Tune Reporting API SDK for Python 2.7 and 3.0</h2>
+<h3>Incorporate Tune Reporting API services.</h3>
+<h4>Update:  $Date: 2014-12-10 17:11:05 $</h4>
+<h4>Version: $Version: 0.9.20 $</h4>
 ===
 
 ### Overview
 
-Python helper library for Tune API services.
+Python helper library for Tune Reporting API services.
 
 The utility focus of this SDK is upon the Advertiser Reporting endpoints.
 
@@ -21,7 +19,7 @@ The second goal of the SDKs is to assure that our customers’ developers are us
 
 Please see documentation here:
 
-[Tune API SDKs](https://developers.mobileapptracking.com/tune-api-sdks/)
+[Tune Reporting API SDKs](https://developers.mobileapptracking.com/tune-api-sdks/)
 
 <a name="sdk_requirements"></a>
 ### SDK Requirements
@@ -46,18 +44,20 @@ To use SDK, it requires you to [Generate API Key](http://developers.mobileapptra
 <a name="sdk_installation"></a>
 ### Installation
 
-You can install **tune-api-python** via PyPi or by installing from source.
+You can install **tune-reporting-python** via PyPi or by installing from source.
 
 <a name="sdk_installation_pip"></a>
 #### Via PyPi using pip:
 
-PyPi registered package: [Tune API client library](https://pypi.python.org/pypi/tune/0.9.7)
+*tune_reporting* module is in *PyPi*: `[link](https://pypi.python.org/pypi/tune_reporting/)
+
+PyPi registered package: [Tune Reporting API client library](https://pypi.python.org/pypi/tune/0.9.7)
 
 Install from PyPi using [pip](http://www.pip-installer.org/en/latest/), a
 package manager for Python.
 
 ```bash
-    $ pip install tune
+    $ pip install tune_reporting
 ```
 
 Don't have pip installed? Try installing it, by running this from the command
@@ -71,8 +71,8 @@ line:
 #### Via ZIP file:
 
 You can [download the source code
-(ZIP)](https://github.com/MobileAppTracking/tune-api-python/zipball/master "tune-api-python
-source code") for `tune-api-python`, and then run:
+(ZIP)](https://github.com/MobileAppTracking/tune-reporting-python/zipball/master "tune-reporting-python
+source code") for `tune-reporting-python`, and then run:
 
 ```bash
     python setup.py install
@@ -133,4 +133,4 @@ Requires installation of [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.ht
 
 We would love to hear your feedback.
 
-Report issues using the [Github Issue Tracker](https://github.com/MobileAppTracking/tune-api-python/issues) or Email [sdk@tune.com](mailto:sdk@tune.com).
+Report issues using the [Github Issue Tracker](https://github.com/MobileAppTracking/tune-reporting-python/issues) or Email [sdk@tune.com](mailto:sdk@tune.com).

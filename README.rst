@@ -1,16 +1,16 @@
-Tune API SDK for Python documentation
+Tune Reporting API SDK for Python documentation
 ===========================================
 
-    :package: `tune-api-python <https://github.com/MobileAppTracking/tune-api-python>`_
-    :label: Tune API SDK for Python 2.7 and 3.0
-    :purpose: Incorporate Tune API services.
-    :update:  $Date: 2014-11-21 17:34:43 $
-    :version: $Version: 0.9.16 $
+    :package: `tune-reporting-python <https://github.com/MobileAppTracking/tune-reporting-python>`_
+    :label: Tune Reporting API SDK for Python 2.7 and 3.0
+    :purpose: Incorporate Tune Reporting API services.
+    :update:  $Date: 2014-12-10 17:11:05 $
+    :version: $Version: 0.9.20 $
 
 Overview
 ####################
 
-Python helper library for Tune API services.
+Python helper library for Tune Reporting API services.
 
 The utility focus of this SDK is upon the Advertiser Reporting endpoints.
 
@@ -18,7 +18,7 @@ Even though the the breadth of the Management API goes beyond just reports, it i
 
 The second goal of the SDKs is to assure that our customers’ developers are using best practices in gathering reports in the most optimal way.
 
-Please see documentation here: `Tune API SDKs <https://developers.mobileapptracking.com/tune-api-sdks>`_
+Please see documentation here: `Tune Reporting API SDKs <https://developers.mobileapptracking.com/tune-api-sdks>`_
 
 Requirements
 ####################
@@ -36,17 +36,19 @@ To use SDK, it requires you to `Generate API Key <http://developers.mobileapptra
 Installation
 ####################
 
-You can install `tune-api-python` via PyPi or by installing from source.
+You can install `tune-reporting-python` via PyPi or by installing from source.
 
 Via PyPi using pip:
 ********************
+
+*tune_reporting* module is in *PyPi*: `link <https://pypi.python.org/pypi/tune_reporting/>`_
 
 Install from PyPi using package manager for Python: `pip <http://www.pip-installer.org/en/latest/>`_
 
 .. code-block:: bash
     :linenos:
 
-    $ pip install tune
+    $ pip install tune_reporting
 
 
 Don't have pip installed? Try installing it, by running this from the command
@@ -60,7 +62,7 @@ line:
 Via ZIP file:
 ********************
 
-you can download the source code: `ZIP <https://github.com/MobileAppTracking/tune-api-python/zipball/master>`_.
+you can download the source code: `ZIP <https://github.com/MobileAppTracking/tune-reporting-python/zipball/master>`_.
 
 .. code-block:: bash
     :linenos:
@@ -128,7 +130,7 @@ Reporting Issues
 
 We would love to hear your feedback.
 
-Report issues using the `Github Issue Tracker  <https://github.com/MobileAppTracking/tune-api-python/issues>`_.
+Report issues using the `Github Issue Tracker  <https://github.com/MobileAppTracking/tune-reporting-python/issues>`_.
 
 
 or Email: `sdk@tune.com <mailto:sdk@tune.com>`_

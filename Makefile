@@ -26,8 +26,8 @@
 # author    Jeff Tanner <jefft@tune.com>
 # copyright 2014 Tune (http://www.tune.com)
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# update    $Date: 2014-12-02 12:30:00 $
-# version   $Version: 0.9.16 $
+# update    $Date: 2014-12-10 17:11:05 $
+# version   $Version: 0.9.20 $
 # link      https://developers.mobileapptracking.com
 #
 
@@ -67,7 +67,7 @@ register:
 	sudo python setup.py register
 
 tests:
-	python ./tests/tune_tests.py $(api_key)
+	python ./tests/tune_reporting_tests.py $(api_key)
 	
 tests-travis-ci:
 	flake8 --ignore=F401,E265,E129 tune
@@ -75,7 +75,7 @@ tests-travis-ci:
 	python ./tests/tune_tests.py $(api_key)
 
 examples:
-	python ./examples/tune_examples.py $(api_key)
+	python ./examples/tune_reporting_examples.py $(api_key)
 
 analysis: install
 	. venv/bin/activate; flake8 --ignore=E123,E126,E128,E265,E501 examples
@@ -95,4 +95,3 @@ docs-doxygen:
 	sudo rm -fR ./docs/doxygen/*
 	sudo doxygen docs/Doxyfile
 	x-www-browser docs/doxygen/html/index.html
-

@@ -27,11 +27,11 @@
 #
 #  Python 2.7 and 3.0
 #
-#  @category  Tune
-#  @package   Tune_API_Python
+#  @category  Tune_Reporting
+#  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 Tune (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-11-03 15:19:08 $
-#  @link      https://developers.mobileapptracking.com @endlink
+#  @version   $Date: 2014-12-10 17:11:05 $
+#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #

@@ -1,7 +1,7 @@
-tune
+tune_reporting
 ====
 
 .. toctree::
    :maxdepth: 4
 
-   tune
+   tune_reporting

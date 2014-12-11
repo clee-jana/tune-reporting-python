@@ -15,7 +15,7 @@
 import sys, os
 from datetime import datetime
 
-from tune import __version_info__
+from tune_reporting import __version_info__
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -64,7 +64,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Tune API SDK for Python'
+project = u'Tune Reporting API SDK for Python'
 copyright = unicode(datetime.utcnow().year) + u', Tune Inc'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -217,7 +217,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'tune_api_python.tex', u'Tune API SDK for Python',
+  ('index', 'tune_api_python.tex', u'Tune Reporting API SDK for Python',
    u'Jeff Tanner', 'manual'),
 ]
 
@@ -247,7 +247,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'tune_api_python', u'Tune API SDK for Python',
+    ('index', 'tune_api_python', u'Tune Reporting API SDK for Python',
      [u'Tune Inc.'], 1)
 ]
 
@@ -261,8 +261,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'tune_api_python', u'Tune API SDK for Python',
-   u'Jeff Tanner', 'tune_api_python', 'Tune API Helper for Python Programmers.',
+  ('index', 'tune_api_python', u'Tune Reporting API SDK for Python',
+   u'Jeff Tanner', 'tune_api_python', 'Tune Reporting API Helper for Python Programmers.',
    'Miscellaneous'),
 ]
 
@@ -282,7 +282,7 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'Tune API SDK for Python'
+epub_title = u'Tune Reporting API SDK for Python'
 epub_author = u'Tune Inc.'
 epub_publisher = u'Tune Inc.'
 epub_copyright = u'2014, Tune Inc.'

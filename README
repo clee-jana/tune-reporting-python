@@ -1,16 +1,16 @@
 ****************************************
-tune-api-python
-Tune API SDK for Python 2.7 and 3.0
-Incorporate Tune API services.
-Update:  $Date: 2014-11-21 17:34:43 $
-Version: $Version: 0.9.16 $
+tune-reporting-python
+Tune Reporting API SDK for Python 2.7 and 3.0
+Incorporate Tune Reporting API services.
+Update:  $Date: 2014-12-10 17:11:05 $
+Version: $Version: 0.9.20 $
 ****************************************
 
 =============
 Overview
 =============
 
-Python helper library for Tune API services.
+Python helper library for Tune Reporting API services.
 
 The utility focus of this SDK is upon the Advertiser Reporting endpoints.
 
@@ -49,16 +49,18 @@ http://developers.mobileapptracking.com/generate-api-key/
 Installation
 =============
 
-You can install **tune-api-python** via PyPi or by installing from source.
+You can install **tune-reporting-python** via PyPi or by installing from source.
 
 -------------
 Via PyPi using pip:
 -------------
 
+'tune_reporting' module is in PyPi: https://pypi.python.org/pypi/tune_reporting
+
 Install from PyPi using pip: http://www.pip-installer.org/en/latest/, a
 package manager for Python.
 
-    $ pip install tune
+    $ pip install tune_reporting
 
 Don't have pip installed? Try installing it, by running this from the command
 line:
@@ -70,7 +72,7 @@ Via ZIP file:
 -------------
 
 You can download the source code ZIP:
-https://github.com/MobileAppTracking/tune-api-python/zipball/master:
+https://github.com/MobileAppTracking/tune-reporting-python/zipball/master:
 
     python setup.py install
 
@@ -141,7 +143,7 @@ Reporting Issues
 We would love to hear your feedback.
 
 Report issues using the Github Issue Tracker:
-https://github.com/MobileAppTracking/tune-api-python/issues
+https://github.com/MobileAppTracking/tune-reporting-python/issues
 
 or Email:
 sdk@tune.com
