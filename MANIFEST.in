@@ -10,10 +10,10 @@ include Makefile
 include requirements.txt
 include tests/requirements.txt
 include docs/requirements.txt
-recursive-include tune *.py
+recursive-include tune_reporting *.py
 recursive-include examples *.py
 recursive-include tests *.py
-include docs/tune-logo-with-dial.png
+include docs/mobileapptracking-logo.png
 include docs/favicon.ico
 include docs/Doxyfile
 include docs/config.dox

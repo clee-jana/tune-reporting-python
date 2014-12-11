@@ -1,6 +1,6 @@
 
-# tune-api-python
-tune.egg-info
+# tune-reporting-python
+tune_reporting.egg-info
 build/
 __pycache__/
 *.pyc
