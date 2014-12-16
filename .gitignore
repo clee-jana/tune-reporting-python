@@ -1,13 +1,25 @@
+# Project files
+*.komodoproject
+.idea/
+.metadata/
+.project
+.settings/
+.pydevproject
+.idea
+.dartignore
 
-# tune-reporting-python
+# Code build files
 tune_reporting.egg-info
 build/
 __pycache__/
 *.pyc
-doc/doxygen/
-doc/sphinx/build/
-.pydevproject
-.idea
-.dartignore
-.metadata/
-*.komodoproject
+# Code documentation
+docs/doxygen/
+docs/sphinx/_build/
+venv/
+
+# Backup files
+*.bak
+*.log
+*.*~
+*~
