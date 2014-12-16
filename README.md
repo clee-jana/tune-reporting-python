@@ -49,16 +49,16 @@ You can install **tune-reporting-python** via PyPi or by installing from source.
 <a name="sdk_installation_pip"></a>
 #### Via PyPi using pip:
 
-*tune_reporting* module is in *PyPi*: `[link](https://pypi.python.org/pypi/tune_reporting/)
-
+*tune_reporting* module is in *PyPi*: [link](https://pypi.python.org/pypi/tune_reporting/)
 PyPi registered package: [Tune Reporting API client library](https://pypi.python.org/pypi/tune/0.9.7)
 
 Install from PyPi using [pip](http://www.pip-installer.org/en/latest/), a
 package manager for Python.
 
 ```bash
-    $ pip install tune_reporting
+    $ pip install git+https://github.com/MobileAppTracking/tune-reporting-python
 ```
+You may need to run the above commands with `sudo`.
 
 Don't have pip installed? Try installing it, by running this from the command
 line:
@@ -107,7 +107,7 @@ Run the following script to view execution of all unittests:
 Run the following script to generate [Sphnix]("http://en.wikipedia.org/wiki/Sphinx_(documentation_generator)") documentation from Python codebase:
 
 ```bash
-    $ make tests-installs
+    $ make installs
     $ make docs-sphinx
 ```
 
@@ -116,12 +116,12 @@ Run the following script to generate [Sphnix]("http://en.wikipedia.org/wiki/Sphi
 
 The following will generate [Doxygen](http://en.wikipedia.org/wiki/Doxygen) documentation from Python codebase:
 
+Requires installation of [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.html).
+
 ```bash
     $ make tests-installs
     $ make docs-doxygen
 ```
-
-Requires installation of [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.html).
 
 <a name="license"></a>
 ### License
