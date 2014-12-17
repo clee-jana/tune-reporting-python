@@ -27,7 +27,7 @@
             </li>
             <li><a href="#sdk_install_choices">Choices</a>
                 <ul>
-                    <li><a href="#sdk_install_method_composer">Composer</a></li>
+                    <li><a href="#sdk_install_method_pypi_pip">Composer</a></li>
                     <li><a href="#sdk_install_method_zip">ZIP</a></li>
                     <li><a href="#sdk_prerequisites_api_key">Environment</a></li>
                 </ul>
@@ -39,7 +39,7 @@
     <li><a href="#sdk_gendoc">SDK Generated Documentation</a>
         <ul>
             <li><a href="#sdk_gendoc_doxygen">Doxygen</a></li>
-            <li><a href="#sdk_gendoc_pythondoc">pythonDocumentor</a></li>
+            <li><a href="#sdk_gendoc_sphinx">Sphinx</a></li>
         </ul>
     </li>
 
@@ -180,7 +180,7 @@ To use SDK to access Advertiser Reporting endpoints of Tune Management API, it r
 
 You can install this either via **PyPi pip** or by downloading the **ZIP** source.
 
-<a id="sdk_install_method_composer" name="sdk_install_method_composer"></a>
+<a id="sdk_install_method_pypi_pip" name="sdk_install_method_pypi_pip"></a>
 ##### Via PyPi using pip:
 
 *tune_reporting* module is in *PyPi*: [link](https://pypi.python.org/pypi/tune_reporting/)
@@ -228,7 +228,7 @@ SDK code is well commented and to see full documentation of its source using the
 <a id="sdk_gendoc_doxygen" name="sdk_gen_doc_doxygen"></a>
 #### Doxygen
 
-The following will generate <a href="http://en.wikipedia.org/wiki/Doxygen" title="Doxygen" target="_blank">Doxygen</a> from PHP codebase:
+The following will generate <a href="http://en.wikipedia.org/wiki/Doxygen" title="Doxygen" target="_blank">Doxygen</a> from Python codebase:
 
 This code documentation generation requires installation of [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.html).
 
@@ -237,22 +237,22 @@ This code documentation generation requires installation of [Doxygen](http://www
 ```
 
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Doxygen.png">
-<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Doxygen-400x213.png" alt="Tune-Reporting PHP Doxygen Generated" width="400" height="213">
+<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Doxygen-400x213.png" alt="Tune-Reporting Python Doxygen Generated" width="400" height="213">
 </a>
 
-<a id="sdk_gendoc_pythondoc" name="sdk_gen_doc_pythondoc"></a>
-#### pythonDocumentor
+<a id="sdk_gendoc_sphinx" name="sdk_gen_doc_pythondoc"></a>
+#### Sphinx
 
-The following will generate <a href="http://en.wikipedia.org/wiki/PhpDocumentor" title="PhpDocumentor" target="_blank">PhpDocumentor</a> from PHP codebase:
+Run the following script to generate [Sphnix]("http://en.wikipedia.org/wiki/Sphinx_(documentation_generator)") documentation from Python codebase:
 
-This code documentation generation requires installation of [pythonDocumentatior](http://www.pythondoc.org/).
+This code documentation generation requires installation of [Sphinx](http://sphinx-doc.org/).
 
 <pre lang="bash">
-    $ make docs-pythondoc
+    $ make docs-sphinx
 </pre>
 
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Sphinx.png">
-<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Sphinx-400x204.png" alt="Tune-Reporting PHP pythonDocumentor Generated" width="400" height="204">
+<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Sphinx-400x204.png" alt="Tune-Reporting Python Sphinx Generated" width="400" height="204">
 </a>
 
 <p>
@@ -353,7 +353,7 @@ Cohort and AdvertiserReportRetention reports all request an export using action 
 <a id="sdk_sources" name="sdk_sources"></a>
 ### SDK Sources
 
-The key contents of SDK is **src**, which contains the library; followed by the **examples**, and **tests**.
+The key contents of SDK is **tune_reporting**, which contains the library; followed by the **examples**, and **tests**.
 
 File **Makefile** provides shortcuts for executing examples and tests.
 
@@ -380,11 +380,11 @@ File **Makefile** provides shortcuts for executing examples and tests.
 
 File **TuneReporting.python** is the root of this Library.
 
-Library folder **src** contains the key functionality related to **Advertiser Reporting classes** are defined within folder **/src/TuneReporting/Api/**.
+Library folder **tune_reporting** contains the key functionality related to **Advertiser Reporting classes** are defined within folder **/tune_reporting/api/**.
 
-Client classes that connect with the **Tune Management API Service** are defined within folder **/src/TuneReporting/Base/Service/**.
+Client classes that connect with the **Tune Management API Service** are defined within folder **/tune_reporting/base/service/**.
 
-Helper class for both the Library and Examples are defined within folder **/src/TuneReporting/Helpers/**.
+Helper class for both the Library and Examples are defined within folder **/tune_reporting/helpers/**.
 ```
 tune_reporting
 ├── api
@@ -561,7 +561,7 @@ Finds all existing records matching provided filter criteria and returns total c
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-action-count.png">
 <img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-action-count-700x247.png" alt="Function count()" width="700" height="247" title="Click to Expand" /></a>
 
-<!-- PHP -->
+<!-- Python -->
 ```python
     advertiser_report_clicks = AdvertiserReportClicks(api_key, validate_fields=True)
     response = advertiser_report_clicks.count(
@@ -588,7 +588,7 @@ Gathers all existing records that match filter criteria and returns an array of 
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-action-find.png">
 <img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-action-find-700x511.png" alt="Function find()" width="700" height="511" title="Click to Expand" /></a>
 
-<!-- PHP -->
+<!-- Python -->
 ```python
     advertiser_report_clicks = AdvertiserReportClicks(api_key, validate_fields=True)
     response = advertiser_report_clicks.find(
@@ -655,7 +655,7 @@ A helper function that creates a threaded worker that handles the status request
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-action-fetch.png">
 <img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-action-fetch-700x337.png" alt="Function fetch()" width="700" height="337" title="Click to Expand" /></a>
 
-<!-- PHP -->
+<!-- Python -->
 ```python
     advertiser_report_clicks = AdvertiserReportClicks(api_key, validate_fields=True)
     export_fetch_response = advertiser_report_clicks.fetch(
