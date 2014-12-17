@@ -47,6 +47,7 @@ clean:
 	sudo rm -fR ./docs/doxygen/*
 	sudo rm -fR ./docs/sphinx/_build
 	sudo rm -fR build/*
+	find . -name "*.pyc" -type f -delete
 	rm -rf venv
 
 dist-install:
