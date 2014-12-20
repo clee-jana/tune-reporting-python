@@ -1,5 +1,5 @@
 """
-Tune Service Exception
+TUNE Service Exception
 ======================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Service Exception
 #
 #  exceptions.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,15 +34,15 @@ Tune Service Exception
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 10:04:26 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 
 class TuneSdkException(Exception):
-    """Exception raised for errors when using Tune SDK
+    """Exception raised for errors when using TUNE SDK
     """
 
     #
@@ -53,13 +53,13 @@ class TuneSdkException(Exception):
     ## Constructor
     #
     def __init__(self, message=None, errors=None):
-        """Tune SDK exception constructor
+        """TUNE SDK exception constructor
 
             :param str          message:    Message describing error.
             :param Exception    exc:        Caught exception.
         """
         if message is None:
-            message = "Tune SDK error"
+            message = "TUNE SDK error"
 
         # Call the endpoint_base class constructor with the parameters it needs
         Exception.__init__(self, message)
@@ -74,7 +74,7 @@ class TuneSdkException(Exception):
 
 
 class TuneServiceException(Exception):
-    """Exception raised when error is returned from Tune Service
+    """Exception raised when error is returned from TUNE Management Service
     """
 
     #
@@ -85,13 +85,13 @@ class TuneServiceException(Exception):
     ## Constructor
     #
     def __init__(self, message=None, errors=None):
-        """Tune Reporting API Service exception constructor
+        """TUNE Reporting API Service exception constructor
 
             :param str message: Message describing error.
             :param Exception exc: Caught exception.
         """
         if message is None:
-            message = "Tune Service error"
+            message = "TUNE Service error"
 
         # Call the endpoint_base class constructor with the parameters it needs
         Exception.__init__(self, message)

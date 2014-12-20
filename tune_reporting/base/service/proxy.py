@@ -1,5 +1,5 @@
 """
-Tune Mangement API Service Proxy
+TUNE Management API Service Proxy
 =============================================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Mangement API Service Proxy
 #
 #  proxy.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,9 +34,9 @@ Tune Mangement API Service Proxy
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 10:04:26 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -54,12 +54,12 @@ from tune_reporting.helpers import (
 
 
 #
-# Service process class for connecting to Tune Management API service.
+# Service process class for connecting to TUNE Management API service.
 #
 # package Tune_Python_SDK
 #
 class TuneManagementProxy(object):
-    """Service proxy class for connecting to Tune Management API service.
+    """Service proxy class for connecting to TUNE Management API service.
     """
 
     __request_url = None
@@ -67,7 +67,7 @@ class TuneManagementProxy(object):
 
     @property
     def response(self):
-        """Full response object to Tune Management API service."""
+        """Full response object to TUNE Management API service."""
         return self.__response
 
     ## Constructor
@@ -85,7 +85,7 @@ class TuneManagementProxy(object):
         self.__request_url = request_url
 
     def execute(self):
-        """HTTP POST request to Tune MobileAppTracking Management API.
+        """HTTP POST request to TUNE MobileAppTracking Management API.
 
             Returns:
                 bool: True upon success.

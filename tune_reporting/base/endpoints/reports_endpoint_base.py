@@ -1,5 +1,5 @@
 """
-Tune Mangement Reports Endpoint base
+TUNE Management Reports Endpoint base
 ============================================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Mangement Reports Endpoint base
 #
 #  reports_endpoint_base.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,9 +34,9 @@ Tune Mangement Reports Endpoint base
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -45,10 +45,10 @@ from tune_reporting.base.endpoints import (
 )
 
 
-## Base components for every Tune Management API reports.
+## Base components for every TUNE Management API reports.
 #
 class ReportsEndpointBase(EndpointBase):
-    """Base components for every Tune Management API reports.
+    """Base components for every TUNE Management API reports.
     """
 
     #  Remove debug mode information from results.
@@ -61,39 +61,28 @@ class ReportsEndpointBase(EndpointBase):
 
     ## The constructor.
     #
-    #  @param str   controller               Tune Management API endpoint name.
-    #  @param str   api_key                  MobileAppTracking API Key.
+    #  @param str   controller               TUNE Management API endpoint name.
     #  @param bool  filter_debug_mode        Remove debug mode information
     #                                        from results.
     #  @param bool  filter_test_profile_id   Remove test profile information
     #                                        from results.
-    #  @param bool  validate_fields          Validate fields used by actions'
-    #                                        parameters.
+    #
     def __init__(self,
                  controller,
-                 api_key,
                  filter_debug_mode,
-                 filter_test_profile_id,
-                 validate_fields=False):
+                 filter_test_profile_id):
         """The constructor.
 
-            :param controller (string): Tune Management API endpoint name.
-            :param api_key (string):          Tune MobileAppTracking API Key.
+            :param controller (string): TUNE Management API endpoint name.
             :param bool filter_debug_mode:  Remove debug mode information
                                                     from results.
             :param bool filter_test_profile_id: Remove test profile
                                                 information from results.
-            :param bool validate_fields:    Validate fields used
-                                            by actions' parameters.
         """
 
         if not isinstance(controller, str) or len(controller) < 1:
             raise ValueError(
-                "Parameter 'controller' is not defined."
-            )
-        if not isinstance(api_key, str) or len(api_key) < 1:
-            raise ValueError(
-                "Parameter 'api_key' is not defined."
+                "Parameter 'controller' is not defined: '{}'".format(controller)
             )
         if not isinstance(filter_debug_mode, bool):
             raise ValueError(
@@ -104,15 +93,12 @@ class ReportsEndpointBase(EndpointBase):
                 "Parameter 'filter_test_profile_id' is not defined as bool."
             )
 
-        self.__api_key = api_key
         self.__filter_debug_mode = filter_debug_mode
         self.__filter_test_profile_id = filter_test_profile_id
 
         EndpointBase.__init__(
             self,
-            controller,
-            api_key,
-            validate_fields
+            controller
         )
 
     #  Prepare action with provided query str parameters, then call

@@ -1,5 +1,5 @@
 """
-Tune Mangement API '/advertiser/stats/'
+TUNE Management API '/advertiser/stats/'
 ====================================================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Mangement API '/advertiser/stats/'
 #
 #  __init__.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,9 +34,9 @@ Tune Mangement API '/advertiser/stats/'
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -49,29 +49,19 @@ from tune_reporting.base import (
 #  @example example_reports_actuals.py
 class AdvertiserReportActuals(ReportsActualsEndpointBase):
     """
-    Tune Management API endpoint '/advertiser/stats/'
+    TUNE Management API endpoint '/advertiser/stats/'
     """
 
     ## The constructor.
     #
-    #  @param str   api_key         MobileAppTracking API Key.
-    #  @param bool  validate_fields Validate fields used by actions'
-    #
-    def __init__(self,
-                 api_key,
-                 validate_fields=False):
+    def __init__(self):
         """The constructor.
-
-            :param str api_key:             MobileAppTracking API Key.
-            :param bool validate_fields:    Validate fields used by actions.
         """
         ReportsActualsEndpointBase.__init__(
             self,
             "advertiser/stats",
-            api_key,
             True,
-            True,
-            validate_fields
+            True
         )
 
         self.fields_recommended = [

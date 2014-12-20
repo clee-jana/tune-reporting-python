@@ -3,7 +3,7 @@
 #
 #  test_advertiser_report_installs.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,21 +30,23 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
-import unittest
 import datetime
+import os.path
 import sys
-import os
+import unittest
+
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_dir + "/..")
 try:
     from tune_reporting import (
         AdvertiserReportInstalls,
+        SdkConfig,
         TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
@@ -54,8 +56,11 @@ except ImportError as exc:
 
 class TestAdvertiserReportInstalls(unittest.TestCase):
 
-    def __init__(self, api_key):
-        self.__api_key = api_key
+    def __init__(self):
+        dirname = os.path.split(__file__)[0]
+        filepath = os.path.join(dirname, "tune_reporting_sdk.tests.config")
+        abspath = os.path.abspath(filepath)
+        sdk_config = SdkConfig(filepath=abspath)
         unittest.TestCase.__init__(self)
 
     def setUp(self):
@@ -64,14 +69,18 @@ class TestAdvertiserReportInstalls(unittest.TestCase):
         self.__end_date = "{} 23:59:59".format(yesterday)
 
     def test_ApiKey(self):
-        self.assertIsNotNone(self.__api_key)
+        sdk_config = SdkConfig()
+        api_key = sdk_config.api_key
+
+        self.assertIsNotNone(api_key)
+        self.assertGreater(len(api_key), 0)
+        self.assertNotEqual("API_KEY", api_key)
 
     def test_Fields(self):
         response = None
-        installs = AdvertiserReportInstalls(
-            self.__api_key,
-        )
-        response = installs.fields(TUNE_FIELDS_RECOMMENDED)
+        advertiser_report = AdvertiserReportInstalls()
+
+        response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
         self.assertIsNotNone(response)
         self.assertGreater(len(response), 0)
 
@@ -79,11 +88,9 @@ class TestAdvertiserReportInstalls(unittest.TestCase):
         response = None
 
         try:
-            installs = AdvertiserReportInstalls(
-                self.__api_key,
-            )
+            advertiser_report = AdvertiserReportInstalls()
 
-            response = installs.count(
+            response = advertiser_report.count(
                 self.__start_date,
                 self.__end_date,
                 filter="(status = 'approved')",
@@ -104,15 +111,12 @@ class TestAdvertiserReportInstalls(unittest.TestCase):
         response = None
 
         try:
-            installs = AdvertiserReportInstalls(
-                self.__api_key,
-                validate_fields=True
-            )
+            advertiser_report = AdvertiserReportInstalls()
 
-            response = installs.find(
+            response = advertiser_report.find(
                 self.__start_date,
                 self.__end_date,
-                fields=installs.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter="(status = 'approved')",
                 limit=10,
                 page=None,
@@ -133,15 +137,12 @@ class TestAdvertiserReportInstalls(unittest.TestCase):
         response = None
 
         try:
-            installs = AdvertiserReportInstalls(
-                self.__api_key,
-                validate_fields=True
-            )
+            advertiser_report = AdvertiserReportInstalls()
 
-            response = installs.export(
+            response = advertiser_report.export(
                 self.__start_date,
                 self.__end_date,
-                fields=installs.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter="(status = 'approved')",
                 format="csv",
                 response_timezone="America/Los_Angeles"

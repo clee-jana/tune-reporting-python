@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,13 +27,24 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
+import datetime
+import os.path
 import sys
+import traceback
+
+try:
+    from tune_reporting import (
+        SdkConfig
+        )
+except ImportError as exc:
+    sys.stderr.write("Error: failed to import module ({})".format(exc))
+    raise
 
 from example_advertiser_report_actuals import ExampleAdvertiserReportActuals
 from example_advertiser_report_cohort import ExampleAdvertiserReportCohort
@@ -47,36 +58,29 @@ from example_advertiser_report_postbacks import ExampleAdvertiserReportPostbacks
 
 if __name__ == '__main__':
     try:
-        if len(sys.argv) < 2:
-            raise ValueError(
-                "Provide API Key to execute Tune Reporting API example {}.".format(sys.argv[0])
-                )
-
-        api_key = sys.argv[1]
-
         example = ExampleAdvertiserReportActuals()
-        example.run(api_key)
+        example.run()
 
         example = ExampleAdvertiserReportCohort()
-        example.run(api_key)
+        example.run()
 
         example = ExampleAdvertiserReportRetention()
-        example.run(api_key)
+        example.run()
 
         example = ExampleAdvertiserReportClicks()
-        example.run(api_key)
+        example.run()
 
         example = ExampleAdvertiserReportEventItems()
-        example.run(api_key)
+        example.run()
 
         example = ExampleAdvertiserReportEvents()
-        example.run(api_key)
+        example.run()
 
         example = ExampleAdvertiserReportInstalls()
-        example.run(api_key)
+        example.run()
 
         example = ExampleAdvertiserReportPostbacks()
-        example.run(api_key)
+        example.run()
 
     except Exception as exc:
         print("Exception: {0}".format(exc))

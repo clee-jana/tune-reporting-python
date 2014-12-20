@@ -1,11 +1,11 @@
 """
-Tune Mangement Endpoint base
+TUNE Management Endpoint base
 ============================
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -32,9 +32,9 @@ Tune Mangement Endpoint base
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -49,12 +49,15 @@ from tune_reporting.base.service import (
     TuneManagementClient
 )
 from tune_reporting.helpers import (
+    is_parentheses_balanced,
     TuneSdkException,
-    TuneServiceException,
-    is_parentheses_balanced
+    TuneServiceException
 )
 from tune_reporting.helpers.report_export_worker import (
     ReportExportWorker
+)
+from tune_reporting.helpers.sdk_config import (
+    SdkConfig
 )
 
 TUNE_FIELDS_UNDEFINED = 0
@@ -66,13 +69,17 @@ TUNE_FIELDS_MINIMAL = 16
 TUNE_FIELDS_RECOMMENDED = 32
 
 
-## Base components for every Tune Management API request.
+## Base components for every TUNE Management API request.
 #
 class EndpointBase(object):
-    """Base components for every Tune Management API request.
+    """Base components for every TUNE Management API request.
     """
 
-    #  Tune Management API Endpoint
+    #  SDK Configuration
+    #  @var SdkConfig
+    __sdk_config = None
+
+    #  TUNE Management API Endpoint
     #  @var str
     __controller = None
 
@@ -80,7 +87,7 @@ class EndpointBase(object):
     #  @var str
     __api_key = None
 
-    #  Tune Management API Endpoint's fields
+    #  TUNE Management API Endpoint's fields
     #  @var list
     __fields = None
 
@@ -131,22 +138,19 @@ class EndpointBase(object):
 
     #  Constructor
     #
-    #  @param str controller         Tune Management API Endpoint
-    #  @param str api_key            MobileAppTracking API Key
-    #  @param bool   validate_fields    Validate fields used by actions'
-    #                                   parameters.
+    #  @param str controller         TUNE Management API Endpoint
     #
     def __init__(self,
-                 controller,
-                 api_key,
-                 validate_fields):
+                 controller):
         """The constructor.
 
-            :param controller (string):     Tune Management API endpoint name.
-            :param api_key (string):        Tune MobileAppTracking API Key.
-            :param bool validate_fields:    Validate fields used by
-                                            actions' parameters.
+            :param controller (string):     TUNE Management API endpoint name.
         """
+
+        self.__sdk_config = SdkConfig()
+        api_key = self.__sdk_config.api_key
+        validate_fields = self.__sdk_config.validate_fields
+
         # -----------------------------------------------------------------
         # validate_fields inputs
         # -----------------------------------------------------------------
@@ -155,7 +159,7 @@ class EndpointBase(object):
         if not controller or len(controller) < 1:
             raise ValueError("Parameter 'controller' is not defined.")
         # api_key
-        if not api_key or len(api_key) < 1:
+        if not api_key or (len(api_key) < 1) or ("API_KEY" == api_key):
             raise ValueError("Parameter 'api_key' is not defined.")
 
         self.__controller = controller
@@ -166,28 +170,28 @@ class EndpointBase(object):
     #  @return string
     @property
     def controller(self):
-        """Tune Management API controller."""
+        """TUNE Management API controller."""
         return self.__controller
 
     #  Get API Key
     #  @return string
     @property
     def api_key(self):
-        """Tune Management API KEY."""
+        """TUNE Management API KEY."""
         return self.__api_key
 
-    #  Call Tune Management API service for this controller.
-    #  @param str action              Tune Management API endpoint's
+    #  Call TUNE Management API service for this controller.
+    #  @param str action              TUNE Management API endpoint's
     #                                   action name.
     #  @param array  query_string_dict   Action's query string parameters
     #  @return object @see TuneManagementResponse
     def call(self,
              action,
              query_string_dict=None):
-        """Call Tune Management API service requesting response
+        """Call TUNE Management API service requesting response
         endpoint_base upon provided controller/action?query_string.
 
-            :param str      action:     Tune Management API endpoint's
+            :param str      action:     TUNE Management API endpoint's
                                         action name.
             :param array    query_string_dict:  Action's query string
                                         parameters.

@@ -1,5 +1,5 @@
 """
-Tune Mangement API Request
+TUNE Management API Request
 =============================================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Mangement API Request
 #
 #  request.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,9 +34,9 @@ Tune Mangement API Request
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 10:04:26 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -49,7 +49,7 @@ from .query_string_builder import (
 
 
 class TuneManagementRequest(object):
-    """Base components for every Tune Management API request.
+    """Base components for every TUNE Management API request.
     """
 
     __controller = None
@@ -68,15 +68,15 @@ class TuneManagementRequest(object):
                  api_url_version):
         """The constructor.
 
-            :param str      controller: Tune Management API endpoint name
-            :param str      action:     Tune Management API endpoint's
+            :param str      controller: TUNE Management API endpoint name
+            :param str      action:     TUNE Management API endpoint's
                                         action name
-            :param str      api_key:    Tune MobileAppTracking API Key
+            :param str      api_key:    TUNE MobileAppTracking API Key
             :param array    query_string_dict:  Action's query string
                                                 parameters
-            :param str      api_url_endpoint:   Tune Management API
+            :param str      api_url_endpoint:   TUNE Management API
                                                 endpoint path
-            :param str      api_url_version:    Tune Management API version
+            :param str      api_url_version:    TUNE Management API version
         """
         # -----------------------------------------------------------------
         # validate_fields inputs
@@ -106,39 +106,39 @@ class TuneManagementRequest(object):
 
     @property
     def controller(self):
-        """Tune Management API controller."""
+        """TUNE Management API controller."""
         return self.__controller
 
     @property
     def action(self):
-        """Tune Management API action."""
+        """TUNE Management API action."""
         return self.__action
 
     @property
     def endpoint_base(self):
-        """Tune Management API endpoint_base URL"""
+        """TUNE Management API endpoint_base URL"""
         return self.__api_url_endpoint
 
     @property
     def version(self):
-        """Tune Management API version"""
+        """TUNE Management API version"""
         return self.__api_url_version
 
     @property
     def api_key(self):
-        """Tune Management API KEY."""
+        """TUNE Management API KEY."""
         return self.__api_key
 
     @property
     def query_string_dict(self):
         """
-        Tune Management API query string dictionary used to build Query String.
+        TUNE Management API query string dictionary used to build Query String.
         """
         return self.__query_string_dict
 
     @property
     def query_string(self):
-        """Tune Management API query string."""
+        """TUNE Management API query string."""
         qsb = QueryStringBuilder()
 
         # Every request should contain an API Key
@@ -156,7 +156,7 @@ class TuneManagementRequest(object):
 
     @property
     def path(self):
-        """Tune Management API service path"""
+        """TUNE Management API service path"""
         request_path = "{0}/{1}/{2}/{3}".format(
             self.__api_url_endpoint,
             self.__api_url_version,
@@ -168,7 +168,7 @@ class TuneManagementRequest(object):
 
     @property
     def url(self):
-        """Tune Management API full service request."""
+        """TUNE Management API full service request."""
         request_url = "{0}?{1}".format(
             self.path,
             self.query_string

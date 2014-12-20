@@ -3,7 +3,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,9 +30,9 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -43,27 +43,21 @@ from tune_reporting.base import (
 )
 
 
-## Tune Mangement API endpoint '/export'
+## TUNE Management API endpoint '/export'
 #
 class Export(EndpointBase):
-    """Tune Management API endpoint '/export/'."""
+    """TUNE Management API endpoint '/export/'."""
 
-    #  Constructor
-    #  @param str api_key  Tune MobileAppTracking API Key
-    def __init__(self, api_key):
+    ## The constructor.
+    #
+    def __init__(self):
         """The constructor.
-
-            :param str api_key:             MobileAppTracking API Key.
         """
-        if not api_key or len(api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined.")
 
         self.__api_key = api_key
         EndpointBase.__init__(
             self,
-            controller="export",
-            api_key=api_key,
-            validate_fields=False
+            controller="export"
         )
 
     ## TuneManagementRequest status from export queue for report.

@@ -3,7 +3,7 @@
 #
 #  example_advertiser_report_events.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,9 +30,9 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #
@@ -44,21 +44,23 @@
 # all measurement and attribution continues to operate smoothly. MAT updates
 # the Logs report every 1 minute.
 #
-# https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=events
+# https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=advertiser_report
 #
-# Events API call: stats/events
+# Events API call: stats/advertiser_report
 #
 
+import datetime
+import os.path
 import sys
 import traceback
-import datetime
 
 try:
     from tune_reporting import (
-        TuneSdkException,
         AdvertiserReportEvents,
         ReportReaderCSV,
         ReportReaderJSON,
+        SdkConfig,
+        TuneSdkException,
         TUNE_FIELDS_RECOMMENDED
     )
 except ImportError as exc:
@@ -67,47 +69,59 @@ except ImportError as exc:
 
 
 class ExampleAdvertiserReportEvents(object):
-    """Example using Tune Reporting API client."""
+    """Example using TUNE Advertiser Report Events."""
 
     def __init__(self):
-        pass
+        # Setup SDK Configuration with TUNE MobileAppTracking API Key.
+        dirname = os.path.split(__file__)[0]
+        dirname = os.path.dirname(dirname)
+        filepath = os.path.join(dirname, SdkConfig.SDK_CONFIG_FILENAME)
 
-    #
-    # Example of running successful requests to Tune MobileAppTracking Management API.
-    #
-    def run(self, api_key):
-        """Run Example\n"""
+        abspath = os.path.abspath(filepath)
+
+        sdk_config = SdkConfig(filepath=abspath)
+        api_key = sdk_config.api_key
+
+        if "API_KEY" == api_key:
+            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
         # api_key
         if not api_key or len(api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined.")
+            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
-        print("==============================================================")
-        print("= Tune Reporting API Advertiser Reports Logs Events         =")
-        print("==============================================================")
+    #
+    # Example of running successful requests to TUNE Advertiser Report Events.
+    #
+    def run(self):
+        """Run Example"""
+
+        print("")
+        print("\033[34m" + "=================================================" + "\033[0m")
+        print("\033[34m" + " TUNE Advertiser Report Events                   " + "\033[0m")
+        print("\033[34m" + "================================================ " + "\033[0m")
 
         try:
             yesterday = datetime.date.fromordinal(datetime.date.today().toordinal() - 1)
             start_date = "{} 00:00:00".format(yesterday)
             end_date = "{} 23:59:59".format(yesterday)
 
-            events = AdvertiserReportEvents(api_key, validate_fields=True)
+            advertiser_report = AdvertiserReportEvents()
 
             print("")
             print("======================================================")
-            print(" Fields of Advertiser Logs Events records.            ")
+            print(" Fields of Advertiser Report Events records.            ")
             print("======================================================")
 
-            response = events.fields(TUNE_FIELDS_RECOMMENDED)
+            response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
             print("")
             print("======================================================")
-            print(" Count Advertiser Logs Events records.                ")
+            print(" Count Advertiser Report Events records.              ")
             print("======================================================")
 
-            response = events.count(
+            response = advertiser_report.count(
                 start_date,
                 end_date,
                 filter="(status = 'approved')",
@@ -117,20 +131,20 @@ class ExampleAdvertiserReportEvents(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
-            print("= Count:")
+            print(" Count:")
             print(str(response.data))
 
             print("")
             print("======================================================")
-            print(" Find Advertiser Logs Events records.                 ")
+            print(" Find Advertiser Report Events records.               ")
             print("======================================================")
 
-            response = events.find(
+            response = advertiser_report.find(
                 start_date,
                 end_date,
-                fields=events.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter="(status = 'approved')",
                 limit=5,
                 page=None,
@@ -141,18 +155,18 @@ class ExampleAdvertiserReportEvents(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             print("")
             print("==========================================================")
-            print(" Advertiser Logs Events CSV report for export.            ")
+            print(" Export Advertiser Report Events CSV report               ")
             print("==========================================================")
 
-            response = events.export(
+            response = advertiser_report.export(
                 start_date,
                 end_date,
-                fields=events.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter="(status = 'approved')",
                 format="csv",
                 response_timezone="America/Los_Angeles"
@@ -161,19 +175,19 @@ class ExampleAdvertiserReportEvents(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             job_id = AdvertiserReportEvents.parse_response_report_job_id(response)
 
-            print("= CSV Job ID: {}".format(job_id))
+            print(" CSV Job ID: {}".format(job_id))
 
             print("")
             print("=================================================================")
-            print(" Fetching Advertiser Logs Events CSV report                      ")
+            print(" Fetching Advertiser Report Events CSV report                      ")
             print("=================================================================")
 
-            export_fetch_response = events.fetch(
+            export_fetch_response = advertiser_report.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
@@ -181,11 +195,11 @@ class ExampleAdvertiserReportEvents(object):
 
             csv_report_url = AdvertiserReportEvents.parse_response_report_url(export_fetch_response)
 
-            print("= CVS Report URL: {}".format(csv_report_url))
+            print(" CVS Report URL: {}".format(csv_report_url))
 
             print("")
             print("========================================================")
-            print(" Read Events CSV report and pretty print 5 lines.       ")
+            print(" Read Events CSV report       ")
             print("========================================================")
 
             csv_report_reader = ReportReaderCSV(csv_report_url)
@@ -194,13 +208,13 @@ class ExampleAdvertiserReportEvents(object):
 
             print("")
             print("===========================================================")
-            print(" Advertiser Logs Events JSON report for export.            ")
+            print(" Export Advertiser Report Events JSON report ")
             print("===========================================================")
 
-            response = events.export(
+            response = advertiser_report.export(
                 start_date,
                 end_date,
-                fields=events.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter="(status = 'approved')",
                 format="json",
                 response_timezone="America/Los_Angeles"
@@ -209,25 +223,25 @@ class ExampleAdvertiserReportEvents(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             job_id = AdvertiserReportEvents.parse_response_report_job_id(response)
 
-            print("= JSON Job ID: {}".format(job_id))
+            print(" JSON Job ID: {}".format(job_id))
 
             print("")
             print("========================================================")
-            print(" Fetching Advertiser Logs Events JSON report.           ")
+            print(" Fetching Advertiser Report Events JSON report.           ")
             print("========================================================")
 
-            export_fetch_response = events.fetch(
+            export_fetch_response = advertiser_report.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
             )
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(export_fetch_response))
 
             if export_fetch_response is None:
@@ -236,11 +250,11 @@ class ExampleAdvertiserReportEvents(object):
 
             json_report_url = AdvertiserReportEvents.parse_response_report_url(export_fetch_response)
 
-            print("= JSON Report URL: {}".format(json_report_url))
+            print(" JSON Report URL: {}".format(json_report_url))
 
             print("")
             print("========================================================")
-            print(" Read Events JSON report and pretty print 5 lines.      ")
+            print(" Read Events JSON report      ")
             print("========================================================")
 
             json_report_reader = ReportReaderJSON(json_report_url)
@@ -264,9 +278,9 @@ class ExampleAdvertiserReportEvents(object):
             raise
 
         print("")
-        print("======================================")
-        print("= End Example                        =")
-        print("======================================")
+        print("\033[32m" + "======================================" + "\033[0m")
+        print("\033[32m" + " End Example                          " + "\033[0m")
+        print("\033[32m" + "======================================" + "\033[0m")
 
     @staticmethod
     def provide_traceback():
@@ -285,11 +299,8 @@ class ExampleAdvertiserReportEvents(object):
 
 if __name__ == '__main__':
     try:
-        if len(sys.argv) < 2:
-            raise ValueError("{} [api_key].".format(sys.argv[0]))
-        api_key = sys.argv[1]
         example = ExampleAdvertiserReportEvents()
-        example.run(api_key)
+        example.run()
     except Exception as exc:
         print("Exception: {0}".format(exc))
         raise

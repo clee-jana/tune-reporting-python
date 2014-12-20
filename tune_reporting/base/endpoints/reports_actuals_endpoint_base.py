@@ -1,5 +1,5 @@
 """
-Tune Mangement Actuals Reports Endpoint base
+TUNE Management Actuals Reports Endpoint base
 ============================================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Mangement Actuals Reports Endpoint base
 #
 # reports_actuals_endpoint_base.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,9 +34,9 @@ Tune Mangement Actuals Reports Endpoint base
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -60,45 +60,32 @@ class ReportsActualsEndpointBase(ReportsEndpointBase):
 
     ## The constructor.
     #
-    #  @param str controller             Tune Management API endpoint name.
-    #  @param str api_key                Tune MobileAppTracking API Key.
+    #  @param str controller                TUNE Management API endpoint name.
     #  @param bool   filter_debug_mode      Remove debug mode information
     #                                       from results.
     #  @param bool   filter_test_profile_id Remove test profile information
     #                                       from results.
-    #  @param bool   validate_fields        Validate fields used by actions'
-    #                                       parameters.
     def __init__(self,
                  controller,
-                 api_key,
                  filter_debug_mode,
-                 filter_test_profile_id,
-                 validate_fields=False):
+                 filter_test_profile_id):
         """The constructor.
 
-            :param str controller:       Tune Management API endpoint name.
-            :param str api_key:          Tune MobileAppTracking API Key.
+            :param str controller:       TUNE Management API endpoint name.
             :param bool filter_debug_mode:  Remove debug mode information
                                                     from results.
             :param bool filter_test_profile_id: Remove test profile information
                                                     from results.
-            :param bool validate_fields: Validate fields used by
-                                        actions' parameters.
         """
         # controller
         if not controller or len(controller) < 1:
             raise ValueError("Parameter 'controller' is not defined.")
-        # api key
-        if not api_key or len(api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined.")
 
         ReportsEndpointBase.__init__(
             self,
             controller,
-            api_key,
             filter_debug_mode,
-            filter_test_profile_id,
-            validate_fields
+            filter_test_profile_id
         )
 
     ## Counts all existing records that match filter criteria

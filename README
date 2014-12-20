@@ -1,16 +1,16 @@
 ****************************************
 tune-reporting-python
-Tune Reporting API SDK for Python 2.7 and 3.0
-Incorporate Tune Reporting API services.
-Update:  $Date: 2014-12-10 17:11:05 $
-Version: $Version: 0.9.20 $
+TUNE SDK for Python 2.7 and 3.0
+Incorporate TUNE services.
+Update:  $Date: 2014-12-19 15:59:09 $
+Version: $Version: 0.9.23 $
 ****************************************
 
 =============
 Overview
 =============
 
-Python helper library for Tune Reporting API services.
+Python helper library for TUNE services.
 
 The utility focus of this SDK is upon the Advertiser Reporting endpoints.
 
