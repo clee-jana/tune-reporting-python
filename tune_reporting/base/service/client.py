@@ -1,5 +1,5 @@
 """
-Tune Mangement Client
+TUNE Management Client
 =============================================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Mangement Client
 #
 #  client.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,9 +34,9 @@ Tune Mangement Client
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 10:04:26 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -66,12 +66,12 @@ from .proxy import (
 )
 
 
-#  Tune MobileAppTracking Management API access class
+#  TUNE MobileAppTracking Management API access class
 #
 #  @example example_client_account_users.py
 #
 class TuneManagementClient(object):
-    """Tune MobileAppTracking Management API access class.
+    """TUNE MobileAppTracking Management API access class.
     """
     #
     #  @var object @see TuneManagementRequest
@@ -85,13 +85,13 @@ class TuneManagementClient(object):
 
     #  Constructor
     #
-    #  @param str      controller          Tune Management API endpoint name
-    #  @param str      action              Tune Management API endpoint's
+    #  @param str      controller          TUNE Management API endpoint name
+    #  @param str      action              TUNE Management API endpoint's
     #                                         action name
-    #  @param str      api_key             Tune MobileAppTracking API Key
+    #  @param str      api_key             TUNE MobileAppTracking API Key
     #  @param null|array  query_string_dict   Action's query string parameters
-    #  @param null|string api_url_endpoint    Tune Management API endpoint path
-    #  @param null|string api_url_version     Tune Management API version
+    #  @param null|string api_url_endpoint    TUNE Management API endpoint path
+    #  @param null|string api_url_version     TUNE Management API version
     #
     def __init__(self,
                  controller,
@@ -102,15 +102,15 @@ class TuneManagementClient(object):
                  api_url_version=__tune_management_api_version__):
         """The constructor.
 
-            :param str      controller: Tune Management API endpoint name
-            :param str      action:     Tune Management API endpoint's
+            :param str      controller: TUNE Management API endpoint name
+            :param str      action:     TUNE Management API endpoint's
                                         action name
-            :param str      api_key:    Tune MobileAppTracking API Key
+            :param str      api_key:    TUNE MobileAppTracking API Key
             :param array    query_string_dict:  Action's query string
                                                 parameters
-            :param str      api_url_endpoint:   Tune Management API
+            :param str      api_url_endpoint:   TUNE Management API
                                                 endpoint path
-            :param str      api_url_version:    Tune Management API version
+            :param str      api_url_version:    TUNE Management API version
         """
         # controller
         if not controller or len(controller) < 1:
@@ -137,11 +137,11 @@ class TuneManagementClient(object):
         """Get SDK version."""
         return __version__
 
-    #  Sends a request and gets a response from the Tune Management
+    #  Sends a request and gets a response from the TUNE Management
     #  API Service.
     #
     def call(self):
-        """Sends a request and gets a response from the Tune Management
+        """Sends a request and gets a response from the TUNE Management
         API Service.
         """
         response_success = False

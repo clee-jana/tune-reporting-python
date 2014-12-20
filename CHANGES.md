@@ -7,13 +7,13 @@ Version 0.9.0
 --------------
 
 Internal release on October 06, 2014
-* Tune Reporting API Client for Python 3.0
+* TUNE Client for Python 3.0
 
 Version 0.9.1
 --------------
 
 Internal release on October 12, 2014
-* Tune Reporting API Advertise Reports
+* TUNE Advertise Reports
 
 Version 0.9.2
 --------------
@@ -25,7 +25,7 @@ Version 0.9.3
 --------------
 
 Internal release on October 18, 2014
-* Tune Reporting API Client for Python 2.7 and Python 3.0
+* TUNE Client for Python 2.7 and Python 3.0
 
 Version 0.9.5
 --------------
@@ -98,8 +98,15 @@ Version 0.9.16
 Beta public release on Novenber 19, 2014
 * Fixes to Cohort and Retention reports
 
-Version 0.9.20
+Version 0.9.23
 --------------
 
 Beta public release on December 10, 2014
 * Refactored to accomodate *tune-reporting-python*
+
+
+Version 0.9.23
+--------------
+
+Beta public release on December 19, 2014
+* SDK Configuration *tune_reporting_sdk.config* file.

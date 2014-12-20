@@ -3,7 +3,7 @@
 #
 #  example_advertiser_report_retention.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,9 +30,9 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #  Retention Report
@@ -41,7 +41,7 @@
 #  with your app over time (how users continue to get value from the app).
 #  Retention Reports are particularly good for evaluating the quality of users as
 #  opposed to the quantity of users (as in the case of user acquisition campaigns).
-#  For more information about retention reports, please visit Running Retention
+#  For more information about advertiser_report reports, please visit Running Retention
 #  Reports.
 #
 #  Aggregate "cumulative" shows the data compounds or grows over time.
@@ -57,7 +57,7 @@
 #  interval (such as Day, Week, Month, Year, or All Time). Viewing the data
 #  incrementally does not appear as impressive as viewing cumulative or aggregated
 #  data because it only shows incremental changes (and there is typically a
-#  downward trend because of decreases in retention).
+#  downward trend because of decreases in advertiser_report).
 #
 #  Cohort "clicks" refers to the number of clicks through to the app store to
 #  download an app.
@@ -65,15 +65,17 @@
 #  Cohort "installs" refers to the number of downloads of an app
 #
 
+import datetime
+import os.path
 import sys
 import traceback
-import datetime
 
 try:
     from tune_reporting import (
-        TuneSdkException,
         AdvertiserReportRetention,
         ReportReaderCSV,
+        SdkConfig,
+        TuneSdkException,
         TUNE_FIELDS_RECOMMENDED,
         TUNE_FIELDS_DEFAULT
     )
@@ -83,24 +85,35 @@ except ImportError as exc:
 
 
 class ExampleAdvertiserReportRetention(object):
-    """Example using Tune Reporting API client."""
+    """Example using TUNE Advertiser Report Retention."""
 
     def __init__(self):
-        pass
+        # Setup SDK Configuration with TUNE MobileAppTracking API Key.
+        dirname = os.path.split(__file__)[0]
+        dirname = os.path.dirname(dirname)
+        filepath = os.path.join(dirname, SdkConfig.SDK_CONFIG_FILENAME)
 
-    #  Example of running successful requests to Tune MobileAppTracking Management API.
-    #
-    def run(self, api_key):
-        """Run Example\n"""
+        abspath = os.path.abspath(filepath)
+
+        sdk_config = SdkConfig(filepath=abspath)
+        api_key = sdk_config.api_key
+
+        if "API_KEY" == api_key:
+            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
         # api_key
         if not api_key or len(api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined.")
+            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
+
+    #  Example of running successful requests to TUNE Advertiser Report Retention.
+    #
+    def run(self):
+        """Run Example"""
 
         print("")
-        print("==============================================================")
-        print("= Tune Reporting API Advertiser Retention                   =")
-        print("==============================================================")
+        print("\033[34m" + "=================================================" + "\033[0m")
+        print("\033[34m" + " TUNE Advertiser Report Retention                " + "\033[0m")
+        print("\033[34m" + "================================================ " + "\033[0m")
 
         try:
             week_ago = datetime.date.fromordinal(datetime.date.today().toordinal() - 8)
@@ -108,32 +121,32 @@ class ExampleAdvertiserReportRetention(object):
             start_date = "{} 00:00:00".format(week_ago)
             end_date = "{} 23:59:59".format(yesterday)
 
-            retention = AdvertiserReportRetention(api_key, validate_fields=True)
+            advertiser_report = AdvertiserReportRetention()
 
             print("")
             print("======================================================")
-            print(" Fields of Advertiser Retention records - Default.    ")
+            print(" Default Fields of Advertiser Report Retention        ")
             print("======================================================")
 
-            response = retention.fields(TUNE_FIELDS_DEFAULT)
+            response = advertiser_report.fields(TUNE_FIELDS_DEFAULT)
             for field in response:
                 print(str(field))
 
             print("")
             print("======================================================")
-            print(" Fields of Advertiser Retention records - Recommended.")
+            print(" Recommended Fields of Advertiser Report Retention    ")
             print("======================================================")
 
-            response = retention.fields(TUNE_FIELDS_RECOMMENDED)
+            response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
             print("")
             print("======================================================")
-            print(" Count Advertiser Retention click records.            ")
+            print(" Count Advertiser Report Retention click records.     ")
             print("======================================================")
 
-            response = retention.count(
+            response = advertiser_report.count(
                 start_date,
                 end_date,
                 cohort_type="click",
@@ -146,18 +159,18 @@ class ExampleAdvertiserReportRetention(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
-            print("= Count:")
+            print(" Count:")
             print(str(response.data))
 
             print("")
             print("======================================================")
-            print(" Count Advertiser Retention install records.          ")
+            print(" Count Advertiser Report Retention install records.   ")
             print("======================================================")
 
-            response = retention.count(
+            response = advertiser_report.count(
                 start_date,
                 end_date,
                 cohort_type="install",
@@ -167,24 +180,24 @@ class ExampleAdvertiserReportRetention(object):
                 response_timezone="America/Los_Angeles"
             )
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
-            print("= Count:")
+            print(" Count:")
             print(str(response.data))
 
             print("")
             print("====================================================================")
-            print(" Find Advertiser Retention 'click/cumulative' records - Default.    ")
+            print(" Find Advertiser Report Retention 'click/cumulative' records - Default.    ")
             print("====================================================================")
 
-            response = retention.find(
+            response = advertiser_report.find(
                 start_date,
                 end_date,
                 cohort_type="install",
@@ -201,20 +214,20 @@ class ExampleAdvertiserReportRetention(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             print("")
-            print("====================================================================")
-            print(" Find Advertiser Retention 'click/cumulative' records - Recommended.")
-            print("====================================================================")
+            print("=====================================================================================")
+            print(" Find Advertiser Report Retention 'click/cumulative' records with Recommended fields.")
+            print("=====================================================================================")
 
-            response = retention.find(
+            response = advertiser_report.find(
                 start_date,
                 end_date,
                 cohort_type="install",
                 cohort_interval="year_day",
-                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 group="site_id,install_publisher_id",
                 filter="(install_publisher_id > 0)",
                 limit=10,
@@ -226,20 +239,20 @@ class ExampleAdvertiserReportRetention(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             print("")
             print("==========================================================")
-            print(" Advertiser Retention CSV report for export.              ")
+            print(" Export Advertiser Report Retention CSV report                   ")
             print("==========================================================")
 
-            response = retention.export(
+            response = advertiser_report.export(
                 start_date,
                 end_date,
                 cohort_type="click",
                 cohort_interval="year_day",
-                fields=retention.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 group="site_id,install_publisher_id",
                 filter="(install_publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
@@ -248,25 +261,25 @@ class ExampleAdvertiserReportRetention(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             job_id = AdvertiserReportRetention.parse_response_report_job_id(response)
 
-            print("= CSV Job ID: {}".format(job_id))
+            print(" CSV Job ID: {}".format(job_id))
 
             print("")
             print("========================================================")
-            print(" Fetching Advertiser Retention CSV report.              ")
+            print(" Fetching Advertiser Report Retention CSV report.              ")
             print("========================================================")
 
-            export_fetch_response = retention.fetch(
+            export_fetch_response = advertiser_report.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
             )
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(export_fetch_response))
 
             if export_fetch_response is None:
@@ -275,11 +288,11 @@ class ExampleAdvertiserReportRetention(object):
 
             csv_report_url = AdvertiserReportRetention.parse_response_report_url(export_fetch_response)
 
-            print("= CSV Report URL: {}".format(csv_report_url))
+            print(" CSV Report URL: {}".format(csv_report_url))
 
             print("")
             print("========================================================")
-            print(" Read Retention CSV report and pretty print 5 lines.    ")
+            print(" Read Advertiser Report Retention CSV report    ")
             print("========================================================")
 
             csv_report_reader = ReportReaderCSV(csv_report_url)
@@ -302,9 +315,9 @@ class ExampleAdvertiserReportRetention(object):
             raise
 
         print("")
-        print("======================================")
-        print("= End Example                        =")
-        print("======================================")
+        print("\033[32m" + "======================================" + "\033[0m")
+        print("\033[32m" + " End Example                          " + "\033[0m")
+        print("\033[32m" + "======================================" + "\033[0m")
 
     @staticmethod
     def provide_traceback():
@@ -323,11 +336,8 @@ class ExampleAdvertiserReportRetention(object):
 
 if __name__ == '__main__':
     try:
-        if len(sys.argv) < 2:
-            raise ValueError("{} [api_key].".format(sys.argv[0]))
-        api_key = sys.argv[1]
         example = ExampleAdvertiserReportRetention()
-        example.run(api_key)
+        example.run()
     except Exception as exc:
         print("Exception: {0}".format(exc))
         raise

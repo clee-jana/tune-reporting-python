@@ -1,5 +1,5 @@
 """
-Tune Reports Export Status Worker
+TUNE Reports Export Status Worker
 =============================================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Reports Export Status Worker
 #
 #  report_export_worker.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,9 +34,9 @@ Tune Reports Export Status Worker
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 10:04:26 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -224,7 +224,7 @@ class ReportExportWorker(object):
                 attempt += 1
                 if self.__verbose:
                     print(
-                        "= attempt: {}, response: {}".format(attempt, response)
+                        " attempt: {}, response: {}".format(attempt, response)
                     )
 
                 time.sleep(self.__sleep)
@@ -239,7 +239,7 @@ class ReportExportWorker(object):
             )
 
         if self.__verbose:
-            print("= response: {}".format(response))
+            print(" response: {}".format(response))
 
         self.__response = response
 

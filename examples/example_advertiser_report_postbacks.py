@@ -3,7 +3,7 @@
 #
 #  example_advertiser_report_postback_urls.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,9 +30,9 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #  You can use the Logs report in the same way as the Actuals reports, but
@@ -43,21 +43,23 @@
 #  all measurement and attribution continues to operate smoothly. MAT updates
 #  the Logs report every 1 minute.
 #
-#  @link https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=postbacks @endlink
+#  @link https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=advertiser_report @endlink
 #
-#  Postback API call: stats/postbacks
+#  Postback API call: stats/advertiser_report
 #
 
+import datetime
+import os.path
 import sys
 import traceback
-import datetime
 
 try:
     from tune_reporting import (
-        TuneSdkException,
         AdvertiserReportPostbacks,
         ReportReaderCSV,
         ReportReaderJSON,
+        SdkConfig,
+        TuneSdkException,
         TUNE_FIELDS_RECOMMENDED
     )
 except ImportError as exc:
@@ -66,48 +68,59 @@ except ImportError as exc:
 
 
 class ExampleAdvertiserReportPostbacks(object):
-    """Example using Tune Reporting API client."""
+    """Example using TUNE Advertiser Report Postbacks."""
 
     def __init__(self):
-        pass
+        # Setup SDK Configuration with TUNE MobileAppTracking API Key.
+        dirname = os.path.split(__file__)[0]
+        dirname = os.path.dirname(dirname)
+        filepath = os.path.join(dirname, SdkConfig.SDK_CONFIG_FILENAME)
 
-    #
-    # Example of running successful requests to Tune MobileAppTracking Management API.
-    #
-    def run(self, api_key):
-        """Run Example\n"""
+        abspath = os.path.abspath(filepath)
+
+        sdk_config = SdkConfig(filepath=abspath)
+        api_key = sdk_config.api_key
+
+        if "API_KEY" == api_key:
+            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
         # api_key
         if not api_key or len(api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined.")
+            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
+
+    #
+    # Example of running successful requests to TUNE Advertiser Report Postbacks.
+    #
+    def run(self):
+        """Run Example"""
 
         print("")
-        print("==============================================================")
-        print("= Tune Reporting API Advertiser Reports Logs Postbacks      =")
-        print("==============================================================")
+        print("\033[34m" + "=================================================" + "\033[0m")
+        print("\033[34m" + " TUNE Advertiser Report Postbacks                " + "\033[0m")
+        print("\033[34m" + "================================================ " + "\033[0m")
 
         try:
             yesterday = datetime.date.fromordinal(datetime.date.today().toordinal() - 1)
             start_date = "{} 00:00:00".format(yesterday)
             end_date = "{} 23:59:59".format(yesterday)
 
-            postbacks = AdvertiserReportPostbacks(api_key, validate_fields=True)
+            advertiser_report = AdvertiserReportPostbacks()
 
             print("")
             print("======================================================")
-            print(" Fields of Advertiser Logs Postbacks records.         ")
+            print(" Recommended Fields of Advertiser Report Postbacks.   ")
             print("======================================================")
 
-            response = postbacks.fields(TUNE_FIELDS_RECOMMENDED)
+            response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
             print("")
             print("======================================================")
-            print(" Count Advertiser Logs Clicks records.                ")
+            print(" Count Advertiser Report Postbacks records.           ")
             print("======================================================")
 
-            response = postbacks.count(
+            response = advertiser_report.count(
                 start_date,
                 end_date,
                 filter="(status = 'approved')",
@@ -117,21 +130,21 @@ class ExampleAdvertiserReportPostbacks(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
-            print("= Count:")
+            print(" Count:")
             print(str(response.data))
 
             print("")
             print("======================================================")
-            print(" Find Advertiser Logs Postbacks records.              ")
+            print(" Find Advertiser Report Postbacks records.              ")
             print("======================================================")
 
-            response = postbacks.find(
+            response = advertiser_report.find(
                 start_date,
                 end_date,
-                fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter=None,
                 limit=5,
                 page=None,
@@ -142,18 +155,18 @@ class ExampleAdvertiserReportPostbacks(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             print("")
             print("==========================================================")
-            print(" Advertiser Logs Postbacks CSV report for export.         ")
+            print(" Export Advertiser Report Postbacks CSV report            ")
             print("==========================================================")
 
-            response = postbacks.export(
+            response = advertiser_report.export(
                 start_date,
                 end_date,
-                fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter=None,
                 format="csv",
                 response_timezone="America/Los_Angeles"
@@ -162,19 +175,19 @@ class ExampleAdvertiserReportPostbacks(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             job_id = AdvertiserReportPostbacks.parse_response_report_job_id(response)
 
-            print("= CSV Job ID: {}".format(job_id))
+            print(" CSV Job ID: {}".format(job_id))
 
             print("")
             print("=================================================================")
-            print(" Fetching Advertiser Logs Postbacks CSV report                   ")
+            print(" Fetching Advertiser Report Postbacks CSV report                 ")
             print("=================================================================")
 
-            export_fetch_response = postbacks.fetch(
+            export_fetch_response = advertiser_report.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
@@ -182,11 +195,11 @@ class ExampleAdvertiserReportPostbacks(object):
 
             csv_report_url = AdvertiserReportPostbacks.parse_response_report_url(export_fetch_response)
 
-            print("= CVS Report URL: {}".format(csv_report_url))
+            print(" CVS Report URL: {}".format(csv_report_url))
 
             print("")
             print("========================================================")
-            print(" Read Postbacks CSV report and pretty print 5 lines.       ")
+            print(" Read Advertiser Report Postbacks CSV report    ")
             print("========================================================")
 
             csv_report_reader = ReportReaderCSV(csv_report_url)
@@ -195,13 +208,13 @@ class ExampleAdvertiserReportPostbacks(object):
 
             print("")
             print("===========================================================")
-            print(" Advertiser Logs Postbacks JSON report for export.         ")
+            print(" Export Advertiser Report Postbacks JSON report            ")
             print("===========================================================")
 
-            response = postbacks.export(
+            response = advertiser_report.export(
                 start_date,
                 end_date,
-                fields=postbacks.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter=None,
                 format="json",
                 response_timezone="America/Los_Angeles"
@@ -210,25 +223,25 @@ class ExampleAdvertiserReportPostbacks(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             job_id = AdvertiserReportPostbacks.parse_response_report_job_id(response)
 
-            print("= JSON Job ID: {}".format(job_id))
+            print(" JSON Job ID: {}".format(job_id))
 
             print("")
             print("========================================================")
-            print(" Fetching Advertiser Logs Clicks JSON report.           ")
+            print(" Fetching Advertiser Report Postbacks JSON report.      ")
             print("========================================================")
 
-            export_fetch_response = postbacks.fetch(
+            export_fetch_response = advertiser_report.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
             )
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(export_fetch_response))
 
             if export_fetch_response is None:
@@ -237,11 +250,11 @@ class ExampleAdvertiserReportPostbacks(object):
 
             json_report_url = AdvertiserReportPostbacks.parse_response_report_url(export_fetch_response)
 
-            print("= JSON Report URL: {}".format(json_report_url))
+            print(" JSON Report URL: {}".format(json_report_url))
 
             print("")
             print("========================================================")
-            print(" Read Clicks JSON report and pretty print 5 lines.      ")
+            print(" Read Advertiser Report Postbacks JSON report      ")
             print("========================================================")
 
             json_report_reader = ReportReaderJSON(json_report_url)
@@ -264,9 +277,9 @@ class ExampleAdvertiserReportPostbacks(object):
             raise
 
         print("")
-        print("======================================")
-        print("= End Example                        =")
-        print("======================================")
+        print("\033[32m" + "======================================" + "\033[0m")
+        print("\033[32m" + " End Example                          " + "\033[0m")
+        print("\033[32m" + "======================================" + "\033[0m")
 
     @staticmethod
     def provide_traceback():
@@ -285,11 +298,8 @@ class ExampleAdvertiserReportPostbacks(object):
 
 if __name__ == '__main__':
     try:
-        if len(sys.argv) < 2:
-            raise ValueError("{} [api_key].".format(sys.argv[0]))
-        api_key = sys.argv[1]
         example = ExampleAdvertiserReportPostbacks()
-        example.run(api_key)
+        example.run()
     except Exception as exc:
         print("Exception: {0}".format(exc))
         raise

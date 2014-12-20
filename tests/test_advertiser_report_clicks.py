@@ -3,7 +3,7 @@
 #
 #  test_advertiser_report_clicks.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,21 +30,23 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
-import unittest
 import datetime
+import os.path
 import sys
-import os
+import unittest
+
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_dir + "/..")
 try:
     from tune_reporting import (
         AdvertiserReportClicks,
+        SdkConfig,
         TuneSdkException,
         TUNE_FIELDS_RECOMMENDED
         )
@@ -55,8 +57,11 @@ except ImportError as exc:
 
 class TestAdvertiserReportClicks(unittest.TestCase):
 
-    def __init__(self, api_key):
-        self.__api_key = api_key
+    def __init__(self):
+        dirname = os.path.split(__file__)[0]
+        filepath = os.path.join(dirname, "tune_reporting_sdk.tests.config")
+        abspath = os.path.abspath(filepath)
+        sdk_config = SdkConfig(filepath=abspath)
         unittest.TestCase.__init__(self)
 
     def setUp(self):
@@ -65,17 +70,19 @@ class TestAdvertiserReportClicks(unittest.TestCase):
         self.__end_date = "{} 23:59:59".format(yesterday)
 
     def test_ApiKey(self):
-        self.assertIsNotNone(self.__api_key)
+        sdk_config = SdkConfig()
+        api_key = sdk_config.api_key
+
+        self.assertIsNotNone(api_key)
+        self.assertGreater(len(api_key), 0)
+        self.assertNotEqual("API_KEY", api_key)
 
     def test_Fields(self):
         response = None
 
-        clicks = AdvertiserReportClicks(
-            self.__api_key,
-            validate_fields=True
-        )
+        advertiser_report = AdvertiserReportClicks()
 
-        response = clicks.fields(TUNE_FIELDS_RECOMMENDED)
+        response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
 
         self.assertIsNotNone(response)
         self.assertGreater(len(response), 0)
@@ -83,12 +90,9 @@ class TestAdvertiserReportClicks(unittest.TestCase):
     def test_Count(self):
         response = None
 
-        clicks = AdvertiserReportClicks(
-            self.__api_key,
-            validate_fields=True
-        )
+        advertiser_report = AdvertiserReportClicks()
 
-        response = clicks.count(
+        response = advertiser_report.count(
             self.__start_date,
             self.__end_date,
             filter=None,
@@ -105,15 +109,12 @@ class TestAdvertiserReportClicks(unittest.TestCase):
     def test_Find(self):
         response = None
 
-        clicks = AdvertiserReportClicks(
-            self.__api_key,
-            validate_fields=True
-        )
+        advertiser_report = AdvertiserReportClicks()
 
-        response = clicks.find(
+        response = advertiser_report.find(
             self.__start_date,
             self.__end_date,
-            fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
+            fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
             filter=None,
             limit=5,
             page=None,
@@ -130,12 +131,9 @@ class TestAdvertiserReportClicks(unittest.TestCase):
 
     def test_FindInvalidFields(self):
         try:
-            clicks = AdvertiserReportClicks(
-                self.__api_key,
-                validate_fields=True
-            )
+            advertiser_report = AdvertiserReportClicks()
 
-            clicks.find(
+            advertiser_report.find(
                 self.__start_date,
                 self.__end_date,
                 fields="foo",
@@ -152,15 +150,12 @@ class TestAdvertiserReportClicks(unittest.TestCase):
 
     def test_FindInvalidFilter(self):
         try:
-            clicks = AdvertiserReportClicks(
-                self.__api_key,
-                validate_fields=True
-            )
+            advertiser_report = AdvertiserReportClicks()
 
-            clicks.find(
+            advertiser_report.find(
                 self.__start_date,
                 self.__end_date,
-                fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter="(foo > 0)",
                 limit=5,
                 page=None,
@@ -176,15 +171,12 @@ class TestAdvertiserReportClicks(unittest.TestCase):
         response = None
 
         try:
-            clicks = AdvertiserReportClicks(
-                self.__api_key,
-                validate_fields=True
-            )
+            advertiser_report = AdvertiserReportClicks()
 
-            response = clicks.export(
+            response = advertiser_report.export(
                 self.__start_date,
                 self.__end_date,
-                fields=clicks.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 filter=None,
                 format="csv",
                 response_timezone="America/Los_Angeles"

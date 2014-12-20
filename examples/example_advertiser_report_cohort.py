@@ -3,7 +3,7 @@
 #
 #  example_advertiser_report_cohort.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,9 +30,9 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #  Cohort Report
@@ -65,15 +65,17 @@
 #  Cohort "installs" refers to the number of downloads of an app
 #
 
+import datetime
+import os.path
 import sys
 import traceback
-import datetime
 
 try:
     from tune_reporting import (
-        TuneSdkException,
         AdvertiserReportCohort,
         ReportReaderCSV,
+        SdkConfig,
+        TuneSdkException,
         TUNE_FIELDS_RECOMMENDED,
         TUNE_FIELDS_DEFAULT
     )
@@ -83,24 +85,35 @@ except ImportError as exc:
 
 
 class ExampleAdvertiserReportCohort(object):
-    """Example using Tune Reporting API client."""
+    """Example using TUNE Advertiser Report Cohort."""
 
     def __init__(self):
-        pass
+        # Setup SDK Configuration with TUNE MobileAppTracking API Key.
+        dirname = os.path.split(__file__)[0]
+        dirname = os.path.dirname(dirname)
+        filepath = os.path.join(dirname, SdkConfig.SDK_CONFIG_FILENAME)
 
-    # Example of running successful requests to Tune MobileAppTracking Management API.
-    #
-    def run(self, api_key):
-        """Run Example\n"""
+        abspath = os.path.abspath(filepath)
+
+        sdk_config = SdkConfig(filepath=abspath)
+        api_key = sdk_config.api_key
+
+        if "API_KEY" == api_key:
+            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
         # api_key
         if not api_key or len(api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined.")
+            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
+
+    # Example of running successful requests to TUNE Advertiser Report Cohort.
+    #
+    def run(self):
+        """Run Example"""
 
         print("")
-        print("==============================================================")
-        print("= Tune Reporting API Advertiser Cohort                   =")
-        print("==============================================================")
+        print("\033[34m" + "=================================================" + "\033[0m")
+        print("\033[34m" + " TUNE Advertiser Report Cohort                   " + "\033[0m")
+        print("\033[34m" + "================================================ " + "\033[0m")
 
         try:
             week_ago = datetime.date.fromordinal(datetime.date.today().toordinal() - 8)
@@ -108,23 +121,23 @@ class ExampleAdvertiserReportCohort(object):
             start_date = "{} 00:00:00".format(week_ago)
             end_date = "{} 23:59:59".format(yesterday)
 
-            reports_cohort = AdvertiserReportCohort(api_key, validate_fields=True)
+            advertiser_report = AdvertiserReportCohort()
 
             print("")
             print("======================================================")
-            print(" Fields of Advertiser Cohort records -- Default.  ")
+            print(" Default Fields of Advertiser Report Cohort           ")
             print("======================================================")
 
-            response = reports_cohort.fields(TUNE_FIELDS_DEFAULT)
+            response = advertiser_report.fields(TUNE_FIELDS_DEFAULT)
             for field in response:
                 print(str(field))
 
             print("")
             print("======================================================")
-            print(" Fields of Advertiser Cohort records -- Recommended.  ")
+            print(" Recommended Fields of Advertiser Report Cohort       ")
             print("======================================================")
 
-            response = reports_cohort.fields(TUNE_FIELDS_RECOMMENDED)
+            response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
@@ -133,7 +146,7 @@ class ExampleAdvertiserReportCohort(object):
             print(" Count Advertiser Cohort click records.               ")
             print("======================================================")
 
-            response = reports_cohort.count(
+            response = advertiser_report.count(
                 start_date,
                 end_date,
                 cohort_type="click",
@@ -146,10 +159,10 @@ class ExampleAdvertiserReportCohort(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
-            print("= Count:")
+            print(" Count:")
             print(str(response.data))
 
             print("")
@@ -157,7 +170,7 @@ class ExampleAdvertiserReportCohort(object):
             print(" Count Advertiser Cohort install records.             ")
             print("======================================================")
 
-            response = reports_cohort.count(
+            response = advertiser_report.count(
                 start_date,
                 end_date,
                 cohort_type="install",
@@ -170,12 +183,12 @@ class ExampleAdvertiserReportCohort(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
-            print("= Count:")
+            print(" Count:")
             print(str(response.data))
 
             print("")
@@ -183,7 +196,7 @@ class ExampleAdvertiserReportCohort(object):
             print(" Find Advertiser Cohort 'click/cumulative' records.       ")
             print("==========================================================")
 
-            response = reports_cohort.find(
+            response = advertiser_report.find(
                 start_date,
                 end_date,
                 cohort_type="click",
@@ -201,7 +214,7 @@ class ExampleAdvertiserReportCohort(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             print("")
@@ -209,13 +222,13 @@ class ExampleAdvertiserReportCohort(object):
             print(" Find Advertiser Cohort 'click/cumulative' records.       ")
             print("==========================================================")
 
-            response = reports_cohort.find(
+            response = advertiser_report.find(
                 start_date,
                 end_date,
                 cohort_type="click",
                 cohort_interval="year_day",
                 aggregation_type="cumulative",
-                fields=reports_cohort.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 group="site_id,publisher_id",
                 filter="(publisher_id > 0)",
                 limit=5,
@@ -227,21 +240,21 @@ class ExampleAdvertiserReportCohort(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             print("")
             print("==========================================================")
-            print(" Advertiser Cohort CSV report for export.                 ")
+            print(" Export Advertiser Cohort CSV report                      ")
             print("==========================================================")
 
-            response = reports_cohort.export(
+            response = advertiser_report.export(
                 start_date,
                 end_date,
                 cohort_type="click",
                 cohort_interval="year_day",
                 aggregation_type="incremental",
-                fields=reports_cohort.fields(TUNE_FIELDS_RECOMMENDED),
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
                 group="site_id,publisher_id",
                 filter="(publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
@@ -250,25 +263,25 @@ class ExampleAdvertiserReportCohort(object):
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(response))
 
             job_id = AdvertiserReportCohort.parse_response_report_job_id(response)
 
-            print("= CSV Job ID: {}".format(job_id))
+            print(" CSV Job ID: {}".format(job_id))
 
             print("")
             print("========================================================")
             print(" Fetching Advertiser Cohort CSV report.                 ")
             print("========================================================")
 
-            export_fetch_response = reports_cohort.fetch(
+            export_fetch_response = advertiser_report.fetch(
                 job_id,
                 verbose=True,
                 sleep=10
             )
 
-            print("= TuneManagementResponse:")
+            print(" TuneManagementResponse:")
             print(str(export_fetch_response))
 
             if export_fetch_response is None:
@@ -277,11 +290,11 @@ class ExampleAdvertiserReportCohort(object):
 
             csv_report_url = AdvertiserReportCohort.parse_response_report_url(export_fetch_response)
 
-            print("= CSV Report URL: {}".format(csv_report_url))
+            print(" CSV Report URL: {}".format(csv_report_url))
 
             print("")
             print("========================================================")
-            print(" Read Cohort CSV report and pretty print 5 lines.       ")
+            print(" Read Advertiser Report Cohort CSV report               ")
             print("========================================================")
 
             csv_report_reader = ReportReaderCSV(csv_report_url)
@@ -304,9 +317,9 @@ class ExampleAdvertiserReportCohort(object):
             raise
 
         print("")
-        print("======================================")
-        print("= End Example                        =")
-        print("======================================")
+        print("\033[32m" + "======================================" + "\033[0m")
+        print("\033[32m" + " End Example                          " + "\033[0m")
+        print("\033[32m" + "======================================" + "\033[0m")
 
     @staticmethod
     def provide_traceback():
@@ -325,11 +338,8 @@ class ExampleAdvertiserReportCohort(object):
 
 if __name__ == '__main__':
     try:
-        if len(sys.argv) < 2:
-            raise ValueError("{} [api_key].".format(sys.argv[0]))
-        api_key = sys.argv[1]
         example = ExampleAdvertiserReportCohort()
-        example.run(api_key)
+        example.run()
     except Exception as exc:
         print("Exception: {0}".format(exc))
         raise

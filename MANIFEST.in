@@ -8,15 +8,16 @@ include README.rst
 include README.md
 include Makefile
 include requirements.txt
+include tune_reporting_sdk.config
 include tests/requirements.txt
 include docs/requirements.txt
 recursive-include tune_reporting *.py
 recursive-include examples *.py
 recursive-include tests *.py
+include tests/tune_reporting_sdk.test.config
 include docs/mobileapptracking-logo.png
 include docs/favicon.ico
 include docs/Doxyfile
 include docs/config.dox
 recursive-include docs/doxypy-0.4.2 *.*
 recursive-include docs/sphinx *.*
-

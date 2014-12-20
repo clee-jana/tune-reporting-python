@@ -1,5 +1,5 @@
 """
-Tune Mangement API '/advertiser/stats/clicks/'
+TUNE Management API '/advertiser/stats/clicks/'
 ================================================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Mangement API '/advertiser/stats/clicks/'
 #
 #  clicks.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,9 +34,9 @@ Tune Mangement API '/advertiser/stats/clicks/'
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 11:19:31 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -50,30 +50,19 @@ from tune_reporting.base import (
 #  @example example_reports_clicks.py
 #
 class AdvertiserReportClicks(ReportsLogsEndpointBase):
-    """Tune Management API endpoint '/advertiser/stats/clicks'
+    """TUNE Management API endpoint '/advertiser/stats/clicks'
     """
 
     ## The constructor.
     #
-    #  @param str api_key            Tune MobileAppTracking API Key.
-    #  @param bool   validate_fields    Validate fields used by actions'
-    #                                   parameters.
-    #
-    def __init__(self,
-                 api_key,
-                 validate_fields=False):
+    def __init__(self):
         """The constructor.
-
-            :param str api_key:             MobileAppTracking API Key.
-            :param bool validate_fields:    Validate fields used by actions.
         """
         ReportsLogsEndpointBase.__init__(
             self,
             "advertiser/stats/clicks",
-            api_key,
             True,
-            True,
-            validate_fields
+            True
         )
 
         self.fields_recommended = [

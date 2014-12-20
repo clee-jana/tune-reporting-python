@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#    Copyright (c) 2014 Tune, Inc
+#    Copyright (c) 2014 TUNE, Inc.
 #    All rights reserved.
 #
 #    Permission is hereby granted, free of charge, to any person obtaining
@@ -25,10 +25,10 @@
 #
 #    Python 2.7
 #
-#    category    Tune
+#    category    TUNE_Reporting
 #    package     SDK
-#    version     $Date: 2014-12-10 17:11:05 $
-#    copyright   Copyright (c) 2014, Tune (http://www.tune.com)
+#    version     $Date: 2014-12-19 10:04:26 $
+#    copyright   Copyright (c) 2014, TUNE Inc. (http://www.tune.com)
 #
 
 
@@ -67,8 +67,8 @@ PACKAGES = [
 setup(
     name='tune_reporting',
     version=__version__,
-    description='Tune Reporting API client library.',
-    author='Tune',
+    description='TUNE Reporting API client library.',
+    author='TUNE',
     author_email='sdk@tune.com',
     url = "https://github.com/MobileAppTracking/tune-reporting-python",
     keywords = ["tune", "tune reporting", "mobileapptracking"],
@@ -93,18 +93,18 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules"
         ],
     long_description = """\
-    Python Tune Reporting API Helper Library
+    TUNE Reporting API Helper Library for Python.
     ----------------------------
 
     DESCRIPTION
-    The Tune Reporting SDK simplifies the process of making calls using the Tune
+    TUNE Reporting SDK simplifies the process of making calls using the TUNE
     Reporting API.
 
-    The Tune Reporting API is for advertisers to export data.
+    TUNE Reporting API is for advertisers to export data.
 
     See https://github.com/MobileAppTracking/tune-reporting-python for
     more information.
 
-    LICENSE The Tune Python Helper Library is distributed under the MIT
+    LICENSE The TUNE Python Helper Library is distributed under the MIT
     License """
 )

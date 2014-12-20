@@ -1,5 +1,5 @@
 """
-Tune Mangement API '/advertiser/stats/retention/'
+TUNE Management API '/advertiser/stats/retention/'
 ====================================================
 """
 #!/usr/bin/env python
@@ -7,7 +7,7 @@ Tune Mangement API '/advertiser/stats/retention/'
 #
 #  retention.py
 #
-#  Copyright (c) 2014 Tune, Inc
+#  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,9 +34,9 @@ Tune Mangement API '/advertiser/stats/retention/'
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 Tune (http://www.tune.com)
+#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-10 17:11:05 $
+#  @version   $Date: 2014-12-19 15:59:09 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -52,29 +52,19 @@ from tune_reporting.base.endpoints import (
 #  @example example_reports_retention.py
 class AdvertiserReportRetention(ReportsInsightEndpointBase):
     """
-    Tune Management API controller 'advertiser/stats/retention'
+    TUNE Management API controller 'advertiser/stats/retention'
     """
 
     ## The constructor.
     #
-    #  @param str   api_key     MobileAppTracking API Key.
-    #  @param bool  validate_fields    Validate fields used by actions.
-    #
-    def __init__(self,
-                 api_key,
-                 validate_fields=False):
+    def __init__(self):
         """The constructor.
-
-            :param str  api_key:            MobileAppTracking API Key.
-            :param bool validate_fields:    Validate fields used by actions.
         """
         ReportsInsightEndpointBase.__init__(
             self,
             "advertiser/stats/retention",
-            api_key,
             False,
-            True,
-            validate_fields
+            True
         )
 
         self.fields_recommended = [
