@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 11:19:31 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -56,7 +56,7 @@ python_check_version(__python_required_version__)
 
 from .api import (
     AdvertiserReportActuals,
-    AdvertiserReportCohort,
+    AdvertiserReportValue,
     AdvertiserReportRetention,
 
     AdvertiserReportClicks,         # Logs

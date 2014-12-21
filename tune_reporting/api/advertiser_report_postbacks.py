@@ -36,18 +36,18 @@ TUNE Management API '/advertiser/stats/postbacks/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 from tune_reporting.base import (
-    ReportsLogsEndpointBase
+    AdvertiserReportLogsBase
 )
 
 
 #  /advertiser/stats/postbacks
 #  @example example_reports_postbacks.py
-class AdvertiserReportPostbacks(ReportsLogsEndpointBase):
+class AdvertiserReportPostbacks(AdvertiserReportLogsBase):
     """Advertiser Stats logs pertaining to postbacks."""
 
     ## The constructor.
@@ -55,7 +55,7 @@ class AdvertiserReportPostbacks(ReportsLogsEndpointBase):
     def __init__(self):
         """The constructor.
         """
-        ReportsLogsEndpointBase.__init__(
+        AdvertiserReportLogsBase.__init__(
             self,
             "advertiser/stats/postbacks",
             False,

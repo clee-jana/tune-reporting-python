@@ -5,7 +5,7 @@ TUNE Management Logs Reports Endpoint base
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  reports_logs_endpoint_base.py
+#  advertiser_report_logs_base.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -36,12 +36,12 @@ TUNE Management Logs Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 11:19:31 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
-from .reports_endpoint_base import (
-    ReportsEndpointBase
+from .advertiser_report_base import (
+    AdvertiserReportBase
 )
 from tune_reporting.base.service import (
     TuneManagementClient
@@ -53,7 +53,7 @@ from tune_reporting.base.endpoints import (
 
 ## Base class intended for gathering from Advertiser Stats logs.
 ##
-class ReportsLogsEndpointBase(ReportsEndpointBase):
+class AdvertiserReportLogsBase(AdvertiserReportBase):
     """
     Base class intended for gathering from Advertiser Stats logs.
     """
@@ -82,7 +82,7 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
         if not controller or len(controller) < 1:
             raise ValueError("Parameter 'controller' is not defined.")
 
-        ReportsEndpointBase.__init__(
+        AdvertiserReportBase.__init__(
             self,
             controller,
             filter_debug_mode,
@@ -121,7 +121,7 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
         if filter is not None and isinstance(filter, str):
             filter = self._validate_filter(filter)
 
-        return ReportsEndpointBase.call(
+        return AdvertiserReportBase.call(
             self,
             action="count",
             query_string_dict={
@@ -205,7 +205,7 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
         if fields is not None:
             fields = self._validate_fields(fields)
 
-        return ReportsEndpointBase.call(
+        return AdvertiserReportBase.call(
             self,
             action="find",
             query_string_dict={
@@ -272,7 +272,7 @@ class ReportsLogsEndpointBase(ReportsEndpointBase):
         if format is not None:
             self._validate_format(format)
 
-        return ReportsEndpointBase.call(
+        return AdvertiserReportBase.call(
             self,
             action="find_export_queue",
             query_string_dict={

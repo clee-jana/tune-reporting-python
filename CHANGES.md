@@ -98,15 +98,21 @@ Version 0.9.16
 Beta public release on Novenber 19, 2014
 * Fixes to Cohort and Retention reports
 
-Version 0.9.23
+Version 0.9.20
 --------------
 
 Beta public release on December 10, 2014
 * Refactored to accomodate *tune-reporting-python*
-
 
 Version 0.9.23
 --------------
 
 Beta public release on December 19, 2014
 * SDK Configuration *tune_reporting_sdk.config* file.
+
+Version 0.9.24
+--------------
+
+Beta public release on December 21, 2014
+* Refactored base endpoints.
+* /advertiser/stats/ltv is now referred to ad Value reporting.

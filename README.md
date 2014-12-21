@@ -1,8 +1,8 @@
 <h2>tune-reporting-python</h2>
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
-<h4>Update:  $Date: 2014-12-19 15:59:09 $
-<h4>Version: 0.9.23
+<h4>Update:  $Date: 2014-12-21 13:25:20 $
+<h4>Version: 0.9.24
 ===
 
 <a id="TOP"></a>
@@ -323,7 +323,7 @@ The Cohort report analyzes user behavior back to click date time (Cohort by Clic
 
 Advertiser Reporting class that perform Cohort Reports is:
 <ul>
-    <li><code>AdvertiserReportCohort</code>: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__ltv">/advertiser/stats/ltv</a></li>
+    <li><code>AdvertiserReportValue</code>: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__ltv">/advertiser/stats/ltv</a></li>
 </ul>
 </dd>
 <dt>Retention Report</dt>
@@ -409,7 +409,7 @@ tune_reporting
 ├── api
 │   ├── advertiser_report_actuals.py
 │   ├── advertiser_report_clicks.py
-│   ├── advertiser_report_cohort.py
+│   ├── advertiser_report_value.py
 │   ├── advertiser_report_event_items.py
 │   ├── advertiser_report_events.py
 │   ├── advertiser_report_installs.py
@@ -421,10 +421,10 @@ tune_reporting
 │   ├── endpoints
 │   │   ├── endpoint_base.py
 │   │   ├── __init__.py
-│   │   ├── reports_actuals_endpoint_base.py
-│   │   ├── reports_endpoint_base.py
-│   │   ├── reports_insights_endpoint_base.py
-│   │   └── reports_logs_endpoint_base.py
+│   │   ├── advertiser_report_actuals_base.py
+│   │   ├── advertiser_report_base.py
+│   │   ├── advertiser_report_cohort_base.py
+│   │   └── advertiser_report_logs_base.py
 │   ├── __init__.py
 │   └── service
 │       ├── client.py
@@ -462,7 +462,7 @@ Each Advertiser Report class defined in **/tune_reporting/api/** has an example:
 examples/
 ├── example_advertiser_report_actuals.py
 ├── example_advertiser_report_clicks.py
-├── example_advertiser_report_cohort.py
+├── example_advertiser_report_value.py
 ├── example_advertiser_report_event_items.py
 ├── example_advertiser_report_events.py
 ├── example_advertiser_report_installs.py
@@ -489,7 +489,7 @@ tests/
 ├── requirements.txt
 ├── test_advertiser_report_actuals.py
 ├── test_advertiser_report_clicks.py
-├── test_advertiser_report_cohort.py
+├── test_advertiser_report_value.py
 ├── test_advertiser_report_event_items.py
 ├── test_advertiser_report_events.py
 ├── test_advertiser_report_installs.py
@@ -542,8 +542,8 @@ tests/
 #### Report Readers Classes
 
 <ul>
-    <li><code>ReportReaderCSV</code> - Reads exported CSV report using downloaded URL.</li>
-    <li><code>ReportReaderJSON</code> - Reads exported JSON report using downloaded URL.</li>
+    <li><code>ReportReaderCSV</code> - Reads exported CSV using downloaded URL.</li>
+    <li><code>ReportReaderJSON</code> - Reads exported JSON using downloaded URL.</li>
 </ul>
 
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_reporting_reader_classes.png">

@@ -5,7 +5,7 @@ TUNE Management Insights Reports Endpoint base
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  reports_insights_endpoint_base.py
+#  advertiser_report_cohort_base.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -36,14 +36,14 @@ TUNE Management Insights Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 import sys
 
-from .reports_endpoint_base import (
-    ReportsEndpointBase
+from .advertiser_report_base import (
+    AdvertiserReportBase
 )
 from tune_reporting.helpers import (
     TuneSdkException
@@ -55,7 +55,7 @@ from tune_reporting.base.endpoints import (
 
 ## Base class for handling TUNE Management API Insight stats reports.
 #
-class ReportsInsightEndpointBase(ReportsEndpointBase):
+class AdvertiserReportCohortBase(AdvertiserReportBase):
     """
     Base class for handling TUNE Management API Insight stats reports.
     """
@@ -79,7 +79,7 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
             :param bool filter_test_profile_id: Remove test profile information
                                                     from results.
         """
-        ReportsEndpointBase.__init__(
+        AdvertiserReportBase.__init__(
             self,
             controller,
             filter_debug_mode,
@@ -142,7 +142,7 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
         if filter is not None:
             filter = self._validate_filter(filter)
 
-        return ReportsEndpointBase.call(
+        return AdvertiserReportBase.call(
             self,
             action="count",
             query_string_dict={
@@ -173,7 +173,7 @@ class ReportsInsightEndpointBase(ReportsEndpointBase):
         if not job_id or len(job_id) < 1:
             raise ValueError("Parameter 'job_id' is not defined.")
 
-        return ReportsEndpointBase.call(
+        return AdvertiserReportBase.call(
             self,
             "status",
             {

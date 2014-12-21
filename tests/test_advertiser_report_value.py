@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  test_advertiser_report_cohort.py
+#  test_advertiser_report_value.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -45,7 +45,7 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(current_dir + "/..")
 try:
     from tune_reporting import (
-        AdvertiserReportCohort,
+        AdvertiserReportValue,
         SdkConfig,
         TUNE_FIELDS_RECOMMENDED
         )
@@ -54,7 +54,7 @@ except ImportError as exc:
     raise
 
 
-class TestAdvertiserReportCohort(unittest.TestCase):
+class TestAdvertiserReportValue(unittest.TestCase):
 
     def __init__(self):
         dirname = os.path.split(__file__)[0]
@@ -80,7 +80,7 @@ class TestAdvertiserReportCohort(unittest.TestCase):
     def test_Fields(self):
         response = None
 
-        advertiser_report = AdvertiserReportCohort()
+        advertiser_report = AdvertiserReportValue()
 
         response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
         self.assertIsNotNone(response)
@@ -90,7 +90,7 @@ class TestAdvertiserReportCohort(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportCohort()
+            advertiser_report = AdvertiserReportValue()
 
             response = advertiser_report.count(
                 self.__start_date,
@@ -115,7 +115,7 @@ class TestAdvertiserReportCohort(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportCohort()
+            advertiser_report = AdvertiserReportValue()
 
             response = advertiser_report.find(
                 self.__start_date,
@@ -145,7 +145,7 @@ class TestAdvertiserReportCohort(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportCohort()
+            advertiser_report = AdvertiserReportValue()
 
             response = advertiser_report.export(
                 self.__start_date,

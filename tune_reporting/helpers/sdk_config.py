@@ -36,7 +36,7 @@ TUNE SDK Configuration Class
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 11:19:31 $
+#  @version   $Date: 2014-12-19 17:18:01 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -125,6 +125,7 @@ class SdkConfig(object):
 
         @property
         def api_key(self):
+            """Get TUNE MobileAppTracking API Key from SDK Configuration File."""
             if "tune_reporting_api_key_string" not in self.sections_dict["TUNE_REPORTING"]:
                 return None
             api_key = self.sections_dict["TUNE_REPORTING"]["tune_reporting_api_key_string"]
@@ -134,6 +135,7 @@ class SdkConfig(object):
 
         @property
         def validate_fields(self):
+            """Get boolean flag to validate fields from SDK Configuration File."""
             if "tune_reporting_validate_fields_boolean" not in self.sections_dict["TUNE_REPORTING"]:
                 return False
             verify_fields = self.sections_dict["TUNE_REPORTING"]["tune_reporting_validate_fields_boolean"]
@@ -143,6 +145,7 @@ class SdkConfig(object):
 
         @property
         def status_sleep(self):
+            """Get number of seconds to sleep between status requests from SDK Configuration File."""
             if "tune_reporting_export_status_sleep_seconds" not in self.sections_dict["TUNE_REPORTING"]:
                 return 0
             status_sleep = self.sections_dict["TUNE_REPORTING"]["tune_reporting_export_status_sleep_seconds"]
@@ -152,6 +155,7 @@ class SdkConfig(object):
 
         @property
         def status_timeout(self):
+            """Get number of seconds to timeout status requests from SDK Configuration File."""
             if "tune_reporting_export_status_timeout_seconds" not in self.sections_dict["TUNE_REPORTING"]:
                 return 0
             status_timeout = self.sections_dict["TUNE_REPORTING"]["tune_reporting_export_status_timeout_seconds"]

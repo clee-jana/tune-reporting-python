@@ -29,7 +29,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -42,8 +42,8 @@ from test_advertiser_report_events import TestAdvertiserReportEvents
 from test_advertiser_report_installs import TestAdvertiserReportInstalls
 from test_advertiser_report_postbacks import TestAdvertiserReportPostbacks
 from test_advertiser_report_actuals import TestAdvertiserReportActuals
-from test_advertiser_report_cohort import TestAdvertiserReportCohort
 from test_advertiser_report_retention import TestAdvertiserReportRetention
+from test_advertiser_report_value import TestAdvertiserReportValue
 
 
 def suite():
@@ -56,8 +56,8 @@ def suite():
     suite.addTest(TestAdvertiserReportInstalls())
     suite.addTest(TestAdvertiserReportPostbacks())
     suite.addTest(TestAdvertiserReportActuals())
-    suite.addTest(TestAdvertiserReportCohort())
     suite.addTest(TestAdvertiserReportRetention())
+    suite.addTest(TestAdvertiserReportValue())
 
     return suite
 
