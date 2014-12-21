@@ -29,7 +29,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -47,7 +47,7 @@ except ImportError as exc:
     raise
 
 from example_advertiser_report_actuals import ExampleAdvertiserReportActuals
-from example_advertiser_report_cohort import ExampleAdvertiserReportCohort
+from example_advertiser_report_value import ExampleAdvertiserReportValue
 from example_advertiser_report_retention import ExampleAdvertiserReportRetention
 
 from example_advertiser_report_clicks import ExampleAdvertiserReportClicks
@@ -61,7 +61,7 @@ if __name__ == '__main__':
         example = ExampleAdvertiserReportActuals()
         example.run()
 
-        example = ExampleAdvertiserReportCohort()
+        example = ExampleAdvertiserReportValue()
         example.run()
 
         example = ExampleAdvertiserReportRetention()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  example_advertiser_report_cohort.py
+#  example_advertiser_report_value.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #  Cohort Report
@@ -72,7 +72,7 @@ import traceback
 
 try:
     from tune_reporting import (
-        AdvertiserReportCohort,
+        AdvertiserReportValue,
         ReportReaderCSV,
         SdkConfig,
         TuneSdkException,
@@ -84,8 +84,8 @@ except ImportError as exc:
     raise
 
 
-class ExampleAdvertiserReportCohort(object):
-    """Example using TUNE Advertiser Report Cohort."""
+class ExampleAdvertiserReportValue(object):
+    """Example using TUNE Advertiser Report Value."""
 
     def __init__(self):
         # Setup SDK Configuration with TUNE MobileAppTracking API Key.
@@ -105,14 +105,14 @@ class ExampleAdvertiserReportCohort(object):
         if not api_key or len(api_key) < 1:
             raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
-    # Example of running successful requests to TUNE Advertiser Report Cohort.
+    # Example of running successful requests to TUNE Advertiser Report Value.
     #
     def run(self):
         """Run Example"""
 
         print("")
         print("\033[34m" + "=================================================" + "\033[0m")
-        print("\033[34m" + " TUNE Advertiser Report Cohort                   " + "\033[0m")
+        print("\033[34m" + " TUNE Advertiser Report Value                    " + "\033[0m")
         print("\033[34m" + "================================================ " + "\033[0m")
 
         try:
@@ -121,30 +121,30 @@ class ExampleAdvertiserReportCohort(object):
             start_date = "{} 00:00:00".format(week_ago)
             end_date = "{} 23:59:59".format(yesterday)
 
-            advertiser_report = AdvertiserReportCohort()
+            advertiser_report = AdvertiserReportValue()
 
             print("")
-            print("======================================================")
-            print(" Default Fields of Advertiser Report Cohort           ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Default Fields of Advertiser Report Value                 ")
+            print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_DEFAULT)
             for field in response:
                 print(str(field))
 
             print("")
-            print("======================================================")
-            print(" Recommended Fields of Advertiser Report Cohort       ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Recommended Fields of Advertiser Report Value             ")
+            print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
             print("")
-            print("======================================================")
-            print(" Count Advertiser Cohort click records.               ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Count Advertiser Report Value click records.              ")
+            print("===========================================================")
 
             response = advertiser_report.count(
                 start_date,
@@ -166,9 +166,9 @@ class ExampleAdvertiserReportCohort(object):
             print(str(response.data))
 
             print("")
-            print("======================================================")
-            print(" Count Advertiser Cohort install records.             ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Count Advertiser Report Value install records.            ")
+            print("===========================================================")
 
             response = advertiser_report.count(
                 start_date,
@@ -192,9 +192,9 @@ class ExampleAdvertiserReportCohort(object):
             print(str(response.data))
 
             print("")
-            print("==========================================================")
-            print(" Find Advertiser Cohort 'click/cumulative' records.       ")
-            print("==========================================================")
+            print("===========================================================")
+            print(" Find Advertiser Report Value 'click/cumulative' records. ")
+            print("===========================================================")
 
             response = advertiser_report.find(
                 start_date,
@@ -218,9 +218,9 @@ class ExampleAdvertiserReportCohort(object):
             print(str(response))
 
             print("")
-            print("==========================================================")
-            print(" Find Advertiser Cohort 'click/cumulative' records.       ")
-            print("==========================================================")
+            print("===========================================================")
+            print(" Find Advertiser Report Value 'click/cumulative' records. ")
+            print("===========================================================")
 
             response = advertiser_report.find(
                 start_date,
@@ -244,9 +244,9 @@ class ExampleAdvertiserReportCohort(object):
             print(str(response))
 
             print("")
-            print("==========================================================")
-            print(" Export Advertiser Cohort CSV report                      ")
-            print("==========================================================")
+            print("===========================================================")
+            print(" Export Advertiser Report Value CSV                ")
+            print("===========================================================")
 
             response = advertiser_report.export(
                 start_date,
@@ -266,14 +266,14 @@ class ExampleAdvertiserReportCohort(object):
             print(" TuneManagementResponse:")
             print(str(response))
 
-            job_id = AdvertiserReportCohort.parse_response_report_job_id(response)
+            job_id = AdvertiserReportValue.parse_response_report_job_id(response)
 
             print(" CSV Job ID: {}".format(job_id))
 
             print("")
-            print("========================================================")
-            print(" Fetching Advertiser Cohort CSV report.                 ")
-            print("========================================================")
+            print("===========================================================")
+            print(" Fetching Advertiser Report Value CSV.           ")
+            print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
                 job_id,
@@ -288,14 +288,14 @@ class ExampleAdvertiserReportCohort(object):
                 print("Exit")
                 return
 
-            csv_report_url = AdvertiserReportCohort.parse_response_report_url(export_fetch_response)
+            csv_report_url = AdvertiserReportValue.parse_response_report_url(export_fetch_response)
 
             print(" CSV Report URL: {}".format(csv_report_url))
 
             print("")
-            print("========================================================")
-            print(" Read Advertiser Report Cohort CSV report               ")
-            print("========================================================")
+            print("===========================================================")
+            print(" Read Advertiser Report Value CSV                ")
+            print("===========================================================")
 
             csv_report_reader = ReportReaderCSV(csv_report_url)
             csv_report_reader.read()
@@ -338,7 +338,7 @@ class ExampleAdvertiserReportCohort(object):
 
 if __name__ == '__main__':
     try:
-        example = ExampleAdvertiserReportCohort()
+        example = ExampleAdvertiserReportValue()
         example.run()
     except Exception as exc:
         print("Exception: {0}".format(exc))

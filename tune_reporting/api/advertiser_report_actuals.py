@@ -36,18 +36,18 @@ TUNE Management API '/advertiser/stats/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 from tune_reporting.base import (
-    ReportsActualsEndpointBase
+    AdvertiserReportActualsBase
 )
 
 
 #  /advertiser/stats
 #  @example example_reports_actuals.py
-class AdvertiserReportActuals(ReportsActualsEndpointBase):
+class AdvertiserReportActuals(AdvertiserReportActualsBase):
     """
     TUNE Management API endpoint '/advertiser/stats/'
     """
@@ -57,7 +57,7 @@ class AdvertiserReportActuals(ReportsActualsEndpointBase):
     def __init__(self):
         """The constructor.
         """
-        ReportsActualsEndpointBase.__init__(
+        AdvertiserReportActualsBase.__init__(
             self,
             "advertiser/stats",
             True,

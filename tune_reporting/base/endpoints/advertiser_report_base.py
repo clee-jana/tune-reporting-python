@@ -5,7 +5,7 @@ TUNE Management Reports Endpoint base
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  reports_endpoint_base.py
+#  advertiser_report_base.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -36,7 +36,7 @@ TUNE Management Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -47,7 +47,7 @@ from tune_reporting.base.endpoints import (
 
 ## Base components for every TUNE Management API reports.
 #
-class ReportsEndpointBase(EndpointBase):
+class AdvertiserReportBase(EndpointBase):
     """Base components for every TUNE Management API reports.
     """
 

@@ -36,12 +36,12 @@ TUNE Management API '/advertiser/stats/ltv/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 from tune_reporting.base import (
-    ReportsInsightEndpointBase
+    AdvertiserReportCohortBase
 )
 from tune_reporting.base.endpoints import (
     TUNE_FIELDS_DEFAULT
@@ -50,7 +50,7 @@ from tune_reporting.base.endpoints import (
 
 #  /advertiser/stats/ltv
 #  @example example_reports_cohort.py
-class AdvertiserReportCohort(ReportsInsightEndpointBase):
+class AdvertiserReportValue(AdvertiserReportCohortBase):
     """TUNE Management API controller 'advertiser/stats/ltv'"""
 
     ## The constructor.
@@ -58,7 +58,7 @@ class AdvertiserReportCohort(ReportsInsightEndpointBase):
     def __init__(self):
         """The constructor.
         """
-        ReportsInsightEndpointBase.__init__(
+        AdvertiserReportCohortBase.__init__(
             self,
             "advertiser/stats/ltv",
             False,
@@ -309,7 +309,7 @@ class AdvertiserReportCohort(ReportsInsightEndpointBase):
                                         status on export queue.
             :return: (TuneManagementResponse)
         """
-        return super(AdvertiserReportCohort, self)._fetch(
+        return super(AdvertiserReportValue, self)._fetch(
             self.controller,
             "status",
             job_id,

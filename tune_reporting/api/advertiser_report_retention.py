@@ -36,12 +36,12 @@ TUNE Management API '/advertiser/stats/retention/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 from tune_reporting.base import (
-    ReportsInsightEndpointBase
+    AdvertiserReportCohortBase
 )
 from tune_reporting.base.endpoints import (
     TUNE_FIELDS_DEFAULT
@@ -50,7 +50,7 @@ from tune_reporting.base.endpoints import (
 
 #  /advertiser/stats/retention
 #  @example example_reports_retention.py
-class AdvertiserReportRetention(ReportsInsightEndpointBase):
+class AdvertiserReportRetention(AdvertiserReportCohortBase):
     """
     TUNE Management API controller 'advertiser/stats/retention'
     """
@@ -60,7 +60,7 @@ class AdvertiserReportRetention(ReportsInsightEndpointBase):
     def __init__(self):
         """The constructor.
         """
-        ReportsInsightEndpointBase.__init__(
+        AdvertiserReportCohortBase.__init__(
             self,
             "advertiser/stats/retention",
             False,

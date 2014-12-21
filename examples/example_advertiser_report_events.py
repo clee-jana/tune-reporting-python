@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #
@@ -108,18 +108,18 @@ class ExampleAdvertiserReportEvents(object):
             advertiser_report = AdvertiserReportEvents()
 
             print("")
-            print("======================================================")
-            print(" Fields of Advertiser Report Events records.            ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Fields of Advertiser Report Events records.               ")
+            print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
             print("")
-            print("======================================================")
-            print(" Count Advertiser Report Events records.              ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Count Advertiser Report Events records.                   ")
+            print("===========================================================")
 
             response = advertiser_report.count(
                 start_date,
@@ -137,9 +137,9 @@ class ExampleAdvertiserReportEvents(object):
             print(str(response.data))
 
             print("")
-            print("======================================================")
-            print(" Find Advertiser Report Events records.               ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Find Advertiser Report Events records.                    ")
+            print("===========================================================")
 
             response = advertiser_report.find(
                 start_date,
@@ -159,9 +159,9 @@ class ExampleAdvertiserReportEvents(object):
             print(str(response))
 
             print("")
-            print("==========================================================")
-            print(" Export Advertiser Report Events CSV report               ")
-            print("==========================================================")
+            print("===========================================================")
+            print(" Export Advertiser Report Events CSV                       ")
+            print("===========================================================")
 
             response = advertiser_report.export(
                 start_date,
@@ -183,9 +183,9 @@ class ExampleAdvertiserReportEvents(object):
             print(" CSV Job ID: {}".format(job_id))
 
             print("")
-            print("=================================================================")
-            print(" Fetching Advertiser Report Events CSV report                      ")
-            print("=================================================================")
+            print("===========================================================")
+            print(" Fetching Advertiser Report Events CSV                     ")
+            print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
                 job_id,
@@ -198,9 +198,9 @@ class ExampleAdvertiserReportEvents(object):
             print(" CVS Report URL: {}".format(csv_report_url))
 
             print("")
-            print("========================================================")
-            print(" Read Events CSV report       ")
-            print("========================================================")
+            print("===========================================================")
+            print(" Read Advertiser Report Events CSV                         ")
+            print("===========================================================")
 
             csv_report_reader = ReportReaderCSV(csv_report_url)
             csv_report_reader.read()
@@ -208,7 +208,7 @@ class ExampleAdvertiserReportEvents(object):
 
             print("")
             print("===========================================================")
-            print(" Export Advertiser Report Events JSON report ")
+            print(" Export Advertiser Report Events JSON                      ")
             print("===========================================================")
 
             response = advertiser_report.export(
@@ -231,9 +231,9 @@ class ExampleAdvertiserReportEvents(object):
             print(" JSON Job ID: {}".format(job_id))
 
             print("")
-            print("========================================================")
-            print(" Fetching Advertiser Report Events JSON report.           ")
-            print("========================================================")
+            print("===========================================================")
+            print(" Fetching Advertiser Report Events JSON                    ")
+            print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
                 job_id,
@@ -253,9 +253,9 @@ class ExampleAdvertiserReportEvents(object):
             print(" JSON Report URL: {}".format(json_report_url))
 
             print("")
-            print("========================================================")
-            print(" Read Events JSON report      ")
-            print("========================================================")
+            print("===========================================================")
+            print(" Read Advertiser Report Events JSON                        ")
+            print("===========================================================")
 
             json_report_reader = ReportReaderJSON(json_report_url)
             json_report_reader.read()

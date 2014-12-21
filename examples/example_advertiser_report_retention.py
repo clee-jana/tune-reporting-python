@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-21 13:25:20 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #  Retention Report
@@ -124,27 +124,27 @@ class ExampleAdvertiserReportRetention(object):
             advertiser_report = AdvertiserReportRetention()
 
             print("")
-            print("======================================================")
-            print(" Default Fields of Advertiser Report Retention        ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Default Fields of Advertiser Report Retention             ")
+            print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_DEFAULT)
             for field in response:
                 print(str(field))
 
             print("")
-            print("======================================================")
-            print(" Recommended Fields of Advertiser Report Retention    ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Recommended Fields of Advertiser Report Retention         ")
+            print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
             for field in response:
                 print(str(field))
 
             print("")
-            print("======================================================")
-            print(" Count Advertiser Report Retention click records.     ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Count Advertiser Report Retention click records.          ")
+            print("===========================================================")
 
             response = advertiser_report.count(
                 start_date,
@@ -166,9 +166,9 @@ class ExampleAdvertiserReportRetention(object):
             print(str(response.data))
 
             print("")
-            print("======================================================")
-            print(" Count Advertiser Report Retention install records.   ")
-            print("======================================================")
+            print("===========================================================")
+            print(" Count Advertiser Report Retention install records.        ")
+            print("===========================================================")
 
             response = advertiser_report.count(
                 start_date,
@@ -193,9 +193,9 @@ class ExampleAdvertiserReportRetention(object):
             print(str(response.data))
 
             print("")
-            print("====================================================================")
-            print(" Find Advertiser Report Retention 'click/cumulative' records - Default.    ")
-            print("====================================================================")
+            print("=========================================================================")
+            print(" Find Advertiser Report Retention 'click/cumulative' records - Default.  ")
+            print("=========================================================================")
 
             response = advertiser_report.find(
                 start_date,
@@ -243,9 +243,9 @@ class ExampleAdvertiserReportRetention(object):
             print(str(response))
 
             print("")
-            print("==========================================================")
-            print(" Export Advertiser Report Retention CSV report                   ")
-            print("==========================================================")
+            print("===========================================================")
+            print(" Export Advertiser Report Retention CSV                    ")
+            print("===========================================================")
 
             response = advertiser_report.export(
                 start_date,
@@ -269,9 +269,9 @@ class ExampleAdvertiserReportRetention(object):
             print(" CSV Job ID: {}".format(job_id))
 
             print("")
-            print("========================================================")
-            print(" Fetching Advertiser Report Retention CSV report.              ")
-            print("========================================================")
+            print("===========================================================")
+            print(" Fetching Advertiser Report Retention CSV.                 ")
+            print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
                 job_id,
@@ -291,9 +291,9 @@ class ExampleAdvertiserReportRetention(object):
             print(" CSV Report URL: {}".format(csv_report_url))
 
             print("")
-            print("========================================================")
-            print(" Read Advertiser Report Retention CSV report    ")
-            print("========================================================")
+            print("===========================================================")
+            print(" Read Advertiser Report Retention CSV                      ")
+            print("===========================================================")
 
             csv_report_reader = ReportReaderCSV(csv_report_url)
             csv_report_reader.read()

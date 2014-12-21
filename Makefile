@@ -26,7 +26,7 @@
 # author    Jeff Tanner <jefft@tune.com>
 # copyright 2014 Tune (http://www.tune.com)
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# update    $Date: 2014-12-19 15:59:09 $
+# update    $Date: 2014-12-21 13:25:20 $
 # version   $Version: 0.9.20 $
 # link      https://developers.mobileapptracking.com
 #
@@ -74,7 +74,7 @@ tests:
 tests-travis-ci:
 	flake8 --ignore=F401,E265,E129 tune
 	flake8 --ignore=E123,E126,E128,E265,E501 tests
-	python ./tests/tune_tests.py $(api_key)
+	python ./tests/tune_reporting_tests.py
 
 examples:
 	python ./examples/tune_reporting_examples.py
