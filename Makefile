@@ -26,7 +26,7 @@
 # author    Jeff Tanner <jefft@tune.com>
 # copyright 2014 Tune (http://www.tune.com)
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# update    $Date: 2014-12-21 13:25:20 $
+# update    $Date: 2014-12-21 21:48:56 $
 # version   $Version: 0.9.20 $
 # link      https://developers.mobileapptracking.com
 #
@@ -85,7 +85,7 @@ analysis: install
 	. venv/bin/activate; flake8 --ignore=F401,E265,E129 tune
 	. venv/bin/activate; pylint --rcfile ./tools/pylintrc tune
 
-docs-install:
+docs-install: venv
 	. venv/bin/activate; pip install -r docs/sphinx/requirements.txt
 
 docs-sphinx: docs-install

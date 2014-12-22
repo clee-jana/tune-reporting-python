@@ -64,8 +64,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Tune Reporting API SDK for Python'
-copyright = unicode(datetime.utcnow().year) + u', Tune Inc'
+project = u'TUNE Reporting SDK for Python'
+copyright = unicode(datetime.utcnow().year) + u', TUNE Inc'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -138,7 +138,7 @@ html_theme_options = {
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = "../tune-logo-with-dial.png"
+html_logo = "../mobileapptracking-logo.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -197,7 +197,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'tune_api_pythondoc'
+htmlhelp_basename = 'tune_reporting_pythondoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -217,7 +217,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'tune_api_python.tex', u'Tune Reporting API SDK for Python',
+  ('index', 'tune_reporting_python.tex', u'TUNE Reporting SDK for Python',
    u'Jeff Tanner', 'manual'),
 ]
 
@@ -247,8 +247,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'tune_api_python', u'Tune Reporting API SDK for Python',
-     [u'Tune Inc.'], 1)
+    ('index', 'tune_reporting_python', u'TUNE Reporting SDK for Python',
+     [u'TUNE, Inc.'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -261,8 +261,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'tune_api_python', u'Tune Reporting API SDK for Python',
-   u'Jeff Tanner', 'tune_api_python', 'Tune Reporting API Helper for Python Programmers.',
+  ('index', 'tune_reporting_python', u'TUNE Reporting SDK for Python',
+   u'Jeff Tanner', 'tune_api_python', 'TUNE Reporting Helper for Python Programmers.',
    'Miscellaneous'),
 ]
 
@@ -282,10 +282,10 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'Tune Reporting API SDK for Python'
-epub_author = u'Tune Inc.'
-epub_publisher = u'Tune Inc.'
-epub_copyright = u'2014, Tune Inc.'
+epub_title = u'TUNE Reporting SDK for Python'
+epub_author = u'Jeff Tanner, jefft@tune.com'
+epub_publisher = u'TUNE, Inc.'
+epub_copyright = u'2014, TUNE Inc.'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'tune_api_python'
