@@ -55,9 +55,9 @@ dist-install:
 
 dist:
 	sudo rm -fR ./dist/*
-	sudo python setup.py sdist --format=zip,gztar
-	sudo python setup.py bdist_egg
-	sudo python setup.py bdist_wheel
+	sudo python setup.py sdist --format=zip,gztar upload
+	sudo python setup.py bdist_egg upload
+	sudo python setup.py bdist_wheel upload
 
 build:
 	sudo pip install -r requirements.txt

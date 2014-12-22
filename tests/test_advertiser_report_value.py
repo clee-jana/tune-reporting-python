@@ -41,8 +41,6 @@ import os.path
 import sys
 import unittest
 
-current_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(current_dir + "/..")
 try:
     from tune_reporting import (
         AdvertiserReportValue,
