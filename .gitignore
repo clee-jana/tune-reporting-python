@@ -9,7 +9,7 @@
 .dartignore
 
 # Code build files
-tune_reporting.egg-info
+tune_reporting.egg-info/
 build/
 __pycache__/
 *.pyc
