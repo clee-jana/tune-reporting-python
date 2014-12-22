@@ -45,9 +45,7 @@ from test_advertiser_report_actuals import TestAdvertiserReportActuals
 from test_advertiser_report_retention import TestAdvertiserReportRetention
 from test_advertiser_report_value import TestAdvertiserReportValue
 
-
 def suite():
-
     suite = unittest.TestSuite()
 
     suite.addTest(TestAdvertiserReportClicks())

@@ -48,8 +48,9 @@ Install from PyPi using package manager for Python: `pip <http://www.pip-install
 .. code-block:: bash
     :linenos:
 
-    $ pip install tune_reporting
+    $ pip install --upgrade tune-reporting
 
+You may need to run the above commands with *sudo*.
 
 Don't have pip installed? Try installing it, by running this from the command
 line:

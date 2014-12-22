@@ -190,8 +190,9 @@ Install from PyPi using [pip](http://www.pip-installer.org/en/latest/), a
 package manager for Python.
 
 ```bash
-    $ pip install git+https://github.com/MobileAppTracking/tune-reporting-python
+    $ pip install --upgrade tune-reporting
 ```
+
 You may need to run the above commands with `sudo`.
 
 Don't have pip installed? Try installing it, by running this from the command
