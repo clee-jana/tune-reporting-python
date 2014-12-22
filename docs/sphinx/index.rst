@@ -9,8 +9,8 @@ Tune Reporting API SDK for Python documentation
     :package: `tune-reporting-python <https://github.com/MobileAppTracking/tune-reporting-python>`_
     :label: Tune Reporting API SDK for Python 2.7 and 3.0
     :purpose: Incorporate Tune Reporting API services.
-    :update:  2014-12-10
-    :version: 0.9.20
+    :update:  $Date: 2014-12-21 21:48:56 $
+    :version: 0.9.24
 
 -------------------
 Contents:
@@ -57,8 +57,6 @@ You can install `tune-reporting-python` via PyPi or by installing from source.
 
 Via PyPi using pip:
 ********************
-
-*tune_reporting* module is in *PyPi*: `link <https://pypi.python.org/pypi/tune_reporting/>`_
 
 Install from PyPi using package manager for Python: `pip <http://www.pip-installer.org/en/latest/>`_
 
