@@ -1,11 +1,11 @@
 """
-TUNE Management API '/advertiser/stats/installs/'
-====================================================
+TUNE Management API '/advertiser/stats/clicks/'
+================================================
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  installs.py
+#  clicks.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -36,28 +36,31 @@ TUNE Management API '/advertiser/stats/installs/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 from tune_reporting.base import (
-    AdvertiserReportLogsBase
+    AdvertiserReportLogBase
 )
 
 
-#  /advertiser/stats/installs
-#  @example example_reports_installs.py
-class AdvertiserReportInstalls(AdvertiserReportLogsBase):
-    """Advertiser Stats logs pertaining to installs."""
+#  /advertiser/stats/clicks
+#
+#  @example example_reports_clicks.py
+#
+class AdvertiserReportLogClicks(AdvertiserReportLogBase):
+    """TUNE Management API endpoint '/advertiser/stats/clicks'
+    """
 
     ## The constructor.
     #
     def __init__(self):
         """The constructor.
         """
-        AdvertiserReportLogsBase.__init__(
+        AdvertiserReportLogBase.__init__(
             self,
-            "advertiser/stats/installs",
+            "advertiser/stats/clicks",
             True,
             True
         )
@@ -65,23 +68,13 @@ class AdvertiserReportInstalls(AdvertiserReportLogsBase):
         self.fields_recommended = [
             "id",
             "created",
-            "status",
             "site_id",
             "site.name",
             "publisher_id",
             "publisher.name",
-            "advertiser_ref_id",
+            "is_unique",
             "advertiser_sub_campaign_id",
             "advertiser_sub_campaign.ref",
             "publisher_sub_campaign_id",
-            "publisher_sub_campaign.ref",
-            "user_id",
-            "device_id",
-            "os_id",
-            "google_aid",
-            "ios_ifa",
-            "ios_ifv",
-            "windows_aid",
-            "referral_url",
-            "is_view_through"
+            "publisher_sub_campaign.ref"
         ]

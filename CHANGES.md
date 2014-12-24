@@ -116,3 +116,10 @@ Version 0.9.24
 Beta public release on December 21, 2014
 * Refactored base endpoints.
 * /advertiser/stats/ltv is now referred to ad Value reporting.
+
+Version 0.9.26
+--------------
+
+Beta public release on December 24, 2014
+* Refactored Log and Cohort classes.
+* Tune Management API request contains SDK name and version.

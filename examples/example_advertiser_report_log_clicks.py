@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #
@@ -56,7 +56,7 @@ import traceback
 
 try:
     from tune_reporting import (
-        AdvertiserReportClicks,
+        AdvertiserReportLogClicks,
         ReportReaderCSV,
         ReportReaderJSON,
         SdkConfig,
@@ -69,8 +69,8 @@ except ImportError as exc:
     raise
 
 
-class ExampleAdvertiserReportClicks(object):
-    """Example using TUNE Advertiser Report Clicks."""
+class ExampleAdvertiserReportLogClicks(object):
+    """Example using TUNE Advertiser Report Log Clicks."""
 
     def __init__(self):
         # Setup SDK Configuration with TUNE MobileAppTracking API Key.
@@ -91,14 +91,14 @@ class ExampleAdvertiserReportClicks(object):
             raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
     #
-    # Example of running successful requests to TUNE Advertiser Report Clicks.
+    # Example of running successful requests to TUNE Advertiser Report Log Clicks.
     #
     def run(self):
         """Run Example"""
 
         print("")
         print("\033[34m" + "=================================================" + "\033[0m")
-        print("\033[34m" + " TUNE Advertiser Report Clicks                   " + "\033[0m")
+        print("\033[34m" + " TUNE Advertiser Report Log Clicks               " + "\033[0m")
         print("\033[34m" + "================================================ " + "\033[0m")
 
         try:
@@ -106,11 +106,11 @@ class ExampleAdvertiserReportClicks(object):
             start_date = "{} 00:00:00".format(yesterday)
             end_date = "{} 23:59:59".format(yesterday)
 
-            advertiser_report = AdvertiserReportClicks()
+            advertiser_report = AdvertiserReportLogClicks()
 
             print("")
             print("===========================================================")
-            print(" Default Fields of Advertiser Report Clicks                ")
+            print(" Default Fields of Advertiser Report Log Clicks            ")
             print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_DEFAULT)
@@ -119,7 +119,7 @@ class ExampleAdvertiserReportClicks(object):
 
             print("")
             print("===========================================================")
-            print(" Recommended Fields of Advertiser Report Clicks            ")
+            print(" Recommended Fields of Advertiser Report Log Clicks            ")
             print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
@@ -128,7 +128,7 @@ class ExampleAdvertiserReportClicks(object):
 
             print("")
             print("===========================================================")
-            print(" Count Advertiser Report Clicks records.                   ")
+            print(" Count Advertiser Report Log Clicks records.               ")
             print("===========================================================")
 
             response = advertiser_report.count(
@@ -148,7 +148,7 @@ class ExampleAdvertiserReportClicks(object):
 
             print("")
             print("===========================================================")
-            print(" Find Advertiser Report Clicks records with Default fields ")
+            print(" Find Advertiser Report Log Clicks records Default         ")
             print("===========================================================")
 
             response = advertiser_report.find(
@@ -170,7 +170,7 @@ class ExampleAdvertiserReportClicks(object):
 
             print("")
             print("================================================================")
-            print(" Find Advertiser Report Clicks records with Recommended fields. ")
+            print(" Find Advertiser Report Log Clicks records Recommended          ")
             print("================================================================")
 
             response = advertiser_report.find(
@@ -192,7 +192,7 @@ class ExampleAdvertiserReportClicks(object):
 
             print("")
             print("===========================================================")
-            print(" Export Advertiser Report Clicks CSV                       ")
+            print(" Export Advertiser Report Log Clicks CSV                   ")
             print("===========================================================")
 
             response = advertiser_report.export(
@@ -210,13 +210,13 @@ class ExampleAdvertiserReportClicks(object):
             print(" TuneManagementResponse:")
             print(str(response))
 
-            job_id = AdvertiserReportClicks.parse_response_report_job_id(response)
+            job_id = AdvertiserReportLogClicks.parse_response_report_job_id(response)
 
             print(" CSV Job ID: {}".format(job_id))
 
             print("")
             print("===========================================================")
-            print(" Fetching Advertiser Report Clicks CSV                     ")
+            print(" Fetching Advertiser Report Log Clicks CSV                 ")
             print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
@@ -225,13 +225,13 @@ class ExampleAdvertiserReportClicks(object):
                 sleep=10
             )
 
-            csv_report_url = AdvertiserReportClicks.parse_response_report_url(export_fetch_response)
+            csv_report_url = AdvertiserReportLogClicks.parse_response_report_url(export_fetch_response)
 
             print(" CVS Report URL: {}".format(csv_report_url))
 
             print("")
             print("===========================================================")
-            print(" Read Advertiser Report Clicks CSV                         ")
+            print(" Read Advertiser Report Log Clicks CSV                     ")
             print("===========================================================")
 
             csv_report_reader = ReportReaderCSV(csv_report_url)
@@ -240,7 +240,7 @@ class ExampleAdvertiserReportClicks(object):
 
             print("")
             print("===========================================================")
-            print(" Export Advertiser Report Clicks JSON                      ")
+            print(" Export Advertiser Report Log Clicks JSON                  ")
             print("===========================================================")
 
             response = advertiser_report.export(
@@ -258,13 +258,13 @@ class ExampleAdvertiserReportClicks(object):
             print(" TuneManagementResponse:")
             print(str(response))
 
-            job_id = AdvertiserReportClicks.parse_response_report_job_id(response)
+            job_id = AdvertiserReportLogClicks.parse_response_report_job_id(response)
 
             print(" JSON Job ID: {}".format(job_id))
 
             print("")
             print("===========================================================")
-            print(" Fetching Advertiser Report Clicks JSON                    ")
+            print(" Fetching Advertiser Report Log Clicks JSON                ")
             print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
@@ -280,13 +280,13 @@ class ExampleAdvertiserReportClicks(object):
                 print("Exit")
                 return
 
-            json_report_url = AdvertiserReportClicks.parse_response_report_url(export_fetch_response)
+            json_report_url = AdvertiserReportLogClicks.parse_response_report_url(export_fetch_response)
 
             print(" JSON Report URL: {}".format(json_report_url))
 
             print("")
             print("===========================================================")
-            print(" Read Advertiser Report Clicks JSON                        ")
+            print(" Read Advertiser Report Log Clicks JSON                    ")
             print("===========================================================")
 
             json_report_reader = ReportReaderJSON(json_report_url)
@@ -330,7 +330,7 @@ class ExampleAdvertiserReportClicks(object):
 
 if __name__ == '__main__':
     try:
-        example = ExampleAdvertiserReportClicks()
+        example = ExampleAdvertiserReportLogClicks()
         example.run()
     except Exception as exc:
         print("Exception: {0}".format(exc))

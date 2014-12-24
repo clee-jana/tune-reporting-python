@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  example_advertiser_report_installs.py
+#  example_advertiser_report_postback_urls.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,20 +32,20 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
-# You can use the Logs report in the same way as the Actuals reports, but
-# instead of being aggregated by request type, the Logs report contains the
-# logs of each individual request (including the logs for Clicks, Installs,
-# Updates, Events, Event Items, and Postback URLs). The log data is available
-# in real-time, so you can use it for testing, debugging, and ensuring that
-# all measurement and attribution continues to operate smoothly. MAT updates
-# the Logs report every 1 minute.
+#  You can use the Logs report in the same way as the Actuals reports, but
+#  instead of being aggregated by request type, the Logs report contains the
+#  logs of each individual request (including the logs for Clicks, Installs,
+#  Updates, Events, Event Items, and Postback URLs). The log data is available
+#  in real-time, so you can use it for testing, debugging, and ensuring that
+#  all measurement and attribution continues to operate smoothly. MAT updates
+#  the Logs report every 1 minute.
 #
-# https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=advertiser_report
+#  @link https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=advertiser_report @endlink
 #
-# Installs API call: stats/advertiser_report
+#  Postback API call: stats/advertiser_report
 #
 
 import datetime
@@ -55,7 +55,7 @@ import traceback
 
 try:
     from tune_reporting import (
-        AdvertiserReportInstalls,
+        AdvertiserReportLogPostbacks,
         ReportReaderCSV,
         ReportReaderJSON,
         SdkConfig,
@@ -67,9 +67,8 @@ except ImportError as exc:
     raise
 
 
-class ExampleAdvertiserReportInstalls(object):
-
-    """Example using TUNE Advertiser Report Installs."""
+class ExampleAdvertiserReportLogPostbacks(object):
+    """Example using TUNE Advertiser Report Log Postbacks."""
 
     def __init__(self):
         # Setup SDK Configuration with TUNE MobileAppTracking API Key.
@@ -90,14 +89,14 @@ class ExampleAdvertiserReportInstalls(object):
             raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
     #
-    # Example of running successful requests to TUNE Advertiser Report Installs.
+    # Example of running successful requests to TUNE Advertiser Report Log Postbacks.
     #
     def run(self):
         """Run Example"""
 
         print("")
         print("\033[34m" + "=================================================" + "\033[0m")
-        print("\033[34m" + " TUNE Advertiser Report Installs                 " + "\033[0m")
+        print("\033[34m" + " TUNE Advertiser Report Log Postbacks            " + "\033[0m")
         print("\033[34m" + "================================================ " + "\033[0m")
 
         try:
@@ -105,11 +104,11 @@ class ExampleAdvertiserReportInstalls(object):
             start_date = "{} 00:00:00".format(yesterday)
             end_date = "{} 23:59:59".format(yesterday)
 
-            advertiser_report = AdvertiserReportInstalls()
+            advertiser_report = AdvertiserReportLogPostbacks()
 
             print("")
             print("===========================================================")
-            print(" Fields of Advertiser Report Installs records.             ")
+            print(" Recommended Fields of Advertiser Report Log Postbacks.    ")
             print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
@@ -118,7 +117,7 @@ class ExampleAdvertiserReportInstalls(object):
 
             print("")
             print("===========================================================")
-            print(" Count Advertiser Report Installs records.                 ")
+            print(" Count Advertiser Report Log Postbacks records.            ")
             print("===========================================================")
 
             response = advertiser_report.count(
@@ -139,14 +138,14 @@ class ExampleAdvertiserReportInstalls(object):
 
             print("")
             print("===========================================================")
-            print(" Find Advertiser Report Installs records.                  ")
+            print(" Find Advertiser Report Log Postbacks records.             ")
             print("===========================================================")
 
             response = advertiser_report.find(
                 start_date,
                 end_date,
-                filter="(status = 'approved') AND (publisher_id > 0)",
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                filter=None,
                 limit=5,
                 page=None,
                 sort={"created": "DESC"},
@@ -161,14 +160,14 @@ class ExampleAdvertiserReportInstalls(object):
 
             print("")
             print("===========================================================")
-            print(" Export Advertiser Report Installs CSV                     ")
+            print(" Export Advertiser Report Log Postbacks CSV                ")
             print("===========================================================")
 
             response = advertiser_report.export(
                 start_date,
                 end_date,
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
+                filter=None,
                 format="csv",
                 response_timezone="America/Los_Angeles"
             )
@@ -179,13 +178,13 @@ class ExampleAdvertiserReportInstalls(object):
             print(" TuneManagementResponse:")
             print(str(response))
 
-            job_id = AdvertiserReportInstalls.parse_response_report_job_id(response)
+            job_id = AdvertiserReportLogPostbacks.parse_response_report_job_id(response)
 
             print(" CSV Job ID: {}".format(job_id))
 
             print("")
             print("===========================================================")
-            print(" Fetching Advertiser Report Installs CSV                   ")
+            print(" Fetching Advertiser Report Log Postbacks CSV              ")
             print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
@@ -194,13 +193,13 @@ class ExampleAdvertiserReportInstalls(object):
                 sleep=10
             )
 
-            csv_report_url = AdvertiserReportInstalls.parse_response_report_url(export_fetch_response)
+            csv_report_url = AdvertiserReportLogPostbacks.parse_response_report_url(export_fetch_response)
 
             print(" CVS Report URL: {}".format(csv_report_url))
 
             print("")
             print("===========================================================")
-            print(" Read Advertiser Report Installs CSV                       ")
+            print(" Read Advertiser Report Log Postbacks CSV                  ")
             print("===========================================================")
 
             csv_report_reader = ReportReaderCSV(csv_report_url)
@@ -209,14 +208,14 @@ class ExampleAdvertiserReportInstalls(object):
 
             print("")
             print("===========================================================")
-            print(" Export Advertiser Report Clicks JSON                      ")
+            print(" Export Advertiser Report Log Postbacks JSON               ")
             print("===========================================================")
 
             response = advertiser_report.export(
                 start_date,
                 end_date,
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
+                filter=None,
                 format="json",
                 response_timezone="America/Los_Angeles"
             )
@@ -227,13 +226,13 @@ class ExampleAdvertiserReportInstalls(object):
             print(" TuneManagementResponse:")
             print(str(response))
 
-            job_id = AdvertiserReportInstalls.parse_response_report_job_id(response)
+            job_id = AdvertiserReportLogPostbacks.parse_response_report_job_id(response)
 
             print(" JSON Job ID: {}".format(job_id))
 
             print("")
             print("===========================================================")
-            print(" Fetching Advertiser Report Installs JSON                  ")
+            print(" Fetching Advertiser Report Log Postbacks JSON             ")
             print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
@@ -249,13 +248,13 @@ class ExampleAdvertiserReportInstalls(object):
                 print("Exit")
                 return
 
-            json_report_url = AdvertiserReportInstalls.parse_response_report_url(export_fetch_response)
+            json_report_url = AdvertiserReportLogPostbacks.parse_response_report_url(export_fetch_response)
 
             print(" JSON Report URL: {}".format(json_report_url))
 
             print("")
             print("===========================================================")
-            print(" Read Advertiser Report Installs JSON                      ")
+            print(" Read Advertiser Report Log Postbacks JSON                 ")
             print("===========================================================")
 
             json_report_reader = ReportReaderJSON(json_report_url)
@@ -299,7 +298,7 @@ class ExampleAdvertiserReportInstalls(object):
 
 if __name__ == '__main__':
     try:
-        example = ExampleAdvertiserReportInstalls()
+        example = ExampleAdvertiserReportLogPostbacks()
         example.run()
     except Exception as exc:
         print("Exception: {0}".format(exc))

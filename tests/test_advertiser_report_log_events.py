@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  test_advertiser_report_clicks.py
+#  test_advertiser_report_log_events.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -43,9 +43,8 @@ import unittest
 
 try:
     from tune_reporting import (
-        AdvertiserReportClicks,
+        AdvertiserReportLogEvents,
         SdkConfig,
-        TuneSdkException,
         TUNE_FIELDS_RECOMMENDED
         )
 except ImportError as exc:
@@ -53,7 +52,7 @@ except ImportError as exc:
     raise
 
 
-class TestAdvertiserReportClicks(unittest.TestCase):
+class TestAdvertiserReportLogEvents(unittest.TestCase):
 
     def __init__(self):
         dirname = os.path.split(__file__)[0]
@@ -77,25 +76,26 @@ class TestAdvertiserReportClicks(unittest.TestCase):
 
     def test_Fields(self):
         response = None
-
-        advertiser_report = AdvertiserReportClicks()
+        advertiser_report = AdvertiserReportLogEvents()
 
         response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
-
         self.assertIsNotNone(response)
         self.assertGreater(len(response), 0)
 
     def test_Count(self):
         response = None
 
-        advertiser_report = AdvertiserReportClicks()
+        try:
+            advertiser_report = AdvertiserReportLogEvents()
 
-        response = advertiser_report.count(
-            self.__start_date,
-            self.__end_date,
-            filter=None,
-            response_timezone="America/Los_Angeles"
-        )
+            response = advertiser_report.count(
+                self.__start_date,
+                self.__end_date,
+                filter="(status = 'approved')",
+                response_timezone="America/Los_Angeles"
+                )
+        except Exception as exc:
+            self.fail("Exception: {0}".format(exc))
 
         self.assertIsNotNone(response)
         self.assertIsNotNone(response.data)
@@ -105,20 +105,24 @@ class TestAdvertiserReportClicks(unittest.TestCase):
         self.assertGreaterEqual(response.data, 0)
 
     def test_Find(self):
+
         response = None
 
-        advertiser_report = AdvertiserReportClicks()
+        try:
+            advertiser_report = AdvertiserReportLogEvents()
 
-        response = advertiser_report.find(
-            self.__start_date,
-            self.__end_date,
-            fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-            filter=None,
-            limit=5,
-            page=None,
-            sort={"created": "DESC"},
-            response_timezone="America/Los_Angeles"
-        )
+            response = advertiser_report.find(
+                self.__start_date,
+                self.__end_date,
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                filter="(status = 'approved')",
+                limit=10,
+                page=None,
+                sort={"created": "DESC"},
+                response_timezone="America/Los_Angeles"
+            )
+        except Exception as exc:
+            self.fail("Exception: {0}".format(exc))
 
         self.assertIsNotNone(response)
         self.assertIsNotNone(response.data)
@@ -127,55 +131,17 @@ class TestAdvertiserReportClicks(unittest.TestCase):
         self.assertIsInstance(response.data, list)
         self.assertLessEqual(len(response.data), 10)
 
-    def test_FindInvalidFields(self):
-        try:
-            advertiser_report = AdvertiserReportClicks()
-
-            advertiser_report.find(
-                self.__start_date,
-                self.__end_date,
-                fields="foo",
-                filter=None,
-                limit=5,
-                page=None,
-                sort={"created": "DESC"},
-                response_timezone="America/Los_Angeles"
-            )
-        except TuneSdkException:
-            pass
-        except Exception as exc:
-            self.fail("Exception: {0}".format(exc))
-
-    def test_FindInvalidFilter(self):
-        try:
-            advertiser_report = AdvertiserReportClicks()
-
-            advertiser_report.find(
-                self.__start_date,
-                self.__end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(foo > 0)",
-                limit=5,
-                page=None,
-                sort={"created": "DESC"},
-                response_timezone="America/Los_Angeles"
-            )
-        except TuneSdkException:
-            pass
-        except Exception as exc:
-            self.fail("Exception: {0}".format(exc))
-
     def test_Export(self):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportClicks()
+            advertiser_report = AdvertiserReportLogEvents()
 
             response = advertiser_report.export(
                 self.__start_date,
                 self.__end_date,
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter=None,
+                filter="(status = 'approved')",
                 format="csv",
                 response_timezone="America/Los_Angeles"
             )
@@ -192,6 +158,4 @@ class TestAdvertiserReportClicks(unittest.TestCase):
         self.test_Fields()
         self.test_Count()
         self.test_Find()
-        self.test_FindInvalidFields()
-        self.test_FindInvalidFilter()
         self.test_Export()

@@ -29,33 +29,33 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 import sys
 import unittest
 
-from test_advertiser_report_clicks import TestAdvertiserReportClicks
-from test_advertiser_report_event_items import TestAdvertiserReportEventItems
-from test_advertiser_report_events import TestAdvertiserReportEvents
-from test_advertiser_report_installs import TestAdvertiserReportInstalls
-from test_advertiser_report_postbacks import TestAdvertiserReportPostbacks
+from test_advertiser_report_log_clicks import TestAdvertiserReportLogClicks
+from test_advertiser_report_log_event_items import TestAdvertiserReportLogEventItems
+from test_advertiser_report_log_events import TestAdvertiserReportLogEvents
+from test_advertiser_report_log_installs import TestAdvertiserReportLogInstalls
+from test_advertiser_report_log_postbacks import TestAdvertiserReportLogPostbacks
 from test_advertiser_report_actuals import TestAdvertiserReportActuals
-from test_advertiser_report_retention import TestAdvertiserReportRetention
-from test_advertiser_report_value import TestAdvertiserReportValue
+from test_advertiser_report_cohort_retention import TestAdvertiserReportCohortRetention
+from test_advertiser_report_cohort_value import TestAdvertiserReportCohortValue
 
 def suite():
     suite = unittest.TestSuite()
 
-    suite.addTest(TestAdvertiserReportClicks())
-    suite.addTest(TestAdvertiserReportEventItems())
-    suite.addTest(TestAdvertiserReportEvents())
-    suite.addTest(TestAdvertiserReportInstalls())
-    suite.addTest(TestAdvertiserReportPostbacks())
+    suite.addTest(TestAdvertiserReportLogClicks())
+    suite.addTest(TestAdvertiserReportLogEventItems())
+    suite.addTest(TestAdvertiserReportLogEvents())
+    suite.addTest(TestAdvertiserReportLogInstalls())
+    suite.addTest(TestAdvertiserReportLogPostbacks())
     suite.addTest(TestAdvertiserReportActuals())
-    suite.addTest(TestAdvertiserReportRetention())
-    suite.addTest(TestAdvertiserReportValue())
+    suite.addTest(TestAdvertiserReportCohortRetention())
+    suite.addTest(TestAdvertiserReportCohortValue())
 
     return suite
 

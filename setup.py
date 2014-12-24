@@ -27,7 +27,7 @@
 #
 #    category    TUNE_Reporting
 #    package     SDK
-#    version     $Date: 2014-12-19 10:04:26 $
+#    version     $Date: 2014-12-24 11:24:16 $
 #    copyright   Copyright (c) 2014, TUNE Inc. (http://www.tune.com)
 #
 
@@ -44,7 +44,7 @@ import tune_reporting
 # python setup.py install
 #
 
-__version__ = None
+__sdk_version__ = None
 with open('tune_reporting/version.py') as f:
     exec(f.read())
 
@@ -66,7 +66,7 @@ PACKAGES = [
 
 setup(
     name='tune_reporting',
-    version=__version__,
+    version=__sdk_version__,
     description='TUNE Reporting API client library.',
     author='TUNE',
     author_email='sdk@tune.com',

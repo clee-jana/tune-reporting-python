@@ -36,7 +36,7 @@ TUNE Management Client
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 10:04:26 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -44,7 +44,7 @@ from tune_reporting.helpers import (
     python_check_version
 )
 from tune_reporting.version import (
-    __version__,
+    __sdk_version__,
     __python_required_version__
 )
 
@@ -135,7 +135,7 @@ class TuneManagementClient(object):
     @staticmethod
     def version():
         """Get SDK version."""
-        return __version__
+        return __sdk_version__
 
     #  Sends a request and gets a response from the TUNE Management
     #  API Service.

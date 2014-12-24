@@ -36,6 +36,14 @@ tune_reporting.helpers.report_reader_json module
     :undoc-members:
     :show-inheritance:
 
+tune_reporting.helpers.sdk_config module
+----------------------------------------
+
+.. automodule:: tune_reporting.helpers.sdk_config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 tune_reporting.helpers.sdk_exception module
 -------------------------------------------
 

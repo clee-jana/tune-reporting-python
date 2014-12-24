@@ -36,7 +36,7 @@ TUNE Management API Request
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 10:04:26 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -46,7 +46,10 @@ from tune_reporting.helpers import (
 from .query_string_builder import (
     QueryStringBuilder
 )
-
+from tune_reporting.version import (
+    __sdk_name__,
+    __sdk_version__
+)
 
 class TuneManagementRequest(object):
     """Base components for every TUNE Management API request.
@@ -145,6 +148,8 @@ class TuneManagementRequest(object):
         if not self.__api_key or len(self.__api_key) < 1:
             raise TuneSdkException("Parameter 'api_key' is not defined.")
 
+        qsb.add("sdk_name", __sdk_name__)
+        qsb.add("sdk_version", __sdk_version__)
         qsb.add("api_key", self.__api_key)
 
         # Build query string with provided contents in dictionary

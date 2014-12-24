@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  example_advertiser_report_events.py
+#  example_advertiser_report_cohort_value.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,21 +32,37 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
+#  Cohort Report
 #
-# You can use the Logs report in the same way as the Actuals reports, but
-# instead of being aggregated by request type, the Logs report contains the
-# logs of each individual request (including the logs for Clicks, Installs,
-# Updates, Events, Event Items, and Postback URLs). The log data is available
-# in real-time, so you can use it for testing, debugging, and ensuring that
-# all measurement and attribution continues to operate smoothly. MAT updates
-# the Logs report every 1 minute.
+#  For insight into the value of the users you’ve acquired for your mobile app
+#  (e.g. how acquired users are performing over time), you can use our Cohort Report.
 #
-# https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=advertiser_report
+#  The cohort report analyzes user behavior back to click date time (Cohort by Click)
+#  or to install date time (Cohort by Install). Based on whether you are viewing
+#  the results endpoint_based on click or install, the data in the report is vastly different.
 #
-# Events API call: stats/advertiser_report
+#  Aggregate "cumulative" shows the data compounds or grows over time.
+#
+#  Aggregate "incremental" shows the rate of change over time.
+#
+#  Aggregate "cumulative" shows user growth over time by taking into account
+#  all of the revenue from the cohort date time to the specified time interval.
+#  Because the data is cumulative (values added on top of each other), the graph
+#  shows an upward trend as shown in the following screenshot.
+#
+#  Aggregate "incremental" option only includes the data measured during the specified
+#  interval (such as Day, Week, Month, Year, or All Time). Viewing the data
+#  incrementally does not appear as impressive as viewing cumulative or aggregated
+#  data because it only shows incremental changes (and there is typically a
+#  downward trend because of decreases in retention).
+#
+#  Cohort "clicks" refers to the number of clicks through to the app store to
+#  download an app.
+#
+#  Cohort "installs" refers to the number of downloads of an app
 #
 
 import datetime
@@ -56,20 +72,20 @@ import traceback
 
 try:
     from tune_reporting import (
-        AdvertiserReportEvents,
+        AdvertiserReportCohortValue,
         ReportReaderCSV,
-        ReportReaderJSON,
         SdkConfig,
         TuneSdkException,
-        TUNE_FIELDS_RECOMMENDED
+        TUNE_FIELDS_RECOMMENDED,
+        TUNE_FIELDS_DEFAULT
     )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
     raise
 
 
-class ExampleAdvertiserReportEvents(object):
-    """Example using TUNE Advertiser Report Events."""
+class ExampleAdvertiserReportCohortValue(object):
+    """Example using TUNE Advertiser Report Cohort Value."""
 
     def __init__(self):
         # Setup SDK Configuration with TUNE MobileAppTracking API Key.
@@ -89,27 +105,36 @@ class ExampleAdvertiserReportEvents(object):
         if not api_key or len(api_key) < 1:
             raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
-    #
-    # Example of running successful requests to TUNE Advertiser Report Events.
+    # Example of running successful requests to TUNE Advertiser Report Cohort Value.
     #
     def run(self):
         """Run Example"""
 
         print("")
         print("\033[34m" + "=================================================" + "\033[0m")
-        print("\033[34m" + " TUNE Advertiser Report Events                   " + "\033[0m")
+        print("\033[34m" + " TUNE Advertiser Report Cohort Value                    " + "\033[0m")
         print("\033[34m" + "================================================ " + "\033[0m")
 
         try:
+            week_ago = datetime.date.fromordinal(datetime.date.today().toordinal() - 8)
             yesterday = datetime.date.fromordinal(datetime.date.today().toordinal() - 1)
-            start_date = "{} 00:00:00".format(yesterday)
+            start_date = "{} 00:00:00".format(week_ago)
             end_date = "{} 23:59:59".format(yesterday)
 
-            advertiser_report = AdvertiserReportEvents()
+            advertiser_report = AdvertiserReportCohortValue()
 
             print("")
             print("===========================================================")
-            print(" Fields of Advertiser Report Events records.               ")
+            print(" Default Fields of Advertiser Report Cohort Value          ")
+            print("===========================================================")
+
+            response = advertiser_report.fields(TUNE_FIELDS_DEFAULT)
+            for field in response:
+                print(str(field))
+
+            print("")
+            print("===========================================================")
+            print(" Recommended Fields of Advertiser Report Cohort Value      ")
             print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
@@ -118,18 +143,48 @@ class ExampleAdvertiserReportEvents(object):
 
             print("")
             print("===========================================================")
-            print(" Count Advertiser Report Events records.                   ")
+            print(" Count Advertiser Report Cohort Value click records.       ")
             print("===========================================================")
 
             response = advertiser_report.count(
                 start_date,
                 end_date,
-                filter="(status = 'approved')",
+                cohort_type="click",
+                cohort_interval="year_day",
+                group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
+            print(" TuneManagementResponse:")
+            print(str(response))
+
+            print(" Count:")
+            print(str(response.data))
+
+            print("")
+            print("===========================================================")
+            print(" Count Advertiser Report Cohort Value install records.     ")
+            print("===========================================================")
+
+            response = advertiser_report.count(
+                start_date,
+                end_date,
+                cohort_type="install",
+                cohort_interval="year_day",
+                group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
+                response_timezone="America/Los_Angeles"
+            )
+
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
+            print(" TuneManagementResponse:")
+            print(str(response))
 
             print(" TuneManagementResponse:")
             print(str(response))
@@ -138,17 +193,21 @@ class ExampleAdvertiserReportEvents(object):
 
             print("")
             print("===========================================================")
-            print(" Find Advertiser Report Events records.                    ")
+            print(" Find Advertiser Report Cohort Value 'click/cumulative'.   ")
             print("===========================================================")
 
             response = advertiser_report.find(
                 start_date,
                 end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
+                cohort_type="click",
+                cohort_interval="year_day",
+                aggregation_type="cumulative",
+                fields= "site_id,site.name,publisher_id,publisher.name,rpi,epi",
+                group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
                 limit=5,
                 page=None,
-                sort={"created": "DESC"},
+                sort=None,
                 response_timezone="America/Los_Angeles"
             )
 
@@ -160,15 +219,21 @@ class ExampleAdvertiserReportEvents(object):
 
             print("")
             print("===========================================================")
-            print(" Export Advertiser Report Events CSV                       ")
+            print(" Find Advertiser Report Cohort Value 'click/cumulative'    ")
             print("===========================================================")
 
-            response = advertiser_report.export(
+            response = advertiser_report.find(
                 start_date,
                 end_date,
+                cohort_type="click",
+                cohort_interval="year_day",
+                aggregation_type="cumulative",
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
-                format="csv",
+                group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
+                limit=5,
+                page=None,
+                sort=None,
                 response_timezone="America/Los_Angeles"
             )
 
@@ -178,61 +243,36 @@ class ExampleAdvertiserReportEvents(object):
             print(" TuneManagementResponse:")
             print(str(response))
 
-            job_id = AdvertiserReportEvents.parse_response_report_job_id(response)
+            print("")
+            print("===========================================================")
+            print(" Export Advertiser Report Cohort Value CSV                 ")
+            print("===========================================================")
+
+            response = advertiser_report.export(
+                start_date,
+                end_date,
+                cohort_type="click",
+                cohort_interval="year_day",
+                aggregation_type="incremental",
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
+                response_timezone="America/Los_Angeles"
+            )
+
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
+            print(" TuneManagementResponse:")
+            print(str(response))
+
+            job_id = AdvertiserReportCohortValue.parse_response_report_job_id(response)
 
             print(" CSV Job ID: {}".format(job_id))
 
             print("")
             print("===========================================================")
-            print(" Fetching Advertiser Report Events CSV                     ")
-            print("===========================================================")
-
-            export_fetch_response = advertiser_report.fetch(
-                job_id,
-                verbose=True,
-                sleep=10
-            )
-
-            csv_report_url = AdvertiserReportEvents.parse_response_report_url(export_fetch_response)
-
-            print(" CVS Report URL: {}".format(csv_report_url))
-
-            print("")
-            print("===========================================================")
-            print(" Read Advertiser Report Events CSV                         ")
-            print("===========================================================")
-
-            csv_report_reader = ReportReaderCSV(csv_report_url)
-            csv_report_reader.read()
-            csv_report_reader.pretty_print(limit=5)
-
-            print("")
-            print("===========================================================")
-            print(" Export Advertiser Report Events JSON                      ")
-            print("===========================================================")
-
-            response = advertiser_report.export(
-                start_date,
-                end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
-                format="json",
-                response_timezone="America/Los_Angeles"
-            )
-
-            if response.http_code != 200 or response.errors:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
-
-            print(" TuneManagementResponse:")
-            print(str(response))
-
-            job_id = AdvertiserReportEvents.parse_response_report_job_id(response)
-
-            print(" JSON Job ID: {}".format(job_id))
-
-            print("")
-            print("===========================================================")
-            print(" Fetching Advertiser Report Events JSON                    ")
+            print(" Fetching Advertiser Report Cohort Value CSV.              ")
             print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
@@ -248,19 +288,18 @@ class ExampleAdvertiserReportEvents(object):
                 print("Exit")
                 return
 
-            json_report_url = AdvertiserReportEvents.parse_response_report_url(export_fetch_response)
+            csv_report_url = AdvertiserReportCohortValue.parse_response_report_url(export_fetch_response)
 
-            print(" JSON Report URL: {}".format(json_report_url))
+            print(" CSV Report URL: {}".format(csv_report_url))
 
             print("")
             print("===========================================================")
-            print(" Read Advertiser Report Events JSON                        ")
+            print(" Read Advertiser Report Cohort Value CSV                   ")
             print("===========================================================")
 
-            json_report_reader = ReportReaderJSON(json_report_url)
-            json_report_reader.read()
-
-            json_report_reader.pretty_print(limit=5)
+            csv_report_reader = ReportReaderCSV(csv_report_url)
+            csv_report_reader.read()
+            csv_report_reader.pretty_print(limit=5)
 
         except TuneSdkException as exc:
             print("TuneSdkException ({})".format(exc))
@@ -299,7 +338,7 @@ class ExampleAdvertiserReportEvents(object):
 
 if __name__ == '__main__':
     try:
-        example = ExampleAdvertiserReportEvents()
+        example = ExampleAdvertiserReportCohortValue()
         example.run()
     except Exception as exc:
         print("Exception: {0}".format(exc))
