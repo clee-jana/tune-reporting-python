@@ -5,7 +5,7 @@ TUNE Management Logs Reports Endpoint base
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  advertiser_report_logs_base.py
+#  advertiser_report_log_base.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -36,7 +36,7 @@ TUNE Management Logs Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -53,7 +53,7 @@ from tune_reporting.base.endpoints import (
 
 ## Base class intended for gathering from Advertiser Stats logs.
 ##
-class AdvertiserReportLogsBase(AdvertiserReportBase):
+class AdvertiserReportLogBase(AdvertiserReportBase):
     """
     Base class intended for gathering from Advertiser Stats logs.
     """

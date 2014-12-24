@@ -1,8 +1,8 @@
 <h2>tune-reporting-python</h2>
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
-<h4>Update:  $Date: 2014-12-21 13:25:20 $
-<h4>Version: 0.9.24
+<h4>Update:  $Date: 2014-12-24 11:24:16 $
+<h4>Version: 0.9.25
 ===
 
 <a id="TOP"></a>
@@ -299,11 +299,11 @@ Log reports provide measurement records for each Click, Install, Event, Event It
 
 Advertiser Reporting classes that perform Log Reports are:
 <ul>
-    <li><code>AdvertiserReportClicks</code>: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__clicks/">/advertiser/stats/clicks/</a></li>
-    <li><code>AdvertiserReportEventItems</code>:<a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__event__items/">/advertiser/stats/event/items/</a></li>
-    <li><code>AdvertiserReportEvents</code>:<a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__events/">/advertiser/stats/events/</a></li>
-    <li><code>AdvertiserReportInstalls</code>:<a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__installs/">/advertiser/stats/installs/</a></li>
-    <li><code>AdvertiserReportPostbacks</code>:<a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__postbacks/">/advertiser/stats/postbacks/</a></li>
+    <li><code>AdvertiserReportLogClicks</code>: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__clicks/">/advertiser/stats/clicks/</a></li>
+    <li><code>AdvertiserReportLogEventItems</code>:<a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__event__items/">/advertiser/stats/event/items/</a></li>
+    <li><code>AdvertiserReportLogEvents</code>:<a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__events/">/advertiser/stats/events/</a></li>
+    <li><code>AdvertiserReportLogInstalls</code>:<a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__installs/">/advertiser/stats/installs/</a></li>
+    <li><code>AdvertiserReportLogPostbacks</code>:<a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__postbacks/">/advertiser/stats/postbacks/</a></li>
 </ul>
 
 </dd>
@@ -324,16 +324,16 @@ The Cohort report analyzes user behavior back to click date time (Cohort by Clic
 
 Advertiser Reporting class that perform Cohort Reports is:
 <ul>
-    <li><code>AdvertiserReportValue</code>: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__ltv">/advertiser/stats/ltv</a></li>
+    <li><code>AdvertiserReportCohortValue</code>: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__ltv">/advertiser/stats/ltv</a></li>
 </ul>
 </dd>
 <dt>Retention Report</dt>
 <dd>
-The Retention report shows you how many of your installed users open or engage with your app over time (how users continue to get value from the app). AdvertiserReportRetention reports are particularly good for evaluating the quality of users as opposed to the quantity of users (as in the case of user acquisition campaigns). For more information about retention reports, please visit <a href="http://support.mobileapptracking.com/entries/42179044-Running-AdvertiserReportRetention-Reports">Running AdvertiserReportRetention Reports</a>.
+The Retention report shows you how many of your installed users open or engage with your app over time (how users continue to get value from the app). AdvertiserReportCohortRetention reports are particularly good for evaluating the quality of users as opposed to the quantity of users (as in the case of user acquisition campaigns). For more information about retention reports, please visit <a href="http://support.mobileapptracking.com/entries/42179044-Running-AdvertiserReportCohortRetention-Reports">Running AdvertiserReportCohortRetention Reports</a>.
 
 Advertiser Reporting class that perform Retention Reports are:
 <ul>
-    <li><code>AdvertiserReportRetention</code>: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__retention">/advertiser/stats/retention</a></li>
+    <li><code>AdvertiserReportCohortRetention</code>: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__retention">/advertiser/stats/retention</a></li>
 </ul>
 </dd>
 </dl>
@@ -356,7 +356,7 @@ Logs and Actuals reports all request an export using action <code>find_export_qu
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-report-exports1.png">
 <img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-report-exports1-600x569.png" alt="Exporting logs and actuals reports." width="600" height="569" /></a>
 
-Cohort and AdvertiserReportRetention reports all request an export using action <code>export.json</code>, which also returns a <code>job_id</code>. You then pass the <code>job_id</code> onto another action <code>status.json</code>, which performs the status checking and report URL retrieval.
+Cohort and AdvertiserReportCohortRetention reports all request an export using action <code>export.json</code>, which also returns a <code>job_id</code>. You then pass the <code>job_id</code> onto another action <code>status.json</code>, which performs the status checking and report URL retrieval.
 
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-insight-report-exports.png">
 <img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/management-api-insight-report-exports-600x459.png" alt="Export cohort and retention reports." width="600" height="459" /></a>
@@ -409,13 +409,13 @@ Helper class for both the Library and Examples are defined within folder **/tune
 tune_reporting
 ├── api
 │   ├── advertiser_report_actuals.py
-│   ├── advertiser_report_clicks.py
-│   ├── advertiser_report_value.py
-│   ├── advertiser_report_event_items.py
-│   ├── advertiser_report_events.py
-│   ├── advertiser_report_installs.py
-│   ├── advertiser_report_postbacks.py
-│   ├── advertiser_report_retention.py
+│   ├── advertiser_report_log_clicks.py
+│   ├── advertiser_report_cohort_value.py
+│   ├── advertiser_report_log_event_items.py
+│   ├── advertiser_report_log_events.py
+│   ├── advertiser_report_log_installs.py
+│   ├── advertiser_report_log_postbacks.py
+│   ├── advertiser_report_cohort_retention.py
 │   ├── export.py
 │   └── __init__.py
 ├── base
@@ -425,7 +425,7 @@ tune_reporting
 │   │   ├── advertiser_report_actuals_base.py
 │   │   ├── advertiser_report_base.py
 │   │   ├── advertiser_report_cohort_base.py
-│   │   └── advertiser_report_logs_base.py
+│   │   └── advertiser_report_log_base.py
 │   ├── __init__.py
 │   └── service
 │       ├── client.py
@@ -462,13 +462,13 @@ Each Advertiser Report class defined in **/tune_reporting/api/** has an example:
 ```
 examples/
 ├── example_advertiser_report_actuals.py
-├── example_advertiser_report_clicks.py
-├── example_advertiser_report_value.py
-├── example_advertiser_report_event_items.py
-├── example_advertiser_report_events.py
-├── example_advertiser_report_installs.py
-├── example_advertiser_report_postbacks.py
-├── example_advertiser_report_retention.py
+├── example_advertiser_report_log_clicks.py
+├── example_advertiser_report_cohort_value.py
+├── example_advertiser_report_log_event_items.py
+├── example_advertiser_report_log_events.py
+├── example_advertiser_report_log_installs.py
+├── example_advertiser_report_log_postbacks.py
+├── example_advertiser_report_cohort_retention.py
 ├── __init__.py
 └── tune_reporting_examples.py
 ```
@@ -489,13 +489,13 @@ tests/
 ├── __init__.py
 ├── requirements.txt
 ├── test_advertiser_report_actuals.py
-├── test_advertiser_report_clicks.py
-├── test_advertiser_report_value.py
-├── test_advertiser_report_event_items.py
-├── test_advertiser_report_events.py
-├── test_advertiser_report_installs.py
-├── test_advertiser_report_postbacks.py
-├── test_advertiser_report_retention.py
+├── test_advertiser_report_log_clicks.py
+├── test_advertiser_report_cohort_value.py
+├── test_advertiser_report_log_event_items.py
+├── test_advertiser_report_log_events.py
+├── test_advertiser_report_log_installs.py
+├── test_advertiser_report_log_postbacks.py
+├── test_advertiser_report_cohort_retention.py
 └── tune_reporting_tests.py
 ```
 
@@ -566,7 +566,7 @@ tests/
 <a id="sdk_methods" name="sdk_methods"></a>
 ### Advertiser Reporting Methods
 
-<strong>Important to note on Sample Code:</strong> The example provided pertain to only Advertiser Reports class <code>AdvertiserReportClicks</code>. The fields used theses sample primarily pertain to the available fields for the record and related records for the the associated endpoint <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__clicks/">/advertiser/stats/clicks</a> of this class. Do not expect that these fields will be available if used with other Advertiser Records classes.
+<strong>Important to note on Sample Code:</strong> The example provided pertain to only Advertiser Reports class <code>AdvertiserReportLogClicks</code>. The fields used theses sample primarily pertain to the available fields for the record and related records for the the associated endpoint <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__clicks/">/advertiser/stats/clicks</a> of this class. Do not expect that these fields will be available if used with other Advertiser Records classes.
 
 The benefit of using TUNE API SDKs is it provides the same interface across all advertiser reports. The following class diagram lists what are all the expected functions. The signature of the expected parameters for each function will be consistent with the action it is interfacing.
 
@@ -583,8 +583,8 @@ Finds all existing records matching provided filter criteria and returns total c
 
 <!-- Python -->
 ```python
-    advertiser_report_clicks = AdvertiserReportClicks(api_key, validate_fields=True)
-    response = advertiser_report_clicks.count(
+    advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key, validate_fields=True)
+    response = advertiser_report_log_clicks.count(
         start_date,
         end_date,
         filter=None,
@@ -610,11 +610,11 @@ Gathers all existing records that match filter criteria and returns an array of 
 
 <!-- Python -->
 ```python
-    advertiser_report_clicks = AdvertiserReportClicks(api_key, validate_fields=True)
-    response = advertiser_report_clicks.find(
+    advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key, validate_fields=True)
+    response = advertiser_report_log_clicks.find(
         start_date,
         end_date,
-        fields=advertiser_report_clicks.fields(TUNE_FIELDS_RECOMMENDED),
+        fields=advertiser_report_log_clicks.fields(TUNE_FIELDS_RECOMMENDED),
         filter=None,
         limit=5,
         page=None,
@@ -639,11 +639,11 @@ Provides the same signature as function find(), accept parameters <code>limit</c
 
 <!-- Python -->
 ```python
-    advertiser_report_clicks = AdvertiserReportClicks(api_key, validate_fields=True)
-    response = advertiser_report_clicks.export(
+    advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key, validate_fields=True)
+    response = advertiser_report_log_clicks.export(
         start_date,
         end_date,
-        fields=advertiser_report_clicks.fields(TUNE_FIELDS_RECOMMENDED),
+        fields=advertiser_report_log_clicks.fields(TUNE_FIELDS_RECOMMENDED),
         filter=None,
         format="csv",
         response_timezone="America/Los_Angeles"
@@ -655,7 +655,7 @@ Provides the same signature as function find(), accept parameters <code>limit</c
     print(" TuneManagementResponse:")
     print(str(response))
 
-    job_id = AdvertiserReportClicks.parse_response_report_job_id(response)
+    job_id = AdvertiserReportLogClicks.parse_response_report_job_id(response)
 
     print(" CSV Job ID: {}".format(job_id))
 ```
@@ -664,7 +664,7 @@ Provides the same signature as function find(), accept parameters <code>limit</c
 ##### Method <code>status()</code>
 
 
-As discussed in <a href="#exporting-reports">Exporting Advertise Reports</a>, for gathering report export status records' classes <strong>Cohort (AdvertiserReportCohorts)</strong> and <strong>AdvertiserReportRetention</strong> uses it own method <code>status()</code>. Its purpose is the same as method <code>Export::download()</code>.
+As discussed in <a href="#exporting-reports">Exporting Advertise Reports</a>, for gathering report export status records' classes <strong>Cohort (AdvertiserReportCohorts)</strong> and <strong>AdvertiserReportCohortRetention</strong> uses it own method <code>status()</code>. Its purpose is the same as method <code>Export::download()</code>.
 
 
 <a id="sdk_method_fetch" name="sdk_method_fetch"></a>
@@ -677,14 +677,14 @@ A helper function that creates a threaded worker that handles the status request
 
 <!-- Python -->
 ```python
-    advertiser_report_clicks = AdvertiserReportClicks(api_key, validate_fields=True)
-    export_fetch_response = advertiser_report_clicks.fetch(
+    advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key, validate_fields=True)
+    export_fetch_response = advertiser_report_log_clicks.fetch(
         job_id,
         verbose=True,
         sleep=10
     )
 
-    csv_report_url = AdvertiserReportClicks.parse_response_report_url(export_fetch_response)
+    csv_report_url = AdvertiserReportLogClicks.parse_response_report_url(export_fetch_response)
 
     print(" CVS Report URL: {}".format(csv_report_url))
 ```
@@ -697,8 +697,8 @@ Method <strong>fields()</strong> returns a listing of all the fields that can be
 
 <!-- Python -->
 ```python
-    advertiser_report_clicks = AdvertiserReportClicks(api_key)
-    response = advertiser_report_clicks.fields()
+    advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key)
+    response = advertiser_report_log_clicks.fields()
     for field in response:
         print str(field)
 ```
@@ -710,8 +710,8 @@ Method <strong>define()</strong> returns the complete meta-data of an endpoint. 
 
 <!-- Python -->
 ```python
-    advertiser_report_clicks = AdvertiserReportClicks(api_key, validate_fields=True)
-    response = advertiser_report_clicks.define()
+    advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key, validate_fields=True)
+    response = advertiser_report_log_clicks.define()
     print(response)
 ```
 
@@ -740,14 +740,14 @@ Another tool is to pre-build your request using <a href="/management-api/explore
 <img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/api_explorer_record_fields-600x436.png" alt="API Explorer -- Record and Related Record&#039;s Fields for a specific endpoint." width="600" height="436" title="Click to Expand" /></a>
 
 <ul>
-    <li>AdvertiserReportClicks' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__clicks/">/advertiser/stats/clicks fields</a></li>
-    <li>AdvertiserReportEventItems' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__event__items/">/advertiser/stats/event/items fields</a></li>
-    <li>AdvertiserReportEvents' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__events/">/advertiser/stats/events fields</a></li>
-    <li>AdvertiserReportInstalls' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__installs/">/advertiser/stats/installs fields</a></li>
-    <li>AdvertiserReportPostbacks' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__postbacks/">/advertiser/stats/postbacks fields</a></li>
+    <li>AdvertiserReportLogClicks' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__clicks/">/advertiser/stats/clicks fields</a></li>
+    <li>AdvertiserReportLogEventItems' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__event__items/">/advertiser/stats/event/items fields</a></li>
+    <li>AdvertiserReportLogEvents' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__events/">/advertiser/stats/events fields</a></li>
+    <li>AdvertiserReportLogInstalls' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__installs/">/advertiser/stats/installs fields</a></li>
+    <li>AdvertiserReportLogPostbacks' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__postbacks/">/advertiser/stats/postbacks fields</a></li>
     <li>AdvertiserReportActuals' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats/">/advertiser/stats fields</a></li>
     <li>AdvertiserReportCohorts' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__ltv/">/advertiser/stats/ltv fields</a></li>
-    <li>AdvertiserReportRetention' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__retention/">/advertiser/stats/retention fields</a></li>
+    <li>AdvertiserReportCohortRetention' fields: <a href="http://developers.mobileapptracking.com/management-api/explorer/root/endpoint/#/advertiser__stats__retention/">/advertiser/stats/retention fields</a></li>
 </ul>
 
 <p>

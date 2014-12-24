@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  test_advertiser_report_value.py
+#  test_advertiser_report_cohort_retention.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -43,7 +43,7 @@ import unittest
 
 try:
     from tune_reporting import (
-        AdvertiserReportValue,
+        AdvertiserReportCohortRetention,
         SdkConfig,
         TUNE_FIELDS_RECOMMENDED
         )
@@ -52,7 +52,7 @@ except ImportError as exc:
     raise
 
 
-class TestAdvertiserReportValue(unittest.TestCase):
+class TestAdvertiserReportCohortRetention(unittest.TestCase):
 
     def __init__(self):
         dirname = os.path.split(__file__)[0]
@@ -77,9 +77,7 @@ class TestAdvertiserReportValue(unittest.TestCase):
 
     def test_Fields(self):
         response = None
-
-        advertiser_report = AdvertiserReportValue()
-
+        advertiser_report = AdvertiserReportCohortRetention()
         response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
         self.assertIsNotNone(response)
         self.assertGreater(len(response), 0)
@@ -88,17 +86,17 @@ class TestAdvertiserReportValue(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportValue()
+            advertiser_report = AdvertiserReportCohortRetention()
 
             response = advertiser_report.count(
                 self.__start_date,
                 self.__end_date,
                 cohort_type="click",
                 cohort_interval="year_day",
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
+                group="site_id,install_publisher_id",
+                filter="(install_publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
-                )
+            )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))
 
@@ -113,20 +111,19 @@ class TestAdvertiserReportValue(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportValue()
+            advertiser_report = AdvertiserReportCohortRetention()
 
             response = advertiser_report.find(
                 self.__start_date,
                 self.__end_date,
-                cohort_type="click",
+                cohort_type="install",
                 cohort_interval="year_day",
-                aggregation_type="cumulative",
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                limit=10,
+                group="site_id,install_publisher_id",
+                filter="(install_publisher_id > 0)",
+                limit=5,
                 page=None,
-                sort=None,
+                sort={"year_day": "asc", "install_publisher_id": "asc"},
                 response_timezone="America/Los_Angeles"
             )
         except Exception as exc:
@@ -143,17 +140,16 @@ class TestAdvertiserReportValue(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportValue()
+            advertiser_report = AdvertiserReportCohortRetention()
 
             response = advertiser_report.export(
                 self.__start_date,
                 self.__end_date,
-                cohort_type="click",
+                cohort_type="install",
                 cohort_interval="year_day",
-                aggregation_type="cumulative",
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
+                group="site_id,install_publisher_id",
+                filter="(install_publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
             )
         except Exception as exc:

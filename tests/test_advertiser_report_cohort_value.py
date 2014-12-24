@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  test_advertiser_report_event_items.py
+#  test_advertiser_report_cohort_value.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -43,7 +43,7 @@ import unittest
 
 try:
     from tune_reporting import (
-        AdvertiserReportEventItems,
+        AdvertiserReportCohortValue,
         SdkConfig,
         TUNE_FIELDS_RECOMMENDED
         )
@@ -52,7 +52,7 @@ except ImportError as exc:
     raise
 
 
-class TestAdvertiserReportEventItems(unittest.TestCase):
+class TestAdvertiserReportCohortValue(unittest.TestCase):
 
     def __init__(self):
         dirname = os.path.split(__file__)[0]
@@ -62,8 +62,9 @@ class TestAdvertiserReportEventItems(unittest.TestCase):
         unittest.TestCase.__init__(self)
 
     def setUp(self):
+        week_ago = datetime.date.fromordinal(datetime.date.today().toordinal() - 8)
         yesterday = datetime.date.fromordinal(datetime.date.today().toordinal() - 1)
-        self.__start_date = "{} 00:00:00".format(yesterday)
+        self.__start_date = "{} 00:00:00".format(week_ago)
         self.__end_date = "{} 23:59:59".format(yesterday)
 
     def test_ApiKey(self):
@@ -77,7 +78,7 @@ class TestAdvertiserReportEventItems(unittest.TestCase):
     def test_Fields(self):
         response = None
 
-        advertiser_report = AdvertiserReportEventItems()
+        advertiser_report = AdvertiserReportCohortValue()
 
         response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
         self.assertIsNotNone(response)
@@ -87,14 +88,17 @@ class TestAdvertiserReportEventItems(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportEventItems()
+            advertiser_report = AdvertiserReportCohortValue()
 
             response = advertiser_report.count(
                 self.__start_date,
                 self.__end_date,
-                filter=None,
+                cohort_type="click",
+                cohort_interval="year_day",
+                group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
-            )
+                )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))
 
@@ -109,16 +113,20 @@ class TestAdvertiserReportEventItems(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportEventItems()
+            advertiser_report = AdvertiserReportCohortValue()
 
             response = advertiser_report.find(
                 self.__start_date,
                 self.__end_date,
+                cohort_type="click",
+                cohort_interval="year_day",
+                aggregation_type="cumulative",
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter=None,
+                group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
                 limit=10,
                 page=None,
-                sort={"created": "DESC"},
+                sort=None,
                 response_timezone="America/Los_Angeles"
             )
         except Exception as exc:
@@ -135,14 +143,17 @@ class TestAdvertiserReportEventItems(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportEventItems()
+            advertiser_report = AdvertiserReportCohortValue()
 
             response = advertiser_report.export(
                 self.__start_date,
                 self.__end_date,
+                cohort_type="click",
+                cohort_interval="year_day",
+                aggregation_type="cumulative",
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter=None,
-                format="csv",
+                group="site_id,publisher_id",
+                filter="(publisher_id > 0)",
                 response_timezone="America/Los_Angeles"
             )
         except Exception as exc:

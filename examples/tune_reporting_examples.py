@@ -29,7 +29,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -47,39 +47,39 @@ except ImportError as exc:
     raise
 
 from example_advertiser_report_actuals import ExampleAdvertiserReportActuals
-from example_advertiser_report_value import ExampleAdvertiserReportValue
-from example_advertiser_report_retention import ExampleAdvertiserReportRetention
+from example_advertiser_report_cohort_value import ExampleAdvertiserReportCohortValue
+from example_advertiser_report_cohort_retention import ExampleAdvertiserReportCohortRetention
 
-from example_advertiser_report_clicks import ExampleAdvertiserReportClicks
-from example_advertiser_report_event_items import ExampleAdvertiserReportEventItems
-from example_advertiser_report_events import ExampleAdvertiserReportEvents
-from example_advertiser_report_installs import ExampleAdvertiserReportInstalls
-from example_advertiser_report_postbacks import ExampleAdvertiserReportPostbacks
+from example_advertiser_report_log_clicks import ExampleAdvertiserReportLogClicks
+from example_advertiser_report_log_event_items import ExampleAdvertiserReportLogEventItems
+from example_advertiser_report_log_events import ExampleAdvertiserReportLogEvents
+from example_advertiser_report_log_installs import ExampleAdvertiserReportLogInstalls
+from example_advertiser_report_log_postbacks import ExampleAdvertiserReportLogPostbacks
 
 if __name__ == '__main__':
     try:
         example = ExampleAdvertiserReportActuals()
         example.run()
 
-        example = ExampleAdvertiserReportValue()
+        example = ExampleAdvertiserReportCohortValue()
         example.run()
 
-        example = ExampleAdvertiserReportRetention()
+        example = ExampleAdvertiserReportCohortRetention()
         example.run()
 
-        example = ExampleAdvertiserReportClicks()
+        example = ExampleAdvertiserReportLogClicks()
         example.run()
 
-        example = ExampleAdvertiserReportEventItems()
+        example = ExampleAdvertiserReportLogEventItems()
         example.run()
 
-        example = ExampleAdvertiserReportEvents()
+        example = ExampleAdvertiserReportLogEvents()
         example.run()
 
-        example = ExampleAdvertiserReportInstalls()
+        example = ExampleAdvertiserReportLogInstalls()
         example.run()
 
-        example = ExampleAdvertiserReportPostbacks()
+        example = ExampleAdvertiserReportLogPostbacks()
         example.run()
 
     except Exception as exc:

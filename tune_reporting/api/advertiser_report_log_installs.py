@@ -1,11 +1,11 @@
 """
-TUNE Management API '/advertiser/stats/postbacks/'
+TUNE Management API '/advertiser/stats/installs/'
 ====================================================
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  postbacks.py
+#  installs.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -36,48 +36,52 @@ TUNE Management API '/advertiser/stats/postbacks/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 from tune_reporting.base import (
-    AdvertiserReportLogsBase
+    AdvertiserReportLogBase
 )
 
 
-#  /advertiser/stats/postbacks
-#  @example example_reports_postbacks.py
-class AdvertiserReportPostbacks(AdvertiserReportLogsBase):
-    """Advertiser Stats logs pertaining to postbacks."""
+#  /advertiser/stats/installs
+#  @example example_reports_installs.py
+class AdvertiserReportLogInstalls(AdvertiserReportLogBase):
+    """Advertiser Stats logs pertaining to installs."""
 
     ## The constructor.
     #
     def __init__(self):
         """The constructor.
         """
-        AdvertiserReportLogsBase.__init__(
+        AdvertiserReportLogBase.__init__(
             self,
-            "advertiser/stats/postbacks",
-            False,
+            "advertiser/stats/installs",
+            True,
             True
         )
 
         self.fields_recommended = [
             "id",
-            "stat_install_id",
-            "stat_event_id",
-            "stat_open_id",
             "created",
             "status",
             "site_id",
             "site.name",
-            "site_event_id",
-            "site_event.name",
-            "site_event.type",
             "publisher_id",
             "publisher.name",
-            "attributed_publisher_id",
-            "attributed_publisher.name",
-            "url",
-            "http_result"
+            "advertiser_ref_id",
+            "advertiser_sub_campaign_id",
+            "advertiser_sub_campaign.ref",
+            "publisher_sub_campaign_id",
+            "publisher_sub_campaign.ref",
+            "user_id",
+            "device_id",
+            "os_id",
+            "google_aid",
+            "ios_ifa",
+            "ios_ifv",
+            "windows_aid",
+            "referral_url",
+            "is_view_through"
         ]

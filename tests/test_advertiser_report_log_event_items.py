@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  test_advertiser_report_events.py
+#  test_advertiser_report_log_event_items.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -43,7 +43,7 @@ import unittest
 
 try:
     from tune_reporting import (
-        AdvertiserReportEvents,
+        AdvertiserReportLogEventItems,
         SdkConfig,
         TUNE_FIELDS_RECOMMENDED
         )
@@ -52,7 +52,7 @@ except ImportError as exc:
     raise
 
 
-class TestAdvertiserReportEvents(unittest.TestCase):
+class TestAdvertiserReportLogEventItems(unittest.TestCase):
 
     def __init__(self):
         dirname = os.path.split(__file__)[0]
@@ -76,7 +76,8 @@ class TestAdvertiserReportEvents(unittest.TestCase):
 
     def test_Fields(self):
         response = None
-        advertiser_report = AdvertiserReportEvents()
+
+        advertiser_report = AdvertiserReportLogEventItems()
 
         response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
         self.assertIsNotNone(response)
@@ -86,14 +87,14 @@ class TestAdvertiserReportEvents(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportEvents()
+            advertiser_report = AdvertiserReportLogEventItems()
 
             response = advertiser_report.count(
                 self.__start_date,
                 self.__end_date,
-                filter="(status = 'approved')",
+                filter=None,
                 response_timezone="America/Los_Angeles"
-                )
+            )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))
 
@@ -105,17 +106,16 @@ class TestAdvertiserReportEvents(unittest.TestCase):
         self.assertGreaterEqual(response.data, 0)
 
     def test_Find(self):
-
         response = None
 
         try:
-            advertiser_report = AdvertiserReportEvents()
+            advertiser_report = AdvertiserReportLogEventItems()
 
             response = advertiser_report.find(
                 self.__start_date,
                 self.__end_date,
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
+                filter=None,
                 limit=10,
                 page=None,
                 sort={"created": "DESC"},
@@ -135,13 +135,13 @@ class TestAdvertiserReportEvents(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportEvents()
+            advertiser_report = AdvertiserReportLogEventItems()
 
             response = advertiser_report.export(
                 self.__start_date,
                 self.__end_date,
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
+                filter=None,
                 format="csv",
                 response_timezone="America/Los_Angeles"
             )

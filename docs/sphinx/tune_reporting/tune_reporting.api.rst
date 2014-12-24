@@ -12,58 +12,58 @@ tune_reporting.api.advertiser_report_actuals module
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.api.advertiser_report_clicks module
---------------------------------------------------
+tune_reporting.api.advertiser_report_cohort_retention module
+------------------------------------------------------------
 
-.. automodule:: tune_reporting.api.advertiser_report_clicks
+.. automodule:: tune_reporting.api.advertiser_report_cohort_retention
     :members:
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.api.advertiser_report_cohort module
---------------------------------------------------
+tune_reporting.api.advertiser_report_cohort_value module
+--------------------------------------------------------
 
-.. automodule:: tune_reporting.api.advertiser_report_cohort
+.. automodule:: tune_reporting.api.advertiser_report_cohort_value
     :members:
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.api.advertiser_report_event_items module
--------------------------------------------------------
+tune_reporting.api.advertiser_report_log_clicks module
+------------------------------------------------------
 
-.. automodule:: tune_reporting.api.advertiser_report_event_items
+.. automodule:: tune_reporting.api.advertiser_report_log_clicks
     :members:
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.api.advertiser_report_events module
---------------------------------------------------
+tune_reporting.api.advertiser_report_log_event_items module
+-----------------------------------------------------------
 
-.. automodule:: tune_reporting.api.advertiser_report_events
+.. automodule:: tune_reporting.api.advertiser_report_log_event_items
     :members:
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.api.advertiser_report_installs module
-----------------------------------------------------
+tune_reporting.api.advertiser_report_log_events module
+------------------------------------------------------
 
-.. automodule:: tune_reporting.api.advertiser_report_installs
+.. automodule:: tune_reporting.api.advertiser_report_log_events
     :members:
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.api.advertiser_report_postbacks module
------------------------------------------------------
+tune_reporting.api.advertiser_report_log_installs module
+--------------------------------------------------------
 
-.. automodule:: tune_reporting.api.advertiser_report_postbacks
+.. automodule:: tune_reporting.api.advertiser_report_log_installs
     :members:
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.api.advertiser_report_retention module
------------------------------------------------------
+tune_reporting.api.advertiser_report_log_postbacks module
+---------------------------------------------------------
 
-.. automodule:: tune_reporting.api.advertiser_report_retention
+.. automodule:: tune_reporting.api.advertiser_report_log_postbacks
     :members:
     :undoc-members:
     :show-inheritance:

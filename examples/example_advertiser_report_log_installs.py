@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  example_advertiser_report_value.py
+#  example_advertiser_report_log_installs.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,37 +32,20 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
-#  Cohort Report
+# You can use the Logs report in the same way as the Actuals reports, but
+# instead of being aggregated by request type, the Logs report contains the
+# logs of each individual request (including the logs for Clicks, Installs,
+# Updates, Events, Event Items, and Postback URLs). The log data is available
+# in real-time, so you can use it for testing, debugging, and ensuring that
+# all measurement and attribution continues to operate smoothly. MAT updates
+# the Logs report every 1 minute.
 #
-#  For insight into the value of the users you’ve acquired for your mobile app
-#  (e.g. how acquired users are performing over time), you can use our Cohort Report.
+# https://platform.mobileapptracking.com/#!/Advertiser/Reports/logs?type=advertiser_report
 #
-#  The cohort report analyzes user behavior back to click date time (Cohort by Click)
-#  or to install date time (Cohort by Install). Based on whether you are viewing
-#  the results endpoint_based on click or install, the data in the report is vastly different.
-#
-#  Aggregate "cumulative" shows the data compounds or grows over time.
-#
-#  Aggregate "incremental" shows the rate of change over time.
-#
-#  Aggregate "cumulative" shows user growth over time by taking into account
-#  all of the revenue from the cohort date time to the specified time interval.
-#  Because the data is cumulative (values added on top of each other), the graph
-#  shows an upward trend as shown in the following screenshot.
-#
-#  Aggregate "incremental" option only includes the data measured during the specified
-#  interval (such as Day, Week, Month, Year, or All Time). Viewing the data
-#  incrementally does not appear as impressive as viewing cumulative or aggregated
-#  data because it only shows incremental changes (and there is typically a
-#  downward trend because of decreases in retention).
-#
-#  Cohort "clicks" refers to the number of clicks through to the app store to
-#  download an app.
-#
-#  Cohort "installs" refers to the number of downloads of an app
+# Installs API call: stats/advertiser_report
 #
 
 import datetime
@@ -72,20 +55,21 @@ import traceback
 
 try:
     from tune_reporting import (
-        AdvertiserReportValue,
+        AdvertiserReportLogInstalls,
         ReportReaderCSV,
+        ReportReaderJSON,
         SdkConfig,
         TuneSdkException,
-        TUNE_FIELDS_RECOMMENDED,
-        TUNE_FIELDS_DEFAULT
+        TUNE_FIELDS_RECOMMENDED
     )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
     raise
 
 
-class ExampleAdvertiserReportValue(object):
-    """Example using TUNE Advertiser Report Value."""
+class ExampleAdvertiserReportLogInstalls(object):
+
+    """Example using TUNE Advertiser Report Log Installs."""
 
     def __init__(self):
         # Setup SDK Configuration with TUNE MobileAppTracking API Key.
@@ -105,36 +89,27 @@ class ExampleAdvertiserReportValue(object):
         if not api_key or len(api_key) < 1:
             raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
 
-    # Example of running successful requests to TUNE Advertiser Report Value.
+    #
+    # Example of running successful requests to TUNE Advertiser Report Log Installs.
     #
     def run(self):
         """Run Example"""
 
         print("")
         print("\033[34m" + "=================================================" + "\033[0m")
-        print("\033[34m" + " TUNE Advertiser Report Value                    " + "\033[0m")
+        print("\033[34m" + " TUNE Advertiser Report Log Installs             " + "\033[0m")
         print("\033[34m" + "================================================ " + "\033[0m")
 
         try:
-            week_ago = datetime.date.fromordinal(datetime.date.today().toordinal() - 8)
             yesterday = datetime.date.fromordinal(datetime.date.today().toordinal() - 1)
-            start_date = "{} 00:00:00".format(week_ago)
+            start_date = "{} 00:00:00".format(yesterday)
             end_date = "{} 23:59:59".format(yesterday)
 
-            advertiser_report = AdvertiserReportValue()
+            advertiser_report = AdvertiserReportLogInstalls()
 
             print("")
             print("===========================================================")
-            print(" Default Fields of Advertiser Report Value                 ")
-            print("===========================================================")
-
-            response = advertiser_report.fields(TUNE_FIELDS_DEFAULT)
-            for field in response:
-                print(str(field))
-
-            print("")
-            print("===========================================================")
-            print(" Recommended Fields of Advertiser Report Value             ")
+            print(" Fields of Advertiser Report Log Installs records.         ")
             print("===========================================================")
 
             response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
@@ -143,16 +118,13 @@ class ExampleAdvertiserReportValue(object):
 
             print("")
             print("===========================================================")
-            print(" Count Advertiser Report Value click records.              ")
+            print(" Count Advertiser Report Log Installs records.             ")
             print("===========================================================")
 
             response = advertiser_report.count(
                 start_date,
                 end_date,
-                cohort_type="click",
-                cohort_interval="year_day",
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
+                filter="(status = 'approved')",
                 response_timezone="America/Los_Angeles"
             )
 
@@ -167,73 +139,17 @@ class ExampleAdvertiserReportValue(object):
 
             print("")
             print("===========================================================")
-            print(" Count Advertiser Report Value install records.            ")
-            print("===========================================================")
-
-            response = advertiser_report.count(
-                start_date,
-                end_date,
-                cohort_type="install",
-                cohort_interval="year_day",
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                response_timezone="America/Los_Angeles"
-            )
-
-            if response.http_code != 200 or response.errors:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
-
-            print(" TuneManagementResponse:")
-            print(str(response))
-
-            print(" TuneManagementResponse:")
-            print(str(response))
-            print(" Count:")
-            print(str(response.data))
-
-            print("")
-            print("===========================================================")
-            print(" Find Advertiser Report Value 'click/cumulative' records. ")
+            print(" Find Advertiser Report Log Installs records.              ")
             print("===========================================================")
 
             response = advertiser_report.find(
                 start_date,
                 end_date,
-                cohort_type="click",
-                cohort_interval="year_day",
-                aggregation_type="cumulative",
-                fields= "site_id,site.name,publisher_id,publisher.name,rpi,epi",
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                limit=5,
-                page=None,
-                sort=None,
-                response_timezone="America/Los_Angeles"
-            )
-
-            if response.http_code != 200 or response.errors:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
-
-            print(" TuneManagementResponse:")
-            print(str(response))
-
-            print("")
-            print("===========================================================")
-            print(" Find Advertiser Report Value 'click/cumulative' records. ")
-            print("===========================================================")
-
-            response = advertiser_report.find(
-                start_date,
-                end_date,
-                cohort_type="click",
-                cohort_interval="year_day",
-                aggregation_type="cumulative",
+                filter="(status = 'approved') AND (publisher_id > 0)",
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
                 limit=5,
                 page=None,
-                sort=None,
+                sort={"created": "DESC"},
                 response_timezone="America/Los_Angeles"
             )
 
@@ -245,18 +161,15 @@ class ExampleAdvertiserReportValue(object):
 
             print("")
             print("===========================================================")
-            print(" Export Advertiser Report Value CSV                ")
+            print(" Export Advertiser Report Log Installs CSV                 ")
             print("===========================================================")
 
             response = advertiser_report.export(
                 start_date,
                 end_date,
-                cohort_type="click",
-                cohort_interval="year_day",
-                aggregation_type="incremental",
                 fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
+                filter="(status = 'approved')",
+                format="csv",
                 response_timezone="America/Los_Angeles"
             )
 
@@ -266,13 +179,61 @@ class ExampleAdvertiserReportValue(object):
             print(" TuneManagementResponse:")
             print(str(response))
 
-            job_id = AdvertiserReportValue.parse_response_report_job_id(response)
+            job_id = AdvertiserReportLogInstalls.parse_response_report_job_id(response)
 
             print(" CSV Job ID: {}".format(job_id))
 
             print("")
             print("===========================================================")
-            print(" Fetching Advertiser Report Value CSV.           ")
+            print(" Fetching Advertiser Report Log Installs CSV               ")
+            print("===========================================================")
+
+            export_fetch_response = advertiser_report.fetch(
+                job_id,
+                verbose=True,
+                sleep=10
+            )
+
+            csv_report_url = AdvertiserReportLogInstalls.parse_response_report_url(export_fetch_response)
+
+            print(" CVS Report URL: {}".format(csv_report_url))
+
+            print("")
+            print("===========================================================")
+            print(" Read Advertiser Report Log Installs CSV                   ")
+            print("===========================================================")
+
+            csv_report_reader = ReportReaderCSV(csv_report_url)
+            csv_report_reader.read()
+            csv_report_reader.pretty_print(limit=5)
+
+            print("")
+            print("===========================================================")
+            print(" Export Advertiser Report Log Installs JSON                ")
+            print("===========================================================")
+
+            response = advertiser_report.export(
+                start_date,
+                end_date,
+                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                filter="(status = 'approved')",
+                format="json",
+                response_timezone="America/Los_Angeles"
+            )
+
+            if response.http_code != 200 or response.errors:
+                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
+
+            print(" TuneManagementResponse:")
+            print(str(response))
+
+            job_id = AdvertiserReportLogInstalls.parse_response_report_job_id(response)
+
+            print(" JSON Job ID: {}".format(job_id))
+
+            print("")
+            print("===========================================================")
+            print(" Fetching Advertiser Report Log Installs JSON              ")
             print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
@@ -288,18 +249,18 @@ class ExampleAdvertiserReportValue(object):
                 print("Exit")
                 return
 
-            csv_report_url = AdvertiserReportValue.parse_response_report_url(export_fetch_response)
+            json_report_url = AdvertiserReportLogInstalls.parse_response_report_url(export_fetch_response)
 
-            print(" CSV Report URL: {}".format(csv_report_url))
+            print(" JSON Report URL: {}".format(json_report_url))
 
             print("")
             print("===========================================================")
-            print(" Read Advertiser Report Value CSV                ")
+            print(" Read Advertiser Report Log Installs JSON                  ")
             print("===========================================================")
 
-            csv_report_reader = ReportReaderCSV(csv_report_url)
-            csv_report_reader.read()
-            csv_report_reader.pretty_print(limit=5)
+            json_report_reader = ReportReaderJSON(json_report_url)
+            json_report_reader.read()
+            json_report_reader.pretty_print(limit=5)
 
         except TuneSdkException as exc:
             print("TuneSdkException ({})".format(exc))
@@ -338,7 +299,7 @@ class ExampleAdvertiserReportValue(object):
 
 if __name__ == '__main__':
     try:
-        example = ExampleAdvertiserReportValue()
+        example = ExampleAdvertiserReportLogInstalls()
         example.run()
     except Exception as exc:
         print("Exception: {0}".format(exc))

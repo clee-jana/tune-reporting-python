@@ -1,11 +1,11 @@
 """
-TUNE Management API '/advertiser/stats/clicks/'
-================================================
+TUNE Management API '/advertiser/stats/event/items/'
+====================================================
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  clicks.py
+#  event_items.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -36,32 +36,29 @@ TUNE Management API '/advertiser/stats/clicks/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 from tune_reporting.base import (
-    AdvertiserReportLogsBase
+    AdvertiserReportLogBase
 )
 
 
-#  /advertiser/stats/clicks
-#
-#  @example example_reports_clicks.py
-#
-class AdvertiserReportClicks(AdvertiserReportLogsBase):
-    """TUNE Management API endpoint '/advertiser/stats/clicks'
-    """
+#  /advertiser/stats/event/items
+#  @example example_reports_event_items.py
+class AdvertiserReportLogEventItems(AdvertiserReportLogBase):
+    """Advertiser Stats logs pertaining to event items."""
 
     ## The constructor.
     #
     def __init__(self):
         """The constructor.
         """
-        AdvertiserReportLogsBase.__init__(
+        AdvertiserReportLogBase.__init__(
             self,
-            "advertiser/stats/clicks",
-            True,
+            "advertiser/stats/event/items",
+            False,
             True
         )
 
@@ -70,11 +67,24 @@ class AdvertiserReportClicks(AdvertiserReportLogsBase):
             "created",
             "site_id",
             "site.name",
-            "publisher_id",
-            "publisher.name",
-            "is_unique",
+            "campaign_id",
+            "campaign.name",
+            "site_event_id",
+            "site_event.name",
+            "site_event_item_id",
+            "site_event_item.name",
+            "quantity",
+            "value_usd",
+            "country_id",
+            "country.name",
+            "region_id",
+            "region.name",
+            "agency_id",
+            "agency.name",
+            "advertiser_sub_site_id",
+            "advertiser_sub_site.name",
             "advertiser_sub_campaign_id",
-            "advertiser_sub_campaign.ref",
-            "publisher_sub_campaign_id",
-            "publisher_sub_campaign.ref"
+            "advertiser_sub_campaign.name",
+            "currency_code",
+            "value"
         ]

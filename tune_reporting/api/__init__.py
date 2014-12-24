@@ -34,17 +34,17 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
 from .advertiser_report_actuals import (AdvertiserReportActuals)
-from .advertiser_report_clicks import (AdvertiserReportClicks)
-from .advertiser_report_event_items import (AdvertiserReportEventItems)
-from .advertiser_report_events import (AdvertiserReportEvents)
-from .advertiser_report_installs import (AdvertiserReportInstalls)
-from .advertiser_report_postbacks import (AdvertiserReportPostbacks)
-from .advertiser_report_retention import (AdvertiserReportRetention)
-from .advertiser_report_value import (AdvertiserReportValue)
+from .advertiser_report_log_clicks import (AdvertiserReportLogClicks)
+from .advertiser_report_log_event_items import (AdvertiserReportLogEventItems)
+from .advertiser_report_log_events import (AdvertiserReportLogEvents)
+from .advertiser_report_log_installs import (AdvertiserReportLogInstalls)
+from .advertiser_report_log_postbacks import (AdvertiserReportLogPostbacks)
+from .advertiser_report_cohort_retention import (AdvertiserReportCohortRetention)
+from .advertiser_report_cohort_value import (AdvertiserReportCohortValue)
 
 from .export import (Export)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  test_advertiser_report_installs.py
+#  test_advertiser_report_log_installs.py
 #
 #  Copyright (c) 2014 TUNE, Inc.
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -43,7 +43,7 @@ import unittest
 
 try:
     from tune_reporting import (
-        AdvertiserReportInstalls,
+        AdvertiserReportLogInstalls,
         SdkConfig,
         TUNE_FIELDS_RECOMMENDED
         )
@@ -52,7 +52,7 @@ except ImportError as exc:
     raise
 
 
-class TestAdvertiserReportInstalls(unittest.TestCase):
+class TestAdvertiserReportLogInstalls(unittest.TestCase):
 
     def __init__(self):
         dirname = os.path.split(__file__)[0]
@@ -76,7 +76,7 @@ class TestAdvertiserReportInstalls(unittest.TestCase):
 
     def test_Fields(self):
         response = None
-        advertiser_report = AdvertiserReportInstalls()
+        advertiser_report = AdvertiserReportLogInstalls()
 
         response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
         self.assertIsNotNone(response)
@@ -86,7 +86,7 @@ class TestAdvertiserReportInstalls(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportInstalls()
+            advertiser_report = AdvertiserReportLogInstalls()
 
             response = advertiser_report.count(
                 self.__start_date,
@@ -109,7 +109,7 @@ class TestAdvertiserReportInstalls(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportInstalls()
+            advertiser_report = AdvertiserReportLogInstalls()
 
             response = advertiser_report.find(
                 self.__start_date,
@@ -135,7 +135,7 @@ class TestAdvertiserReportInstalls(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportInstalls()
+            advertiser_report = AdvertiserReportLogInstalls()
 
             response = advertiser_report.export(
                 self.__start_date,

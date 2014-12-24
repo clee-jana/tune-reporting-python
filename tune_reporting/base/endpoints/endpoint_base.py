@@ -34,7 +34,7 @@ TUNE Management Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
+#  @version   $Date: 2014-12-24 11:24:16 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -43,7 +43,7 @@ import sys
 from datetime import datetime
 
 from tune_reporting.version import (
-    __version__
+    __sdk_version__
 )
 from tune_reporting.base.service import (
     TuneManagementClient
@@ -740,7 +740,7 @@ class EndpointBase(object):
     def version():
         """Get SDK version.
         """
-        return __version__
+        return __sdk_version__
 
     #  To string
     #  @return string
