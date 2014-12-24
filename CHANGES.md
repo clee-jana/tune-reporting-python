@@ -117,7 +117,7 @@ Beta public release on December 21, 2014
 * Refactored base endpoints.
 * /advertiser/stats/ltv is now referred to ad Value reporting.
 
-Version 0.9.25
+Version 0.9.26
 --------------
 
 Beta public release on December 24, 2014
