@@ -26,7 +26,7 @@
 # author    Jeff Tanner <jefft@tune.com>
 # copyright 2014 Tune (http://www.tune.com)
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# update    $Date: 2014-12-21 21:48:56 $
+# update    $Date: 2014-12-30 08:50:38 $
 # version   $Version: 0.9.20 $
 # link      https://developers.mobileapptracking.com
 #
@@ -47,6 +47,7 @@ clean:
 	sudo rm -fR ./docs/doxygen/*
 	sudo rm -fR ./docs/sphinx/_build
 	sudo rm -fR build/*
+	sudo rm -fR ./tune_reporting.egg-info/*
 	find . -name "*.pyc" -type f -delete
 	rm -rf venv
 

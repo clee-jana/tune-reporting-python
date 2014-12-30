@@ -123,3 +123,9 @@ Version 0.9.26
 Beta public release on December 24, 2014
 * Refactored Log and Cohort classes.
 * Tune Management API request contains SDK name and version.
+
+Version 0.9.27
+--------------
+
+Beta public release on December 30, 2014
+* TUNE Management API request contains 'sdk' and 'ver'.
