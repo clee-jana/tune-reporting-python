@@ -1,4 +1,4 @@
-## tune-reporting-python Contributors
+## tune-reporting-python Authors
 =======================
 
 We'd like to thank the following people who have contributed to the `tune-reporting-python` repository.
