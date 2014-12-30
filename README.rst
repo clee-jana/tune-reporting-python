@@ -5,7 +5,7 @@ TUNE SDK for Python documentation
     :label: TUNE SDK for Python 2.7 and 3.0
     :purpose: Incorporate TUNE services.
     :update:  $Date: 2014-12-30 08:50:38 $
-    :version: 0.9.27
+    :version: 0.9.28
 
 Overview
 ####################
