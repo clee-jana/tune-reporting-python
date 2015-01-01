@@ -129,3 +129,9 @@ Version 0.9.28
 
 Beta public release on December 30, 2014
 * TUNE Management API request contains 'sdk' and 'ver'.
+
+Version 0.9.29
+--------------
+
+Beta public release on December 31, 2014
+* Set SDK configuration with API_KEY.

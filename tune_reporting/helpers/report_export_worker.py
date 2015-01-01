@@ -36,7 +36,7 @@ TUNE Reports Export Status Worker
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 10:04:26 $
+#  @version   $Date: 2014-12-31 17:01:21 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -192,7 +192,7 @@ class ReportExportWorker(object):
                 # Failed to get successful service response.
                 if response.http_code != 200 or response.errors:
                     raise TuneServiceException(
-                        "Service failed: {}: {}".format(
+                        "Service failed:\nHTTP Code: {}:\n Service Error: {}".format(
                             response.http_code,
                             str(response)
                         )

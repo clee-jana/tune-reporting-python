@@ -29,7 +29,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-24 11:24:16 $
+#  @version   $Date: 2014-12-31 17:01:21 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -45,23 +45,31 @@ from test_advertiser_report_actuals import TestAdvertiserReportActuals
 from test_advertiser_report_cohort_retention import TestAdvertiserReportCohortRetention
 from test_advertiser_report_cohort_value import TestAdvertiserReportCohortValue
 
-def suite():
+def suite(api_key):
     suite = unittest.TestSuite()
 
-    suite.addTest(TestAdvertiserReportLogClicks())
-    suite.addTest(TestAdvertiserReportLogEventItems())
-    suite.addTest(TestAdvertiserReportLogEvents())
-    suite.addTest(TestAdvertiserReportLogInstalls())
-    suite.addTest(TestAdvertiserReportLogPostbacks())
-    suite.addTest(TestAdvertiserReportActuals())
-    suite.addTest(TestAdvertiserReportCohortRetention())
-    suite.addTest(TestAdvertiserReportCohortValue())
+    suite.addTest(TestAdvertiserReportLogClicks(api_key))
+    suite.addTest(TestAdvertiserReportLogEventItems(api_key))
+    suite.addTest(TestAdvertiserReportLogEvents(api_key))
+    suite.addTest(TestAdvertiserReportLogInstalls(api_key))
+    suite.addTest(TestAdvertiserReportLogPostbacks(api_key))
+    suite.addTest(TestAdvertiserReportActuals(api_key))
+    suite.addTest(TestAdvertiserReportCohortRetention(api_key))
+    suite.addTest(TestAdvertiserReportCohortValue(api_key))
 
     return suite
 
 if __name__ == '__main__':
+    try:
+        if len(sys.argv) > 1:
+            api_key = sys.argv.pop()
+
+    except Exception as exc:
+        print("Exception: {0}".format(exc))
+        raise
+
     runner = unittest.TextTestRunner()
 
-    test_suite = suite()
+    test_suite = suite(api_key)
 
     runner.run(test_suite)
