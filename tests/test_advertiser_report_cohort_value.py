@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-24 11:24:16 $
+#  @version   $Date: 2014-12-31 17:01:21 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -54,11 +54,16 @@ except ImportError as exc:
 
 class TestAdvertiserReportCohortValue(unittest.TestCase):
 
-    def __init__(self):
+    def __init__(self, api_key):
+        # Setup SDK Configuration with TUNE MobileAppTracking API Key.
         dirname = os.path.split(__file__)[0]
-        filepath = os.path.join(dirname, "tune_reporting_sdk.tests.config")
+        dirname = os.path.dirname(dirname)
+        filepath = os.path.join(dirname, SdkConfig.SDK_CONFIG_FILENAME)
+
         abspath = os.path.abspath(filepath)
+
         sdk_config = SdkConfig(filepath=abspath)
+        sdk_config.api_key = api_key
         unittest.TestCase.__init__(self)
 
     def setUp(self):

@@ -29,7 +29,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-24 11:24:16 $
+#  @version   $Date: 2014-12-31 17:01:21 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -58,29 +58,36 @@ from example_advertiser_report_log_postbacks import ExampleAdvertiserReportLogPo
 
 if __name__ == '__main__':
     try:
+        if len(sys.argv) < 2:
+            raise ValueError(
+                "Provide API Key to execute TUNE Advertiser Reporting examples {}.".format(sys.argv[0])
+                )
+
+        api_key = sys.argv[1]
+
         example = ExampleAdvertiserReportActuals()
-        example.run()
+        example.run(api_key)
 
         example = ExampleAdvertiserReportCohortValue()
-        example.run()
+        example.run(api_key)
 
         example = ExampleAdvertiserReportCohortRetention()
-        example.run()
+        example.run(api_key)
 
         example = ExampleAdvertiserReportLogClicks()
-        example.run()
+        example.run(api_key)
 
         example = ExampleAdvertiserReportLogEventItems()
-        example.run()
+        example.run(api_key)
 
         example = ExampleAdvertiserReportLogEvents()
-        example.run()
+        example.run(api_key)
 
         example = ExampleAdvertiserReportLogInstalls()
-        example.run()
+        example.run(api_key)
 
         example = ExampleAdvertiserReportLogPostbacks()
-        example.run()
+        example.run(api_key)
 
     except Exception as exc:
         print("Exception: {0}".format(exc))

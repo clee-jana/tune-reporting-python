@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-24 11:24:16 $
+#  @version   $Date: 2014-12-31 17:01:21 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #  You can use the Logs report in the same way as the Actuals reports, but
@@ -71,6 +71,17 @@ class ExampleAdvertiserReportLogPostbacks(object):
     """Example using TUNE Advertiser Report Log Postbacks."""
 
     def __init__(self):
+        pass
+
+    #
+    # Example of running successful requests to TUNE Advertiser Report Log Postbacks.
+    #
+    def run(self, api_key):
+
+        # api_key
+        if not api_key or len(api_key) < 1:
+            raise ValueError("Parameter 'api_key' is not defined.")
+
         # Setup SDK Configuration with TUNE MobileAppTracking API Key.
         dirname = os.path.split(__file__)[0]
         dirname = os.path.dirname(dirname)
@@ -79,20 +90,7 @@ class ExampleAdvertiserReportLogPostbacks(object):
         abspath = os.path.abspath(filepath)
 
         sdk_config = SdkConfig(filepath=abspath)
-        api_key = sdk_config.api_key
-
-        if "API_KEY" == api_key:
-            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
-
-        # api_key
-        if not api_key or len(api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined in {}.".format(SdkConfig.SDK_CONFIG_FILENAME))
-
-    #
-    # Example of running successful requests to TUNE Advertiser Report Log Postbacks.
-    #
-    def run(self):
-        """Run Example"""
+        sdk_config.api_key = api_key
 
         print("")
         print("\033[34m" + "=================================================" + "\033[0m")
@@ -298,8 +296,11 @@ class ExampleAdvertiserReportLogPostbacks(object):
 
 if __name__ == '__main__':
     try:
+        if len(sys.argv) < 2:
+            raise ValueError("{} [api_key].".format(sys.argv[0]))
+        api_key = sys.argv[1]
         example = ExampleAdvertiserReportLogPostbacks()
-        example.run()
+        example.run(api_key)
     except Exception as exc:
         print("Exception: {0}".format(exc))
         raise

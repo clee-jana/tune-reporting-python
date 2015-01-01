@@ -10,7 +10,7 @@ Tune Reporting API SDK for Python documentation
     :label: Tune Reporting API SDK for Python 2.7 and 3.0
     :purpose: Incorporate Tune Reporting API services.
     :update:  $Date: 2014-12-24 11:24:16 $
-    :version: 0.9.25
+    :version: 0.9.29
 
 -------------------
 Contents:

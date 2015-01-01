@@ -36,7 +36,7 @@ TUNE SDK Configuration Class
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 17:18:01 $
+#  @version   $Date: 2014-12-31 17:01:21 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -132,6 +132,13 @@ class SdkConfig(object):
             if isinstance(api_key, unicode):
                 api_key = str(api_key)
             return api_key
+
+        @api_key.setter
+        def api_key(self, value):
+            """Set TUNE MobileAppTracking API Key from SDK Configuration File."""
+            if "tune_reporting_api_key_string" not in self.sections_dict["TUNE_REPORTING"]:
+                return None
+            self.sections_dict["TUNE_REPORTING"]["tune_reporting_api_key_string"] = value
 
         @property
         def validate_fields(self):
