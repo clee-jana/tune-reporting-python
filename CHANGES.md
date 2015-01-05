@@ -130,8 +130,9 @@ Version 0.9.28
 Beta public release on December 30, 2014
 * TUNE Management API request contains 'sdk' and 'ver'.
 
-Version 0.9.30
+Version 0.9.32
 --------------
 
-Beta public release on December 31, 2014
-* Set SDK configuration with API_KEY.
+Beta public release on January 03, 2015
+* Provide toJson() within response.
+* Created 'config' directory to hold TUNE Reporting SDK configuration.

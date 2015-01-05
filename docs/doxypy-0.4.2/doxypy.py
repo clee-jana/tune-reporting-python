@@ -21,7 +21,7 @@ __website__ = "http://code.foosel.org/doxypy"
 
 __author__ = (
 	"Philippe 'demod' Neumann (doxypy at demod dot org)",
-	"Gina 'foosel' Haeussge (gina at foosel dot net)" 
+	"Gina 'foosel' Haeussge (gina at foosel dot net)"
 )
 
 __licenseName__ = "GPL v2"
@@ -50,7 +50,7 @@ class FSM(object):
 	Transitions are given as 4-tuples, consisting of an origin state, a target
 	state, a condition for the transition (given as a reference to a function
 	which gets called with a given piece of input) and a pointer to a function
-	to be called upon the execution of the given transition. 
+	to be called upon the execution of the given transition.
 	"""
 	
 	"""
@@ -212,8 +212,8 @@ class Doxypy(object):
 				print >>self.outstream, "\n".join(self.output)
 				self.outstream.flush()
 			except IOError:
-				# Fix for FS#33. Catches "broken pipe" when doxygen closes 
-				# stdout prematurely upon usage of INPUT_FILTER, INLINE_SOURCES 
+				# Fix for FS#33. Catches "broken pipe" when doxygen closes
+				# stdout prematurely upon usage of INPUT_FILTER, INLINE_SOURCES
 				# and FILTER_SOURCE_FILES.
 				pass
 		self.output = []
@@ -228,7 +228,7 @@ class Doxypy(object):
 		Closes the current commentblock and starts a new comment search.
 		"""
 		if options.debug:
-			print >>sys.stderr, "# CALLBACK: resetCommentSearch" 
+			print >>sys.stderr, "# CALLBACK: resetCommentSearch"
 		self.__closeComment()
 		self.startCommentSearch(match)
 	
@@ -251,7 +251,7 @@ class Doxypy(object):
 		appends the current line to the output.
 		"""
 		if options.debug:
-			print >>sys.stderr, "# CALLBACK: stopCommentSearch" 
+			print >>sys.stderr, "# CALLBACK: stopCommentSearch"
 		self.__closeComment()
 		
 		self.defclass = []
@@ -261,9 +261,9 @@ class Doxypy(object):
 		"""Appends a line in the FILEHEAD state.
 		
 		Closes the open comment	block, resets it and appends the current line.
-		""" 
+		"""
 		if options.debug:
-			print >>sys.stderr, "# CALLBACK: appendFileheadLine" 
+			print >>sys.stderr, "# CALLBACK: appendFileheadLine"
 		self.__closeComment()
 		self.comment = []
 		self.output.append(self.fsm.current_input)
@@ -275,7 +275,7 @@ class Doxypy(object):
 		well as singleline comments.
 		"""
 		if options.debug:
-			print >>sys.stderr, "# CALLBACK: appendCommentLine" 
+			print >>sys.stderr, "# CALLBACK: appendCommentLine"
 		(from_state, to_state, condition, callback) = self.fsm.current_transition
 		
 		# single line comment
@@ -312,13 +312,13 @@ class Doxypy(object):
 	def appendNormalLine(self, match):
 		"""Appends a line to the output."""
 		if options.debug:
-			print >>sys.stderr, "# CALLBACK: appendNormalLine" 
+			print >>sys.stderr, "# CALLBACK: appendNormalLine"
 		self.output.append(self.fsm.current_input)
 		
 	def appendDefclassLine(self, match):
 		"""Appends a line to the triggering block."""
 		if options.debug:
-			print >>sys.stderr, "# CALLBACK: appendDefclassLine" 
+			print >>sys.stderr, "# CALLBACK: appendDefclassLine"
 		self.defclass.append(self.fsm.current_input)
 	
 	def makeCommentBlock(self):
@@ -333,7 +333,7 @@ class Doxypy(object):
 		commentLines = map(lambda x: "%s# %s" % (self.indent, x), commentLines)
 		l = [self.indent + doxyStart]
 		l.extend(commentLines)
-			 
+			
 		return l
 	
 	def parse(self, input):
@@ -342,7 +342,7 @@ class Doxypy(object):
 		
 		@param	input	the python code to parse
 		@returns the modified python code
-		""" 
+		"""
 		lines = input.split("\n")
 		
 		for line in lines:
@@ -359,7 +359,7 @@ class Doxypy(object):
 		
 		@param	input	the python code to parse
 		@returns the modified python code
-		""" 
+		"""
 		f = open(filename, 'r')
 		
 		for line in f:
@@ -370,7 +370,7 @@ class Doxypy(object):
 		f.close()
 	
 	def parseLine(self, line):
-		"""Parse one line of python and flush the resulting output to the 
+		"""Parse one line of python and flush the resulting output to the
 		outstream.
 		
 		@param	line	the python code line to parse
@@ -403,7 +403,7 @@ def optParse():
 	return filename[0]
 
 def main():
-	"""Starts the parser on the file given by the filename as the first 
+	"""Starts the parser on the file given by the filename as the first
 	argument on the commandline.
 	"""
 	filename = optParse()

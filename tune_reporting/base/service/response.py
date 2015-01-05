@@ -85,7 +85,7 @@ class TuneManagementResponse(object):
         """
         Get property for Full JSON response returned
         from TUNE Management API Service."""
-        return self.__response_json
+        return dict([(str(k), v) for k, v in self.__response_json.items()])
 
     @property
     def http_code(self):

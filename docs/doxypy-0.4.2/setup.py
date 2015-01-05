@@ -5,7 +5,7 @@ import os
 
 from glob import glob
 from distutils.core import setup
-from distutils.command.install import INSTALL_SCHEMES 
+from distutils.command.install import INSTALL_SCHEMES
 
 import doxypy
 
