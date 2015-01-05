@@ -36,7 +36,7 @@ TUNE SDK Configuration Class
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-31 17:01:21 $
+#  @version   $Date: 2015-01-03 08:41:07 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 
@@ -185,7 +185,7 @@ if __name__ == '__main__':
     dirname = os.path.split(__file__)[0]
     dirname = os.path.dirname(dirname)
     dirname = os.path.dirname(dirname)
-    filepath = os.path.join(dirname, SdkConfig.SDK_CONFIG_FILENAME)
+    filepath = os.path.join(dirname, "config", SdkConfig.SDK_CONFIG_FILENAME)
     filepath = os.path.abspath(filepath)
 
     s1=SdkConfig(filepath=filepath)

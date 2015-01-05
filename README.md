@@ -1,8 +1,8 @@
 <h2>tune-reporting-python</h2>
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
-<h4>Update:  $Date: 2014-12-31 17:01:21 $</h4>
-<h4>Version: 0.9.29</h4>
+<h4>Update:  $Date: 2015-01-03 08:41:07 $</h4>
+<h4>Version: 0.9.32</h4>
 ===
 
 <a id="TOP"></a>
@@ -217,7 +217,7 @@ You may need to run the above commands with `sudo`.
 <a id="sdk_install_config" name="sdk_install_config"></a>
 #### Configuration
 
-In the root folder, the TUNE Reporting SDK configuration is set within file ```./tune_reporting_sdk.config```.
+In the root folder, the TUNE Reporting SDK configuration is set within file ```./config/tune_reporting_sdk.config```.
 
 With generated API_KEY from TUNE MobileAppTracking Platform account, replace `API_KEY`.
 
@@ -406,26 +406,26 @@ Client classes that connect with the **TUNE Management API Service** are defined
 
 Helper class for both the Library and Examples are defined within folder **/tune_reporting/helpers/**.
 ```
-tune_reporting
+tune_reporting/
 ├── api
 │   ├── advertiser_report_actuals.py
-│   ├── advertiser_report_log_clicks.py
+│   ├── advertiser_report_cohort_retention.py
 │   ├── advertiser_report_cohort_value.py
+│   ├── advertiser_report_log_clicks.py
 │   ├── advertiser_report_log_event_items.py
 │   ├── advertiser_report_log_events.py
 │   ├── advertiser_report_log_installs.py
 │   ├── advertiser_report_log_postbacks.py
-│   ├── advertiser_report_cohort_retention.py
 │   ├── export.py
 │   └── __init__.py
 ├── base
 │   ├── endpoints
-│   │   ├── endpoint_base.py
-│   │   ├── __init__.py
 │   │   ├── advertiser_report_actuals_base.py
 │   │   ├── advertiser_report_base.py
 │   │   ├── advertiser_report_cohort_base.py
-│   │   └── advertiser_report_log_base.py
+│   │   ├── advertiser_report_log_base.py
+│   │   ├── endpoint_base.py
+│   │   └── __init__.py
 │   ├── __init__.py
 │   └── service
 │       ├── client.py
@@ -441,6 +441,7 @@ tune_reporting
 │   ├── report_reader_base.py
 │   ├── report_reader_csv.py
 │   ├── report_reader_json.py
+│   ├── sdk_config.py
 │   ├── sdk_exception.py
 │   ├── service_exception.py
 │   ├── utf8_recorder.py
@@ -462,13 +463,13 @@ Each Advertiser Report class defined in **/tune_reporting/api/** has an example:
 ```
 examples/
 ├── example_advertiser_report_actuals.py
-├── example_advertiser_report_log_clicks.py
+├── example_advertiser_report_cohort_retention.py
 ├── example_advertiser_report_cohort_value.py
+├── example_advertiser_report_log_clicks.py
 ├── example_advertiser_report_log_event_items.py
 ├── example_advertiser_report_log_events.py
 ├── example_advertiser_report_log_installs.py
 ├── example_advertiser_report_log_postbacks.py
-├── example_advertiser_report_cohort_retention.py
 ├── __init__.py
 └── tune_reporting_examples.py
 ```
@@ -489,13 +490,13 @@ tests/
 ├── __init__.py
 ├── requirements.txt
 ├── test_advertiser_report_actuals.py
-├── test_advertiser_report_log_clicks.py
+├── test_advertiser_report_cohort_retention.py
 ├── test_advertiser_report_cohort_value.py
+├── test_advertiser_report_log_clicks.py
 ├── test_advertiser_report_log_event_items.py
 ├── test_advertiser_report_log_events.py
 ├── test_advertiser_report_log_installs.py
 ├── test_advertiser_report_log_postbacks.py
-├── test_advertiser_report_cohort_retention.py
 └── tune_reporting_tests.py
 ```
 

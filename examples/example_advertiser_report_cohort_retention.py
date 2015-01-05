@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2014 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-31 17:01:21 $
+#  @version   $Date: 2015-01-03 08:41:07 $
 #  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
 #
 #  Retention Report
@@ -101,7 +101,7 @@ class ExampleAdvertiserReportCohortRetention(object):
         # Setup SDK Configuration with TUNE MobileAppTracking API Key.
         dirname = os.path.split(__file__)[0]
         dirname = os.path.dirname(dirname)
-        filepath = os.path.join(dirname, SdkConfig.SDK_CONFIG_FILENAME)
+        filepath = os.path.join(dirname, "config", SdkConfig.SDK_CONFIG_FILENAME)
 
         abspath = os.path.abspath(filepath)
 
@@ -160,6 +160,9 @@ class ExampleAdvertiserReportCohortRetention(object):
             print(" TuneManagementResponse:")
             print(str(response))
 
+            print(" JSON:")
+            print(response.json)
+
             print(" Count:")
             print(str(response.data))
 
@@ -186,6 +189,9 @@ class ExampleAdvertiserReportCohortRetention(object):
 
             print(" TuneManagementResponse:")
             print(str(response))
+
+            print(" JSON:")
+            print(response.json)
 
             print(" Count:")
             print(str(response.data))
