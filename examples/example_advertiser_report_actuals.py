@@ -3,7 +3,7 @@
 #
 #  example_advertiser_report_actuals.py
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,10 +30,10 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-03 08:41:07 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 #  The Actuals report gives you quick insight into the performance of your apps
 #  and advertising partners (publishers). Use this report for reconciliation,
@@ -52,9 +52,9 @@ import traceback
 try:
     from tune_reporting import (
         AdvertiserReportActuals,
-        SdkConfig,
         ReportReaderCSV,
         ReportReaderJSON,
+        SdkConfig,
         TuneSdkException,
         TUNE_FIELDS_RECOMMENDED,
         TUNE_FIELDS_DEFAULT
@@ -73,13 +73,11 @@ class ExampleAdvertiserReportActuals(object):
     #
     # Example of running successful requests to TUNE Advertiser Report Actuals.
     #
-    def run(self, api_key):
+    def run(self,
+            auth_key,
+            auth_type):
 
-        # api_key
-        if not api_key or len(api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined.")
-
-        # Setup SDK Configuration with TUNE MobileAppTracking API Key.
+        # Setup TUNE Reporting SDK configuration.
         dirname = os.path.split(__file__)[0]
         dirname = os.path.dirname(dirname)
         filepath = os.path.join(dirname, "config", SdkConfig.SDK_CONFIG_FILENAME)
@@ -87,7 +85,9 @@ class ExampleAdvertiserReportActuals(object):
         abspath = os.path.abspath(filepath)
 
         sdk_config = SdkConfig(filepath=abspath)
-        sdk_config.api_key = api_key
+        if auth_type and auth_key:
+            sdk_config.auth_key = auth_key
+            sdk_config.auth_type = auth_type
 
         print("")
         print("\033[34m" + "================================================" + "\033[0m")
@@ -234,9 +234,7 @@ class ExampleAdvertiserReportActuals(object):
             print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
-                job_id,
-                verbose=True,
-                sleep=10
+                job_id
             )
 
             csv_report_url = AdvertiserReportActuals.parse_response_report_url(export_fetch_response)
@@ -287,9 +285,7 @@ class ExampleAdvertiserReportActuals(object):
             print("===========================================================")
 
             export_fetch_response = advertiser_report.fetch(
-                job_id,
-                verbose=True,
-                sleep=10
+                job_id
             )
 
             print(" TuneManagementResponse:")
@@ -350,10 +346,10 @@ class ExampleAdvertiserReportActuals(object):
 if __name__ == '__main__':
     try:
         if len(sys.argv) < 2:
-            raise ValueError("{} [api_key].".format(sys.argv[0]))
-        api_key = sys.argv[1]
+            raise ValueError("{} [auth_key].".format(sys.argv[0]))
+        auth_key = sys.argv[1]
         example = ExampleAdvertiserReportActuals()
-        example.run(api_key)
+        example.run(auth_key)
     except Exception as exc:
         print("Exception: {0}".format(exc))
         raise

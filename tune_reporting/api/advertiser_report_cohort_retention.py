@@ -7,7 +7,7 @@ TUNE Management API '/advertiser/stats/retention/'
 #
 #  retention.py
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,10 +34,10 @@ TUNE Management API '/advertiser/stats/retention/'
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-24 11:24:16 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 from tune_reporting.base import (
@@ -277,31 +277,20 @@ class AdvertiserReportCohortRetention(AdvertiserReportCohortBase):
     ## Helper function for fetching report document given provided job
     #  identifier.
     #
-    #  @param str    job_id     Job Identifier of report on queue.
-    #  @param bool   verbose    For debugging purposes only.
-    #  @param int    sleep      How long thread should sleep before
-    #                           next status request.
+    #  @param str   job_id      Job Identifier of report on queue.
     #
     #  @return object
     def fetch(self,
-              job_id,
-              verbose=False,
-              sleep=10):
+              job_id):
         """Helper function for fetching report upon completion.
         Starts worker for polling export queue.
 
-            :param str    job_id:     Provided Job Identifier to reference
-                                        requested report on export queue.
-            :param bool   verbose:    Debug purposes only to view progress of
-                                        job on export queue.
-            :param int    sleep:      Polling delay between querying job
-                                        status on export queue.
+            :param str  job_id:     Provided Job Identifier to reference
+                                    requested report on export queue.
             :return: (TuneManagementResponse)
         """
         return super(AdvertiserReportCohortRetention, self)._fetch(
             self.controller,
             "status",
-            job_id,
-            verbose,
-            sleep
+            job_id
         )

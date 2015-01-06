@@ -5,7 +5,7 @@ TUNE Management Endpoint base
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -32,10 +32,10 @@ TUNE Management Endpoint base
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-24 11:24:16 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import re
@@ -53,11 +53,11 @@ from tune_reporting.helpers import (
     TuneSdkException,
     TuneServiceException
 )
-from tune_reporting.helpers.report_export_worker import (
-    ReportExportWorker
-)
 from tune_reporting.helpers.sdk_config import (
     SdkConfig
+)
+from .report_export_worker import (
+    ReportExportWorker
 )
 
 TUNE_FIELDS_UNDEFINED = 0
@@ -83,9 +83,26 @@ class EndpointBase(object):
     #  @var str
     __controller = None
 
-    #  MobileAppTracking API Key
+    #  TUNE Reporting authentication key.
     #  @var str
-    __api_key = None
+    __auth_key = None
+
+    #  TUNE Reporting authentication type.
+    #  @var str
+    __auth_type = None
+
+    #  Verbose output for debugging purposes when fetching report download url.
+    #  @var bool
+    __status_verbose = False
+
+    #  TUNE reporting export status sleep (seconds).
+    #  @var int
+    __status_sleep = 10
+
+    #   TUNE reporting export fetch timeout (seconds).
+    #  @var int
+    __status_timeout = 0
+
 
     #  TUNE Management API Endpoint's fields
     #  @var list
@@ -93,7 +110,7 @@ class EndpointBase(object):
 
     ## Validate action's parameters against this endpoint' fields.
     #  @var bool
-    validate_fields = False
+    __validate_fields = False
 
     #  Endpoint's model name
     #  @var str
@@ -138,33 +155,38 @@ class EndpointBase(object):
 
     #  Constructor
     #
-    #  @param str controller         TUNE Management API Endpoint
+    #  @param str controller     TUNE Management API Endpoint.
+    #  @param bool use_config    Use TUNE Reporting SDK config.
     #
     def __init__(self,
-                 controller):
+                 controller,
+                 use_config):
         """The constructor.
 
             :param controller (string):     TUNE Management API endpoint name.
+            :param use_config (boolean):    Use TUNE Reporting SDK config.
         """
-
-        self.__sdk_config = SdkConfig()
-        api_key = self.__sdk_config.api_key
-        validate_fields = self.__sdk_config.validate_fields
-
-        # -----------------------------------------------------------------
-        # validate_fields inputs
-        # -----------------------------------------------------------------
 
         # controller
         if not controller or len(controller) < 1:
             raise ValueError("Parameter 'controller' is not defined.")
-        # api_key
-        if not api_key or (len(api_key) < 1) or ("API_KEY" == api_key):
-            raise ValueError("Parameter 'api_key' is not defined.")
-
         self.__controller = controller
-        self.__api_key = api_key
-        self.validate_fields = validate_fields
+
+        if use_config:
+            self.__sdk_config = SdkConfig()
+            self.__auth_key = self.__sdk_config.auth_key
+            self.__auth_type = self.__sdk_config.auth_type
+            self.__validate_fields = self.__sdk_config.validate_fields
+            self.__status_verbose = self.__sdk_config.status_verbose
+            self.__status_sleep = self.__sdk_config.status_sleep
+            self.__status_timeout = self.__sdk_config.status_timeout
+
+            # auth_key
+            if not self.__auth_key or (len(self.__auth_key) < 1):
+                raise ValueError("Parameter 'auth_key' is not defined.")
+            # auth_type
+            if not self.__auth_type or (len(self.__auth_type) < 1):
+                raise ValueError("Parameter 'auth_type' is not defined.")
 
     #  Get controller
     #  @return string
@@ -176,9 +198,9 @@ class EndpointBase(object):
     #  Get API Key
     #  @return string
     @property
-    def api_key(self):
+    def auth_key(self):
         """TUNE Management API KEY."""
-        return self.__api_key
+        return self.__auth_key
 
     #  Call TUNE Management API service for this controller.
     #  @param str action              TUNE Management API endpoint's
@@ -200,7 +222,8 @@ class EndpointBase(object):
         client = TuneManagementClient(
             self.controller,
             action,
-            self.api_key,
+            self.__auth_key,
+            self.__auth_type,
             query_string_dict
         )
 
@@ -230,7 +253,7 @@ class EndpointBase(object):
                 TUNE_FIELDS_RECOMMENDED
             :return (array): list endpoint fields
         """
-        if (self.__fields is None or not self.__fields):
+        if self.__fields is None or not self.__fields:
             self.__endpoint_fields()
 
         if ((enum_fields_selection & TUNE_FIELDS_ALL) or
@@ -329,7 +352,8 @@ class EndpointBase(object):
         client = TuneManagementClient(
             "apidoc",
             "get_controllers",
-            self.__api_key,
+            self.__auth_key,
+            self.__auth_type,
             query_string_dict
         )
 
@@ -474,7 +498,7 @@ class EndpointBase(object):
             raise TuneSdkException(
                 "Invalid parameter 'fields' provided: '{}'".format(fields))
 
-        if self.validate_fields:
+        if self.__validate_fields:
             if self.__fields is None:
                 self.fields()
 
@@ -518,7 +542,7 @@ class EndpointBase(object):
                 "Invalid parameter 'group' provided: '{}'".format(group)
             )
 
-        if self.validate_fields:
+        if self.__validate_fields:
             if self.__fields is None:
                 self.fields()
 
@@ -561,13 +585,13 @@ class EndpointBase(object):
             else:
                 fields_arr = fields.split(",")
 
-        if self.validate_fields:
+        if self.__validate_fields:
             if self.__fields is None:
                 self.fields()
 
         sort_build = {}
         for sort_field, sort_direction in sort.items():
-            if self.validate_fields:
+            if self.__validate_fields:
                 if sort_field not in self.__fields:
                     raise TuneSdkException(
                         "Parameter 'sort' contains "
@@ -619,7 +643,7 @@ class EndpointBase(object):
                 )
             )
 
-        if self.validate_fields:
+        if self.__validate_fields:
             if self.__fields is None:
                 self.fields()
 
@@ -658,7 +682,7 @@ class EndpointBase(object):
             if filter_part_match is not None \
                and (filter_part_match.group(0) == filter_part):
 
-                if self.validate_fields:
+                if self.__validate_fields:
                     if filter_part in self.__fields:
                         continue
 
@@ -747,7 +771,7 @@ class EndpointBase(object):
     def __str__(self):
         """For debug purposes, provide string representation of this object.
         """
-        return "{}, {}".format(self.__controller, self.__api_key)
+        return "{}, {}".format(self.__controller, self.__auth_key)
 
     #  Property returning recommended and valid fields for an endpoint.
     #
@@ -770,12 +794,9 @@ class EndpointBase(object):
     #
     #  Requesting for report url is not the same for all report endpoints.
     #
-    #  @param str    export_controller   Export controller.
-    #  @param str    export_action       Export status action.
-    #  @param str       job_id              Job Identifier of report on queue.
-    #  @param bool      verbose             For debugging purposes only.
-    #  @param int       sleep               How long should sleep before next
-    #                                       status request.
+    #  @param str   export_controller   Export controller.
+    #  @param str   export_action       Export status action.
+    #  @param str   job_id              Job Identifier of report on queue.
     #
     #  @return object @see TuneManagementResponse
     #  @throws ValueError
@@ -784,12 +805,15 @@ class EndpointBase(object):
     def _fetch(self,
                export_controller,
                export_action,
-               job_id,
-               verbose=False,
-               sleep=10):
+               job_id):
         """
         Helper function for fetching report document given provided
         job identifier.
+            :param str      export_controller:  Export controller.
+            :param str      export_action:      Export status action.
+            :param str      job_id:             Provided Job Identifier to
+                                                reference requested report on
+                                                export queue.
         """
 
         # export_controller
@@ -811,17 +835,19 @@ class EndpointBase(object):
         export_worker = ReportExportWorker(
             export_controller,
             export_action,
-            self.api_key,
+            self.__auth_key,
+            self.__auth_type,
             job_id,
-            verbose,
-            sleep
+            self.__status_verbose,
+            self.__status_sleep,
+            self.__status_timeout
         )
 
         try:
-            if verbose:
+            if self.__status_verbose:
                 print("Starting...")
             if export_worker.run():
-                if verbose:
+                if self.__status_verbose:
                     print("Completed...")
                     print(export_worker.response)
         except (KeyboardInterrupt, SystemExit):

@@ -1,8 +1,8 @@
 <h2>tune-reporting-python</h2>
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
-<h4>Update:  $Date: 2015-01-03 08:41:07 $</h4>
-<h4>Version: 0.9.32</h4>
+<h4>Update:  $Date: 2015-01-05 19:53:06 $</h4>
+<h4>Version: 0.9.33</h4>
 ===
 
 <a id="TOP"></a>
@@ -215,7 +215,9 @@ line:
 You may need to run the above commands with `sudo`.
 
 <a id="sdk_install_config" name="sdk_install_config"></a>
-#### Configuration
+#### TUNE Reporting SDK Configuration
+
+##### SDK Configuration file
 
 In the root folder, the TUNE Reporting SDK configuration is set within file ```./config/tune_reporting_sdk.config```.
 
@@ -223,15 +225,58 @@ With generated API_KEY from TUNE MobileAppTracking Platform account, replace `AP
 
 ```
 [TUNE_REPORTING]
-; Tune MobileAppTracking Platform generated API Key.
-tune_reporting_api_key_string=API_KEY
-; Validate use Tune Management API fields used within action parameters.
-tune_reporting_verify_fields_boolean=false
-; Tune reporting export status sleep (seconds).
+# TUNE MobileAppTracking Platform generated API Key. Replace UNDEFINED.
+tune_reporting_auth_key_string=UNDEFINED
+# TUNE Reporting Authentication Type: api_key OR session_token.
+tune_reporting_auth_type_string=api_key
+# Validate use TUNE Management API fields used within action parameters.
+tune_reporting_validate_fields_boolean=false
+# TUNE reporting export status sleep (seconds).
 tune_reporting_export_status_sleep_seconds=10
-; Tune reporting export fetch timeout (seconds).
+# TUNE reporting export fetch timeout (seconds).
 tune_reporting_export_status_timeout_seconds=240
+# Verbose output for debugging purposes when fetching report download url.
+tune_reporting_export_status_verbose_boolean=false
 ```
+
+##### SDK Configuration class
+
+The TUNE Reporting SDK reads configuration through class ```SdkConfig``` with the
+provided path to SDK configuration file.
+
+```python
+    dirname = os.path.split(__file__)[0]
+    dirname = os.path.dirname(dirname)
+    filepath = os.path.join(dirname, "config", SdkConfig.SDK_CONFIG_FILENAME)
+
+    abspath = os.path.abspath(filepath)
+
+    sdk_config = SdkConfig(filepath=abspath)
+```
+
+By default, configuration is assumed using ```api_key``` authentication type.
+
+To override 'api_key' authentication type, then use ```SdkConfig::setApiKey()```:
+
+```python
+    sdk_config->set_api_key(api_key);
+```
+
+To override authentication type using ```session_token```, then use ```SdkConfig::setSessionToken()```:
+
+```python
+    sdk_config->set_session_token(session_token);
+```
+
+If you wish to generate your own session_token, class ```SessionAuthentication``` is provided:
+
+```python
+    session_authenticate = SessionAuthenticate()
+    response = session_authenticate.api_key(api_key)
+    session_token = response.data
+```
+
+and you're good to go!
 
 <p>
 <a href="#TOP">
@@ -680,9 +725,7 @@ A helper function that creates a threaded worker that handles the status request
 ```python
     advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key, validate_fields=True)
     export_fetch_response = advertiser_report_log_clicks.fetch(
-        job_id,
-        verbose=True,
-        sleep=10
+        job_id
     )
 
     csv_report_url = AdvertiserReportLogClicks.parse_response_report_url(export_fetch_response)

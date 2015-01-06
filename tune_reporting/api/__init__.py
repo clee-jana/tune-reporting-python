@@ -5,7 +5,7 @@
 #
 #  __init__.py
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -32,19 +32,36 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-24 11:24:16 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
-from .advertiser_report_actuals import (AdvertiserReportActuals)
-from .advertiser_report_log_clicks import (AdvertiserReportLogClicks)
-from .advertiser_report_log_event_items import (AdvertiserReportLogEventItems)
-from .advertiser_report_log_events import (AdvertiserReportLogEvents)
-from .advertiser_report_log_installs import (AdvertiserReportLogInstalls)
-from .advertiser_report_log_postbacks import (AdvertiserReportLogPostbacks)
-from .advertiser_report_cohort_retention import (AdvertiserReportCohortRetention)
-from .advertiser_report_cohort_value import (AdvertiserReportCohortValue)
+from .advertiser_report_actuals import (
+    AdvertiserReportActuals
+)
+from .advertiser_report_log_clicks import (
+    AdvertiserReportLogClicks
+)
+from .advertiser_report_log_event_items import (
+    AdvertiserReportLogEventItems
+)
+from .advertiser_report_log_events import (
+    AdvertiserReportLogEvents
+)
+from .advertiser_report_log_installs import (
+    AdvertiserReportLogInstalls
+)
+from .advertiser_report_log_postbacks import (
+    AdvertiserReportLogPostbacks
+)
+from .advertiser_report_cohort_retention import (
+    AdvertiserReportCohortRetention
+)
+from .advertiser_report_cohort_value import (
+    AdvertiserReportCohortValue
+)
 
 from .export import (Export)
+from .session_authenticate import (SessionAuthenticate)

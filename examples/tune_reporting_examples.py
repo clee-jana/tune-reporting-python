@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,10 +27,10 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-31 17:01:21 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import datetime
@@ -40,7 +40,8 @@ import traceback
 
 try:
     from tune_reporting import (
-        SdkConfig
+        SdkConfig,
+        SessionAuthenticate
         )
 except ImportError as exc:
     sys.stderr.write("Error: failed to import module ({})".format(exc))
@@ -64,30 +65,54 @@ if __name__ == '__main__':
                 )
 
         api_key = sys.argv[1]
+        # api_key
+        if not api_key or (len(api_key) < 1):
+            raise ValueError("Parameter 'api_key' is not defined.")
+
+        print(" api_key:")
+        print(api_key)
+
+        session_authenticate = SessionAuthenticate()
+        response = session_authenticate.api_key(api_key)
+        session_token = response.data
+
+        print(" session_token:")
+        print(session_token)
+        # session_token
+        if not session_token or (len(session_token) < 1):
+            raise ValueError("Parameter 'session_token' is not defined.")
 
         example = ExampleAdvertiserReportActuals()
-        example.run(api_key)
+        example.run(api_key, "api_key")
+        example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportCohortValue()
-        example.run(api_key)
+        example.run(api_key, "api_key")
+        example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportCohortRetention()
-        example.run(api_key)
+        example.run(api_key, "api_key")
+        example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogClicks()
-        example.run(api_key)
+        example.run(api_key, "api_key")
+        example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogEventItems()
-        example.run(api_key)
+        example.run(api_key, "api_key")
+        example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogEvents()
-        example.run(api_key)
+        example.run(api_key, "api_key")
+        example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogInstalls()
-        example.run(api_key)
+        example.run(api_key, "api_key")
+        example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogPostbacks()
-        example.run(api_key)
+        example.run(api_key, "api_key")
+        example.run(session_token, "session_token")
 
     except Exception as exc:
         print("Exception: {0}".format(exc))

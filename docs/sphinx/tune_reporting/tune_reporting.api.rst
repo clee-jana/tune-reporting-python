@@ -76,6 +76,14 @@ tune_reporting.api.export module
     :undoc-members:
     :show-inheritance:
 
+tune_reporting.api.session_authenticate module
+----------------------------------------------
+
+.. automodule:: tune_reporting.api.session_authenticate
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

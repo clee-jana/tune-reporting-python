@@ -4,14 +4,6 @@ tune_reporting.helpers package
 Submodules
 ----------
 
-tune_reporting.helpers.report_export_worker module
---------------------------------------------------
-
-.. automodule:: tune_reporting.helpers.report_export_worker
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tune_reporting.helpers.report_reader_base module
 ------------------------------------------------
 

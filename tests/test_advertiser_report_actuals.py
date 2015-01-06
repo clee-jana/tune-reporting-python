@@ -3,7 +3,7 @@
 #
 #  test_advertiser_report_actuals.py
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,10 +30,10 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-03 08:41:07 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import datetime
@@ -55,7 +55,7 @@ except ImportError as exc:
 class TestAdvertiserReportActuals(unittest.TestCase):
 
     def __init__(self, api_key):
-        # Setup SDK Configuration with TUNE MobileAppTracking API Key.
+        # Setup TUNE Reporting SDK configuration.
         dirname = os.path.split(__file__)[0]
         dirname = os.path.dirname(dirname)
         filepath = os.path.join(dirname, "config", SdkConfig.SDK_CONFIG_FILENAME)
@@ -63,7 +63,7 @@ class TestAdvertiserReportActuals(unittest.TestCase):
         abspath = os.path.abspath(filepath)
 
         sdk_config = SdkConfig(filepath=abspath)
-        sdk_config.api_key = api_key
+        sdk_config.set_api_key(api_key)
         unittest.TestCase.__init__(self)
 
     def setUp(self):
@@ -74,11 +74,12 @@ class TestAdvertiserReportActuals(unittest.TestCase):
 
     def test_ApiKey(self):
         sdk_config = SdkConfig()
-        api_key = sdk_config.api_key
+        api_key = sdk_config.auth_key
 
         self.assertIsNotNone(api_key)
         self.assertGreater(len(api_key), 0)
         self.assertNotEqual("API_KEY", api_key)
+        self.assertEqual("api_key", sdk_config.auth_type)
 
     def test_Fields(self):
         response = None
@@ -119,7 +120,6 @@ class TestAdvertiserReportActuals(unittest.TestCase):
 
         try:
             advertiser_report = AdvertiserReportActuals()
-
 
             response = advertiser_report.find(
                 self.__start_date,

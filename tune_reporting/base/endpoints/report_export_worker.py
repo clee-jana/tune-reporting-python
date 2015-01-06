@@ -7,7 +7,7 @@ TUNE Reports Export Status Worker
 #
 #  report_export_worker.py
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,10 +34,10 @@ TUNE Reports Export Status Worker
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-31 17:01:21 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import time
@@ -70,7 +70,12 @@ class ReportExportWorker(object):
     #
     #  @var string
     #
-    __api_key = None
+    __auth_key = None
+
+    #
+    #  @var string
+    #
+    __auth_type = None
 
     #
     #  @var string
@@ -81,6 +86,11 @@ class ReportExportWorker(object):
     #  @var int
     #
     __sleep = None
+
+    #
+    #  @var int
+    #
+    __timeout = None
 
     #
     #  @var boolean
@@ -94,37 +104,44 @@ class ReportExportWorker(object):
 
     #  The constructor
     #
-    #  @param str    export_controller   Export controller.
-    #  @param str    export_action       Export status action.
-    #                                       status query.
-    #  @param str   api_key              MobileAppTracking API Key
-    #  @param str   job_id               Provided Job Identifier to
-    #                                       reference requested report on
-    #                                       export queue.
-    #  @param bool     verbose              Debug purposes only to view
-    #                                       progress of job on export queue.
-    #  @param int      sleep                Polling delay between querying job
-    #                                       status on export queue.
+    #  @param str   export_controller   Export controller.
+    #  @param str   export_action       Export status action.
+    #  @param str   auth_key            TUNE Reporting authentication key.
+    #  @param str   auth_type           TUNE Reporting authentication type.
+    #  @param str   job_id              Provided Job Identifier to
+    #                                   reference requested report on
+    #                                   export queue.
+    #  @param bool  verbose             Debug purposes only to view
+    #                                   progress of job on export queue.
+    #  @param int   sleep               Polling delay between querying job
+    #                                   status on export queue.
+    #  @param int   timeout             Poll until exceeds timeout.
+    #
     def __init__(self,
                  export_controller,
                  export_action,
-                 api_key,
+                 auth_key,
+                 auth_type,
                  job_id,
                  verbose=False,
-                 sleep=10):
+                 sleep=10,
+                 timeout=0):
         """The constructor.
 
-                :param str      export_controller:  Export controller.
-                :param str      export_action:      Export status action.
-                                                    status query.
-                :param str      api_key:            MobileAppTracking API Key
-                :param str      job_id:     Provided Job Identifier to
-                                            reference requested report on
-                                            export queue.
-                :param bool     verbose:    Debug purposes only to view
-                                            progress of job on export queue.
-                :param int      sleep:  Polling delay between querying job
-                                                    status on export queue.
+            :param str      export_controller:  Export controller.
+            :param str      export_action:      Export status action.
+            :param str      auth_key            TUNE Reporting authentication
+                                                key.
+            :param str      auth_type           TUNE Reporting authentication
+                                                type.
+            :param str      job_id:             Provided Job Identifier to
+                                                reference requested report on
+                                                export queue.
+            :param bool     verbose:            Debug purposes only to view
+                                                progress of job on export queue.
+            :param int      sleep:              Polling delay between querying
+                                                job status on export queue.
+            :param int      timeout:            Poll until exceeds timeout.
         """
         # export_controller
         if not export_controller or len(export_controller) < 1:
@@ -136,10 +153,15 @@ class ReportExportWorker(object):
             raise ValueError(
                 "Parameter 'export_action' is not defined."
             )
-        # api_key
-        if not api_key or len(api_key) < 1:
+        # auth_key
+        if not auth_key or len(auth_key) < 1:
             raise ValueError(
-                "Parameter 'api_key' is not defined."
+                "Parameter 'auth_key' is not defined."
+            )
+        # auth_type
+        if not auth_type or len(auth_type) < 1:
+            raise ValueError(
+                "Parameter 'auth_type' is not defined."
             )
         # job_id
         if not job_id or len(job_id) < 1:
@@ -149,9 +171,11 @@ class ReportExportWorker(object):
 
         self.__export_controller = export_controller
         self.__export_action = export_action
-        self.__api_key = api_key
+        self.__auth_key = auth_key
+        self.__auth_type = auth_type
         self.__job_id = job_id
         self.__sleep = sleep
+        self.__timeout = timeout
         self.__verbose = verbose
         self.__response = None
 
@@ -167,11 +191,13 @@ class ReportExportWorker(object):
         status = None
         response = None
         attempt = 0
+        total_time = 0
 
         client = TuneManagementClient(
             self.__export_controller,
             self.__export_action,
-            self.__api_key,
+            self.__auth_key,
+            self.__auth_type,
             query_string_dict={
                 'job_id': self.__job_id
             }
@@ -179,6 +205,13 @@ class ReportExportWorker(object):
 
         try:
             while True:
+                if self.__timeout > 0:
+                    if total_time >= self.__timeout:
+                        raise TuneSdkException(
+                            "Exceeded timeout."
+                        )
+                    total_time += self.__sleep
+
                 client.call()
 
                 response = client.response

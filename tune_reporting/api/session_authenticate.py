@@ -1,11 +1,7 @@
-"""
-TUNE SDK Exception
-==================
+"""session_authenticate.py
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-#  exceptions.py
 #
 #  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
@@ -40,34 +36,49 @@ TUNE SDK Exception
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
+import sys
 
-class TuneSdkException(Exception):
-    """Exception raised for errors when using TUNE SDK
-    """
+from tune_reporting.base import (
+    EndpointBase
+)
 
+## TUNE Management API endpoint '/session/authenticate'
+#
+class SessionAuthenticate(EndpointBase):
+    """TUNE Management API endpoint '/session/authenticate/'."""
+
+    ## The constructor.
     #
-    # Failure response type
-    #
-    __errors = None
-
-    ## Constructor
-    #
-    def __init__(self, message=None, errors=None):
-        """Tune SDK exception constructor
-
-            :param str          message:    Message describing error.
-            :param Exception    exc:        Caught exception.
+    def __init__(self):
+        """The constructor.
         """
-        if message is None:
-            message = "TUNE SDK error"
 
-        # Call the endpoint_base class constructor with the parameters it needs
-        Exception.__init__(self, message)
+        EndpointBase.__init__(
+            self,
+            controller="session/authenticate",
+            use_config=False
+        )
 
-        # Now for your custom code...
-        self.__errors = errors
+    ## Generate session token is returned to provide access to service.
+    #
+    #  @param string api_keys  Generate 'session token' for this api_keys.
+    #  @return object @see TuneManagementResponse
+    def api_key(self,
+                api_keys):
+        """
+        Generate session token is returned to provide access to service.
 
-    @property
-    def errors(self):
-        """Get property of error object."""
-        return self.__errors
+            :param api_keys (string):   Generate 'session token'
+                                        for this api_keys.
+            :return: TuneManagementResponse
+        """
+        if not api_keys or len(api_keys) < 1:
+            raise ValueError("Parameter 'api_keys' is not defined.")
+
+        return EndpointBase.call(
+            self,
+            action="api_key",
+            query_string_dict={
+                'api_keys': api_keys
+            }
+        )

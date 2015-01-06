@@ -285,7 +285,7 @@ texinfo_documents = [
 epub_title = u'TUNE Reporting SDK for Python'
 epub_author = u'Jeff Tanner, jefft@tune.com'
 epub_publisher = u'TUNE, Inc.'
-epub_copyright = u'2014, TUNE Inc.'
+epub_copyright = u'2015, TUNE Inc.'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'tune_api_python'
