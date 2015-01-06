@@ -136,3 +136,9 @@ Version 0.9.32
 Beta public release on January 03, 2015
 * Provide toJson() within response.
 * Created 'config' directory to hold TUNE Reporting SDK configuration.
+
+Version 0.9.33
+--------------
+
+Beta public release on January 05, 2015
+* Authenticate using either 'api_key' or 'session_token'.

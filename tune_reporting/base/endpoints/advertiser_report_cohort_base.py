@@ -7,7 +7,7 @@ TUNE Management Insights Reports Endpoint base
 #
 #  advertiser_report_cohort_base.py
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,10 +34,10 @@ TUNE Management Insights Reports Endpoint base
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-21 13:25:20 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import sys
@@ -47,9 +47,6 @@ from .advertiser_report_base import (
 )
 from tune_reporting.helpers import (
     TuneSdkException
-)
-from tune_reporting.base.endpoints import (
-    TUNE_FIELDS_DEFAULT
 )
 
 

@@ -3,7 +3,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -30,10 +30,10 @@
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE, Inc. (http://www.tune.com)
+#  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2014-12-19 15:59:09 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import sys
@@ -54,10 +54,10 @@ class Export(EndpointBase):
         """The constructor.
         """
 
-        self.__api_key = api_key
         EndpointBase.__init__(
             self,
-            controller="export"
+            controller="export",
+            use_config=True
         )
 
     ## TuneManagementRequest status from export queue for report.
@@ -88,38 +88,23 @@ class Export(EndpointBase):
     ## Helper function for fetching report upon completion.
     #  Starts worker for polling export queue.
     #
-    #  @param str job_id         Job identifier assigned for report export.
-    #  @param bool   verbose        For debug purposes to monitor job export
-    #                               completion status.
-    #  @param int    sleep          Polling delay for checking job completion
-    #                               status.
-    #
+    #  @param str   job_id      Job identifier assigned for report export.
     #  @return object Document contents
     def fetch(self,
-              job_id,
-              verbose=False,
-              sleep=60):
+              job_id):
         """Helper function for fetching report upon completion.
         Starts worker for polling export queue.
 
-            :param str    job_id:    Job identifier assigned for report export.
-            :param bool   verbose:   For debug purposes to monitor job export
-                                    completion status.
-            :param int    sleep:     Polling delay for checking job completion
-                                    status.
+            :param str  job_id:     Job identifier assigned for report export.
             :return:   Document contents
         """
-        if not self.__api_key or len(self.__api_key) < 1:
-            raise ValueError("Parameter 'api_key' is not defined.")
         if not job_id or len(job_id) < 1:
             raise ValueError("Parameter 'job_id' is not defined.")
 
         return self._fetch(
             "export",
             "download",
-            job_id,
-            verbose,
-            sleep
+            job_id
         )
 
     ## Helper function for parsing export status response to gather report url.
@@ -127,7 +112,8 @@ class Export(EndpointBase):
     #  @return str Report Url
     @staticmethod
     def parse_response_report_url(response):
-        """Helper function for parsing export status response to gather report url
+        """Helper function for parsing export status response to
+        gather report url.
 
             :param object response: TuneManagementResponse
             :return (str): Report Url

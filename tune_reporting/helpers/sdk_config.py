@@ -7,7 +7,7 @@ TUNE SDK Configuration Class
 #
 #  sdk_config.py
 #
-#  Copyright (c) 2014 TUNE, Inc.
+#  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
 #
 #  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,10 +34,10 @@ TUNE SDK Configuration Class
 #  @category  Tune_Reporting
 #  @package   Tune_Reporting_Python
 #  @author    Jeff Tanner <jefft@tune.com>
-#  @copyright 2014 TUNE (http://www.tune.com)
+#  @copyright 2015 TUNE (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-03 08:41:07 $
-#  @link      https://developers.mobileapptracking.com/tune-reporting-sdks @endlink
+#  @version   $Date: 2015-01-05 19:38:53 $
+#  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import sys
@@ -119,26 +119,58 @@ class SdkConfig(object):
                 str_builder += "{\n"
                 for key_item in self.sections_dict[key_section]:
                     value_item = self.sections_dict[key_section][key_item]
-                    str_builder += "\t[%s] '%s': '%s'\n" % (key_section, key_item, value_item)
+                    str_builder += "\t[%s] '%s': '%s'\n" % (
+                        key_section,
+                        key_item,
+                        value_item)
                 str_builder += "}"
             return str_builder
 
-        @property
-        def api_key(self):
-            """Get TUNE MobileAppTracking API Key from SDK Configuration File."""
-            if "tune_reporting_api_key_string" not in self.sections_dict["TUNE_REPORTING"]:
-                return None
-            api_key = self.sections_dict["TUNE_REPORTING"]["tune_reporting_api_key_string"]
-            if isinstance(api_key, unicode):
-                api_key = str(api_key)
-            return api_key
+        def set_api_key(self, auth_key):
+            """Set TUNE Reporting API Key.
 
-        @api_key.setter
-        def api_key(self, value):
-            """Set TUNE MobileAppTracking API Key from SDK Configuration File."""
-            if "tune_reporting_api_key_string" not in self.sections_dict["TUNE_REPORTING"]:
+            :param str    auth_key:     API Key
+            """
+            self.auth_key = auth_key
+            self.auth_type = "api_key"
+
+        def set_session_token(self, auth_key):
+            """Set TUNE Reporting Session Token.
+
+            :param str    auth_key:     Session Token
+            """
+            self.auth_key = auth_key
+            self.auth_type = "session_token"
+
+        @property
+        def auth_key(self):
+            """Get TUNE Reporting Authentication Key."""
+            if "tune_reporting_auth_key_string" not in self.sections_dict["TUNE_REPORTING"]:
                 return None
-            self.sections_dict["TUNE_REPORTING"]["tune_reporting_api_key_string"] = value
+            auth_key = self.sections_dict["TUNE_REPORTING"]["tune_reporting_auth_key_string"]
+            if isinstance(auth_key, unicode):
+                auth_key = str(auth_key)
+            return auth_key
+
+        @auth_key.setter
+        def auth_key(self, value):
+            """Set TUNE Reporting Authentication Key."""
+            self.sections_dict["TUNE_REPORTING"]["tune_reporting_auth_key_string"] = value
+
+        @property
+        def auth_type(self):
+            """Get TUNE Reporting Authentication Type."""
+            if "tune_reporting_auth_key_string" not in self.sections_dict["TUNE_REPORTING"]:
+                return None
+            auth_key = self.sections_dict["TUNE_REPORTING"]["tune_reporting_auth_key_string"]
+            if isinstance(auth_type, unicode):
+                auth_type = str(auth_type)
+            return auth_type
+
+        @auth_type.setter
+        def auth_type(self, value):
+            """Set TUNE Reporting Authentication Type."""
+            self.sections_dict["TUNE_REPORTING"]["tune_reporting_auth_type_string"] = value
 
         @property
         def validate_fields(self):
@@ -169,6 +201,16 @@ class SdkConfig(object):
             if isinstance(status_timeout, unicode):
                 status_timeout = str(status_timeout)
             return int(status_timeout)
+
+        @property
+        def status_verbose(self):
+            """Get boolean flag to show verbose output when fetching export status."""
+            if "tune_reporting_validate_fields_boolean" not in self.sections_dict["TUNE_REPORTING"]:
+                return False
+            status_verbose = self.sections_dict["TUNE_REPORTING"]["tune_reporting_export_status_verbose_boolean"]
+            if isinstance(status_verbose, unicode):
+                status_verbose = str(status_verbose)
+            return status_verbose == "true"
 
     instance = None
 
@@ -203,7 +245,7 @@ if __name__ == '__main__':
     else:
         print "Different filepath"
 
-    if(s1.config["tune_reporting_api_key_string"]==s2.config["tune_reporting_api_key_string"]):
+    if(s1.config["tune_reporting_auth_key_string"]==s2.config["tune_reporting_auth_key_string"]):
         print "Same config"
     else:
         print "Different config"
