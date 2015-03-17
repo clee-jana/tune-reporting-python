@@ -2,7 +2,7 @@
    "tune_reporting_php_sdk": {
        "doxygen": {
            "oss_licenses": [
-               "GNU General Public License (GPL-2.0)"
+               "GPL-2.0"
            ],
            "url": "http://www.stack.nl/~dimitri/doxygen/manual/index.html#license",
            "versions": [
@@ -29,7 +29,7 @@
        },
        "python": {
            "oss_licenses": [
-               "Python Software Foundation (PSF)"
+               "PSF"
            ],
            "url": "https://docs.python.org/3/license.html",
            "versions": [
