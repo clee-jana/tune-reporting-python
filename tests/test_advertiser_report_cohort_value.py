@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 22:59:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -96,15 +96,19 @@ class TestAdvertiserReportCohortValue(unittest.TestCase):
         try:
             advertiser_report = AdvertiserReportCohortValue()
 
+            map_params = {
+                "start_date": self.__start_date,
+                "end_date": self.__end_date,
+                "cohort_type": "click",
+                "cohort_interval": "year_day",
+                "filter": "(publisher_id > 0)",
+                "group": "site_id,publisher_id",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.count(
-                self.__start_date,
-                self.__end_date,
-                cohort_type="click",
-                cohort_interval="year_day",
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                response_timezone="America/Los_Angeles"
-                )
+                map_params
+            )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))
 
@@ -121,19 +125,23 @@ class TestAdvertiserReportCohortValue(unittest.TestCase):
         try:
             advertiser_report = AdvertiserReportCohortValue()
 
+            map_params = {
+                "start_date": self.__start_date,
+                "end_date": self.__end_date,
+                "cohort_type": "click",
+                "cohort_interval": "year_day",
+                "aggregation_type": "cumulative",
+                "filter": "(publisher_id > 0)",
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "group": "site_id,publisher_id",
+                "limit": 5,
+                "page": None,
+                "sort": None,
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.find(
-                self.__start_date,
-                self.__end_date,
-                cohort_type="click",
-                cohort_interval="year_day",
-                aggregation_type="cumulative",
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                limit=10,
-                page=None,
-                sort=None,
-                response_timezone="America/Los_Angeles"
+                map_params
             )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))
@@ -143,7 +151,7 @@ class TestAdvertiserReportCohortValue(unittest.TestCase):
         self.assertEqual(response.http_code, 200)
         self.assertIsNone(response.errors)
         self.assertIsInstance(response.data, list)
-        self.assertLessEqual(len(response.data), 10)
+        self.assertLessEqual(len(response.data), 5)
 
     def test_Export(self):
         response = None
@@ -151,16 +159,20 @@ class TestAdvertiserReportCohortValue(unittest.TestCase):
         try:
             advertiser_report = AdvertiserReportCohortValue()
 
+            map_params = {
+                "start_date": self.__start_date,
+                "end_date": self.__end_date,
+                "cohort_type": "click",
+                "cohort_interval": "year_day",
+                "aggregation_type": "cumulative",
+                "filter": "(publisher_id > 0)",
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "group": "site_id,publisher_id",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.export(
-                self.__start_date,
-                self.__end_date,
-                cohort_type="click",
-                cohort_interval="year_day",
-                aggregation_type="cumulative",
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))

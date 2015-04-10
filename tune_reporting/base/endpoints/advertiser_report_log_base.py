@@ -1,5 +1,5 @@
 """
-TUNE Management Logs Reports Endpoint base
+TUNE Service Logs Reports Endpoint base
 =============================================
 """
 #!/usr/bin/env python
@@ -36,7 +36,7 @@ TUNE Management Logs Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-10 11:10:41 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -44,7 +44,7 @@ from .advertiser_report_base import (
     AdvertiserReportBase
 )
 from tune_reporting.base.service import (
-    TuneManagementClient
+    TuneServiceClient
 )
 from tune_reporting.base.endpoints import (
     TUNE_FIELDS_DEFAULT
@@ -60,7 +60,7 @@ class AdvertiserReportLogBase(AdvertiserReportBase):
 
     ## The constructor.
     #
-    #  @param str controller                    TUNE Management API endpoint
+    #  @param str controller                    TUNE Reporting API endpoint
     #                                           name.
     #  @param bool   filter_debug_mode          Remove debug mode information
     #                                           from results.
@@ -72,7 +72,7 @@ class AdvertiserReportLogBase(AdvertiserReportBase):
                  filter_test_profile_id):
         """The constructor.
 
-            :param str controller:          TUNE Management API endpoint name.
+            :param str controller:          TUNE Reporting API endpoint name.
             :param bool filter_debug_mode:  Remove debug mode information
                                                     from results.
             :param bool filter_test_profile_id: Remove test profile information
@@ -92,132 +92,116 @@ class AdvertiserReportLogBase(AdvertiserReportBase):
     ## Counts all existing records that match filter criteria
     #  and returns an array of found model data.
     #
-    #  @param str start_date         YYYY-MM-DD HH:MM:SS
-    #  @param str end_date           YYYY-MM-DD HH:MM:SS
-    #  @param str filter             Filter the results and apply
-    #                                   conditions that must be met
-    #                                   for records to be included in data.
-    #  @param str response_timezone  Setting expected time for data
+    # @param dict map_params    Mapping of: <p><dl>
+    # <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>filter</dt><dd>Apply constraints based upon values associated with
+    #                    this endpoint's fields.</dd>
+    # <dt>response_timezone</dt><dd>Setting expected timezone for results,
+    #                          default is set in account.</dd>
+    # </dl><p>
+    #
     def count(self,
-              start_date,
-              end_date,
-              filter=None,
-              response_timezone=None):
+              map_params):
         """Counts all existing records that match filter criteria
         and returns an array of found model data.
 
-            :param str  start_date:    YYYY-MM-DD HH:MM:SS
-            :param str  end_date:      YYYY-MM-DD HH:MM:SS
-            :param str  filter:        Filter the results and apply
-                                            conditions that must be met for
-                                            records to be included in data.
-            :param str  response_timezone:   Setting expected timezone
-                                        for data. Default is set by account.
-            :return: (TuneManagementResponse)
+            :param (dict) map_params    Mapping of: <p><dl>
+                <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+                <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+                <dt>filter</dt><dd>Apply constraints based upon values associated with
+                                   this endpoint's fields.</dd>
+                <dt>response_timezone</dt><dd>Setting expected timezone for results,
+                                         default is set in account.</dd>
+                </dl><p>
+            :return: (TuneServiceResponse)
         """
-        self._validate_datetime('start_date', start_date)
-        self._validate_datetime('end_date', end_date)
+        map_query_string = {};
+        map_query_string = self._validate_datetime(map_params, "start_date", map_query_string)
+        map_query_string = self._validate_datetime(map_params, "end_date", map_query_string)
 
-        if filter is not None and isinstance(filter, str):
-            filter = self._validate_filter(filter)
+        if "filter" in map_params and map_params["filter"] is not None:
+            map_query_string = self._validate_filter(map_params, map_query_string)
+
+        if "response_timezone" in map_params and map_params["response_timezone"] is not None:
+            map_query_string["response_timezone"] = map_params["response_timezone"]
 
         return AdvertiserReportBase.call(
             self,
-            action="count",
-            query_string_dict={
-                'start_date': start_date,
-                'end_date': end_date,
-                'filter': filter,
-                'response_timezone': response_timezone
-            }
+            "count",
+            map_query_string
         )
 
     ## Finds all existing records that match filter criteria
     #  and returns an array of found model data.
     #
-    #  @param str start_date             YYYY-MM-DD HH:MM:SS
-    #  @param str end_date               YYYY-MM-DD HH:MM:SS
-    #  @param str filter                 Filter the results and apply
-    #                                       conditions that must be met for
-    #                                       records to be included in data.
-    #  @param str fields                 No value returns default fields,
-    #                                       "*" returns all available fields,
-    #                                       or provide specific fields.
-    #  @param int    limit                  Limit number of results, default
-    #                                       10, 0 shows all.
-    #  @param int    page                   Pagination, default 1.
-    #  @param dict   sort                   Expression defining sorting found
-    #                                       records in result set endpoint_base
-    #                                       upon provided fields and its
-    #                                       order modifier:
-    #                                       (ASC or DESC).
-    #  @param str response_timezone      Setting expected timezone for
-    #                                       results, default is set in account.
+    # @param dict map_params    Mapping of: <p><dl>
+    # <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>fields</dt><dd>Present results using these endpoint's fields.</dd>
+    # <dt>filter</dt><dd>Apply constraints based upon values associated with
+    #                    this endpoint's fields.</dd>
+    # <dt>limit</dt><dd>Limit number of results, default 10, 0 shows all</dd>
+    # <dt>page</dt><dd>Pagination, default 1.</dd>
+    # <dt>sort</dt><dd>Sort results using this endpoint's fields.
+    #                    Directions: DESC, ASC</dd>
+    # <dt>response_timezone</dt><dd>Setting expected timezone for results,
+    #                          default is set in account.</dd>
+    # </dl><p>
     #  @return object
     def find(self,
-             start_date,
-             end_date,
-             fields=None,
-             filter=None,
-             limit=None,
-             page=None,
-             sort=None,
-             response_timezone=None):
+             map_params):
         """Finds all existing records that match filter criteria
         and returns an array of found model data.
 
-            :param str    start_date:    YYYY-MM-DD HH:MM:SS
-            :param str    end_date:      YYYY-MM-DD HH:MM:SS
-            :param str    filter:        Filter the results and apply
-                                            conditions that must be met for
-                                            records to be included in data.
-            :param str    fields:        No value returns default fields,
-                                            "*" returns all available fields,
-                                            or provide specific fields.
-            :param int   limit:         Limit number of results, default
-                                            10.
-            :param int   page:          Pagination, default 1.
-            :param array     sort:          Sort by field name, ASC (default)
-                                            or DESC
-            :param str    timestamp:     Set to breakdown stats by
-                                            timestamp choices: hour, datehour,
-                                            date, week, month.
-            :param str    response_timezone:   Setting expected timezone
-                                        for data. Default is set by account.
-            :return: (TuneManagementResponse)
+            :param (dict) map_params:    Mapping of: <p><dl>
+                <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+                <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+                <dt>fields</dt><dd>Present results using these endpoint's fields.</dd>
+                <dt>filter</dt><dd>Apply constraints based upon values associated with
+                                   this endpoint's fields.</dd>
+                <dt>limit</dt><dd>Limit number of results, default 10, 0 shows all</dd>
+                <dt>page</dt><dd>Pagination, default 1.</dd>
+                <dt>sort</dt><dd>Sort results using this endpoint's fields.
+                                   Directions: DESC, ASC</dd>
+                <dt>response_timezone</dt><dd>Setting expected timezone for results,
+                                         default is set in account.</dd>
+                </dl><p>
+            :return (object): (TuneServiceResponse)
         """
-        self._validate_datetime('start_date', start_date)
-        self._validate_datetime('end_date', end_date)
+        if map_params is None or \
+           not isinstance(map_params, dict):
+            raise ValueError(
+                "Parameter 'map_params' is not defined as dict."
+            )
 
-        if filter is not None:
-            filter = self._validate_filter(filter)
+        map_query_string = {}
+        map_query_string = self._validate_datetime(map_params, "start_date", map_query_string)
+        map_query_string = self._validate_datetime(map_params, "end_date", map_query_string)
 
-        if fields is not None:
-            fields = self._validate_fields(fields)
-        else:
-            fields = self.fields(TUNE_FIELDS_DEFAULT)
+        if "filter" in map_params and map_params["filter"] is not None:
+            map_query_string = self._validate_filter(map_params, map_query_string)
 
-        if sort is not None:
-            sort_result = self._validate_sort(fields, sort)
-            sort = sort_result["sort"]
-            fields = sort_result["fields"]
+        if "fields" not in map_params or map_params["fields"] is None:
+          map_params["fields"] = self.fields(TUNE_FIELDS_DEFAULT)
+        if "fields" in map_params and map_params["fields"] is not None:
+            map_query_string = self._validate_fields(map_params, map_query_string)
 
-        if fields is not None:
-            fields = self._validate_fields(fields)
+        if "limit" in map_params and map_params["limit"] is not None:
+            map_query_string = self._validate_limit(map_params, map_query_string)
+        if "page" in map_params and map_params["page"] is not None:
+            map_query_string = self._validate_page(map_params, map_query_string)
+
+        if "sort" in map_params and map_params["sort"] is not None:
+            map_query_string = self._validate_sort(map_params, map_query_string)
+
+        if "response_timezone" in map_params and map_params["response_timezone"] is not None:
+            map_query_string["response_timezone"] = map_params["response_timezone"]
 
         return AdvertiserReportBase.call(
             self,
-            action="find",
-            query_string_dict={
-                'start_date': start_date,
-                'end_date': end_date,
-                'filter': filter,
-                'fields': fields,
-                'limit': limit,
-                'page': page,
-                'sort': sort,
-                'response_timezone': response_timezone
-            }
+            "find",
+            map_query_string
         )
 
     ## Places a job into a queue to generate a report that will contain
@@ -225,64 +209,67 @@ class AdvertiserReportLogBase(AdvertiserReportBase):
     #  identifier to be provided to action /export/download.json to download
     #  completed report.
     #
-    #  @param str start_date            YYYY-MM-DD HH:MM:SS
-    #  @param str end_date              YYYY-MM-DD HH:MM:SS
-    #  @param str filter                Filter the results and apply
-    #                                   conditions that must be met for
-    #                                   records to be included in data.
-    #  @param str fields                Provide fields if format is 'csv'.
-    #  @param str format                Export format: csv, json
-    #  @param str response_timezone     Setting expected timezone for
-    #                                   results, default is set in account.
+    # @param dict map_params    Mapping of: <p><dl>
+    # <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>fields</dt><dd>Present results using these endpoint's fields.</dd>
+    # <dt>filter</dt><dd>Apply constraints based upon values associated with
+    #                    this endpoint's fields.</dd>
+    # <dt>format</dt><dd>Export format choices: csv, json</dd>
+    # <dt>response_timezone</dt><dd>Setting expected timezone for results,
+    #                          default is set in account.</dd>
+    # </dl><p>
     #
     #  @return object
     def export(self,
-               start_date,
-               end_date,
-               fields=None,
-               filter=None,
-               format=None,
-               response_timezone=None):
+               map_params):
         """Places a job into a queue to generate a report that will contain
         records that match provided filter criteria, and it returns a job
         identifier to be provided to action /export/download.json to download
         completed report.
 
-            :param str  start_date:   YYYY-MM-DD HH:MM:SS
-            :param str  end_date:     YYYY-MM-DD HH:MM:SS
-            :param str  filter:       Filter the results and apply conditions
-                                        that must be met for records to be
-                                        included in data.
-            :param str  fields:       No value returns default fields, "# "
-                                        returns all available fields, or
-                                        provide specific fields.
-            :param str  format:       Export format for downloaded report:
-                                        choices: json, csv.
-            :param str  response_timezone:   Setting expected timezone
-                                        for data. Default is set by account.
-            :return: (TuneManagementResponse)
+            :param (dict) map_params:    Mapping of: <p><dl>
+                <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+                <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+                <dt>fields</dt><dd>Present results using these endpoint's fields.</dd>
+                <dt>filter</dt><dd>Apply constraints based upon values associated with
+                                   this endpoint's fields.</dd>
+                <dt>format</dt><dd>Export format choices: csv, json</dd>
+                <dt>response_timezone</dt><dd>Setting expected timezone for results,
+                                         default is set in account.</dd>
+                </dl><p>
+            :return: (TuneServiceResponse)
         """
-        self._validate_datetime('start_date', start_date)
-        self._validate_datetime('end_date', end_date)
+        if map_params is None or \
+           not isinstance(map_params, dict):
+            raise ValueError(
+                "Parameter 'map_params' is not defined as dict."
+            )
 
-        if fields is not None:
-            fields = self._validate_fields(fields)
-        if filter is not None:
-            filter = self._validate_filter(filter)
-        if format is not None:
-            self._validate_format(format)
+        map_query_string = {}
+        map_query_string = self._validate_datetime(map_params, "start_date", map_query_string)
+        map_query_string = self._validate_datetime(map_params, "end_date", map_query_string)
+
+        if "fields" not in map_params or map_params["fields"] is None:
+          map_params["fields"] = self.fields(TUNE_FIELDS_DEFAULT)
+        if "fields" in map_params and map_params["fields"] is not None:
+            map_query_string = self._validate_fields(map_params, map_query_string)
+
+        if "filter" in map_params and map_params["filter"] is not None:
+            map_query_string = self._validate_filter(map_params, map_query_string)
+
+        if "format" in map_params and map_params["format"] is not None:
+            map_query_string = self._validate_format(map_params, map_query_string)
+        else:
+            map_query_string["format"] = 'csv'
+
+        if "response_timezone" in map_params and map_params["response_timezone"] is not None:
+            map_query_string["response_timezone"] = map_params["response_timezone"]
 
         return AdvertiserReportBase.call(
             self,
-            action="find_export_queue",
-            query_string_dict={
-                'start_date': start_date,
-                'end_date': end_date,
-                'filter': filter,
-                'fields': fields,
-                'format': format,
-                'response_timezone': response_timezone
-            }
+            "find_export_queue",
+            map_query_string
         )
 
     ## Query status of insight reports. Upon completion will
@@ -296,19 +283,19 @@ class AdvertiserReportLogBase(AdvertiserReportBase):
         download requested report.
 
             :param str job_id: Export queue identifier
-            :return: (TuneManagementResponse)
+            :return (object): (TuneServiceResponse)
         """
 
         # job_id
         if not job_id or len(job_id) < 1:
             raise ValueError("Parameter 'job_id' is not defined.")
 
-        client = TuneManagementClient(
+        client = TuneServiceClient(
             controller="export",
             action="download",
             auth_key=self.auth_key,
             auth_type=self.auth_type,
-            query_string_dict={
+            map_query_string={
                 'job_id': job_id
             }
         )
@@ -318,13 +305,13 @@ class AdvertiserReportLogBase(AdvertiserReportBase):
     ## Helper function for fetching report upon completion.
     #
     #  @param str   job_id      Job identifier assigned for report export.
-    #  @return object @see TuneManagementResponse
+    #  @return object @see TuneServiceResponse
     def fetch(self,
               job_id):
         """Helper function for fetching report upon completion.
 
             :param str  job_id:     Job identifier assigned for report export.
-            :return: (TuneManagementResponse)
+            :return: (TuneServiceResponse)
         """
         # job_id
         if not job_id or len(job_id) < 1:

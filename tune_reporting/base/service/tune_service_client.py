@@ -1,11 +1,11 @@
 """
-TUNE Management Client
+TUNE Service Client
 =============================================
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  client.py
+#  tune_service_client.py
 #
 #  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
@@ -36,7 +36,7 @@ TUNE Management Client
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 17:36:25 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -52,8 +52,8 @@ python_check_version(__python_required_version__)
 
 import json
 
-from .request import (TuneManagementRequest)
-from .response import (TuneManagementResponse)
+from .tune_service_request import (TuneManagementRequest)
+from .tune_service_response import (TuneServiceResponse)
 from .constants import (
     __tune_management_api_endpoint__,
     __tune_management_api_version__
@@ -61,17 +61,17 @@ from .constants import (
 from tune_reporting.helpers import (
     TuneSdkException
 )
-from .proxy import (
-    TuneManagementProxy
+from .tune_service_proxy import (
+    TuneServiceProxy
 )
 
 
-#  TUNE MobileAppTracking Management API access class
+#  TUNE MobileAppTracking TUNE Reporting API access class
 #
 #  @example example_client_account_users.py
 #
-class TuneManagementClient(object):
-    """TUNE MobileAppTracking Management API access class.
+class TuneServiceClient(object):
+    """TUNE MobileAppTracking Servoce access class.
     """
     #
     #  @var object @see TuneManagementRequest
@@ -79,45 +79,45 @@ class TuneManagementClient(object):
     __request = None
 
     #
-    #  @var object @see TuneManagementResponse
+    #  @var object @see TuneServiceResponse
     #
     __response = None
 
     #  Constructor
     #
-    #  @param str      controller           TUNE Management API endpoint
+    #  @param str      controller           TUNE Reporting API endpoint
     #                                       name.
-    #  @param str      action               TUNE Management API endpoint's
+    #  @param str      action               TUNE Reporting API endpoint's
     #                                       action name.
     #  @param str      auth_key             TUNE Reporting authentication key.
     #  @param str      auth_type            TUNE Reporting authentication type.
-    #  @param null|array  query_string_dict Action's query string parameters.
-    #  @param null|string api_url_endpoint  TUNE Management API endpoint path.
-    #  @param null|string api_url_version   TUNE Management API version.
+    #  @param null|array  map_query_string Action's query string parameters.
+    #  @param null|string api_url_endpoint  TUNE Reporting API endpoint path.
+    #  @param null|string api_url_version   TUNE Reporting API version.
     #
     def __init__(self,
                  controller,
                  action,
                  auth_key,
                  auth_type,
-                 query_string_dict=None,
+                 map_query_string=None,
                  api_url_endpoint=__tune_management_api_endpoint__,
                  api_url_version=__tune_management_api_version__):
         """The constructor.
 
-            :param str      controller:         TUNE Management API
+            :param str      controller:         TUNE Reporting API
                                                 endpoint name.
-            :param str      action:             TUNE Management API endpoint's
+            :param str      action:             TUNE Reporting API endpoint's
                                                 action name.
             :param str      auth_key:           TUNE Reporting authentication
                                                 key.
             :param str      auth_type:          TUNE Reporting authentication
                                                 type.
-            :param array    query_string_dict:  Action's query string
+            :param array    map_query_string:  Action's query string
                                                 parameters.
-            :param str      api_url_endpoint:   TUNE Management API
+            :param str      api_url_endpoint:   TUNE Reporting API
                                                 endpoint path.
-            :param str      api_url_version:    TUNE Management API version.
+            :param str      api_url_version:    TUNE Reporting API version.
         """
         # controller
         if not controller or len(controller) < 1:
@@ -132,7 +132,7 @@ class TuneManagementClient(object):
             action.strip(),
             auth_key,
             auth_type,
-            query_string_dict,
+            map_query_string,
             api_url_endpoint,
             api_url_version
         )
@@ -156,7 +156,7 @@ class TuneManagementClient(object):
             raise TuneSdkException("TuneManagementRequest was not defined.")
 
         try:
-            proxy = TuneManagementProxy(self.__request.url)
+            proxy = TuneServiceProxy(self.__request.url)
             if proxy.execute():
                 json_string = proxy.response.read().decode('utf-8')
                 # Convert from json to python data
@@ -164,7 +164,7 @@ class TuneManagementClient(object):
                 response_http_code = proxy.response.getcode()
                 response_headers = proxy.response.info()
 
-                self.__response = TuneManagementResponse(
+                self.__response = TuneServiceResponse(
                     response_json,
                     response_http_code,
                     response_headers,

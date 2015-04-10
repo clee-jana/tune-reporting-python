@@ -1,5 +1,5 @@
 """
-TUNE Management Endpoint base
+TUNE Service Endpoint base
 ============================
 """
 #!/usr/bin/env python
@@ -34,7 +34,7 @@ TUNE Management Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-10 11:10:41 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -46,7 +46,7 @@ from tune_reporting.version import (
     __sdk_version__
 )
 from tune_reporting.base.service import (
-    TuneManagementClient
+    TuneServiceClient
 )
 from tune_reporting.helpers import (
     is_parentheses_balanced,
@@ -69,17 +69,17 @@ TUNE_FIELDS_MINIMAL = 16
 TUNE_FIELDS_RECOMMENDED = 32
 
 
-## Base components for every TUNE Management API request.
+## Base components for every TUNE Reporting API request.
 #
 class EndpointBase(object):
-    """Base components for every TUNE Management API request.
+    """Base components for every TUNE Reporting API request.
     """
 
     #  SDK Configuration
     #  @var SdkConfig
     __sdk_config = None
 
-    #  TUNE Management API Endpoint
+    #  TUNE Reporting API Endpoint
     #  @var str
     __controller = None
 
@@ -104,7 +104,7 @@ class EndpointBase(object):
     __status_timeout = 0
 
 
-    #  TUNE Management API Endpoint's fields
+    #  TUNE Reporting API Endpoint's fields
     #  @var list
     __fields = None
 
@@ -155,7 +155,7 @@ class EndpointBase(object):
 
     #  Constructor
     #
-    #  @param str controller     TUNE Management API Endpoint.
+    #  @param str controller     TUNE Reporting API Endpoint.
     #  @param bool use_config    Use TUNE Reporting SDK config.
     #
     def __init__(self,
@@ -163,7 +163,7 @@ class EndpointBase(object):
                  use_config):
         """The constructor.
 
-            :param controller (string):     TUNE Management API endpoint name.
+            :param controller (string):     TUNE Reporting API endpoint name.
             :param use_config (boolean):    Use TUNE Reporting SDK config.
         """
 
@@ -192,39 +192,39 @@ class EndpointBase(object):
     #  @return string
     @property
     def controller(self):
-        """TUNE Management API controller."""
+        """TUNE Reporting API controller."""
         return self.__controller
 
     #  Get API Key
     #  @return string
     @property
     def auth_key(self):
-        """TUNE Management API KEY."""
+        """TUNE Reporting API KEY."""
         return self.__auth_key
 
-    #  Call TUNE Management API service for this controller.
-    #  @param str action              TUNE Management API endpoint's
+    #  Call TUNE Reporting API service for this controller.
+    #  @param str action              TUNE Reporting API endpoint's
     #                                   action name.
-    #  @param array  query_string_dict   Action's query string parameters
-    #  @return object @see TuneManagementResponse
+    #  @param array  map_query_string   Action's query string parameters
+    #  @return object @see TuneServiceResponse
     def call(self,
              action,
-             query_string_dict=None):
-        """Call TUNE Management API service requesting response
+             map_query_string=None):
+        """Call TUNE Reporting API service requesting response
         endpoint_base upon provided controller/action?query_string.
 
-            :param str      action:     TUNE Management API endpoint's
+            :param str      action:     TUNE Reporting API endpoint's
                                         action name.
-            :param array    query_string_dict:  Action's query string
+            :param array    map_query_string:  Action's query string
                                         parameters.
-            :return: TuneManagementResponse
+            :return: TuneServiceResponse
         """
-        client = TuneManagementClient(
+        client = TuneServiceClient(
             self.controller,
             action,
             self.__auth_key,
             self.__auth_type,
-            query_string_dict
+            map_query_string
         )
 
         client.call()
@@ -232,11 +232,11 @@ class EndpointBase(object):
         return client.response
 
     #  Provide complete definition for this endpoint.
-    #  @return object @see TuneManagementResponse
+    #  @return object @see TuneServiceResponse
     def define(self):
         """Gather all metadata for this endpoint.
 
-            :return:                   TuneManagementResponse:
+            :return:                   TuneServiceResponse:
         """
         return self.call(
             action="define"
@@ -344,17 +344,17 @@ class EndpointBase(object):
             :return: list endpoint fields
             :throws: TuneServiceException
         """
-        query_string_dict = {
+        map_query_string = {
             'controllers': self.__controller,
             'details': 'modelName,fields'
         }
 
-        client = TuneManagementClient(
+        client = TuneServiceClient(
             "apidoc",
             "get_controllers",
             self.__auth_key,
             self.__auth_type,
-            query_string_dict
+            map_query_string
         )
 
         client.call()
@@ -457,19 +457,25 @@ class EndpointBase(object):
 
         return self.__model_name
 
-    ## Validate query string parameter 'fields' having valid
-    #  endpoint's fields
-    #  @param array|string fields
-    #  @return string
-    #  @throws TuneSdkException
-    def _validate_fields(self, fields):
+    ## Validate query string parameter 'fields'.
+    #  @param dict map_params
+    #  @param dict map_query_string
+    #  @return dict map_query_string
+    #  @throws ValueError
+    def _validate_fields(self, map_params, map_query_string):
         """Validate query string parameter 'fields' having
         valid endpoint fields.
 
-            :param array|(str): fields
-            :return (str): fields
-            :throws: TuneSdkException
+            :param (dict) map_params
+            :param (dict) map_query_string
+            :return (dict): map_query_string
+            :throws: ValueError
         """
+        if "fields" not in map_params:
+            raise ValueError("Parameter 'fields' is not defined.")
+
+        fields = map_params["fields"]
+
         if not isinstance(fields, str):
             if sys.version_info >= (3, 0, 0):
                 # for Python 3
@@ -511,20 +517,28 @@ class EndpointBase(object):
                         )
                     )
 
-        return ",".join(fields_list)
+        map_query_string["fields"] = ",".join(fields_list)
+        return map_query_string
 
-    ## Validate query string parameter 'group' having valid endpoint's fields
-    #  @param array|string group
-    #  @return string
-    #  @throws TuneSdkException
-    def _validate_group(self, group):
+    ## Validate query string parameter "group" having valid endpoint's fields
+    #  @param dict map_params
+    #  @param dict map_query_string
+    #  @return dict map_query_string
+    #  @throws ValueError
+    def _validate_group(self, map_params, map_query_string):
         """Validate query string parameter 'group' having
         valid endpoint's fields.
 
-        :param array|(str): group
-        :return (str): group
-        :throws: TuneSdkException
+            :param (dict) map_params
+            :param (dict) map_query_string
+            :return (dict): map_query_string
+            :throws: ValueError
         """
+        if "group" not in map_params:
+            raise ValueError("Parameter 'group' is not defined.")
+
+        group = map_params["group"]
+
         if not isinstance(group, str) and not isinstance(group, list):
             raise TuneSdkException(
                 "Invalid parameter 'group' provided: '{}'".format(group))
@@ -555,35 +569,30 @@ class EndpointBase(object):
                         )
                     )
 
-        return ",".join(group_list)
+        map_query_string["group"] = ",".join(group_list)
+        return map_query_string
 
     ## Validate query string parameter 'sort' having valid endpoint's fields
-    #  @param dict fields
-    #  @param dict sort
-    #  @return dict
-    #  @throws TuneSdkException
-    def _validate_sort(self, fields, sort):
+    #  @param dict map_params
+    #  @param dict map_query_string
+    #  @return dict map_query_string
+    #  @throws ValueError
+    def _validate_sort(self, map_params, map_query_string):
         """Validate query string parameter 'sort'
         having valid endpoint's fields.
 
-            :param array|(str): fields
-            :param array|(str): sort
-            :return (str): sort
-            :throws: TuneSdkException
+            :param (dict) map_params
+            :param (dict) map_query_string
+            :return (dict): map_query_string
+            :throws: ValueError
         """
+        if "sort" not in map_params:
+            raise ValueError("Parameter 'sort' is not defined.")
+
+        sort = map_params["sort"]
+
         if not isinstance(sort, dict):
             raise TuneSdkException("Invalid parameter 'sort' provided.")
-
-        fields_arr = None
-        if fields is None:
-            fields_arr = []
-        elif isinstance(fields, list):
-            fields_arr = fields
-        elif isinstance(fields, str):
-            if not fields:
-                fields_arr = []
-            else:
-                fields_arr = fields.split(",")
 
         if self.__validate_fields:
             if self.__fields is None:
@@ -600,9 +609,6 @@ class EndpointBase(object):
                         )
                     )
 
-            if sort_field not in fields_arr:
-                fields_arr.append(sort_field)
-
             sort_direction = sort_direction.upper()
             if sort_direction not in self.__sort_directions:
                 raise TuneSdkException(
@@ -614,28 +620,27 @@ class EndpointBase(object):
 
             sort_build[sort_field] = sort_direction
 
-        if isinstance(fields, str):
-            fields = ",".join(fields_arr)
-        else:
-            fields = fields_arr
-
-        results = {
-            "sort": sort_build,
-            "fields": fields
-        }
-
-        return results
+        map_query_string["sort"] = sort_build
+        return map_query_string
 
     ## Validate filter parameter
-    #  @param str filter
-    #  @return string
-    def _validate_filter(self, filter):
+    #  @param dict map_params
+    #  @param dict map_query_string
+    #  @return dict map_query_string
+    #  @throws ValueError
+    def _validate_filter(self, map_params, map_query_string):
         """Validate 'filter' parameter.
 
-            :param str filter: Query String filter
-            :return (str): filter
-            :throws: TuneSdkException
+            :param (dict) map_params
+            :param (dict) map_query_string
+            :return (dict): map_query_string
+            :throws: ValueError
         """
+        if "filter" not in map_params:
+            raise ValueError("Parameter 'filter' is not defined.")
+
+        filter = map_params["filter"]
+
         if not isinstance(filter, str) or not filter:
             raise TuneSdkException(
                 "Parameter 'filter' is invalid: '{}'.".format(
@@ -695,18 +700,28 @@ class EndpointBase(object):
                 )
             )
 
-        return "({})".format(filter)
+        map_query_string["filter"] = "({})".format(filter)
+        return map_query_string
 
     ## Validate 'format' parameter
-    #  @param str format
+    #  @param dict map_params
+    #  @param dict map_query_string
+    #  @return dict map_query_string
+    #  @throws ValueError
     @staticmethod
-    def _validate_format(format):
+    def _validate_format(map_params, map_query_string):
         """Validate 'format' parameter of query string.
 
-            :param str format: Query String format parameter
-            :return (str): format
-            :throws: TuneSdkException
+            :param (dict) map_params
+            :param (dict) map_query_string
+            :return (dict): map_query_string
+            :throws: ValueError
         """
+        if "format" not in map_params:
+            raise ValueError("Parameter 'format' is not defined.")
+
+        format = map_params["format"]
+
         report_export_formats = [
             "csv",
             "json"
@@ -719,44 +734,118 @@ class EndpointBase(object):
                 "Parameter 'format' is invalid: '{}'.".format(format)
             )
 
-        return True
+        map_query_string["format"] = format
+        return map_query_string
 
     ## Validate parameters of type datetime.
+    #  @param dict map_params
     #  @param str param_name
-    #  @param str datetime
+    #  @param dict map_query_string
+    #  @return dict map_query_string
+    #  @throws ValueError
     @staticmethod
-    def _validate_datetime(param_name, date_time):
+    def _validate_datetime(map_params, param_name, map_query_string):
         """Validate parameters of type datetime.
 
+            :param (dict) map_params
             :param str param_name:   Query String date_time parameter name
-            :param str date_time:    Query String date_time parameter value
-            :return (bool): Valid datatime string
-            :throws: TuneSdkException
+            :param (dict) map_query_string
+            :return (dict): map_query_string
+            :throws: ValueError
         """
         if (param_name is None
                 or not isinstance(param_name, str)
                 or not param_name):
             raise ValueError("Parameter 'param_name' is not defined.")
+        if param_name not in map_params:
+            raise ValueError("Parameter '{}' is not defined.".format(param_name))
+
+        date_time = map_params[param_name]
+
         if (date_time is None
                 or not isinstance(date_time, str)
                 or not date_time):
             raise ValueError(
                 "Parameter '{}' is not defined.".format(param_name))
 
-        try:
-            datetime.strptime(date_time, '%Y-%m-%d')
-            return True
-        except ValueError:
-            pass
+        valid_datetime = False
 
-        try:
-            datetime.strptime(date_time, '%Y-%m-%d %H:%M:%S')
-            return True
-        except ValueError:
-            pass
+        if not valid_datetime:
+            try:
+                datetime.strptime(date_time, '%Y-%m-%d')
+                valid_datetime = True
+            except ValueError:
+                pass
 
-        raise ValueError(
-            "Parameter '{}' is invalid: '{}'.".format(param_name, date_time))
+        if not valid_datetime:
+            try:
+                datetime.strptime(date_time, '%Y-%m-%d %H:%M:%S')
+                valid_datetime = True
+            except ValueError:
+                pass
+
+        if not valid_datetime:
+            raise ValueError(
+                "Parameter '{}' is invalid: '{}'.".format(param_name, date_time))
+
+        map_query_string[param_name] = date_time
+        return map_query_string
+
+    ## Validate query string parameter 'limit'.
+    #  @param dict map_params
+    #  @param dict map_query_string
+    #  @return dict map_query_string
+    #  @throws ValueError
+    @staticmethod
+    def _validate_limit(self, map_params, map_query_string):
+        """Validate query string parameter 'limit'.
+
+            :param (dict) map_params
+            :param (dict) map_query_string
+            :return (dict): map_query_string
+            :throws: ValueError
+        """
+        if "limit" not in map_params:
+            raise ValueError("Parameter 'limit' is not defined.")
+
+        limit = map_params["limit"]
+
+        if (limit is None
+                or not limit
+                or not isinstance(limit, int)
+                or 0 > limit):
+            raise ValueError("Parameter 'limit' is not valid.")
+
+        map_query_string["limit"] = limit
+        return map_query_string
+
+    ## Validate query string parameter 'page'.
+    #  @param dict map_params
+    #  @param dict map_query_string
+    #  @return dict map_query_string
+    #  @throws ValueError
+    @staticmethod
+    def _validate_page(self, map_params, map_query_string):
+        """Validate query string parameter 'page'.
+
+            :param (dict) map_params
+            :param (dict) map_query_string
+            :return (dict): map_query_string
+            :throws: ValueError
+        """
+        if "limit" not in map_params:
+            raise ValueError("Parameter 'page' is not defined.")
+
+        page = map_params["page"]
+
+        if (page is None
+                or not page
+                or not isinstance(page, int)
+                or 0 > page):
+            raise ValueError("Parameter 'page' is not valid.")
+
+        map_query_string["page"] = page
+        return map_query_string
 
     #  Get SDK version
     #  @return string
@@ -798,7 +887,7 @@ class EndpointBase(object):
     #  @param str   export_action       Export status action.
     #  @param str   job_id              Job Identifier of report on queue.
     #
-    #  @return object @see TuneManagementResponse
+    #  @return object @see TuneServiceResponse
     #  @throws ValueError
     #  @throws TuneServiceException
     #
@@ -878,14 +967,14 @@ class EndpointBase(object):
 
     ## Helper function for parsing export status response to
     #  gather report url.
-    #  @param @see TuneManagementResponse
+    #  @param @see TuneServiceResponse
     #  @return str Report Url
     @staticmethod
     def parse_response_report_url(response):
         """Helper function for parsing export status response to
         gather report url.
 
-            :param object response: TuneManagementResponse
+            :param object response: TuneServiceResponse
             :return (str): Report Url
             :throws: TuneSdkException
         """
@@ -919,7 +1008,7 @@ class EndpointBase(object):
         return url
 
     ## Helper function for parsing export response to gather job identifier.
-    #  @param @see TuneManagementResponse
+    #  @param @see TuneServiceResponse
     #  @return str Report Url
     #  @throws TuneSdkException
     @staticmethod
@@ -927,7 +1016,7 @@ class EndpointBase(object):
         """Helper function for parsing export response to
         gather job identifier.
 
-            :param (TuneManagementResponse) response:
+            :param (TuneServiceResponse) response:
             :return (str): Report Job identifier
             :throws: (TuneSdkException)
         """

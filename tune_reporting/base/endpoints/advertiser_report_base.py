@@ -1,5 +1,5 @@
 """
-TUNE Management Reports Endpoint base
+TUNE Service Reports Endpoint base
 ============================================
 """
 #!/usr/bin/env python
@@ -36,7 +36,7 @@ TUNE Management Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-10 11:10:41 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -45,10 +45,10 @@ from tune_reporting.base.endpoints import (
 )
 
 
-## Base components for every TUNE Management API reports.
+## Base components for every TUNE Reporting API reports.
 #
 class AdvertiserReportBase(EndpointBase):
-    """Base components for every TUNE Management API reports.
+    """Base components for every TUNE Reporting API reports.
     """
 
     #  Remove debug mode information from results.
@@ -61,7 +61,7 @@ class AdvertiserReportBase(EndpointBase):
 
     ## The constructor.
     #
-    #  @param str   controller               TUNE Management API endpoint name.
+    #  @param str   controller               TUNE Reporting API endpoint name.
     #  @param bool  filter_debug_mode        Remove debug mode information
     #                                        from results.
     #  @param bool  filter_test_profile_id   Remove test profile information
@@ -73,7 +73,7 @@ class AdvertiserReportBase(EndpointBase):
                  filter_test_profile_id):
         """The constructor.
 
-            :param controller (string): TUNE Management API endpoint name.
+            :param controller (string): TUNE Reporting API endpoint name.
             :param bool filter_debug_mode:  Remove debug mode information
                                                     from results.
             :param bool filter_test_profile_id: Remove test profile
@@ -103,28 +103,28 @@ class AdvertiserReportBase(EndpointBase):
         )
 
     #  Prepare action with provided query str parameters, then call
-    #  Management API service.
+    #  TUNE Reporting API service.
     #
     #  @param str   action Endpoint action to be called.
-    #  @param dict  query_string_dict Query str parameters for this action.
+    #  @param dict  map_query_string Query str parameters for this action.
     #
-    def call(self, action, query_string_dict):
+    def call(self, action, map_query_string):
         """
         Make service request for report.
 
-            :param action (str): Endpoint action name.
-            :param query_string_dict (dict): Query str parameters of action.
-            :returns (object): TuneManagementResponse
+            :param (str) action: Endpoint action name.
+            :param (dict) map_query_string: Query str parameters of action.
+            :returns (object): TuneServiceResponse
         """
         if not isinstance(action, str) or len(action) < 1:
             raise ValueError(
                 "Parameter 'action' is not defined."
             )
 
-        if query_string_dict is None or \
-           not isinstance(query_string_dict, dict):
+        if map_query_string is None or \
+           not isinstance(map_query_string, dict):
             raise ValueError(
-                "Parameter 'query_string_dict' is not defined as dict."
+                "Parameter 'map_query_string' is not defined as dict."
             )
 
         sdk_filter = ""
@@ -139,33 +139,33 @@ class AdvertiserReportBase(EndpointBase):
                 "(test_profile_id=0 OR test_profile_id IS NULL)"
 
         if len(sdk_filter) > 0:
-            if 'filter' in query_string_dict:
-                if query_string_dict['filter'] is not None:
-                    if isinstance(query_string_dict['filter'], str):
-                        if len(query_string_dict['filter']) > 0:
-                            query_string_dict['filter'] = "({}) AND {}".format(
-                                query_string_dict['filter'],
+            if "filter" in map_query_string:
+                if map_query_string["filter"] is not None:
+                    if isinstance(map_query_string["filter"], str):
+                        if len(map_query_string["filter"]) > 0:
+                            map_query_string["filter"] = "({}) AND {}".format(
+                                map_query_string["filter"],
                                 sdk_filter
                             )
                         else:
-                            query_string_dict['filter'] = sdk_filter
+                            map_query_string["filter"] = sdk_filter
                     else:
-                        query_string_dict['filter'] = sdk_filter
+                        map_query_string["filter"] = sdk_filter
                 else:
-                    query_string_dict['filter'] = sdk_filter
+                    map_query_string["filter"] = sdk_filter
             else:
-                query_string_dict['filter'] = sdk_filter
+                map_query_string["filter"] = sdk_filter
 
-        if 'filter' in query_string_dict:
-            if query_string_dict['filter'] is not None:
-                if isinstance(query_string_dict['filter'], str):
-                    if len(query_string_dict['filter']) > 0:
-                        query_string_dict['filter'] = "({})".format(
-                            query_string_dict['filter']
+        if "filter" in map_query_string:
+            if map_query_string["filter"] is not None:
+                if isinstance(map_query_string["filter"], str):
+                    if len(map_query_string["filter"]) > 0:
+                        map_query_string["filter"] = "({})".format(
+                            map_query_string["filter"]
                         )
 
         return EndpointBase.call(
             self,
             action,
-            query_string_dict
+            map_query_string
         )

@@ -36,7 +36,7 @@ TUNE Reports Export Status Worker
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 17:36:25 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -47,7 +47,7 @@ from tune_reporting.helpers import (
     TuneServiceException
 )
 from tune_reporting.base.service import (
-    TuneManagementClient
+    TuneServiceClient
 )
 
 
@@ -98,7 +98,7 @@ class ReportExportWorker(object):
     __verbose = None
 
     #
-    #  @var object @see TuneManagementResponse
+    #  @var object @see TuneServiceResponse
     #
     __response = None
 
@@ -193,12 +193,12 @@ class ReportExportWorker(object):
         attempt = 0
         total_time = 0
 
-        client = TuneManagementClient(
+        client = TuneServiceClient(
             self.__export_controller,
             self.__export_action,
             self.__auth_key,
             self.__auth_type,
-            query_string_dict={
+            map_query_string={
                 'job_id': self.__job_id
             }
         )
@@ -281,9 +281,9 @@ class ReportExportWorker(object):
     @property
     def response(self):
         """Property that will hold completed report downloaded
-        from Management API service.
+        from TUNE Reporting API service.
 
             :return: Response
-            :rtype: TuneManagementResponse
+            :rtype: TuneServiceResponse
         """
         return self.__response

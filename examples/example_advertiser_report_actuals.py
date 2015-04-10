@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-10 11:10:41 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  The Actuals report gives you quick insight into the performance of your apps
@@ -125,18 +125,22 @@ class ExampleAdvertiserReportActuals(object):
             print(" Count Advertiser Report Actuals.                          ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "filter": "(publisher_id > 0)",
+                "group": "site_id,publisher_id",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.count(
-                start_date,
-                end_date,
-                filter="(publisher_id > 0)",
-                group="site_id,publisher_id",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -150,23 +154,27 @@ class ExampleAdvertiserReportActuals(object):
             print(" Find Advertiser Report Actuals with Default fields.       ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "fields": None,
+                "filter": "(publisher_id > 0)",
+                "group": "site_id,publisher_id",
+                "limit": 5,
+                "page": None,
+                "sort": {"paid_installs": "DESC"},
+                "timestamp": "datehour",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.find(
-                start_date,
-                end_date,
-                fields=None,
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                limit=5,
-                page=None,
-                sort={"installs": "DESC"},
-                timestamp="datehour",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -177,23 +185,27 @@ class ExampleAdvertiserReportActuals(object):
             print(" Find Advertiser Report Actuals with Recommended fields.   ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "filter": "(publisher_id > 0)",
+                "group": "site_id,publisher_id",
+                "limit": 5,
+                "page": None,
+                "sort": {"paid_installs": "DESC"},
+                "timestamp": "datehour",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.find(
-                start_date,
-                end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                limit=5,
-                page=None,
-                sort={"installs": "DESC"},
-                timestamp="datehour",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -204,21 +216,25 @@ class ExampleAdvertiserReportActuals(object):
             print(" Export Advertiser Report Actuals CSV                      ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "filter": "(publisher_id > 0)",
+                "group": "site_id,publisher_id",
+                "format": "csv",
+                "timestamp": "datehour",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.export(
-                start_date,
-                end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                timestamp="datehour",
-                format="csv",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -255,21 +271,25 @@ class ExampleAdvertiserReportActuals(object):
             print(" Export Advertiser Report Actuals JSON                     ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "filter": "(publisher_id > 0)",
+                "group": "site_id,publisher_id",
+                "format": "json",
+                "timestamp": "datehour",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.export(
-                start_date,
-                end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                timestamp="datehour",
-                format="json",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -288,7 +308,7 @@ class ExampleAdvertiserReportActuals(object):
                 job_id
             )
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(export_fetch_response))
 
             if export_fetch_response is None:

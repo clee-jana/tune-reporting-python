@@ -36,7 +36,7 @@ TUNE Advertiser Report JSON Reader
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 17:36:25 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -46,7 +46,7 @@ from .report_reader_base import (
     ReportReaderBase
 )
 from tune_reporting.base.service import (
-    TuneManagementProxy
+    TuneServiceProxy
 )
 
 
@@ -71,7 +71,7 @@ class ReportReaderJSON(ReportReaderBase):
         """Read JSON data provided remote path report_url."""
         self.data = None
 
-        proxy = TuneManagementProxy(self.report_url)
+        proxy = TuneServiceProxy(self.report_url)
 
         if proxy.execute():
             utf8_report_content = proxy.response.read().decode('utf-8')

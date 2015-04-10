@@ -1,11 +1,11 @@
 """
-TUNE Management API Response
+TUNE Service Response
 =============================================
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  response.py
+#  tune_service_response.py
 #
 #  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
@@ -36,15 +36,15 @@ TUNE Management API Response
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 17:36:25 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
 import json
 
 
-class TuneManagementResponse(object):
-    """Response container of TUNE Management API.
+class TuneServiceResponse(object):
+    """Response container of TUNE Service Client.
     """
 
     __response_json = None
@@ -59,13 +59,13 @@ class TuneManagementResponse(object):
                  request_url=None):
         """The constructor.
 
-            :param str   response_json:         TUNE Management API Service
+            :param str   response_json:         TUNE Reporting API Service
                                                 full response.
-            :param str   response_http_code:    TUNE Management API Service
+            :param str   response_http_code:    TUNE Reporting API Service
                                                 response HTTP code.
-            :param array response_headers:      TUNE Management API Service
+            :param array response_headers:      TUNE Reporting API Service
                                                 response HTTP headers.
-            :param str   request_url:           TUNE Management API request
+            :param str   request_url:           TUNE Reporting API request
                                                 URL.
         """
         self.__response_json = response_json
@@ -76,7 +76,7 @@ class TuneManagementResponse(object):
     @property
     def request_url(self):
         """
-        Initial TuneManagementRequest URL to TUNE Management API Service.
+        Initial TuneManagementRequest URL to TUNE Reporting API Service.
         """
         return self.__request_url
 
@@ -84,7 +84,7 @@ class TuneManagementResponse(object):
     def json(self):
         """
         Get property for Full JSON response returned
-        from TUNE Management API Service."""
+        from TUNE Reporting API Service."""
         return dict([(str(k), v) for k, v in self.__response_json.items()])
 
     @property
@@ -101,7 +101,7 @@ class TuneManagementResponse(object):
     def data(self):
         """
         Get property to get 'data' portion of JSON response returned
-        from TUNE Management API Service.
+        from TUNE Reporting API Service.
         """
         if 'data' in self.__response_json:
             return self.__response_json['data']
@@ -111,7 +111,7 @@ class TuneManagementResponse(object):
     def size(self):
         """
         Get property to get 'response_size' portion of JSON
-        response returned from TUNE Management API Service.
+        response returned from TUNE Reporting API Service.
         """
         if 'response_size' in self.__response_json:
             return self.__response_json['response_size']
@@ -121,7 +121,7 @@ class TuneManagementResponse(object):
     def status_code(self):
         """
         Get property to get 'status_code' portion of JSON
-        response returned from TUNE Management API Service.
+        response returned from TUNE Reporting API Service.
         """
         if 'status_code' in self.__response_json:
             return self.__response_json['status_code']
@@ -131,7 +131,7 @@ class TuneManagementResponse(object):
     def errors(self):
         """
         Get property to get 'errors' portion of JSON response
-        returned from TUNE Management API Service.
+        returned from TUNE Reporting API Service.
         """
         if 'errors' in self.__response_json:
             return self.__response_json['errors']

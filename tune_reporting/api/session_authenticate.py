@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 17:36:25 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -42,10 +42,10 @@ from tune_reporting.base import (
     EndpointBase
 )
 
-## TUNE Management API endpoint '/session/authenticate'
+## TUNE Reporting API endpoint '/session/authenticate'
 #
 class SessionAuthenticate(EndpointBase):
-    """TUNE Management API endpoint '/session/authenticate/'."""
+    """TUNE Reporting API endpoint '/session/authenticate/'."""
 
     ## The constructor.
     #
@@ -62,7 +62,7 @@ class SessionAuthenticate(EndpointBase):
     ## Generate session token is returned to provide access to service.
     #
     #  @param string api_keys  Generate 'session token' for this api_keys.
-    #  @return object @see TuneManagementResponse
+    #  @return object @see TuneServiceResponse
     def api_key(self,
                 api_keys):
         """
@@ -70,7 +70,7 @@ class SessionAuthenticate(EndpointBase):
 
             :param api_keys (string):   Generate 'session token'
                                         for this api_keys.
-            :return: TuneManagementResponse
+            :return: TuneServiceResponse
         """
         if not api_keys or len(api_keys) < 1:
             raise ValueError("Parameter 'api_keys' is not defined.")
@@ -78,7 +78,7 @@ class SessionAuthenticate(EndpointBase):
         return EndpointBase.call(
             self,
             action="api_key",
-            query_string_dict={
+            map_query_string={
                 'api_keys': api_keys
             }
         )
