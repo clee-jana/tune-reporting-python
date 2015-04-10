@@ -36,7 +36,7 @@ TUNE Advertiser Report CSV Reader
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 17:36:25 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -47,7 +47,7 @@ from .report_reader_base import (
     ReportReaderBase
 )
 from tune_reporting.base.service import (
-    TuneManagementProxy
+    TuneServiceProxy
 )
 from .utf8_recorder import (UTF8Recoder)
 
@@ -73,7 +73,7 @@ class ReportReaderCSV(ReportReaderBase):
     def read(self):
         """Read CSV data provided remote path report_url.
         """
-        proxy = TuneManagementProxy(self.report_url)
+        proxy = TuneServiceProxy(self.report_url)
         if proxy.execute():
             utf8_report_content = UTF8Recoder(proxy.response, 'utf-8')
             self.reader = csv.reader(utf8_report_content, dialect=csv.excel)

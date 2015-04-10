@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 22:59:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  Retention Report
@@ -144,20 +144,24 @@ class ExampleAdvertiserReportCohortRetention(object):
             print(" Count Advertiser Report Cohort Retention click records.   ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "cohort_type": "click",
+                "cohort_interval": "year_day",
+                "filter": "(install_publisher_id > 0)",
+                "group": "site_id,install_publisher_id",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.count(
-                start_date,
-                end_date,
-                cohort_type="click",
-                cohort_interval="year_day",
-                group="site_id,install_publisher_id",
-                filter="(install_publisher_id > 0)",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -171,23 +175,27 @@ class ExampleAdvertiserReportCohortRetention(object):
             print(" Count Advertiser Report Cohort Retention install records. ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "cohort_type": "install",
+                "cohort_interval": "year_day",
+                "filter": "(install_publisher_id > 0)",
+                "group": "site_id,install_publisher_id",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.count(
-                start_date,
-                end_date,
-                cohort_type="install",
-                cohort_interval="year_day",
-                group="site_id,install_publisher_id",
-                filter="(install_publisher_id > 0)",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -201,24 +209,28 @@ class ExampleAdvertiserReportCohortRetention(object):
             print(" Find Advertiser Report Cohort Retention 'click/cumulative' Default.     ")
             print("=========================================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "cohort_type": "install",
+                "cohort_interval": "year_day",
+                "filter": "(install_publisher_id > 0)",
+                "group": "site_id,install_publisher_id",
+                "fields": None,
+                "limit": 5,
+                "page": None,
+                "sort": {"year_day": "ASC", "install_publisher_id": "ASC"},
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.find(
-                start_date,
-                end_date,
-                cohort_type="install",
-                cohort_interval="year_day",
-                group="site_id,install_publisher_id",
-                fields=None,
-                filter="(install_publisher_id > 0)",
-                limit=10,
-                page=None,
-                sort={"year_day": "ASC", "install_publisher_id": "ASC"},
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print("")
@@ -226,24 +238,28 @@ class ExampleAdvertiserReportCohortRetention(object):
             print(" Find Advertiser Report Cohort Retention 'click/cumulative' Recommended fields.      ")
             print("=====================================================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "cohort_type": "install",
+                "cohort_interval": "year_day",
+                "filter": "(install_publisher_id > 0)",
+                "group": "site_id,install_publisher_id",
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "limit": 5,
+                "page": None,
+                "sort": {"year_day": "ASC", "install_publisher_id": "ASC"},
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.find(
-                start_date,
-                end_date,
-                cohort_type="install",
-                cohort_interval="year_day",
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,install_publisher_id",
-                filter="(install_publisher_id > 0)",
-                limit=10,
-                page=None,
-                sort={"year_day": "ASC", "install_publisher_id": "ASC"},
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print("")
@@ -251,21 +267,25 @@ class ExampleAdvertiserReportCohortRetention(object):
             print(" Export Advertiser Report Cohort Retention CSV             ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "cohort_type": "install",
+                "cohort_interval": "year_day",
+                "filter": "(install_publisher_id > 0)",
+                "group": "site_id,install_publisher_id",
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.export(
-                start_date,
-                end_date,
-                cohort_type="click",
-                cohort_interval="year_day",
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,install_publisher_id",
-                filter="(install_publisher_id > 0)",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             job_id = AdvertiserReportCohortRetention.parse_response_report_job_id(response)
@@ -281,7 +301,7 @@ class ExampleAdvertiserReportCohortRetention(object):
                 job_id
             )
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(export_fetch_response))
 
             if export_fetch_response is None:

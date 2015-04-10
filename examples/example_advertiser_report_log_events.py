@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 22:59:45 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #
@@ -119,17 +119,21 @@ class ExampleAdvertiserReportLogEvents(object):
             print(" Count Advertiser Report Log Events records.               ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "filter": "(status = 'approved')",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.count(
-                start_date,
-                end_date,
-                filter="(status = 'approved')",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -143,21 +147,25 @@ class ExampleAdvertiserReportLogEvents(object):
             print(" Find Advertiser Report Log Events records.                ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "filter": "(status = 'approved')",
+                "limit": 5,
+                "page": None,
+                "sort": {"created": "DESC"},
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.find(
-                start_date,
-                end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
-                limit=5,
-                page=None,
-                sort={"created": "DESC"},
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -168,19 +176,23 @@ class ExampleAdvertiserReportLogEvents(object):
             print(" Export Advertiser Report Log Events CSV                   ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "filter": "(status = 'approved')",
+                "format": "csv",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.export(
-                start_date,
-                end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
-                format="csv",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             print(" JSON:")
@@ -217,19 +229,23 @@ class ExampleAdvertiserReportLogEvents(object):
             print(" Export Advertiser Report Log Events JSON                  ")
             print("===========================================================")
 
+            map_params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "filter": "(status = 'approved')",
+                "format": "json",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.export(
-                start_date,
-                end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(status = 'approved')",
-                format="json",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
 
             if response.http_code != 200 or response.errors:
                 raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(response))
 
             job_id = AdvertiserReportLogEvents.parse_response_report_job_id(response)
@@ -245,7 +261,7 @@ class ExampleAdvertiserReportLogEvents(object):
                 job_id
             )
 
-            print(" TuneManagementResponse:")
+            print(" TuneServiceResponse:")
             print(str(export_fetch_response))
 
             if export_fetch_response is None:

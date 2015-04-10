@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-10 11:10:41 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -96,11 +96,15 @@ class TestAdvertiserReportLogClicks(unittest.TestCase):
 
         advertiser_report = AdvertiserReportLogClicks()
 
+        map_params = {
+            "start_date": self.__start_date,
+            "end_date": self.__end_date,
+            "filter": None,
+            "response_timezone": "America/Los_Angeles"
+        }
+
         response = advertiser_report.count(
-            self.__start_date,
-            self.__end_date,
-            filter=None,
-            response_timezone="America/Los_Angeles"
+            map_params
         )
 
         self.assertIsNotNone(response)
@@ -115,15 +119,19 @@ class TestAdvertiserReportLogClicks(unittest.TestCase):
 
         advertiser_report = AdvertiserReportLogClicks()
 
+        map_params = {
+            "start_date": self.__start_date,
+            "end_date": self.__end_date,
+            "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+            "filter": None,
+            "limit": 5,
+            "page": None,
+            "sort": {"created": "DESC"},
+            "response_timezone": "America/Los_Angeles"
+        }
+
         response = advertiser_report.find(
-            self.__start_date,
-            self.__end_date,
-            fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-            filter=None,
-            limit=5,
-            page=None,
-            sort={"created": "DESC"},
-            response_timezone="America/Los_Angeles"
+            map_params
         )
 
         self.assertIsNotNone(response)
@@ -133,57 +141,23 @@ class TestAdvertiserReportLogClicks(unittest.TestCase):
         self.assertIsInstance(response.data, list)
         self.assertLessEqual(len(response.data), 10)
 
-    def test_FindInvalidFields(self):
-        try:
-            advertiser_report = AdvertiserReportLogClicks()
-
-            advertiser_report.find(
-                self.__start_date,
-                self.__end_date,
-                fields="foo",
-                filter=None,
-                limit=5,
-                page=None,
-                sort={"created": "DESC"},
-                response_timezone="America/Los_Angeles"
-            )
-        except TuneSdkException:
-            pass
-        except Exception as exc:
-            self.fail("Exception: {0}".format(exc))
-
-    def test_FindInvalidFilter(self):
-        try:
-            advertiser_report = AdvertiserReportLogClicks()
-
-            advertiser_report.find(
-                self.__start_date,
-                self.__end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter="(foo > 0)",
-                limit=5,
-                page=None,
-                sort={"created": "DESC"},
-                response_timezone="America/Los_Angeles"
-            )
-        except TuneSdkException:
-            pass
-        except Exception as exc:
-            self.fail("Exception: {0}".format(exc))
-
     def test_Export(self):
         response = None
 
         try:
             advertiser_report = AdvertiserReportLogClicks()
 
+            map_params = {
+                "start_date": self.__start_date,
+                "end_date": self.__end_date,
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "filter": None,
+                "format": "csv",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.export(
-                self.__start_date,
-                self.__end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                filter=None,
-                format="csv",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))
@@ -198,6 +172,4 @@ class TestAdvertiserReportLogClicks(unittest.TestCase):
         self.test_Fields()
         self.test_Count()
         self.test_Find()
-        self.test_FindInvalidFields()
-        self.test_FindInvalidFilter()
         self.test_Export()

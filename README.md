@@ -1,8 +1,8 @@
 <h2>tune-reporting-python</h2>
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
-<h4>Update:  $Date: 2015-01-05 19:53:06 $</h4>
-<h4>Version: 0.9.33</h4>
+<h4>Update:  $Date: 2015-04-10 11:10:41 $</h4>
+<h4>Version: 1.0.1</h4>
 ===
 
 <a id="TOP"></a>
@@ -59,7 +59,7 @@
 
     <li><a href="#sdk_classes">SDK Classes</a>
         <ul>
-            <li><a href="#sdk_classes_service">TUNE Management Service Classes</a></li>
+            <li><a href="#sdk_classes_service">TUNE Service Classes</a></li>
             <li><a href="#sdk_report_readers">Helper Classes</a></li>
             <li><a href="#sdk_classes_exceptions">Exception Classes</a></li>
         </ul>
@@ -109,9 +109,7 @@
 <a id="sdk_overview" name="sdk_overview"></a>
 ### Overview
 
-The **TUNE Reporting SDKs** addressed in this posting are for creating hosted applications which require handling requests to **TUNE Management API services** with utility focus is upon Advertiser Reporting endpoints.
-
-Even though the the breadth of the Management API goes beyond just reports, it is these reporting endpoints that our customers primarily access.
+The **TUNE Reporting SDKs** addressed in this posting are for creating hosted applications which require handling requests to **TUNE Reporting API services** with utility focus is upon Advertiser Reporting endpoints.
 
 The second goal of the SDKs is to assure that our customers’ developers are using best practices in gathering reports in the most optimal way.
 
@@ -173,7 +171,7 @@ These are the basic requirements to use this SDK:
 <a id="sdk_install_prereq_apikey" name="sdk_install_prereq_apikey"></a>
 ##### Generate API Key
 
-To use SDK to access Advertiser Reporting endpoints of TUNE Management API, it requires a MobileAppTracking API Key: [Generate API Key](http://developers.mobileapptracking.com/generate-api-key/).
+To use SDK to access Advertiser Reporting endpoints of TUNE Reporting API, it requires a MobileAppTracking API Key: [Generate API Key](http://developers.mobileapptracking.com/generate-api-key/).
 
 <a id="sdk_install_choices" name="sdk_install_choices"></a>
 #### Installation Choices
@@ -184,7 +182,7 @@ You can install this either via **PyPi pip** or by downloading the **ZIP** sourc
 ##### Via PyPi using pip:
 
 *tune_reporting* module is in *PyPi*: [link](https://pypi.python.org/pypi/tune_reporting/)
-PyPi registered package: [TUNE client library](https://pypi.python.org/pypi/tune/0.9.7)
+PyPi registered package: [TUNE client library](https://pypi.python.org/pypi/tune/1.0.1)
 
 Install from PyPi using [pip](http://www.pip-installer.org/en/latest/), a
 package manager for Python.
@@ -229,7 +227,7 @@ With generated API_KEY from TUNE MobileAppTracking Platform account, replace `AP
 tune_reporting_auth_key_string=UNDEFINED
 # TUNE Reporting Authentication Type: api_key OR session_token.
 tune_reporting_auth_type_string=api_key
-# Validate use TUNE Management API fields used within action parameters.
+# Validate use TUNE Reporting API fields used within action parameters.
 tune_reporting_validate_fields_boolean=false
 # TUNE reporting export status sleep (seconds).
 tune_reporting_export_status_sleep_seconds=10
@@ -330,7 +328,7 @@ This code documentation generation requires installation of [Sphinx](http://sphi
 <a id="sdk_advertiser_reporting_overview" name="sdk_advertiser_reporting_overview"></a>
 ### Advertiser Reporting Overview
 
-The utility focus of the SDKs is upon the <a href="/advertiser-reporting-endpoints/">Advertiser Reporting endpoints</a>. Even though the the breadth of the Management API goes beyond just reports, it is these endpoints that our customers primarily access. The second goal of the SDKs is to assure that our customers' developers are using best practices in gathering reports in the most optimal way.
+The utility focus of the SDKs is upon the <a href="/advertiser-reporting-endpoints/">Advertiser Reporting endpoints</a>. The second goal of the SDKs is to assure that our customers' developers are using best practices in gathering reports in the most optimal way.
 
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_advertiser_reporting_classes.png">
 <img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_advertiser_reporting_classes.png" alt="TUNE Advertiser Reporting Classes" width="500" height="350" /></a>
@@ -384,7 +382,7 @@ Advertiser Reporting class that perform Retention Reports are:
 </dl>
 
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_management_service_reporting_endpoints.png">
-<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_management_service_reporting_endpoints.png" alt="Management API Advertiser Reports covered by TUNE Reporting SDKs." width="592" height="292" /></a>
+<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_management_service_reporting_endpoints.png" alt="TUNE Reporting API Advertiser Reports covered by TUNE Reporting SDKs." width="592" height="292" /></a>
 
 <p>
 <a href="#TOP">
@@ -425,6 +423,8 @@ File **Makefile** provides shortcuts for executing examples and tests.
 ```
 ├── AUTHORS.md
 ├── CHANGES.md
+├── config
+│   └── tune_reporting_sdk.config
 ├── dist
 ├── docs
 ├── examples
@@ -447,9 +447,10 @@ File **TuneReporting.python** is the root of this Library.
 
 Library folder **tune_reporting** contains the key functionality related to **Advertiser Reporting classes** are defined within folder **/tune_reporting/api/**.
 
-Client classes that connect with the **TUNE Management API Service** are defined within folder **/tune_reporting/base/service/**.
+Client classes that connect with the **TUNE Reporting API Service** are defined within folder **/tune_reporting/base/service/**.
 
 Helper class for both the Library and Examples are defined within folder **/tune_reporting/helpers/**.
+
 ```
 tune_reporting/
 ├── api
@@ -462,7 +463,8 @@ tune_reporting/
 │   ├── advertiser_report_log_installs.py
 │   ├── advertiser_report_log_postbacks.py
 │   ├── export.py
-│   └── __init__.py
+│   ├── __init__.py
+│   └── session_authenticate.py
 ├── base
 │   ├── endpoints
 │   │   ├── advertiser_report_actuals_base.py
@@ -470,19 +472,19 @@ tune_reporting/
 │   │   ├── advertiser_report_cohort_base.py
 │   │   ├── advertiser_report_log_base.py
 │   │   ├── endpoint_base.py
-│   │   └── __init__.py
+│   │   ├── __init__.py
+│   │   └── report_export_worker.py
 │   ├── __init__.py
 │   └── service
-│       ├── client.py
 │       ├── constants.py
 │       ├── __init__.py
-│       ├── proxy.py
 │       ├── query_string_builder.py
-│       ├── request.py
-│       └── response.py
+│       ├── tune_service_proxy.py
+│       ├── tune_service_request.py
+│       ├── tune_service_response.py
+│       └── tune_service_client.py
 ├── helpers
 │   ├── __init__.py
-│   ├── report_export_worker.py
 │   ├── report_reader_base.py
 │   ├── report_reader_csv.py
 │   ├── report_reader_json.py
@@ -555,13 +557,13 @@ tests/
 <a id="sdk_classes" name="sdk_classes"></a>
 ### SDK Classes
 
-<!-- TUNE Management API Service -->
+<!-- TUNE Reporting API Service -->
 <a id="sdk_classes_service" name="sdk_classes_service"></a>
-#### TUNE Management API Service Classes
+#### TUNE Reporting API Service Classes
 
 <ul>
-    <li><code>TuneManagementClient</code> - Connects with <a href="http://developers.mobileapptracking.com/management-api/" target="_blank">TUNE Management API Service</a></li>
-    <li><code>TuneManagementRequest</code> - Defines request to TUNE Management API Service containing:
+    <li><code>TuneServiceClient</code> - Connects with <a href="http://developers.mobileapptracking.com/management-api/" target="_blank">TUNE Reporting API Service</a></li>
+    <li><code>TuneManagementRequest</code> - Defines request to TUNE Reporting API Service containing:
         <ul>
             <li>Controller / Endpoint</li>
             <li>Action</li>
@@ -572,7 +574,7 @@ tests/
             </li>
         </ul>
     </li>
-    <li><code>TuneManagementResponse</code> - Complete response from TUNE Management API Service containing:
+    <li><code>TuneServiceResponse</code> - Complete response from TUNE Reporting API Service containing:
         <ul>
             <li>Status Code</li>
             <li>Data</li>
@@ -629,18 +631,23 @@ Finds all existing records matching provided filter criteria and returns total c
 
 <!-- Python -->
 ```python
-    advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key, validate_fields=True)
-    response = advertiser_report_log_clicks.count(
-        start_date,
-        end_date,
-        filter=None,
-        response_timezone="America/Los_Angeles"
+    advertiser_report = AdvertiserReportLogClicks()
+
+    map_params = {
+        "start_date": start_date,
+        "end_date": end_date,
+        "filter": None,
+        "response_timezone": "America/Los_Angeles"
+    }
+
+    response = advertiser_report.count(
+        map_params
     )
 
     if response.http_code != 200 or response.errors:
         raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-    print(" TuneManagementResponse:")
+    print(" TuneServiceResponse:")
     print(str(response))
     print(" Count:")
     print(str(response.data))
@@ -656,22 +663,27 @@ Gathers all existing records that match filter criteria and returns an array of 
 
 <!-- Python -->
 ```python
-    advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key, validate_fields=True)
-    response = advertiser_report_log_clicks.find(
-        start_date,
-        end_date,
-        fields=advertiser_report_log_clicks.fields(TUNE_FIELDS_RECOMMENDED),
-        filter=None,
-        limit=5,
-        page=None,
-        sort={"created": "DESC"},
-        response_timezone="America/Los_Angeles"
+    advertiser_report = AdvertiserReportLogClicks()
+
+    map_params = {
+        "start_date": start_date,
+        "end_date": end_date,
+        "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+        "filter": None,
+        "limit": 5,
+        "page": None,
+        "sort": {"created": "DESC"},
+        "response_timezone": "America/Los_Angeles"
+    }
+
+    response = advertiser_report.find(
+        map_params
     )
 
     if response.http_code != 200 or response.errors:
         raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
 
-    print(" TuneManagementResponse:")
+    print(" TuneServiceResponse:")
     print(str(response))
 ```
 
@@ -685,20 +697,25 @@ Provides the same signature as function find(), accept parameters <code>limit</c
 
 <!-- Python -->
 ```python
-    advertiser_report_log_clicks = AdvertiserReportLogClicks(api_key, validate_fields=True)
-    response = advertiser_report_log_clicks.export(
-        start_date,
-        end_date,
-        fields=advertiser_report_log_clicks.fields(TUNE_FIELDS_RECOMMENDED),
-        filter=None,
-        format="csv",
-        response_timezone="America/Los_Angeles"
+    advertiser_report = AdvertiserReportLogClicks()
+
+    map_params = {
+        "start_date": start_date,
+        "end_date": end_date,
+        "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+        "filter": None,
+        "format": "csv",
+        "response_timezone": "America/Los_Angeles"
+    }
+
+    response = advertiser_report.export(
+        map_params
     )
 
     if response.http_code != 200:
         raise Exception("Failed: {}: {}".format(response.http_code, str(response.errors)))
 
-    print(" TuneManagementResponse:")
+    print(" TuneServiceResponse:")
     print(str(response))
 
     job_id = AdvertiserReportLogClicks.parse_response_report_job_id(response)
@@ -778,7 +795,7 @@ Function <code>define()</code> returns a complete metadata mapping of the endpoi
 
 In addition, the constructor for every advertiser records' class has a bool parameter <code>validate</code> which checks that the field names used within parameter values are valid.
 
-Another tool is to pre-build your request using <a href="/management-api/explorer/root/">Management API Root Endpoints Explorer</a>.
+Another tool is to pre-build your request using <a href="/management-api/explorer/root/">TUNE Reporting API Root Endpoints Explorer</a>.
 
 <a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/api_explorer_record_fields.png">
 <img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/api_explorer_record_fields-600x436.png" alt="API Explorer -- Record and Related Record&#039;s Fields for a specific endpoint." width="600" height="436" title="Click to Expand" /></a>

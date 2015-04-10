@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 17:36:25 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -43,10 +43,10 @@ from tune_reporting.base import (
 )
 
 
-## TUNE Management API endpoint '/export'
+## TUNE Reporting API endpoint '/export'
 #
 class Export(EndpointBase):
-    """TUNE Management API endpoint '/export/'."""
+    """TUNE Reporting API endpoint '/export/'."""
 
     ## The constructor.
     #
@@ -64,7 +64,7 @@ class Export(EndpointBase):
     #  When completed, url will be provided for downloading report.
     #
     #  @param str job_id   Job identifier assigned for report export.
-    #  @return object @see TuneManagementResponse
+    #  @return object @see TuneServiceResponse
     def download(self,
                  job_id):
         """
@@ -72,7 +72,7 @@ class Export(EndpointBase):
         request report to be exported.
 
             :param str job_id:   Job identifier assigned for report export.
-            :return: TuneManagementResponse
+            :return: TuneServiceResponse
         """
         if not job_id or len(job_id) < 1:
             raise ValueError("Parameter 'job_id' is not defined.")
@@ -80,7 +80,7 @@ class Export(EndpointBase):
         return EndpointBase.call(
             self,
             action="download",
-            query_string_dict={
+            map_query_string={
                 'job_id': job_id
             }
         )
@@ -108,14 +108,14 @@ class Export(EndpointBase):
         )
 
     ## Helper function for parsing export status response to gather report url.
-    #  @param @see TuneManagementResponse
+    #  @param @see TuneServiceResponse
     #  @return str Report Url
     @staticmethod
     def parse_response_report_url(response):
         """Helper function for parsing export status response to
         gather report url.
 
-            :param object response: TuneManagementResponse
+            :param object response: TuneServiceResponse
             :return (str): Report Url
             :throws: TuneSdkException
         """

@@ -1,4 +1,4 @@
-"""tune management shared service module
+"""tune service module
 """
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -34,9 +34,9 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-09 17:36:25 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
-from .client import TuneManagementClient
-from .proxy import TuneManagementProxy
+from .tune_service_client import TuneServiceClient
+from .tune_service_proxy import TuneServiceProxy

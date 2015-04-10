@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-10 11:10:41 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -97,12 +97,16 @@ class TestAdvertiserReportActuals(unittest.TestCase):
         try:
             advertiser_report = AdvertiserReportActuals()
 
+            map_params = {
+                "start_date": self.__start_date,
+                "end_date": self.__end_date,
+                "filter": "(publisher_id > 0)",
+                "group": "site_id,publisher_id",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.count(
-                self.__start_date,
-                self.__end_date,
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))
@@ -121,17 +125,21 @@ class TestAdvertiserReportActuals(unittest.TestCase):
         try:
             advertiser_report = AdvertiserReportActuals()
 
+            map_params = {
+                "start_date": self.__start_date,
+                "end_date": self.__end_date,
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "filter": "(publisher_id > 0)",
+                "group": "site_id,publisher_id",
+                "limit": 5,
+                "page": None,
+                "sort": {"paid_installs": "DESC"},
+                "timestamp": "datehour",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.find(
-                self.__start_date,
-                self.__end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                limit=10,
-                page=None,
-                sort={"site.name": "DESC"},
-                timestamp="datehour",  # Set to breakdown stats by timestamp choices: hour, datehour, date, week, month
-                response_timezone="America/Los_Angeles"
+                map_params
             )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))
@@ -149,15 +157,19 @@ class TestAdvertiserReportActuals(unittest.TestCase):
         try:
             advertiser_report = AdvertiserReportActuals()
 
+            map_params = {
+                "start_date": self.__start_date,
+                "end_date": self.__end_date,
+                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
+                "filter": "(publisher_id > 0)",
+                "group": "site_id,publisher_id",
+                "format": "csv",
+                "timestamp": "datehour",
+                "response_timezone": "America/Los_Angeles"
+            }
+
             response = advertiser_report.export(
-                self.__start_date,
-                self.__end_date,
-                fields=advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                group="site_id,publisher_id",
-                filter="(publisher_id > 0)",
-                format="csv",
-                timestamp="datehour",
-                response_timezone="America/Los_Angeles"
+                map_params
             )
         except Exception as exc:
             self.fail("Exception: {0}".format(exc))

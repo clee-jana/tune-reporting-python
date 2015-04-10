@@ -142,3 +142,8 @@ Version 0.9.33
 
 Beta public release on January 05, 2015
 * Authenticate using either 'api_key' or 'session_token'.
+
+Version 1.0.1
+-------------
+
+Production public release on April 10, 2015

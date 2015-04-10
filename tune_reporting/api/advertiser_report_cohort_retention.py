@@ -1,5 +1,5 @@
 """
-TUNE Management API '/advertiser/stats/retention/'
+TUNE Reporting API '/advertiser/stats/retention/'
 ====================================================
 """
 #!/usr/bin/env python
@@ -36,7 +36,7 @@ TUNE Management API '/advertiser/stats/retention/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-10 11:10:41 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -52,7 +52,7 @@ from tune_reporting.base.endpoints import (
 #  @example example_reports_retention.py
 class AdvertiserReportCohortRetention(AdvertiserReportCohortBase):
     """
-    TUNE Management API controller 'advertiser/stats/retention'
+    TUNE Reporting API controller 'advertiser/stats/retention'
     """
 
     ## The constructor.
@@ -103,18 +103,7 @@ class AdvertiserReportCohortRetention(AdvertiserReportCohortBase):
     #
     #  @return object @see response.py
     def find(self,
-             start_date,
-             end_date,
-             cohort_type,
-             cohort_interval,
-             fields,
-             group,
-             filter=None,
-             limit=None,
-             page=None,
-             sort=None,
-             format=None,
-             response_timezone=None):
+             map_params):
         """Finds all existing records that match filter criteria
         and returns an array of found model data.
 
@@ -142,52 +131,39 @@ class AdvertiserReportCohortRetention(AdvertiserReportCohortBase):
                                             date, week, month.
             :param str  response_timezone:   Setting expected timezone
                                         for data. Default is set by account.
-            :return: (TuneManagementResponse)
+            :return: (TuneServiceResponse)
         """
+        map_query_string = {}
+        map_query_string = self._validate_datetime(map_params, "start_date", map_query_string)
+        map_query_string = self._validate_datetime(map_params, "end_date", map_query_string)
 
-        self._validate_datetime('start_date', start_date)
-        self._validate_datetime('end_date', end_date)
+        map_query_string = self._validate_cohort_type(map_params, map_query_string)
+        map_query_string = self._validate_cohort_interval(map_params, map_query_string)
 
-        self._validate_cohort_type(cohort_type)
-        self._validate_cohort_interval(cohort_interval)
+        map_query_string = self._validate_group(map_params, map_query_string)
 
-        if group is None or not group:
-            raise ValueError("Parameter 'group' is not defined.")
+        if "filter" in map_params and map_params["filter"] is not None:
+            map_query_string = self._validate_filter(map_params, map_query_string)
 
-        group = self._validate_group(group)
+        if "fields" not in map_params or map_params["fields"] is None:
+          map_params["fields"] = self.fields(TUNE_FIELDS_DEFAULT)
+        if "fields" in map_params and map_params["fields"] is not None:
+            map_query_string = self._validate_fields(map_params, map_query_string)
 
-        if filter is not None:
-            filter = self._validate_filter(filter)
+        if "limit" in map_params and map_params["limit"] is not None:
+            map_query_string = self._validate_limit(map_params, map_query_string)
+        if "page" in map_params and map_params["page"] is not None:
+            map_query_string = self._validate_page(map_params, map_query_string)
 
-        if fields is not None:
-            fields = self._validate_fields(fields)
-        else:
-            fields = self.fields(TUNE_FIELDS_DEFAULT)
+        if "sort" in map_params and map_params["sort"] is not None:
+            map_query_string = self._validate_sort(map_params, map_query_string)
 
-        if sort is not None:
-            sort_result = self._validate_sort(fields, sort)
-            sort = sort_result["sort"]
-            fields = sort_result["fields"]
-
-        if fields is not None:
-            fields = self._validate_fields(fields)
+        if "response_timezone" in map_params and map_params["response_timezone"] is not None:
+            map_query_string["response_timezone"] = map_params["response_timezone"]
 
         return self.call(
-            action="find",
-            query_string_dict={
-                'start_date': start_date,
-                'end_date': end_date,
-                'cohort_type': cohort_type,
-                'interval': cohort_interval,
-                'group': group,
-                'filter': filter,
-                'fields': fields,
-                'limit': limit,
-                'page': page,
-                'sort': sort,
-                'format': format,
-                'response_timezone': response_timezone
-            }
+            "find",
+            map_query_string
         )
 
     ## Places a job into a queue to generate a report that will contain
@@ -213,14 +189,7 @@ class AdvertiserReportCohortRetention(AdvertiserReportCohortBase):
     #  @return object @see response.py
     #
     def export(self,
-               start_date,
-               end_date,
-               cohort_type,
-               cohort_interval,
-               fields,
-               group,
-               filter=None,
-               response_timezone=None):
+               map_params):
         """Places a job into a queue to generate a report that will contain
         records that match provided filter criteria, and it returns a job
         identifier to be provided to action /export/download.json to download
@@ -241,37 +210,36 @@ class AdvertiserReportCohortRetention(AdvertiserReportCohortBase):
                                             records to be included in data.
             :param str  response_timezone:   Setting expected timezone
                                         for data. Default is set by account.
-            :return: (TuneManagementResponse)
+            :return: (TuneServiceResponse)
         """
-        self._validate_datetime('start_date', start_date)
-        self._validate_datetime('end_date', end_date)
+        map_query_string = {}
+        map_query_string = self._validate_datetime(map_params, "start_date", map_query_string)
+        map_query_string = self._validate_datetime(map_params, "end_date", map_query_string)
 
-        self._validate_cohort_type(cohort_type)
-        self._validate_cohort_interval(cohort_interval)
+        map_query_string = self._validate_cohort_type(map_params, map_query_string)
+        map_query_string = self._validate_cohort_interval(map_params, map_query_string)
 
-        if group is None or not group:
-            raise ValueError("Parameter 'group' is not defined.")
-        if fields is None or not fields:
-            raise ValueError("Parameter 'fields' is not defined.")
+        map_query_string = self._validate_group(map_params, map_query_string)
 
-        group = self._validate_group(group)
-        fields = self._validate_fields(fields)
+        if "fields" not in map_params or map_params["fields"] is None:
+          map_params["fields"] = self.fields(TUNE_FIELDS_DEFAULT)
+        if "fields" in map_params and map_params["fields"] is not None:
+            map_query_string = self._validate_fields(map_params, map_query_string)
 
-        if filter is not None:
-            filter = self._validate_filter(filter)
+        if "format" in map_params and map_params["format"] is not None:
+            map_query_string = self._validate_format(map_params, map_query_string)
+        else:
+            map_query_string["format"] = 'csv'
+
+        if "filter" in map_params and map_params["filter"] is not None:
+            map_query_string = self._validate_filter(map_params, map_query_string)
+
+        if "response_timezone" in map_params and map_params["response_timezone"] is not None:
+            map_query_string["response_timezone"] = map_params["response_timezone"]
 
         return self.call(
-            action="export",
-            query_string_dict={
-                'start_date': start_date,
-                'end_date': end_date,
-                'cohort_type': cohort_type,
-                'interval': cohort_interval,
-                'filter': filter,
-                'fields': fields,
-                'group': group,
-                'response_timezone': response_timezone
-            }
+            "export",
+            map_query_string
         )
 
     ## Helper function for fetching report document given provided job
@@ -287,7 +255,7 @@ class AdvertiserReportCohortRetention(AdvertiserReportCohortBase):
 
             :param str  job_id:     Provided Job Identifier to reference
                                     requested report on export queue.
-            :return: (TuneManagementResponse)
+            :return: (TuneServiceResponse)
         """
         return super(AdvertiserReportCohortRetention, self)._fetch(
             self.controller,
