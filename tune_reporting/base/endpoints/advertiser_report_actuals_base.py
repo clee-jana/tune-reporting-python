@@ -36,7 +36,7 @@ TUNE Service Actuals Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-10 11:10:41 $
+#  @version   $Date: 2015-04-16 15:41:32 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -304,13 +304,16 @@ class AdvertiserReportActualsBase(AdvertiserReportBase):
         client = TuneServiceClient(
             controller="export",
             action="download",
-            api_key=self.api_key,
+            auth_key=self.auth_key,
+            auth_type=self.auth_type,
             map_query_string={
                 'job_id': job_id
             }
         )
 
-        return client.call()
+        client.call()
+
+        return client.response
 
     ## Helper function for fetching report upon completion.
     #  Starts worker for polling export queue.

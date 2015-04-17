@@ -36,9 +36,10 @@ TUNE Service Logs Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-10 11:10:41 $
+#  @version   $Date: 2015-04-16 15:41:32 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
+
 
 from .advertiser_report_base import (
     AdvertiserReportBase
@@ -300,7 +301,9 @@ class AdvertiserReportLogBase(AdvertiserReportBase):
             }
         )
 
-        return client.call()
+        client.call()
+
+        return client.response
 
     ## Helper function for fetching report upon completion.
     #

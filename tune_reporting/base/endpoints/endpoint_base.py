@@ -34,7 +34,7 @@ TUNE Service Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-10 11:10:41 $
+#  @version   $Date: 2015-04-16 15:41:32 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -195,12 +195,20 @@ class EndpointBase(object):
         """TUNE Reporting API controller."""
         return self.__controller
 
-    #  Get API Key
+    #  Get TUNE Reporting API Authentication Key
     #  @return string
     @property
     def auth_key(self):
         """TUNE Reporting API KEY."""
         return self.__auth_key
+
+
+    #  Get TUNE Reporting API Authentication Type
+    #  @return string
+    @property
+    def auth_type(self):
+        """TUNE Reporting API Authentication Type."""
+        return self.__auth_type
 
     #  Call TUNE Reporting API service for this controller.
     #  @param str action              TUNE Reporting API endpoint's
@@ -797,7 +805,7 @@ class EndpointBase(object):
     #  @return dict map_query_string
     #  @throws ValueError
     @staticmethod
-    def _validate_limit(self, map_params, map_query_string):
+    def _validate_limit(map_params, map_query_string):
         """Validate query string parameter 'limit'.
 
             :param (dict) map_params
@@ -825,7 +833,7 @@ class EndpointBase(object):
     #  @return dict map_query_string
     #  @throws ValueError
     @staticmethod
-    def _validate_page(self, map_params, map_query_string):
+    def _validate_page(map_params, map_query_string):
         """Validate query string parameter 'page'.
 
             :param (dict) map_params
