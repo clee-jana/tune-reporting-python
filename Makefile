@@ -27,7 +27,7 @@
 # copyright 2014 Tune (http://www.tune.com)
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
 # update    $Date: 2015-01-05 20:23:20 $
-# version   $Version: 0.9.20 $
+# version   $Version: 1.0.3 $
 # link      https://developers.mobileapptracking.com
 #
 
