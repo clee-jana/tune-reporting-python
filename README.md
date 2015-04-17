@@ -1,8 +1,8 @@
 <h2>tune-reporting-python</h2>
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
-<h4>Update:  $Date: 2015-04-16 15:41:32 $</h4>
-<h4>Version: 1.0.2</h4>
+<h4>Update:  $Date: 2015-04-17 11:16:32 $</h4>
+<h4>Version: 1.0.3</h4>
 ===
 
 <a id="TOP"></a>
@@ -254,10 +254,6 @@ This code documentation generation requires installation of [Doxygen](http://www
     $ make docs-doxygen
 ```
 
-<a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Doxygen.png">
-<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Doxygen-400x213.png" alt="TUNE-Reporting Python Doxygen Generated" width="400" height="213">
-</a>
-
 <a id="sdk_gendoc_sphinx" name="sdk_gen_doc_pythondoc"></a>
 #### Sphinx
 
@@ -269,9 +265,6 @@ This code documentation generation requires installation of [Sphinx](http://sphi
     $ make docs-sphinx
 </pre>
 
-<a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Sphinx.png">
-<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/TuneReporting_Python_Sphinx-400x204.png" alt="TUNE-Reporting Python Sphinx Generated" width="400" height="204">
-</a>
 
 <p>
 <a href="#TOP">
@@ -284,9 +277,6 @@ This code documentation generation requires installation of [Sphinx](http://sphi
 ### Advertiser Reporting Overview
 
 The utility focus of the SDKs is upon the <a href="/advertiser-reporting-endpoints/">Advertiser Reporting endpoints</a>. The second goal of the SDKs is to assure that our customers' developers are using best practices in gathering reports in the most optimal way.
-
-<a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_advertiser_reporting_classes.png">
-<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_advertiser_reporting_classes.png" alt="TUNE Advertiser Reporting Classes" width="500" height="350" /></a>
 
 The endpoints interfaced by TUNE API SDKs provide access in gathering four types of reports:
 
@@ -336,10 +326,11 @@ Advertiser Reporting class that perform Retention Reports are:
 </dd>
 </dl>
 
-<a href="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_management_service_reporting_endpoints.png">
-<img src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/tune_management_service_reporting_endpoints.png" alt="TUNE Reporting API Advertiser Reports covered by TUNE Reporting SDKs." width="592" height="292" /></a>
-
-
+<p>
+<a href="#TOP">
+<img alt="Return to Top" src="https://raw.githubusercontent.com/MobileAppTracking/tune-reporting-python/master/docs/images/b_top.gif" border="0">
+</a>
+</p>
 
 <!-- Licenses -->
 
