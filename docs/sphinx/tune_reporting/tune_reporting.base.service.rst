@@ -4,26 +4,10 @@ tune_reporting.base.service package
 Submodules
 ----------
 
-tune_reporting.base.service.client module
------------------------------------------
-
-.. automodule:: tune_reporting.base.service.client
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tune_reporting.base.service.constants module
 --------------------------------------------
 
 .. automodule:: tune_reporting.base.service.constants
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-tune_reporting.base.service.proxy module
-----------------------------------------
-
-.. automodule:: tune_reporting.base.service.proxy
     :members:
     :undoc-members:
     :show-inheritance:
@@ -36,18 +20,34 @@ tune_reporting.base.service.query_string_builder module
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.base.service.request module
-------------------------------------------
+tune_reporting.base.service.tune_service_client module
+------------------------------------------------------
 
-.. automodule:: tune_reporting.base.service.request
+.. automodule:: tune_reporting.base.service.tune_service_client
     :members:
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.base.service.response module
--------------------------------------------
+tune_reporting.base.service.tune_service_proxy module
+-----------------------------------------------------
 
-.. automodule:: tune_reporting.base.service.response
+.. automodule:: tune_reporting.base.service.tune_service_proxy
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tune_reporting.base.service.tune_service_request module
+-------------------------------------------------------
+
+.. automodule:: tune_reporting.base.service.tune_service_request
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tune_reporting.base.service.tune_service_response module
+--------------------------------------------------------
+
+.. automodule:: tune_reporting.base.service.tune_service_response
     :members:
     :undoc-members:
     :show-inheritance:

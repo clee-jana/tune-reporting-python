@@ -246,14 +246,29 @@ class ExampleAdvertiserReportActuals(object):
 
             print("")
             print("===========================================================")
-            print(" Fetching Advertiser Report Actuals CSV                    ")
+            print(" Status Advertiser Report Actuals CSV                    ")
             print("===========================================================")
 
-            export_fetch_response = advertiser_report.fetch(
+            status_response = advertiser_report.status(
                 job_id
             )
 
-            csv_report_url = AdvertiserReportActuals.parse_response_report_url(export_fetch_response)
+            print(" TuneServiceResponse:")
+            print(str(status_response))
+
+            print(" JSON:")
+            print(str(status_response.json))
+            
+            print("")
+            print("===========================================================")
+            print(" Fetching Advertiser Report Actuals CSV                    ")
+            print("===========================================================")
+
+            fetch_response = advertiser_report.fetch(
+                job_id
+            )
+
+            csv_report_url = AdvertiserReportActuals.parse_response_report_url(fetch_response)
 
             print(" CVS Report URL: {}".format(csv_report_url))
 
