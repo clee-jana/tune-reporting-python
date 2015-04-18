@@ -14,7 +14,7 @@ RUN yum -y update && \
     yum -y clean all
 
 # Install EPEL Repository.
-RUN     yum install epel-release
+RUN     yum install -y epel-release
 
 # Install Python 2.7
 RUN     yum install -y which redhat-lsb-core wget gcc-c++ make kernel-devel
