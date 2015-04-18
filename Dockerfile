@@ -18,6 +18,12 @@ RUN yum install -y zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-dev
 RUN yum install -y which redhat-lsb-core wget gcc gcc-c++ make kernel-devel
 
 RUN curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+RUN export PATH="$HOME/.pyenv/bin:$PATH"
+RUN eval "$(pyenv init -)"
+RUN eval "$(pyenv virtualenv-init -)"
+RUN which pyenv
+RUN pyenv --version
+
 RUN pyenv install -l | grep 2.7
 RUN pyenv install 2.7.8
 RUN pyenv local 2.7.8
