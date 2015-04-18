@@ -17,9 +17,8 @@ RUN yum -y update && \
 RUN     yum install -y epel-release
 
 # Install Python 2.7
-RUN     yum install -y which redhat-lsb-core wget gcc-c++ make kernel-devel
-RUN     yum install -y python27
-RUN     yum install -y python27-devel
+RUN     yum install -y which redhat-lsb-core wget gcc-c++ make kernel-devel python
+RUN     which python
 RUN     python --version
 
 # Install pip
