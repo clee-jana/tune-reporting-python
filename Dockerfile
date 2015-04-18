@@ -13,13 +13,15 @@ RUN yum -y update && \
     yum -y install tar && \
     yum -y clean all
 
-# Install EPEL Repository.
-RUN     yum install -y epel-release
-
 # Install Python 2.7
-RUN     yum install -y which redhat-lsb-core wget gcc-c++ make kernel-devel python
-RUN     which python
-RUN     python --version
+RUN yum install -y zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel mysql-devel
+RUN yum install -y which redhat-lsb-core wget gcc gcc-c++ make kernel-devel
+
+RUN curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+RUN pyenv install -l | grep 2.7
+RUN pyenv install 2.7.8
+RUN pyenv local 2.7.8
+RUN python --version
 
 # Install pip
 RUN     yum install -y python-pip
@@ -33,7 +35,6 @@ RUN     pip freeze | grep 'configparser'
 RUN     python setup.py clean
 RUN     python setup.py build
 RUN     python setup.py install
-RUN     pip freeze | grep 'tune-reporting'
 
 # Build
 RUN make build
