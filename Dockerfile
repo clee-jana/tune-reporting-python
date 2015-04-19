@@ -11,23 +11,16 @@ MAINTAINER jefft@tune.com
 
 RUN yum -y update && \
     yum -y install tar && \
-    yum -y clean all
+    yum -y clean all 
+    
+RUN yum groupinstall "Development tools"
+RUN yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel kernel-devel
+RUN yum install -y which redhat-lsb-core wget gcc gcc-c++ make xz-libs tar
 
-# Install Python 2.7
-RUN yum install -y zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel mysql-devel
-RUN yum install -y which redhat-lsb-core wget gcc gcc-c++ make kernel-devel xz-libs tar
-# install build tools 
-RUN yum install -y  make automake gcc gcc-c++ kernel-devel git-core
-
-# install python 2.7 and change default python symlink 
-RUN yum install python27-devel -y 
-RUN rm /usr/bin/python
-RUN ln -s /usr/bin/python2.7 /usr/bin/python 
-
-# yum still needs 2.6, so write it in and backup script 
-RUN cp /usr/bin/yum /usr/bin/_yum_before_27 
-RUN sed -i s/python/python2.6/g /usr/bin/yum 
-RUN sed -i s/python2.6/python2.6/g /usr/bin/yum 
+RUN wget http://python.org/ftp/python/2.7.6/Python-2.7.6.tar.bz2
+RUN tar xf Python-2.7.6.tar.bz2
+RUN cd Python-2.7.6
+RUN ./configure --prefix=/usr/local
 
 # should display now 2.7.5 or later: 
 RUN python -V 
