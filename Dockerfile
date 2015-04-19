@@ -17,7 +17,7 @@ RUN yum -y update && \
 RUN yum install -y zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel mysql-devel
 RUN yum install -y which redhat-lsb-core wget gcc gcc-c++ make kernel-devel xz-libs tar
 
-RUN wget http://www.python.org/ftp/python/2.7.6/Python-2.7.8.tar.xz
+RUN wget http://www.python.org/ftp/python/2.7.8/Python-2.7.8.tar.xz
 RUN xz -d Python-2.7.8.tar.xz
 RUN tar -xvf Python-2.7.8.tar
 RUN cd Python-2.7.8
