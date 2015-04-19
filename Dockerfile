@@ -19,8 +19,6 @@ RUN yum install -y which redhat-lsb-core wget gcc gcc-c++ make kernel-devel
 
 RUN curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
 RUN export PATH="$HOME/.pyenv/bin:$PATH"
-RUN eval "$(pyenv init -)"
-RUN eval "$(pyenv virtualenv-init -)"
 RUN which pyenv
 RUN pyenv --version
 
