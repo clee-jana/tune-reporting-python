@@ -21,4 +21,17 @@ RUN wget https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz && \
     cd Python-2.7.9 && \
     ./configure && \
     make && \
-    make install
+    make install && \
+    python2.7 -V && \
+    python2.7 -m ensurepip && \
+    mkdir -p /data/tune-reporting-python && \
+    mkdir -p /var/has/data/tune-reporting-python
+
+COPY . /data/tune-reporting-python
+
+WORKDIR /data/tune-reporting-python
+
+RUN pip install -r requirements.txt && \
+    python2.7 setup.py clean && \
+    python2.7 setup.py build && \
+    python2.7 setup.py install
