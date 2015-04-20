@@ -11,18 +11,14 @@ lsb_release -a
 RUN echo -----------------------------
 
 
-RUN yum -y update
-RUN yum -y clean all
+RUN yum -y update && \
+    yum -y clean all
 
-RUN yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel kernel-devel
-RUN yum install -y which redhat-lsb-core wget gcc gcc-c++ make xz-libs tar
+RUN yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel kernel-devel which redhat-lsb-core wget gcc gcc-c++ make xz-libs tar
 
-RUN wget https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz
-RUN tar zxvf Python-2.7.9.tgz
-RUN pwd
-RUN ls -al
-RUN ls -al Python-2.7.9
-RUN cd Python-2.7.9
-RUN ./configure
-RUN make
-RUN make install
+RUN wget https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz && \
+    tar zxvf Python-2.7.9.tgz && \
+    cd Python-2.7.9 && \
+    ./configure && \
+    make && \
+    make install
