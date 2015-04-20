@@ -27,8 +27,9 @@ ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # install python
-RUN ls -al /root/.pyenv/versions/ && \
-    pyenv install 2.7.6 && \
+RUN ls -al /root/.pyenv/versions/
+
+RUN pyenv install 2.7.6 && \
     pyenv global 2.7.6 && \
     pyenv rehash && \
     python -V && \
