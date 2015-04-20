@@ -12,9 +12,8 @@ RUN echo -----------------------------
 
 
 RUN yum -y update
-RUN yum -y clean all 
-    
-RUN yum groupinstall "Development tools" --skip-broken
+RUN yum -y clean all
+
 RUN yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel kernel-devel
 RUN yum install -y which redhat-lsb-core wget gcc gcc-c++ make xz-libs tar
 
