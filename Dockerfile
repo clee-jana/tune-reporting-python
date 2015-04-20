@@ -20,10 +20,4 @@ RUN yum install -y which redhat-lsb-core wget gcc gcc-c++ make xz-libs tar
 RUN wget https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz
 RUN tar zxvf Python-2.7.9.tgz
 RUN cd Python-2.7.9
-RUN ls -al configure*
-RUN configure --prefix=/usr/local
-RUN make
-RUN make install
-RUN echo -----------------------------
-RUN python2.7 -V
-RUN echo -----------------------------
+RUN ls -al
