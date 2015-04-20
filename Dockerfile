@@ -12,7 +12,8 @@ RUN echo -----------------------------
 
 
 RUN yum -y update && \
-    yum -y clean all
+    yum -y clean all && \
+    python -V
 
 RUN yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel kernel-devel which redhat-lsb-core wget gcc gcc-c++ make xz-libs tar
 
