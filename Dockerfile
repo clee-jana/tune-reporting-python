@@ -21,6 +21,8 @@ RUN wget https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz
 RUN tar zxvf Python-2.7.9.tgz
 RUN pwd
 RUN ls -al
-RUN cd ./Python-2.7.9/
+RUN echo -----------------------------
+RUN cd /Python-2.7.9/
 RUN pwd
 RUN ls -al
+RUN echo -----------------------------
