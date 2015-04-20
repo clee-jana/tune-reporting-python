@@ -28,8 +28,7 @@ ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # install python
 RUN pyenv install --list && \
-    pyenv install 3.4.2 && \
-    pyenv global 3.4.2 && \
+    pyenv install 2.7.9 && \
     pyenv rehash && \
     python -V && \
     mkdir -p /data/tune-reporting-python && \
