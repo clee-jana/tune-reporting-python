@@ -31,8 +31,9 @@ COPY . /data/tune-reporting-python
 
 WORKDIR /data/tune-reporting-python
 
-CMD ["pip install -r requirements.txt",
-    "python2.7 setup.py clean",
-    "python2.7 setup.py build",
-    "python2.7 setup.py install",
-    "python2.7 ./tests/tune_reporting_tests.py b951b30cc17b6a77dad4f1ef1471bd5d" ]
+RUN pip install -r requirements.txt && \
+    python2.7 setup.py clean && \
+    python2.7 setup.py build && \
+    python2.7 setup.py install
+    
+CMD echo "image tunesdk/tune-reporting-python-setup"
