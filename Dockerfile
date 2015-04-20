@@ -28,9 +28,6 @@ ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # install python
 RUN pyenv versions && \
-    pyenv install 2.7.6 && \
-    pyenv global 2.7.6 && \
-    pyenv rehash && \
     python -V && \
     mkdir -p /data/tune-reporting-python && \
     mkdir -p /var/has/data/tune-reporting-python
