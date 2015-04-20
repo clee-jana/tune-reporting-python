@@ -22,3 +22,4 @@ RUN tar zxvf Python-2.7.9.tgz
 RUN pwd
 RUN ls -al
 RUN ls -al Python-2.7.9
+RUN cd Python-2.7.9
