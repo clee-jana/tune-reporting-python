@@ -6,7 +6,7 @@ WORKDIR /data/tune-reporting-python
 
 RUN python -V
 
-RUN echo $API_KEY
+RUN echo API_KEY
 
 RUN pip install -r requirements.txt && \
     python setup.py clean && \
@@ -14,4 +14,4 @@ RUN pip install -r requirements.txt && \
     python setup.py install
 
 ENTRYPOINT ["python"]
-CMD ["./tests/tune_reporting_tests.py", "$API_KEY"]
+CMD ["./tests/tune_reporting_tests.py", API_KEY]
