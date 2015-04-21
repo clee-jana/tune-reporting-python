@@ -148,8 +148,15 @@ class SdkConfig(object):
             if "tune_reporting_auth_key_string" not in self.sections_dict["TUNE_REPORTING"]:
                 return None
             auth_key = self.sections_dict["TUNE_REPORTING"]["tune_reporting_auth_key_string"]
-            if isinstance(auth_key, unicode):
-                auth_key = str(auth_key)
+
+            if sys.version_info >= (3, 0, 0):
+                # for Python 3
+                if isinstance(auth_key, bytes):
+                    auth_key = auth_key.decode('ascii')  # or  s = str(s)[2:-1]
+            else:
+                if isinstance(auth_key, unicode):
+                    auth_key = str(auth_key)
+
             return auth_key
 
         @auth_key.setter
@@ -162,9 +169,16 @@ class SdkConfig(object):
             """Get TUNE Reporting Authentication Type."""
             if "tune_reporting_auth_key_string" not in self.sections_dict["TUNE_REPORTING"]:
                 return None
-            auth_key = self.sections_dict["TUNE_REPORTING"]["tune_reporting_auth_key_string"]
-            if isinstance(auth_type, unicode):
-                auth_type = str(auth_type)
+            auth_type = self.sections_dict["TUNE_REPORTING"]["tune_reporting_auth_type_string"]
+
+            if sys.version_info >= (3, 0, 0):
+                # for Python 3
+                if isinstance(auth_type, bytes):
+                    auth_type = auth_type.decode('ascii')  # or  s = str(s)[2:-1]
+            else:
+                if isinstance(auth_type, unicode):
+                    auth_type = str(auth_type)
+                    
             return auth_type
 
         @auth_type.setter
@@ -181,7 +195,7 @@ class SdkConfig(object):
 
             if sys.version_info >= (3, 0, 0):
                 # for Python 3
-                if isinstance(url, bytes):
+                if isinstance(verify_fields, bytes):
                     verify_fields = verify_fields.decode('ascii')  # or  s = str(s)[2:-1]
             else:
                 if isinstance(verify_fields, unicode):
@@ -198,7 +212,7 @@ class SdkConfig(object):
 
             if sys.version_info >= (3, 0, 0):
                 # for Python 3
-                if isinstance(url, bytes):
+                if isinstance(status_sleep, bytes):
                     status_sleep = status_sleep.decode('ascii')  # or  s = str(s)[2:-1]
             else:
                 if isinstance(status_sleep, unicode):
@@ -215,7 +229,7 @@ class SdkConfig(object):
 
             if sys.version_info >= (3, 0, 0):
                 # for Python 3
-                if isinstance(url, bytes):
+                if isinstance(status_timeout, bytes):
                     status_timeout = status_timeout.decode('ascii')  # or  s = str(s)[2:-1]
             else:
                 if isinstance(status_timeout, unicode):
@@ -232,7 +246,7 @@ class SdkConfig(object):
 
             if sys.version_info >= (3, 0, 0):
                 # for Python 3
-                if isinstance(url, bytes):
+                if isinstance(status_verbose, bytes):
                     status_verbose = status_verbose.decode('ascii')  # or  s = str(s)[2:-1]
             else:
                 if isinstance(status_verbose, unicode):
