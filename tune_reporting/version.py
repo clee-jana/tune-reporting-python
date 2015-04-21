@@ -38,7 +38,7 @@
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
-__version_info__ = ('1', '0', '3')
+__version_info__ = ('1', '0', '4')
 __sdk_version__ = '.'.join(__version_info__)
 __sdk_name__ = 'tune-reporting-python'
 
