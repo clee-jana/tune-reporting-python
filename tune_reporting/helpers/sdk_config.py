@@ -36,7 +36,7 @@ TUNE SDK Configuration Class
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-04-20 19:38:53 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -178,8 +178,15 @@ class SdkConfig(object):
             if "tune_reporting_validate_fields_boolean" not in self.sections_dict["TUNE_REPORTING"]:
                 return False
             verify_fields = self.sections_dict["TUNE_REPORTING"]["tune_reporting_validate_fields_boolean"]
-            if isinstance(verify_fields, unicode):
-                verify_fields = str(verify_fields)
+
+            if sys.version_info >= (3, 0, 0):
+                # for Python 3
+                if isinstance(url, bytes):
+                    verify_fields = verify_fields.decode('ascii')  # or  s = str(s)[2:-1]
+            else:
+                if isinstance(verify_fields, unicode):
+                    verify_fields = str(verify_fields)
+
             return verify_fields == "true"
 
         @property
@@ -188,8 +195,15 @@ class SdkConfig(object):
             if "tune_reporting_export_status_sleep_seconds" not in self.sections_dict["TUNE_REPORTING"]:
                 return 0
             status_sleep = self.sections_dict["TUNE_REPORTING"]["tune_reporting_export_status_sleep_seconds"]
-            if isinstance(status_sleep, unicode):
-                status_sleep = str(status_sleep)
+
+            if sys.version_info >= (3, 0, 0):
+                # for Python 3
+                if isinstance(url, bytes):
+                    status_sleep = status_sleep.decode('ascii')  # or  s = str(s)[2:-1]
+            else:
+                if isinstance(status_sleep, unicode):
+                    status_sleep = str(status_sleep)
+
             return int(status_sleep)
 
         @property
@@ -198,8 +212,15 @@ class SdkConfig(object):
             if "tune_reporting_export_status_timeout_seconds" not in self.sections_dict["TUNE_REPORTING"]:
                 return 0
             status_timeout = self.sections_dict["TUNE_REPORTING"]["tune_reporting_export_status_timeout_seconds"]
-            if isinstance(status_timeout, unicode):
-                status_timeout = str(status_timeout)
+
+            if sys.version_info >= (3, 0, 0):
+                # for Python 3
+                if isinstance(url, bytes):
+                    status_timeout = status_timeout.decode('ascii')  # or  s = str(s)[2:-1]
+            else:
+                if isinstance(status_timeout, unicode):
+                    status_timeout = str(status_timeout)
+
             return int(status_timeout)
 
         @property
@@ -208,8 +229,15 @@ class SdkConfig(object):
             if "tune_reporting_validate_fields_boolean" not in self.sections_dict["TUNE_REPORTING"]:
                 return False
             status_verbose = self.sections_dict["TUNE_REPORTING"]["tune_reporting_export_status_verbose_boolean"]
-            if isinstance(status_verbose, unicode):
-                status_verbose = str(status_verbose)
+
+            if sys.version_info >= (3, 0, 0):
+                # for Python 3
+                if isinstance(url, bytes):
+                    status_verbose = status_verbose.decode('ascii')  # or  s = str(s)[2:-1]
+            else:
+                if isinstance(status_verbose, unicode):
+                    status_verbose = str(status_verbose)
+
             return status_verbose == "true"
 
     instance = None
