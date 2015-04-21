@@ -77,62 +77,50 @@ class AdvertiserReportCohortValue(AdvertiserReportCohortBase):
     ## Finds all existing records that match filter criteria
     #  and returns an array of found model data.
     #
-    #  @param str start_date         YYYY-MM-DD HH:MM:SS
-    #  @param str end_date           YYYY-MM-DD HH:MM:SS
-    #  @param str cohort_type        Cohort types: click, install
-    #  @param str cohort_interval    Cohort intervals:
-    #                                   year_day, year_week, year_month, year
-    #  @param str aggregation_type   Aggregation types:
-    #                                   cumulative, incremental
-    #  @param str group              Group results using this endpoint's
-    #                                   fields.
-    #  @param str fields             Present results using these endpoint's
-    #                                   fields.
-    #  @param str filter             Apply constraints endpoint_based upon
-    #                                   values associated with this endpoint's
-    #                                   fields.
-    #  @param int limit              Limit number of results, default 10,
-    #                                   0 shows all
-    #  @param int page               Pagination, default 1.
-    #  @param str sort               Sort results using this endpoint's
-    #                                   fields.
-    #                                   Directions: DESC, ASC
-    #  @param str format
-    #  @param str response_timezone  Setting expected timezone for
-    #                                   results, default is set in account.
+    # @param dict map_params    Mapping of: <p><dl>
+    # <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>cohort_type</dt><dd>Cohort types: click, install</dd>
+    # <dt>cohort_interval</dt><dd>Cohort intervals: year_day, year_week, year_month, year</dd>
+    # <dt>aggregation_type</dt><dd>Aggregation types: cumulative, incremental</dd>
+    # <dt>fields</dt><dd>Present results using these endpoint's fields.</dd>
+    # <dt>group</dt><dd>Group results using this endpoint's fields.</dd>
+    # <dt>filter</dt><dd>Apply constraints based upon values associated with
+    #                    this endpoint's fields.</dd>
+    # <dt>limit</dt><dd>Limit number of results, default 10, 0 shows all.</dd>
+    # <dt>page</dt><dd>Pagination, default 1.</dd>
+    # <dt>sort</dt><dd>Sort results using this endpoint's fields.
+    #                    Directions: DESC, ASC</dd>
+    # <dt>response_timezone</dt><dd>Setting expected timezone for results,
+    #                          default is set in account.</dd>
+    # </dl><p>
     #
-    #  @return object @see response.py
+    #  @return object TuneServiceResponse
+    #
     def find(self,
              map_params):
         """Finds all existing records that match filter criteria
         and returns an array of found model data.
 
-            :param str    start_date:    YYYY-MM-DD HH:MM:SS
-            :param str    end_date:      YYYY-MM-DD HH:MM:SS
-            :param str    cohort_type:        Cohort types:
-                                                click, install
-            :param str    cohort_interval:    Cohort intervals:
-                                year_day, year_week, year_month, year
-            :param str    aggregation_type:   Aggregation types:
-                                                cumulative, incremental
-            :param str    group:           Group results using this endpoint's
-                                            fields.
-            :param str    filter:         Filter the results and apply
-                                            conditions that must be met for
-                                            records to be included in data.
-            :param str    fields:         No value returns default fields,
-                                            "*" returns all available fields,
-                                            or provide specific fields.
-            :param int    limit:          Limit number of results, default
-                                            10.
-            :param int    page:           Pagination, default 1.
-            :param array  sort:           Sort by field name, ASC (default)
-                                            or DESC
-            :param str    timestamp:      Set to breakdown stats by
-                                            timestamp choices: hour, datehour,
-                                            date, week, month.
-            :param str  response_timezone:   Setting expected timezone
-                                        for data. Default is set by account.
+            :param (dict) map_params:\n
+                start_date: YYYY-MM-DD HH:MM:SS\n
+                end_date: YYYY-MM-DD HH:MM:SS\n
+                cohort_type: Cohort types: click, install.\n
+                cohort_interval: Cohort intervals:
+                    year_day, year_week, year_month, year.\n
+                aggregation_type: Aggregation types:
+                    year_day, year_week, year_month, year.\n
+                fields: Present results using these endpoint's fields.\n
+                group: Group results using this endpoint's fields.\n
+                filter: Apply constraints based upon values
+                    associated withthis endpoint's fields.\n
+                limit: Limit number of results, default 10, 0 shows all.\n
+                page: Pagination, default 1.\n
+                sort: Sort results using this endpoint's fields.
+                    Directions: DESC, ASC.\n
+                response_timezone: Setting expected timezone for results,
+                    default is set in account.\n
+
             :return: (TuneServiceResponse)
         """
         map_query_string = {}
@@ -174,24 +162,25 @@ class AdvertiserReportCohortValue(AdvertiserReportCohortBase):
     #  identifier to be provided to action /export/download.json to download
     #  completed report.
     #
-    #  @param str start_date         YYYY-MM-DD HH:MM:SS
-    #  @param str end_date           YYYY-MM-DD HH:MM:SS
-    #  @param str cohort_type        Cohort types: click, install
-    #  @param str cohort_interval    Cohort intervals:
-    #                                   year_day, year_week, year_month, year
-    #  @param str aggregation_type   Aggregation types:
-    #                                   cumulative, incremental
-    #  @param str group              Group results using this endpoint's
-    #                                   fields.
-    #  @param str filter             Apply constraints endpoint_based upon
-    #                                   values associated with this endpoint's
-    #                                   fields.
-    #  @param str fields             Present results using these endpoint's
-    #                                   fields.
-    #  @param str response_timezone  Setting expected timezone for results,
-    #                                   default is set in account.
+    # @param dict map_params    Mapping of: <p><dl>
+    # <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>cohort_type</dt><dd>Cohort types: click, install</dd>
+    # <dt>cohort_interval</dt><dd>Cohort intervals: year_day, year_week, year_month, year</dd>
+    # <dt>aggregation_type</dt><dd>Aggregation types: cumulative, incremental</dd>
+    # <dt>fields</dt><dd>Present results using these endpoint's fields.</dd>
+    # <dt>group</dt><dd>Group results using this endpoint's fields.</dd>
+    # <dt>filter</dt><dd>Apply constraints based upon values associated with
+    #                    this endpoint's fields.</dd>
+    # <dt>limit</dt><dd>Limit number of results, default 10, 0 shows all.</dd>
+    # <dt>page</dt><dd>Pagination, default 1.</dd>
+    # <dt>sort</dt><dd>Sort results using this endpoint's fields.
+    #                    Directions: DESC, ASC</dd>
+    # <dt>response_timezone</dt><dd>Setting expected timezone for results,
+    #                          default is set in account.</dd>
+    # </dl><p>
     #
-    #  @return object @see response.py
+    #  @return object TuneServiceResponse
     #
     def export(self,
                map_params):
@@ -200,23 +189,21 @@ class AdvertiserReportCohortValue(AdvertiserReportCohortBase):
         identifier to be provided to action /export/download.json to download
         completed report.
 
-            :param str    start_date:    YYYY-MM-DD HH:MM:SS
-            :param str    end_date:      YYYY-MM-DD HH:MM:SS
-            :param str    cohort_type:        Cohort types - click, install
-            :param str    cohort_interval:    Cohort intervals -
-                                        year_day, year_week, year_month, year
-            :param str    aggregation_type:   Aggregation types -
-                                            cumulative, incremental
-            :param str    group:          Group results using this endpoint's
-                                            fields.
-            :param str    fields:        No value returns default fields,
-                                            "*" returns all available fields,
-                                            or provide specific fields.
-            :param str    filter:        Filter the results and apply
-                                            conditions that must be met for
-                                            records to be included in data.
-            :param str  response_timezone:   Setting expected timezone
-                                        for data. Default is set by account.
+            :param (dict) map_params:\n
+                start_date: YYYY-MM-DD HH:MM:SS\n
+                end_date: YYYY-MM-DD HH:MM:SS\n
+                cohort_type: Cohort types: click, install.\n
+                cohort_interval: Cohort intervals:
+                    year_day, year_week, year_month, year.\n
+                aggregation_type: Aggregation types:
+                    year_day, year_week, year_month, year.\n
+                fields: Present results using these endpoint's fields.\n
+                group: Group results using this endpoint's fields.\n
+                filter: Apply constraints based upon values
+                    associated with this endpoint's fields.\n
+                response_timezone: Setting expected timezone for results,
+                    default is set in account.\n
+
             :return: (TuneServiceResponse)
         """
         map_query_string = {}

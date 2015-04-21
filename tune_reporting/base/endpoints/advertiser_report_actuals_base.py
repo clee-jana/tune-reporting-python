@@ -105,15 +105,14 @@ class AdvertiserReportActualsBase(AdvertiserReportBase):
         """Counts all existing records that match filter criteria
         and returns an array of found model data.
 
-            :param (dict) map_params:    Mapping of: <p><dl>
-                <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
-                <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
-                <dt>group</dt><dd>Group results using this endpoint's fields.</dd>
-                <dt>filter</dt><dd>Apply constraints based upon values associated with
-                    this endpoint's fields.</dd>
-                <dt>response_timezone</dt><dd>Setting expected timezone for results,
-                    default is set in account.</dd>
-                </dl><p>
+            :param (dict) map_params:\n
+                start_date: YYYY-MM-DD HH:MM:SS\n
+                end_date: YYYY-MM-DD HH:MM:SS\n
+                group: Group results using this endpoint's fields.\n
+                filter: Apply constraints based upon values
+                    associated with this endpoint's fields.\n
+                response_timezone: Setting expected timezone for results,
+                    default is set in account.\n
             :return: (TuneServiceResponse)
         """
         map_query_string = {}
@@ -144,7 +143,7 @@ class AdvertiserReportActualsBase(AdvertiserReportBase):
     # <dt>group</dt><dd>Group results using this endpoint's fields.</dd>
     # <dt>filter</dt><dd>Apply constraints based upon values associated with
     #                    this endpoint's fields.</dd>
-    # <dt>limit</dt><dd>Limit number of results, default 10, 0 shows all</dd>
+    # <dt>limit</dt><dd>Limit number of results, default 10, 0 shows all.</dd>
     # <dt>page</dt><dd>Pagination, default 1.</dd>
     # <dt>sort</dt><dd>Sort results using this endpoint's fields.
     #                    Directions: DESC, ASC</dd>
@@ -154,28 +153,28 @@ class AdvertiserReportActualsBase(AdvertiserReportBase):
     #                          default is set in account.</dd>
     # </dl><p>
     #
-    #  @return object
+    #  @return object TuneServiceResponse
+    #
     def find(self,
              map_params):
         """Finds all existing records that match filter criteria
         and returns an array of found model data.
 
-            :param (dict) map_params:    Mapping of: <p><dl>
-                <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
-                <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
-                <dt>fields</dt><dd>Present results using this endpoint's fields.</dd>
-                <dt>group</dt><dd>Group results using this endpoint's fields.</dd>
-                <dt>filter</dt><dd>Apply constraints based upon values associated with
-                                   this endpoint's fields.</dd>
-                <dt>limit</dt><dd>Limit number of results, default 10, 0 shows all</dd>
-                <dt>page</dt><dd>Pagination, default 1.</dd>
-                <dt>sort</dt><dd>Sort results using this endpoint's fields.
-                                   Directions: DESC, ASC</dd>
-                <dt>timestamp</dt><dd>Set to breakdown stats by timestamp choices:
-                                   hour, datehour, date, week, month</dd>
-                <dt>response_timezone</dt><dd>Setting expected timezone for results,
-                                         default is set in account.</dd>
-                </dl><p>
+            :param (dict) map_params:\n
+                start_date: YYYY-MM-DD HH:MM:SS\n
+                end_date: YYYY-MM-DD HH:MM:SS\n
+                fields: Present results using these endpoint's fields.\n
+                group: Group results using this endpoint's fields.\n
+                filter: Apply constraints based upon values
+                    associated with this endpoint's fields.\n
+                limit: Limit number of results, default 10, 0 shows all.\n
+                page: Pagination, default 1.\n
+                sort: Sort results using this endpoint's fields.
+                    Directions: DESC, ASC.\n
+                timestamp: Set to breakdown stats by timestamp choices:
+                    hour, datehour, date, week, month.\n
+                response_timezone: Setting expected timezone for results,
+                    default is set in account.\n
             :return: (TuneServiceResponse)
         """
         map_query_string = {}
@@ -230,7 +229,8 @@ class AdvertiserReportActualsBase(AdvertiserReportBase):
     #                          default is set in account.</dd>
     # </dl><p>
     #
-    #  @return object
+    #  @return object TuneServiceResponse
+    #
     def export(self,
                map_params):
         """Places a job into a queue to generate a report that will contain
@@ -238,18 +238,17 @@ class AdvertiserReportActualsBase(AdvertiserReportBase):
         identifier to be provided to action /export/download.json to download
         completed report.
 
-            :param (dict) map_params:    Mapping of: <p><dl>
-                <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
-                <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
-                <dt>fields</dt><dd>Present results using this endpoint's fields.</dd>
-                <dt>group</dt><dd>Group results using this endpoint's fields.</dd>
-                <dt>filter</dt><dd>Apply constraints based upon values associated with
-                                   this endpoint's fields.</dd>
-                <dt>timestamp</dt><dd>Set to breakdown stats by timestamp choices:
-                                   hour, datehour, date, week, month</dd>
-                <dt>response_timezone</dt><dd>Setting expected timezone for results,
-                                         default is set in account.</dd>
-                </dl><p>
+            :param (dict) map_params:\n
+                start_date: YYYY-MM-DD HH:MM:SS\n
+                end_date: YYYY-MM-DD HH:MM:SS\n
+                fields: Present results using these endpoint's fields.\n
+                group: Group results using this endpoint's fields.\n
+                filter: Apply constraints based upon values
+                    associated with this endpoint's fields.\n
+                timestamp: Set to breakdown stats by timestamp choices:
+                    hour, datehour, date, week, month.
+                response_timezone: Setting expected timezone for results,
+                    default is set in account.\n
             :return: (TuneServiceResponse)
         """
         map_query_string = {}
@@ -288,6 +287,9 @@ class AdvertiserReportActualsBase(AdvertiserReportBase):
     #
     #  @param str job_id    Provided Job Identifier to reference
     #                                   requested report on export queue.
+    #
+    #  @return object TuneServiceResponse
+    #
     def status(self,
                job_id):
         """Query status of insight reports. Upon completion will return url to
@@ -319,7 +321,9 @@ class AdvertiserReportActualsBase(AdvertiserReportBase):
     #  Starts worker for polling export queue.
     #
     #  @param str   job_id      Job identifier assigned for report export.
-    #  @return object @see TuneServiceResponse
+    #
+    #  @return object TuneServiceResponse
+    #
     def fetch(self,
               job_id):
         """Helper function for fetching report upon completion.

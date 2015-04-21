@@ -114,7 +114,7 @@ class AdvertiserReportBase(EndpointBase):
 
             :param (str) action: Endpoint action name.
             :param (dict) map_query_string: Query str parameters of action.
-            :returns (object): TuneServiceResponse
+            :return: (TuneServiceResponse)
         """
         if not isinstance(action, str) or len(action) < 1:
             raise ValueError(

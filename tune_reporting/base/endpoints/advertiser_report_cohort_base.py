@@ -98,23 +98,25 @@ class AdvertiserReportCohortBase(AdvertiserReportBase):
     #                          default is set in account.</dd>
     # </dl><p>
     #
-    #  @return object @see response.py
+    #  @return object TuneServiceResponse
+    #
     def count(self,
               map_params):
         """Counts all existing records that match filter criteria
             and returns an array of found model data.
 
-            :param (dict) map_params:   Mapping of: <p><dl>
-                <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
-                <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
-                <dt>cohort_type</dt><dd>Cohort types: click, install</dd>
-                <dt>cohort_interval</dt><dd>Cohort intervals: year_day, year_week, year_month, year</dd>
-                <dt>group</dt><dd>Group results using this endpoint's fields.</dd>
-                <dt>filter</dt><dd>Apply constraints based upon values associated with
-                                   this endpoint's fields.</dd>
-                <dt>response_timezone</dt><dd>Setting expected timezone for results,
-                                         default is set in account.</dd>
-                </dl><p>
+            :param (dict) map_params:\n
+                start_date: YYYY-MM-DD HH:MM:SS\n
+                end_date: YYYY-MM-DD HH:MM:SS\n
+                cohort_type: Cohort types: click, install.\n
+                cohort_interval: Cohort intervals:
+                    year_day, year_week, year_month, year.\n
+                group: Group results using this endpoint's fields.\n
+                filter: Apply constraints based upon values
+                    associated with this endpoint's fields.\n
+                response_timezone: Setting expected timezone for results,
+                    default is set in account.\n
+
             :return: TuneServiceResponse
         """
         map_query_string = {}
@@ -143,12 +145,16 @@ class AdvertiserReportCohortBase(AdvertiserReportBase):
     #
     #  @param str job_id             Provided Job Identifier to reference
     #                                   requested report on export queue.
+    #
+    #  @return object TuneServiceResponse
+    #
     def status(self,
                job_id):
         """Query status of insight reports. Upon completion will return url to
         download requested report.
 
             :param str job_id: Export queue identifier
+            :return: (TuneServiceResponse)
         """
 
         # job_id
