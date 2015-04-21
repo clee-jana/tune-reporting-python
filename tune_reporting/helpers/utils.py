@@ -105,7 +105,13 @@ def json_convert(json_str):
         }
     elif isinstance(json_str, list):
         return [json_convert(element) for element in json_str]
-    elif isinstance(json_str, unicode):
-        return json_str.encode('utf-8')
+    
+    if sys.version_info >= (3, 0, 0):
+        # for Python 3
+        if isinstance(json_str, bytes):
+            json_str = json_str.encode('utf-8')  # or  s = str(s)[2:-1]
     else:
-        return json_str
+        if isinstance(json_str, unicode):
+            json_str = json_str.encode('utf-8')
+            
+    return json_str
