@@ -236,18 +236,18 @@ if __name__ == '__main__':
     s1.filepath = filepath
 
     if(id(s1)==id(s2)):
-        print "Same identifier"
+        print("Same identifier")
     else:
-        print "Different identifier"
+        print("Different identifier")
 
     if(s1.filepath==s2.filepath):
-        print "Same filepath"
+        print("Same filepath")
     else:
-        print "Different filepath"
+        print("Different filepath")
 
     if(s1.config["tune_reporting_auth_key_string"]==s2.config["tune_reporting_auth_key_string"]):
-        print "Same config"
+        print("Same config")
     else:
-        print "Different config"
+        print("Different config")
 
-    print s2
+    print(s2)
