@@ -1,6 +1,6 @@
 # TUNE Reporting SDK for Python
 # Dockerfile for Jenkins CI
-# Update:  $Date: 2015-04-20 16:00:00 $
+# Update:  $Date: 2015-04-20 17:00:00 $
 
 FROM docker-dev.ops.tune.com/itops/base_centos6:latest
 
@@ -27,7 +27,9 @@ ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # install python
-RUN pyenv versions && \
+RUN pyenv install 3.4.2 && \
+    pyenv global 3.4.2 && \
+    pyenv rehash && \
     python -V && \
     mkdir -p /data/tune-reporting-python && \
     mkdir -p /var/has/data/tune-reporting-python
