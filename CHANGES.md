@@ -147,3 +147,8 @@ Version 1.0.1
 -------------
 
 Production public release on April 10, 2015
+
+Version 1.0.5
+-------------
+
+Production sphinx document cleanup on April 21, 2015

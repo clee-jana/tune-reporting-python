@@ -2,8 +2,8 @@
 tune-reporting-python
 TUNE SDK for Python 2.7 and 3.0
 Incorporate TUNE services.
-Update:  $Date: 2015-04-21 11:16:32 $
-Version: 1.0.4
+Update:  $Date: 2015-04-21 15:00:00 $
+Version: 1.0.5
 ****************************************
 
 =============

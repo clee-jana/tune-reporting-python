@@ -225,7 +225,7 @@ class EndpointBase(object):
                                         action name.
             :param array    map_query_string:  Action's query string
                                         parameters.
-            :return: TuneServiceResponse
+            :return: (TuneServiceResponse)
         """
         client = TuneServiceClient(
             self.controller,
