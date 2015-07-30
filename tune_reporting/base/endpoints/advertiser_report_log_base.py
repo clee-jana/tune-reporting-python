@@ -36,7 +36,7 @@ TUNE Service Logs Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-16 15:41:32 $
+#  @version   $Date: 2015-07-30 12:49:27 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -220,7 +220,7 @@ class AdvertiserReportLogBase(AdvertiserReportBase):
     # <dt>fields</dt><dd>Present results using these endpoint's fields.</dd>
     # <dt>filter</dt><dd>Apply constraints based upon values associated with
     #                    this endpoint's fields.</dd>
-    # <dt>format</dt><dd>Export format choices: csv, json</dd>
+    # <dt>format</dt><dd>Export format choices: csv</dd>
     # <dt>response_timezone</dt><dd>Setting expected timezone for results,
     #                          default is set in account.</dd>
     # </dl><p>
@@ -240,7 +240,7 @@ class AdvertiserReportLogBase(AdvertiserReportBase):
                 fields: Present results using these endpoint's fields.\n
                 filter: Apply constraints based upon values
                     associated with this endpoint's fields.\n
-                format: Export format choices: csv, json.\n
+                format: Export format choices: csv.\n
                 response_timezone: Setting expected timezone for results,
                     default is set in account.\n
 

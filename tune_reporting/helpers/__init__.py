@@ -34,7 +34,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-07-30 12:49:27 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -51,9 +51,6 @@ from .service_exception import (
 )
 from .report_reader_csv import (
     ReportReaderCSV
-)
-from .report_reader_json import (
-    ReportReaderJSON
 )
 from .sdk_config import (
     SdkConfig

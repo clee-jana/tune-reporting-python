@@ -1,5 +1,9 @@
 ## tune-reporting-python Changelog
-=======================
+## TUNE Reporting SDK for Python 2.7 and 3.0
+## Incorporate TUNE Reporting services.
+#### Update:  $Date: 2015-07-30 12:49:27 $
+#### Version: 1.0.6</h4>
+===
 
 Here you can see the full list of changes between each `tune-reporting-python` release.
 
@@ -152,3 +156,8 @@ Version 1.0.5
 -------------
 
 Production sphinx document cleanup on April 21, 2015
+
+Version 1.0.6
+-------------
+
+Export reporting format JSON is no longer supported.

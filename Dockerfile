@@ -1,6 +1,6 @@
 # TUNE Reporting SDK for Python
 # Dockerfile for Jenkins CI
-# Update:  $Date: 2015-04-20 17:00:00 $
+# Update:  $Date: 2015-07-30 12:49:27 $
 
 FROM docker-dev.ops.tune.com/itops/base_centos6:latest
 
@@ -9,7 +9,7 @@ MAINTAINER Jeff Tanner jefft@tune.com
 RUN echo -----------------------------
 lsb_release -a
 RUN echo -----------------------------
-    
+
 # install system packages
 RUN yum -y update && \
     yum -y install gcc curl zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tar && \
