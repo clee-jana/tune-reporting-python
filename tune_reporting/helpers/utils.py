@@ -36,7 +36,7 @@ TUNE Shared Helper Functions
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-07-30 12:49:27 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -105,7 +105,7 @@ def json_convert(json_str):
         }
     elif isinstance(json_str, list):
         return [json_convert(element) for element in json_str]
-    
+
     if sys.version_info >= (3, 0, 0):
         # for Python 3
         if isinstance(json_str, bytes):
@@ -113,5 +113,5 @@ def json_convert(json_str):
     else:
         if isinstance(json_str, unicode):
             json_str = json_str.encode('utf-8')
-            
+
     return json_str

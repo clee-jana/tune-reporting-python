@@ -1,8 +1,8 @@
 <h2>tune-reporting-python</h2>
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
-<h4>Update:  $Date: 2015-04-21 15:00:00 $</h4>
-<h4>Version: 1.0.5</h4>
+<h4>Update:  $Date: 2015-07-30 12:49:27 $</h4>
+<h4>Version: 1.0.6</h4>
 ===
 
 <a id="TOP"></a>
@@ -96,7 +96,7 @@ Developer Community portal for MobileAppTracking™ (MAT), the industry leader i
 
 [https://developers.mobileapptracking.com](https://developers.mobileapptracking.com)
 
-Additional positions on TUNE Reporting SDKs can be found here:
+Full developer information on TUNE Reporting SDKs can be found here:
 
 [https://developers.mobileapptracking.com/tune-reporting-sdks/](https://developers.mobileapptracking.com/tune-reporting-sdks/)
 

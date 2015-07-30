@@ -29,7 +29,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-07-30 12:49:27 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -83,35 +83,27 @@ if __name__ == '__main__':
             raise ValueError("Parameter 'session_token' is not defined.")
 
         example = ExampleAdvertiserReportActuals()
-        example.run(api_key, "api_key")
         example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportCohortValue()
-        example.run(api_key, "api_key")
         example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportCohortRetention()
-        example.run(api_key, "api_key")
         example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogClicks()
-        example.run(api_key, "api_key")
         example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogEventItems()
-        example.run(api_key, "api_key")
         example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogEvents()
-        example.run(api_key, "api_key")
         example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogInstalls()
-        example.run(api_key, "api_key")
         example.run(session_token, "session_token")
 
         example = ExampleAdvertiserReportLogPostbacks()
-        example.run(api_key, "api_key")
         example.run(session_token, "session_token")
 
     except Exception as exc:

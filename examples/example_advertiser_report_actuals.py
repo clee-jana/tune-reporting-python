@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-10 11:10:41 $
+#  @version   $Date: 2015-07-30 12:49:27 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  The Actuals report gives you quick insight into the performance of your apps
@@ -53,7 +53,6 @@ try:
     from tune_reporting import (
         AdvertiserReportActuals,
         ReportReaderCSV,
-        ReportReaderJSON,
         SdkConfig,
         TuneSdkException,
         TUNE_FIELDS_RECOMMENDED,
@@ -258,7 +257,7 @@ class ExampleAdvertiserReportActuals(object):
 
             print(" JSON:")
             print(str(status_response.json))
-            
+
             print("")
             print("===========================================================")
             print(" Fetching Advertiser Report Actuals CSV                    ")
@@ -280,68 +279,6 @@ class ExampleAdvertiserReportActuals(object):
             csv_report_reader = ReportReaderCSV(csv_report_url)
             csv_report_reader.read()
             csv_report_reader.pretty_print(limit=5)
-
-            print("")
-            print("===========================================================")
-            print(" Export Advertiser Report Actuals JSON                     ")
-            print("===========================================================")
-
-            map_params = {
-                "start_date": start_date,
-                "end_date": end_date,
-                "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
-                "filter": "(publisher_id > 0)",
-                "group": "site_id,publisher_id",
-                "format": "json",
-                "timestamp": "datehour",
-                "response_timezone": "America/Los_Angeles"
-            }
-
-            response = advertiser_report.export(
-                map_params
-            )
-
-            if response.http_code != 200 or response.errors:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
-
-            print(" TuneServiceResponse:")
-            print(str(response))
-
-            print(" JSON:")
-            print(response.json)
-
-            job_id = AdvertiserReportActuals.parse_response_report_job_id(response)
-
-            print(" JSON Job ID: {}".format(job_id))
-
-            print("")
-            print("===========================================================")
-            print(" Fetching Advertiser Report Actuals JSON                   ")
-            print("===========================================================")
-
-            export_fetch_response = advertiser_report.fetch(
-                job_id
-            )
-
-            print(" TuneServiceResponse:")
-            print(str(export_fetch_response))
-
-            if export_fetch_response is None:
-                print("Exit")
-                return
-
-            json_report_url = AdvertiserReportActuals.parse_response_report_url(export_fetch_response)
-
-            print(" JSON Report URL: {}".format(json_report_url))
-
-            print("")
-            print("===========================================================")
-            print(" Read Advertiser Report Actuals JSON                       ")
-            print("===========================================================")
-
-            json_report_reader = ReportReaderJSON(json_report_url)
-            json_report_reader.read()
-            json_report_reader.pretty_print(limit=5)
 
         except TuneSdkException as exc:
             print("TuneSdkException ({})".format(exc))
