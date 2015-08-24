@@ -27,7 +27,7 @@
 #
 #    category    TUNE_Reporting
 #    package     SDK
-#    version     $Date: 2015-01-05 19:38:53 $
+#    version     $Date: 2015-08-24 11:21:26 $
 #    copyright   Copyright (c) 2015, TUNE Inc. (http://www.tune.com)
 #
 
@@ -77,7 +77,11 @@ setup(
     package_dir={'tune_reporting': 'tune_reporting'},
     license="MIT License",
     classifiers= [
-        "Development Status :: 4 - Beta",
+        # How mature is this project? Common values are
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",

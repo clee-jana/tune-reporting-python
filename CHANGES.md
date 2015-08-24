@@ -161,3 +161,8 @@ Version 1.0.6
 -------------
 
 Export reporting format JSON is no longer supported.
+
+Version 1.0.8
+-------------
+
+Python 3.0, Fix required for *tune_reporting/helpers/report_reader_csv.py*

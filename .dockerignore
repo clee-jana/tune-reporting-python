@@ -2,3 +2,5 @@
 tune_reporting.egg-info/
 dist/
 build/
+_tmp/
+_scripts/

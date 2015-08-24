@@ -34,12 +34,17 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-07-30 12:49:27 $
+#  @version   $Date: 2015-08-24 11:21:26 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
-__version_info__ = ('1', '0', '6')
+import sys
+
+__version_info__ = ('1', '0', '8')
 __sdk_version__ = '.'.join(__version_info__)
 __sdk_name__ = 'tune-reporting-python'
 
-__python_required_version__ = (2, 7)
+if sys.version_info >= (3, 0, 0):
+    __python_required_version__ = (3, 0)
+else:
+    __python_required_version__ = (2, 7)

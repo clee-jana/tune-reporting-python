@@ -24,3 +24,8 @@ venv/
 *.log
 *.*~
 *~
+
+# Sandbox
+_tmp/*
+# Scripts
+_scripts/*

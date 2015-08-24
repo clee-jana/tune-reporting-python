@@ -36,12 +36,16 @@ TUNE Advertiser Report CSV Reader
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-09 17:36:25 $
+#  @version   $Date: 2015-08-24 11:21:26 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
+import sys
 import csv
 import codecs
+
+if sys.version_info >= (3, 0, 0):
+    import urllib.request
 
 from .report_reader_base import (
     ReportReaderBase
@@ -73,14 +77,22 @@ class ReportReaderCSV(ReportReaderBase):
     def read(self):
         """Read CSV data provided remote path report_url.
         """
-        proxy = TuneServiceProxy(self.report_url)
-        if proxy.execute():
-            utf8_report_content = UTF8Recoder(proxy.response, 'utf-8')
-            self.reader = csv.reader(utf8_report_content, dialect=csv.excel)
+        if sys.version_info >= (3, 0, 0):
+            stream = urllib.request.urlopen(self.report_url)
+            self.reader = csv.reader(codecs.iterdecode(stream, 'utf-8'), dialect=csv.excel)
+        else:
+            proxy = TuneServiceProxy(self.report_url)
+            if proxy.execute():
+                utf8_report_content = UTF8Recoder(proxy.response, 'utf-8')
+                self.reader = csv.reader(utf8_report_content, dialect=csv.excel)
 
     def next(self):
         try:
-            row = self.reader.next()
+            if sys.version_info >= (3, 0, 0):
+                row = self.reader.__next__()
+            else:
+                row = self.reader.next()
+
             return [unicode(s, "utf-8") for s in row]
         except StopIteration:
             pass
@@ -97,13 +109,19 @@ class ReportReaderCSV(ReportReaderBase):
         """
         print("Report REPORT_URL: {}".format(self.report_url))
         print("------------------")
-        i = 0
-        while(True):
-            row = self.next()
-            if row is None:
-                break
-            i = i + 1
-            print("{}. {}".format(i, str(row)))
-            if (limit > 0) and (i >= limit):
-                break
+
+        if sys.version_info >= (3, 0, 0):
+          for row in self.reader:
+              print(', '.join(row))
+        else:
+          i = 0
+          while(True):
+              row = self.next()
+              if row is None:
+                  break
+              i = i + 1
+              print("{}. {}".format(i, str(row)))
+              if (limit > 0) and (i >= limit):
+                  break
+
         print("------------------")

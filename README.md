@@ -2,7 +2,7 @@
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
 <h4>Update:  $Date: 2015-07-30 12:49:27 $</h4>
-<h4>Version: 1.0.6</h4>
+<h4>Version: 1.0.8</h4>
 ===
 
 <a id="TOP"></a>
