@@ -26,7 +26,7 @@
 # author    Jeff Tanner <jefft@tune.com>
 # copyright 2014 Tune (http://www.tune.com)
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# update    $Date: 2015-07-30 12:49:27 $
+# update    $Date: 2015-08-24 11:21:26 $
 # version   $Version: 1.0.6 $
 # link      https://developers.mobileapptracking.com
 #
@@ -55,11 +55,20 @@ clean:
 dist-install:
 	sudo pip install -r requirements.txt
 
+dist-install3:
+	sudo pip3 install -r requirements.txt
+
 dist:
 	sudo rm -fR ./dist/*
 	sudo python setup.py sdist --format=zip,gztar upload
 	sudo python setup.py bdist_egg upload
 	sudo python setup.py bdist_wheel upload
+
+dist3:
+	sudo rm -fR ./dist/*
+	sudo python3 setup.py sdist --format=zip,gztar upload
+	sudo python3 setup.py bdist_egg upload
+	sudo python3 setup.py bdist_wheel upload
 
 build:
 	sudo pip install -r requirements.txt
@@ -67,19 +76,39 @@ build:
 	sudo python setup.py build
 	sudo python setup.py install
 
+build3:
+	sudo pip install -r requirements.txt
+	sudo python3 setup.py clean
+	sudo python3 setup.py build
+	sudo python3 setup.py install
+
 register:
 	sudo python setup.py register
 
+register3:
+	sudo python3 setup.py register
+
 tests:
 	python ./tests/tune_reporting_tests.py $(api_key)
+
+tests3:
+	python3 ./tests/tune_reporting_tests.py $(api_key)
 
 tests-travis-ci:
 	flake8 --ignore=F401,E265,E129 tune
 	flake8 --ignore=E123,E126,E128,E265,E501 tests
 	python ./tests/tune_reporting_tests.py $(api_key)
 
+tests-travis-ci3:
+	flake8 --ignore=F401,E265,E129 tune
+	flake8 --ignore=E123,E126,E128,E265,E501 tests
+	python3 ./tests/tune_reporting_tests.py $(api_key)
+
 examples:
 	python ./examples/tune_reporting_examples.py $(api_key)
+
+examples3:
+	python3 ./examples/tune_reporting_examples.py $(api_key)
 
 analysis: install
 	. venv/bin/activate; flake8 --ignore=E123,E126,E128,E265,E501 examples
