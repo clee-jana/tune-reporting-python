@@ -2,8 +2,8 @@
 tune-reporting-python
 TUNE SDK for Python 2.7 and 3.0
 Incorporate TUNE services.
-Update:  $Date: 2015-07-30 12:49:27 $
-Version: 1.0.8
+Update:  $Date: 2015-12-11 20:56:46 $
+Version: 1.0.9
 ****************************************
 
 =============
@@ -57,14 +57,14 @@ Via PyPi using pip:
 Install from PyPi using pip: http://www.pip-installer.org/en/latest/, a
 package manager for Python.
 
-    $ pip install --upgrade tune-reporting
+    pip install --upgrade tune-reporting
 
 You may need to run the above commands with `sudo`.
 
 Don't have pip installed? Try installing it, by running this from the command
 line:
 
-    $ curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python
+    curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python
 
 -------------
 Via ZIP file:
@@ -83,8 +83,8 @@ SDK Examples
 
 Run the following script to view execution of all examples:
 ```
-    $ make installs
-    $ make API_KEY=[API_KEY] examples
+    make installs
+    make API_KEY=[API_KEY] examples
 ```
 
 -------------
@@ -93,8 +93,8 @@ SDK Unittests
 
 Run the following script to view execution of all unittests:
 ```
-    $ make tests-installs
-    $ make API_KEY=[API_KEY] tests
+    make tests-installs
+    make API_KEY=[API_KEY] tests
 ```
 
 ---------------------------
@@ -104,8 +104,8 @@ SDK Documentation -- Sphinx
 The following will generate Sphinx documentation, see http://en.wikipedia.org/wiki/Sphinx_(documentation_generator), from Python codebase:
 
 ```
-    $ make tests-installs
-    $ make docs-sphinx
+    make tests-installs
+    make docs-sphinx
 ```
 
 ----------------------------
@@ -115,8 +115,8 @@ SDK Documentation -- Doxygen
 The following will generate Doxygen documentation, see http://en.wikipedia.org/wiki/Doxygen, from Python codebase:
 
 ```
-    $ make tests-installs
-    $ make docs-doxygen
+    make tests-installs
+    make docs-doxygen
 ```
 
 Requires installation of Doxygen: http://www.stack.nl/~dimitri/doxygen/index.html.

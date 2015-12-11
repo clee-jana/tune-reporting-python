@@ -27,5 +27,6 @@ venv/
 
 # Sandbox
 _tmp/*
+
 # Scripts
-_scripts/*
+bash/*

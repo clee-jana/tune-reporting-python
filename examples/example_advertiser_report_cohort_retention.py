@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-09 22:59:45 $
+#  @version   $Date: 2015-12-11 20:56:46 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  Retention Report
@@ -141,37 +141,6 @@ class ExampleAdvertiserReportCohortRetention(object):
 
             print("")
             print("===========================================================")
-            print(" Count Advertiser Report Cohort Retention click records.   ")
-            print("===========================================================")
-
-            map_params = {
-                "start_date": start_date,
-                "end_date": end_date,
-                "cohort_type": "click",
-                "cohort_interval": "year_day",
-                "filter": "(install_publisher_id > 0)",
-                "group": "site_id,install_publisher_id",
-                "response_timezone": "America/Los_Angeles"
-            }
-
-            response = advertiser_report.count(
-                map_params
-            )
-
-            if response.http_code != 200 or response.errors:
-                raise Exception("Failed: {}: {}".format(response.http_code, str(response)))
-
-            print(" TuneServiceResponse:")
-            print(str(response))
-
-            print(" JSON:")
-            print(response.json)
-
-            print(" Count:")
-            print(str(response.data))
-
-            print("")
-            print("===========================================================")
             print(" Count Advertiser Report Cohort Retention install records. ")
             print("===========================================================")
 
@@ -180,6 +149,7 @@ class ExampleAdvertiserReportCohortRetention(object):
                 "end_date": end_date,
                 "cohort_type": "install",
                 "cohort_interval": "year_day",
+                "retention_measure": "rolling_opens",
                 "filter": "(install_publisher_id > 0)",
                 "group": "site_id,install_publisher_id",
                 "response_timezone": "America/Los_Angeles"
@@ -206,7 +176,7 @@ class ExampleAdvertiserReportCohortRetention(object):
 
             print("")
             print("=========================================================================")
-            print(" Find Advertiser Report Cohort Retention 'click/cumulative' Default.     ")
+            print(" Find Advertiser Report Cohort Retention 'install/cumulative' Default.     ")
             print("=========================================================================")
 
             map_params = {
@@ -214,6 +184,7 @@ class ExampleAdvertiserReportCohortRetention(object):
                 "end_date": end_date,
                 "cohort_type": "install",
                 "cohort_interval": "year_day",
+                "retention_measure": "rolling_opens",
                 "filter": "(install_publisher_id > 0)",
                 "group": "site_id,install_publisher_id",
                 "fields": None,
@@ -235,7 +206,7 @@ class ExampleAdvertiserReportCohortRetention(object):
 
             print("")
             print("=====================================================================================")
-            print(" Find Advertiser Report Cohort Retention 'click/cumulative' Recommended fields.      ")
+            print(" Find Advertiser Report Cohort Retention 'install/cumulative' Recommended fields.      ")
             print("=====================================================================================")
 
             map_params = {
@@ -243,6 +214,7 @@ class ExampleAdvertiserReportCohortRetention(object):
                 "end_date": end_date,
                 "cohort_type": "install",
                 "cohort_interval": "year_day",
+                "retention_measure": "rolling_opens",
                 "filter": "(install_publisher_id > 0)",
                 "group": "site_id,install_publisher_id",
                 "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
@@ -272,6 +244,7 @@ class ExampleAdvertiserReportCohortRetention(object):
                 "end_date": end_date,
                 "cohort_type": "install",
                 "cohort_interval": "year_day",
+                "retention_measure": "rolling_opens",
                 "filter": "(install_publisher_id > 0)",
                 "group": "site_id,install_publisher_id",
                 "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),

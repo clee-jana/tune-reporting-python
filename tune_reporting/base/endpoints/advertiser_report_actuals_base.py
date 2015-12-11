@@ -36,7 +36,7 @@ TUNE Service Actuals Reports Endpoint base
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-07-30 12:49:27 $
+#  @version   $Date: 2015-12-11 20:56:46 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -261,7 +261,7 @@ class AdvertiserReportActualsBase(AdvertiserReportBase):
             map_query_string = self._validate_filter(map_params, map_query_string)
 
         if "fields" not in map_params or map_params["fields"] is None:
-          map_params["fields"] = self.fields(TUNE_FIELDS_DEFAULT)
+            map_params["fields"] = self.fields(TUNE_FIELDS_DEFAULT)
         if "fields" in map_params and map_params["fields"] is not None:
             map_query_string = self._validate_fields(map_params, map_query_string)
 

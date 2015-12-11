@@ -34,7 +34,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-12-11 20:56:46 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -59,8 +59,8 @@ from .advertiser_report_log_postbacks import (
 from .advertiser_report_cohort_retention import (
     AdvertiserReportCohortRetention
 )
-from .advertiser_report_cohort_value import (
-    AdvertiserReportCohortValue
+from .advertiser_report_cohort_values import (
+    AdvertiserReportCohortValues
 )
 
 from .export import (Export)

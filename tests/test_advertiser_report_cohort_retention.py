@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-09 22:59:45 $
+#  @version   $Date: 2015-12-11 20:56:46 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -97,8 +97,9 @@ class TestAdvertiserReportCohortRetention(unittest.TestCase):
             map_params = {
                 "start_date": self.__start_date,
                 "end_date": self.__end_date,
-                "cohort_type": "click",
+                "cohort_type": "install",
                 "cohort_interval": "year_day",
+                "retention_measure": "rolling_opens",
                 "filter": "(install_publisher_id > 0)",
                 "group": "site_id,install_publisher_id",
                 "response_timezone": "America/Los_Angeles"
@@ -128,6 +129,7 @@ class TestAdvertiserReportCohortRetention(unittest.TestCase):
                 "end_date": self.__end_date,
                 "cohort_type": "install",
                 "cohort_interval": "year_day",
+                "retention_measure": "rolling_opens",
                 "filter": "(install_publisher_id > 0)",
                 "group": "site_id,install_publisher_id",
                 "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
@@ -161,6 +163,7 @@ class TestAdvertiserReportCohortRetention(unittest.TestCase):
                 "end_date": self.__end_date,
                 "cohort_type": "install",
                 "cohort_interval": "year_day",
+                "retention_measure": "rolling_opens",
                 "filter": "(install_publisher_id > 0)",
                 "group": "site_id,install_publisher_id",
                 "fields": advertiser_report.fields(TUNE_FIELDS_RECOMMENDED),
