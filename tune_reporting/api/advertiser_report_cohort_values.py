@@ -5,7 +5,7 @@ TUNE Reporting API '/advertiser/stats/ltv/'
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  ltv.py
+#  advertiser_report_cohort_values.py
 #
 #  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
@@ -36,7 +36,7 @@ TUNE Reporting API '/advertiser/stats/ltv/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-07-30 12:49:27 $
+#  @version   $Date: 2015-12-11 20:56:46 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -46,11 +46,17 @@ from tune_reporting.base import (
 from tune_reporting.base.endpoints import (
     TUNE_FIELDS_DEFAULT
 )
+from tune_reporting.base.endpoints.advertiser_report_base import (
+    AdvertiserReportBase
+)
+from tune_reporting.helpers import (
+    TuneSdkException
+)
 
 
 #  /advertiser/stats/ltv
 #  @example example_reports_cohort.py
-class AdvertiserReportCohortValue(AdvertiserReportCohortBase):
+class AdvertiserReportCohortValues(AdvertiserReportCohortBase):
     """TUNE Reporting API controller 'advertiser/stats/ltv'"""
 
     ## The constructor.
@@ -73,6 +79,63 @@ class AdvertiserReportCohortValue(AdvertiserReportCohortBase):
             "rpi",
             "epi"
         ]
+
+    ## Counts all existing records that match filter criteria
+    #  and returns an array of found model data.
+    #
+    # @param dict map_params    Mapping of: <p><dl>
+    # <dt>start_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>end_date</dt><dd>YYYY-MM-DD HH:MM:SS</dd>
+    # <dt>cohort_type</dt><dd>Cohort types: click, install</dd>
+    # <dt>cohort_interval</dt><dd>Cohort intervals: year_day, year_week, year_month, year</dd>
+    # <dt>group</dt><dd>Group results using this endpoint's fields.</dd>
+    # <dt>filter</dt><dd>Apply constraints based upon values associated with
+    #                    this endpoint's fields.</dd>
+    # <dt>response_timezone</dt><dd>Setting expected timezone for results,
+    #                          default is set in account.</dd>
+    # </dl><p>
+    #
+    #  @return object TuneServiceResponse
+    #
+    def count(self,
+              map_params):
+        """Counts all existing records that match filter criteria
+            and returns an array of found model data.
+
+            :param (dict) map_params:\n
+                start_date: YYYY-MM-DD HH:MM:SS\n
+                end_date: YYYY-MM-DD HH:MM:SS\n
+                cohort_type: Cohort types: click, install.\n
+                cohort_interval: Cohort intervals:
+                    year_day, year_week, year_month, year.\n
+                group: Group results using this endpoint's fields.\n
+                filter: Apply constraints based upon values
+                    associated with this endpoint's fields.\n
+                response_timezone: Setting expected timezone for results,
+                    default is set in account.\n
+
+            :return: TuneServiceResponse
+        """
+        map_query_string = {}
+        map_query_string = self._validate_datetime(map_params, "start_date", map_query_string)
+        map_query_string = self._validate_datetime(map_params, "end_date", map_query_string)
+
+        map_query_string = self._validate_cohort_type(map_params, map_query_string)
+        map_query_string = self._validate_cohort_interval(map_params, map_query_string)
+
+        map_query_string = self._validate_group(map_params, map_query_string)
+
+        if "filter" in map_params and map_params["filter"] is not None:
+            map_query_string = self._validate_filter(map_params, map_query_string)
+
+        if "response_timezone" in map_params and map_params["response_timezone"] is not None:
+            map_query_string["response_timezone"] = map_params["response_timezone"]
+
+        return AdvertiserReportBase.call(
+            self,
+            "count",
+            map_query_string
+        )
 
     ## Finds all existing records that match filter criteria
     #  and returns an array of found model data.
@@ -247,8 +310,46 @@ class AdvertiserReportCohortValue(AdvertiserReportCohortBase):
                                     requested report on export queue.
             :return: (TuneServiceResponse)
         """
-        return super(AdvertiserReportCohortValue, self)._fetch(
+        return super(AdvertiserReportCohortValues, self)._fetch(
             self.controller,
             "status",
             job_id
         )
+
+    ## Validate query string parameter 'cohort_type'.
+    #  @param dict map_params
+    #  @param dict map_query_string
+    #  @return dict map_query_string
+    #  @throws ValueError
+    @staticmethod
+    def _validate_cohort_type(map_params, map_query_string):
+        """Validate 'cohort_type' parameter.
+
+            :param (dict) map_params
+            :param (dict) map_query_string
+
+            :return (dict): map_query_string
+            :throws: ValueError
+        """
+
+        if 'cohort_type' not in map_params:
+            raise ValueError("Parameter 'cohort_type' is not defined.")
+
+        cohort_type = map_params['cohort_type']
+
+        cohort_types = [
+            "click",
+            "install"
+        ]
+        if cohort_type is None or not cohort_type:
+            raise ValueError("Parameter 'cohort_type' is not defined.")
+        if (not isinstance(cohort_type, str) or
+                (cohort_type not in cohort_types)):
+            raise TuneSdkException(
+                "Parameter 'cohort_type' is invalid: '{}'.".format(
+                    cohort_type
+                )
+            )
+
+        map_query_string['cohort_type'] = cohort_type
+        return map_query_string

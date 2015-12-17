@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  example_advertiser_report_cohort_value.py
+#  example_advertiser_report_cohort_values.py
 #
 #  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-09 22:59:45 $
+#  @version   $Date: 2015-12-11 20:56:46 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 #  Cohort Report
@@ -72,7 +72,7 @@ import traceback
 
 try:
     from tune_reporting import (
-        AdvertiserReportCohortValue,
+        AdvertiserReportCohortValues,
         ReportReaderCSV,
         SdkConfig,
         TuneSdkException,
@@ -84,7 +84,7 @@ except ImportError as exc:
     raise
 
 
-class ExampleAdvertiserReportCohortValue(object):
+class ExampleAdvertiserReportCohortValues(object):
     """Example using TUNE Advertiser Report Cohort Value."""
 
     def __init__(self):
@@ -119,7 +119,7 @@ class ExampleAdvertiserReportCohortValue(object):
             start_date = "{} 00:00:00".format(week_ago)
             end_date = "{} 23:59:59".format(yesterday)
 
-            advertiser_report = AdvertiserReportCohortValue()
+            advertiser_report = AdvertiserReportCohortValues()
 
             print("")
             print("===========================================================")
@@ -294,7 +294,7 @@ class ExampleAdvertiserReportCohortValue(object):
             print(" JSON:")
             print(response.json)
 
-            job_id = AdvertiserReportCohortValue.parse_response_report_job_id(response)
+            job_id = AdvertiserReportCohortValues.parse_response_report_job_id(response)
 
             print(" CSV Job ID: {}".format(job_id))
 
@@ -314,7 +314,7 @@ class ExampleAdvertiserReportCohortValue(object):
                 print("Exit")
                 return
 
-            csv_report_url = AdvertiserReportCohortValue.parse_response_report_url(export_fetch_response)
+            csv_report_url = AdvertiserReportCohortValues.parse_response_report_url(export_fetch_response)
 
             print(" CSV Report URL: {}".format(csv_report_url))
 
@@ -367,7 +367,7 @@ if __name__ == '__main__':
         if len(sys.argv) < 2:
             raise ValueError("{} [api_key].".format(sys.argv[0]))
         api_key = sys.argv[1]
-        example = ExampleAdvertiserReportCohortValue()
+        example = ExampleAdvertiserReportCohortValues()
         example.run(api_key)
     except Exception as exc:
         print("Exception: {0}".format(exc))

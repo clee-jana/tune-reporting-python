@@ -29,7 +29,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-01-05 19:38:53 $
+#  @version   $Date: 2015-12-11 20:56:46 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -43,7 +43,7 @@ from test_advertiser_report_log_installs import TestAdvertiserReportLogInstalls
 from test_advertiser_report_log_postbacks import TestAdvertiserReportLogPostbacks
 from test_advertiser_report_actuals import TestAdvertiserReportActuals
 from test_advertiser_report_cohort_retention import TestAdvertiserReportCohortRetention
-from test_advertiser_report_cohort_value import TestAdvertiserReportCohortValue
+from test_advertiser_report_cohort_values import TestAdvertiserReportCohortValues
 
 def suite(api_key):
     suite = unittest.TestSuite()
@@ -55,7 +55,7 @@ def suite(api_key):
     suite.addTest(TestAdvertiserReportLogPostbacks(api_key))
     suite.addTest(TestAdvertiserReportActuals(api_key))
     suite.addTest(TestAdvertiserReportCohortRetention(api_key))
-    suite.addTest(TestAdvertiserReportCohortValue(api_key))
+    suite.addTest(TestAdvertiserReportCohortValues(api_key))
 
     return suite
 

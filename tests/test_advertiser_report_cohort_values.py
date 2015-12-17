@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  test_advertiser_report_cohort_value.py
+#  test_advertiser_report_cohort_values.py
 #
 #  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
@@ -32,7 +32,7 @@
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-09 22:59:45 $
+#  @version   $Date: 2015-12-11 20:56:46 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
@@ -43,7 +43,7 @@ import unittest
 
 try:
     from tune_reporting import (
-        AdvertiserReportCohortValue,
+        AdvertiserReportCohortValues,
         SdkConfig,
         TUNE_FIELDS_RECOMMENDED
         )
@@ -52,7 +52,7 @@ except ImportError as exc:
     raise
 
 
-class TestAdvertiserReportCohortValue(unittest.TestCase):
+class TestAdvertiserReportCohortValues(unittest.TestCase):
 
     def __init__(self, api_key):
         # Setup TUNE Reporting SDK configuration.
@@ -84,7 +84,7 @@ class TestAdvertiserReportCohortValue(unittest.TestCase):
     def test_Fields(self):
         response = None
 
-        advertiser_report = AdvertiserReportCohortValue()
+        advertiser_report = AdvertiserReportCohortValues()
 
         response = advertiser_report.fields(TUNE_FIELDS_RECOMMENDED)
         self.assertIsNotNone(response)
@@ -94,7 +94,7 @@ class TestAdvertiserReportCohortValue(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportCohortValue()
+            advertiser_report = AdvertiserReportCohortValues()
 
             map_params = {
                 "start_date": self.__start_date,
@@ -123,7 +123,7 @@ class TestAdvertiserReportCohortValue(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportCohortValue()
+            advertiser_report = AdvertiserReportCohortValues()
 
             map_params = {
                 "start_date": self.__start_date,
@@ -157,7 +157,7 @@ class TestAdvertiserReportCohortValue(unittest.TestCase):
         response = None
 
         try:
-            advertiser_report = AdvertiserReportCohortValue()
+            advertiser_report = AdvertiserReportCohortValues()
 
             map_params = {
                 "start_date": self.__start_date,

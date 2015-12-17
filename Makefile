@@ -26,7 +26,7 @@
 # author    Jeff Tanner <jefft@tune.com>
 # copyright 2014 Tune (http://www.tune.com)
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# update    $Date: 2015-08-24 11:21:26 $
+# update    $Date: 2015-12-11 20:56:46 $
 # version   $Version: 1.0.6 $
 # link      https://developers.mobileapptracking.com
 #
@@ -34,13 +34,14 @@
 .PHONY: clean venv install analysis examples tests tests-travis-ci tests-install build dist register docs-sphinx docs-doxygen
 
 venv:
+	sudo pip install virtualenv
 	virtualenv venv
 
 install: venv
-	. venv/bin/activate; pip install . --use-mirrors
+	. venv/bin/activate; pip install --upgrade -r requirements.txt
 
 tests-install: install
-	. venv/bin/activate; pip install -r tests/requirements.txt
+	. venv/bin/activate; pip install --upgrade -r tests/requirements.txt
 
 clean:
 	sudo rm -fR ./build/*
@@ -53,7 +54,7 @@ clean:
 	rm -rf venv
 
 dist-install:
-	sudo pip install -r requirements.txt
+	sudo pip2.7 install -r requirements.txt
 
 dist-install3:
 	sudo pip3 install -r requirements.txt
@@ -71,13 +72,13 @@ dist3:
 	sudo python3 setup.py bdist_wheel upload
 
 build:
-	sudo pip install -r requirements.txt
+	sudo pip2.7 install --upgrade -r requirements27.txt
 	sudo python setup.py clean
 	sudo python setup.py build
 	sudo python setup.py install
 
 build3:
-	sudo pip install -r requirements.txt
+	sudo pip3 install --upgrade -r requirements3.txt
 	sudo python3 setup.py clean
 	sudo python3 setup.py build
 	sudo python3 setup.py install
@@ -88,10 +89,10 @@ register:
 register3:
 	sudo python3 setup.py register
 
-tests:
+tests: build
 	python ./tests/tune_reporting_tests.py $(api_key)
 
-tests3:
+tests3: build3
 	python3 ./tests/tune_reporting_tests.py $(api_key)
 
 tests-travis-ci:
@@ -104,10 +105,10 @@ tests-travis-ci3:
 	flake8 --ignore=E123,E126,E128,E265,E501 tests
 	python3 ./tests/tune_reporting_tests.py $(api_key)
 
-examples:
+examples: build
 	python ./examples/tune_reporting_examples.py $(api_key)
 
-examples3:
+examples3: build3
 	python3 ./examples/tune_reporting_examples.py $(api_key)
 
 analysis: install

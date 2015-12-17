@@ -1,8 +1,8 @@
 <h2>tune-reporting-python</h2>
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
-<h4>Update:  $Date: 2015-07-30 12:49:27 $</h4>
-<h4>Version: 1.0.8</h4>
+<h4>Update:  $Date: 2015-12-11 20:56:46 $</h4>
+<h4>Version: 1.0.9</h4>
 ===
 
 <a id="TOP"></a>
@@ -33,6 +33,13 @@
                 </ul>
             </li>
             <li><a href="#sdk_install_config">Configuration</a></li>
+        </ul>
+    </li>
+
+    <li><a href="#sdk_code_samples">SDK Code Samples</a>
+        <ul>
+            <li><a href="#sdk_code_samples_examples">Examples</a></li>
+            <li><a href="#sdk_code_samples_unittests">Unittests</a></li>
         </ul>
     </li>
 
@@ -78,8 +85,6 @@ Supported programming languages for TUNE Reporting SDKs are:
     <li><b>Python</b>: <a href="https://github.com/MobileAppTracking/tune-reporting-python" target="_blank">tune-reporting-python</a></li>
     <li><b>Java</b>: <a href="https://github.com/MobileAppTracking/tune-reporting-java" target="_blank">tune-reporting-java</a></li>
     <li><b>Node.js</b>: <a href="https://github.com/MobileAppTracking/tune-reporting-node" target="_blank">tune-reporting-node</a></li>
-    <li><b>Go</b>: Coming soon</li>
-    <li><b>C#</b>: Coming soon</li>
 </ul>
 
 <a id="sdk_overview_mobile" name="sdk_overview_mobile"></a>
@@ -237,12 +242,36 @@ and you're good to go!
 </a>
 </p>
 
+<!-- SDK Code Samples -->
+
+<a id="sdk_code_samples" name="sdk_code_samples"></a>
+### SDK Code Samples
+
+<a id="sdk_code_samples_examples" name="sdk_code_samples_examples"></a>
+#### Examples
+
+Run the following script to view execution of all examples:
+
+```bash
+    make examples api_key=[API_KEY]
+```
+
+<a id="sdk_code_samples_unittests" name="sdk_code_samples_unittests"></a>
+#### Unittests
+
+Run the following script to view execution of all unittests:
+
+```bash
+    make tests api_key=[API_KEY]
+```
+
 <!-- Generated Documentation -->
 
 <a id="sdk_gendoc" name="sdk_gendoc"></a>
 ### SDK Generated Documentation
 
 SDK code is well commented and to see full documentation of its source using the provided Makefile commands that initiate code documentation generators.
+
 <a id="sdk_gendoc_doxygen" name="sdk_gen_doc_doxygen"></a>
 #### Doxygen
 
@@ -251,7 +280,7 @@ The following will generate <a href="http://en.wikipedia.org/wiki/Doxygen" title
 This code documentation generation requires installation of [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.html).
 
 ```bash
-    $ make docs-doxygen
+    make docs-doxygen
 ```
 
 <a id="sdk_gendoc_sphinx" name="sdk_gen_doc_pythondoc"></a>
@@ -261,10 +290,9 @@ Run the following script to generate [Sphnix]("http://en.wikipedia.org/wiki/Sphi
 
 This code documentation generation requires installation of [Sphinx](http://sphinx-doc.org/).
 
-<pre lang="bash">
-    $ make docs-sphinx
-</pre>
-
+```bash
+    make docs-sphinx
+```
 
 <p>
 <a href="#TOP">

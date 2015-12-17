@@ -4,8 +4,8 @@ TUNE SDK for Python documentation
     :package: `tune-reporting-python <https://github.com/MobileAppTracking/tune-reporting-python>`_
     :label: TUNE SDK for Python 2.7 and 3.0
     :purpose: Incorporate TUNE services.
-    :update:  $Date: 2015-07-30 12:49:27 $
-    :version: 1.0.8
+    :update:  $Date: 2015-12-11 20:56:46 $
+    :version: 1.0.9
 
 Overview
 ####################
@@ -46,7 +46,7 @@ Install from PyPi using package manager for Python: `pip <http://www.pip-install
 .. code-block:: bash
     :linenos:
 
-    $ pip install --upgrade tune-reporting
+    pip install --upgrade tune-reporting
 
 You may need to run the above commands with *sudo*.
 
@@ -56,7 +56,7 @@ line:
 .. code-block:: bash
     :linenos:
 
-    $ curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python
+    curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python
 
 Via ZIP file:
 ********************
@@ -66,7 +66,7 @@ you can download the source code: `ZIP <https://github.com/MobileAppTracking/tun
 .. code-block:: bash
     :linenos:
 
-    $ python setup.py install
+    python setup.py install
 
 You may need to run the above commands with `sudo`.
 
@@ -81,8 +81,8 @@ Run the following script to view execution of all examples:
 .. code-block:: bash
     :linenos:
 
-    $ make installs
-    $ make API_KEY=[API_KEY] examples
+    make installs
+    make API_KEY=[API_KEY] examples
 
 SDK Unittests
 ********************
@@ -92,8 +92,8 @@ Run the following script to view execution of all unittests:
 .. code-block:: bash
     :linenos:
 
-    $ make tests-installs
-    $ make API_KEY=[API_KEY] tests
+    make tests-installs
+    make API_KEY=[API_KEY] tests
 
 SDK Documentation -- Sphinx
 ****************************
@@ -103,8 +103,8 @@ The following will generate `Sphinx <http://en.wikipedia.org/wiki/Sphinx_(docume
 .. code-block:: bash
     :linenos:
 
-    $ make tests-installs
-    $ make docs-sphinx
+    make tests-installs
+    make docs-sphinx
 
 SDK Documentation -- Doxygen
 ****************************
@@ -114,8 +114,8 @@ The following will generate `Doxygen <http://en.wikipedia.org/wiki/Doxygen>`_ do
 .. code-block:: bash
     :linenos:
 
-    $ make tests-installs
-    $ make docs-doxygen
+    make tests-installs
+    make docs-doxygen
 
 Requires installation of `Doxygen <http://www.stack.nl/~dimitri/doxygen/index.html>`_.
 

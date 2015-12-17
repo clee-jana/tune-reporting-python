@@ -5,7 +5,7 @@ TUNE Reporting API '/advertiser/stats/'
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  __init__.py
+#  advertiser_report_actuals.py
 #
 #  Copyright (c) 2015 TUNE, Inc.
 #  All rights reserved.
@@ -36,7 +36,7 @@ TUNE Reporting API '/advertiser/stats/'
 #  @author    Jeff Tanner <jefft@tune.com>
 #  @copyright 2015 TUNE, Inc. (http://www.tune.com)
 #  @license   http://opensource.org/licenses/MIT The MIT License (MIT)
-#  @version   $Date: 2015-04-09 17:36:25 $
+#  @version   $Date: 2015-12-11 20:56:46 $
 #  @link      https://developers.mobileapptracking.com @endlink
 #
 
