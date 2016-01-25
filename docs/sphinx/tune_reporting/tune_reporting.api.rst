@@ -20,10 +20,10 @@ tune_reporting.api.advertiser_report_cohort_retention module
     :undoc-members:
     :show-inheritance:
 
-tune_reporting.api.advertiser_report_cohort_value module
---------------------------------------------------------
+tune_reporting.api.advertiser_report_cohort_values module
+---------------------------------------------------------
 
-.. automodule:: tune_reporting.api.advertiser_report_cohort_value
+.. automodule:: tune_reporting.api.advertiser_report_cohort_values
     :members:
     :undoc-members:
     :show-inheritance:

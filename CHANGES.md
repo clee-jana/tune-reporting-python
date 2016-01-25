@@ -157,7 +157,7 @@ Version 1.0.5
 
 Production sphinx document cleanup on April 21, 2015
 
-Version 1.0.6
+Version 1.1.1
 -------------
 
 Export reporting format JSON is no longer supported.

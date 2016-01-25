@@ -26,8 +26,8 @@
 # author    Jeff Tanner <jefft@tune.com>
 # copyright 2014 Tune (http://www.tune.com)
 # license   http://opensource.org/licenses/MIT The MIT License (MIT)
-# update    $Date: 2015-12-11 20:56:46 $
-# version   $Version: 1.0.6 $
+# update    $Date: 2016-01-24 22:23:55 PST $
+# version   $Version: 1.1.1 $
 # link      https://developers.mobileapptracking.com
 #
 
