@@ -31,7 +31,7 @@
 # link      https://developers.mobileapptracking.com
 #
 
-.PHONY: clean venv install analysis examples tests tests-travis-ci tests-install build dist register docs-sphinx docs-doxygen
+.PHONY: clean venv install analysis examples27 examples3 tests tests-travis-ci tests-install build27 build3 dist dist27 dist3 register27 register3 docs-sphinx docs-doxygen
 
 venv:
 	sudo pip install virtualenv
@@ -53,47 +53,55 @@ clean:
 	find . -name "*.pyc" -type f -delete
 	rm -rf venv
 
-dist-install:
+dist-install27:
 	sudo pip2.7 install -r requirements.txt
 
 dist-install3:
-	sudo pip3 install -r requirements.txt
+	sudo pip3.4 install -r requirements.txt
 
-dist:
+dist27:
 	sudo rm -fR ./dist/*
-	sudo python setup.py sdist --format=zip,gztar upload
-	sudo python setup.py bdist_egg upload
-	sudo python setup.py bdist_wheel upload
+	sudo python2.7 setup.py sdist --format=zip,gztar upload
+	sudo python2.7 setup.py bdist_egg upload
+	sudo python2.7 setup.py bdist_wheel upload
 
 dist3:
 	sudo rm -fR ./dist/*
-	sudo python3 setup.py sdist --format=zip,gztar upload
-	sudo python3 setup.py bdist_egg upload
-	sudo python3 setup.py bdist_wheel upload
+	sudo python3.4 setup.py sdist --format=zip,gztar bdist_egg bdist_wheel upload
+	sudo python3.4 setup.py bdist_egg upload
+	sudo python3.4 setup.py bdist_wheel upload
 
-build:
+dist:
+	sudo rm -fR ./dist/*
+	sudo python3.4 setup.py sdist --format=zip,gztar upload
+	sudo python2.7 setup.py bdist_egg upload
+	sudo python2.7 setup.py bdist_wheel upload
+	sudo python3.4 setup.py bdist_egg upload
+	sudo python3.4 setup.py bdist_wheel upload
+
+build27:
 	sudo pip2.7 install --upgrade -r requirements27.txt
-	sudo python setup.py clean
-	sudo python setup.py build
-	sudo python setup.py install
+	sudo python2.7 setup.py clean
+	sudo python2.7 setup.py build
+	sudo python2.7 setup.py install
 
 build3:
-	sudo pip3 install --upgrade -r requirements3.txt
-	sudo python3 setup.py clean
-	sudo python3 setup.py build
-	sudo python3 setup.py install
+	sudo pip3.4 install --upgrade -r requirements3.txt
+	sudo python3.4 setup.py clean
+	sudo python3.4 setup.py build
+	sudo python3.4 setup.py install
 
-register:
-	sudo python setup.py register
+register27:
+	sudo python2.7 setup.py register
 
 register3:
-	sudo python3 setup.py register
+	sudo python3.4 setup.py register
 
 tests: build
 	python ./tests/tune_reporting_tests.py $(api_key)
 
 tests3: build3
-	python3 ./tests/tune_reporting_tests.py $(api_key)
+	python3.4 ./tests/tune_reporting_tests.py $(api_key)
 
 tests-travis-ci:
 	flake8 --ignore=F401,E265,E129 tune
@@ -103,13 +111,13 @@ tests-travis-ci:
 tests-travis-ci3:
 	flake8 --ignore=F401,E265,E129 tune
 	flake8 --ignore=E123,E126,E128,E265,E501 tests
-	python3 ./tests/tune_reporting_tests.py $(api_key)
+	python3.4 ./tests/tune_reporting_tests.py $(api_key)
 
-examples: build
-	python ./examples/tune_reporting_examples.py $(api_key)
+examples27: build27
+	python2.7 ./examples/tune_reporting_examples.py $(api_key)
 
 examples3: build3
-	python3 ./examples/tune_reporting_examples.py $(api_key)
+	python3.4 ./examples/tune_reporting_examples.py $(api_key)
 
 analysis: install
 	. venv/bin/activate; flake8 --ignore=E123,E126,E128,E265,E501 examples
