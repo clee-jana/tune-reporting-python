@@ -40,7 +40,7 @@
 
 import sys
 
-__version_info__ = ('1', '0', '9')
+__version_info__ = ('1', '1', '1')
 __sdk_version__ = '.'.join(__version_info__)
 __sdk_name__ = 'tune-reporting-python'
 
