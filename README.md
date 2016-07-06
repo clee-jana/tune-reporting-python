@@ -1,3 +1,5 @@
+<h1>This SDK uses v2 of the TUNE Reporting API, which has been deprecated.</h1>
+
 <h2>tune-reporting-python</h2>
 <h2>TUNE Reporting SDK for Python 2.7 and 3.0</h2>
 <h3>Incorporate TUNE Reporting services.</h3>
